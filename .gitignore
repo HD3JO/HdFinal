@@ -1,5 +1,8 @@
 ### Custom ksj ###
-*.DS_Store
+.DS_Store
+.mvn/
+target/
+
 
 ### Eclipse ###
 .metadata
