@@ -1,3 +1,6 @@
+### Custom ksj ###
+*.DS_Store
+
 ### Eclipse ###
 .metadata
 bin/
