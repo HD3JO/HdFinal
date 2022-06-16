@@ -1,8 +1,11 @@
 package com.hyundai.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.product.repository.TestProductMapper;
 import com.hyundai.project.user.repository.TestUserMapper;
 
@@ -16,17 +19,18 @@ public class TestServiceImpl implements TestService {
 	TestUserMapper mapper2;
 	
 	@Override
-	public String user() throws Exception{
+	public List<MemberDTO> user() throws Exception{
 		System.out.println("Product Service start.....................");
-		
-		return mapper1.getProduct();
+		MemberDTO memberDTO = new MemberDTO();
+		//memberDTO.setEmail("YSK@NAVER.COM");
+		return mapper2.getUser(memberDTO);
 	}
 
 	@Override
 	public String product() throws Exception {
 		System.out.println("User Service start.....................");
 		
-		return mapper2.getUser();
+		return mapper1.getProduct();
 	}
 
 }
