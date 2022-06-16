@@ -1,4 +1,4 @@
-package com.hyudai.project;
+package com.hyundai.project;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
