@@ -1,4 +1,4 @@
-package com.hyudai.project;
+package com.hyundai.project;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

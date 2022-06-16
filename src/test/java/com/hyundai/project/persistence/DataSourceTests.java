@@ -1,4 +1,4 @@
-package com.hyudai.project.persistence;
+package com.hyundai.project.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
