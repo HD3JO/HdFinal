@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.hyundai.project.dto.MemberDTO;
 
 @Mapper
-public interface TestUserMapper {
+public interface MemberMapper {
 	
 	public List<MemberDTO> getUser(MemberDTO memberDTO) throws Exception;
 }
