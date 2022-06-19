@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.CartMapper">
+
+	<!-- 사용자가 담은 장바구니 목록을 조회하는 프로시저 -->
+	<select id="getCartList" resultType="com.hyundai.project.dto.CartDTO">
+		SELECT * FROM TABLE(FN_CART_SELECT(#{email}))
+	</select>
+	
+	<!-- 상품을 장바구니에 담는 프로시저 -->
+	<insert id="cartInsert">
+		EXEC P_CART_INSERT(#{email}, #{psid}, #{pquantity})
+	</insert>
+	
+	<!-- 장바구니에 담긴 상품 수량을 변경하는 프로시저 -->
+	<update id="cartUpdate">
+		EXEC P_CART_UPDATE(#{pquantity}, #{psid}, #{email})
+	</update>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="cartDelete" parameterType="java.util.ArrayList">
+		EXEC P_CART_DELETE(#{email}, #{psid})
+	</delete>
+</mapper>
