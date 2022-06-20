@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.hyundai.project.dto.NewProductDTO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
-import com.hyundai.project.dto.productSizeDTO;
+import com.hyundai.project.dto.ProductSizeDTO;
 
 @Mapper
 public interface ProductMapper {
@@ -18,7 +18,7 @@ public interface ProductMapper {
 	
 	public ProductDetailDTO getProductDetail(String pcid);
 	
-	public List<productSizeDTO> getProductSize(String pcid);
+	public List<ProductSizeDTO> getProductSize(String pcid);
 	
 	public List<NewProductDTO> getNewProduct(String category);
 	
