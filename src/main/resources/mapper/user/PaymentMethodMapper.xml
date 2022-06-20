@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.PaymentMethodMapper">
+
+	<select id="selectPaymentMethod" parameterType="com.hyundai.project.dto.PaymentMethodDTO" resultType="com.hyundai.project.dto.PaymentMethodDTO">
+        SELECT * FROM TABLE(FN_PAYMENT_METHOD_SELECT(#{pmcode, jdbcType=VARCHAR}, #{pmcompany, jdbcType=VARCHAR}, 
+    	#{pmmethod, jdbcType=NUMERIC}))
+    </select>
+	
+	<insert id="insertPaymentMethod" parameterType="com.hyundai.project.dto.PaymentMethodDTO">
+    	CALL P_PAYMENT_METHOD_INSERT(#{pmcode, jdbcType=VARCHAR}, #{pmcompany, jdbcType=VARCHAR}, 
+    	#{pmmethod, jdbcType=NUMERIC})
+    </insert>
+    
+    <update id="updatePaymentMethod" statementType = "CALLABLE">
+    	CALL P_PAYMENT_METHOD_UPDATE(#{pmcode, jdbcType=VARCHAR}, #{pmcompany, jdbcType=VARCHAR}, 
+    	#{pmmethod, jdbcType=NUMERIC})
+    </update>
+    
+    <delete id="deletePaymentMethod">
+    	CALL P_PAYMENT_METHOD_DELETE(#{pmcode, jdbcType=VARCHAR})
+    </delete>
+
+</mapper>
