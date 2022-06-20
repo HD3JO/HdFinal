@@ -27,8 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
 		http.authorizeRequests()
-			.antMatchers("/member").hasRole("USER")
-			.antMatchers("/admin").hasRole("ADMIN")
+			//.antMatchers("/member").hasRole("USER")
+			//.antMatchers("/admin").hasRole("ADMIN")
+			//.antMatchers("/member/**").permitAll()
 			.anyRequest().permitAll();
 		
 		http.formLogin()
@@ -39,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		//http.formLogin();
 		http.oauth2Login();
 				
-		http.csrf().disable();	
+		//http.csrf().disable();	
 	}
    
    

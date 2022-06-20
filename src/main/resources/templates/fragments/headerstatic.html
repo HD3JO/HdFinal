@@ -5,6 +5,11 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="headerstatic">
 <title>&#45908;&#54620;&#49452;&#45815;&#52980; | THE
 	HANDSOME.COM</title>
+	
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <link rel="shortcut icon"
 	href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico" />
 <link rel="stylesheet" type="text/css"
