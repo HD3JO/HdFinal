@@ -17,4 +17,12 @@ public class LogAdvice {
 		log.info(exception.getMessage());
 		throw exception;
 	}
+	
+	@AfterThrowing(
+		pointcut="execution(* com.hyundai.project.security.service.*.*(..))",
+		throwing = "exception")
+	public void logSecurityException(Exception exception) throws Exception{
+		log.info(exception.getMessage());
+		throw exception;
+	}
 }
