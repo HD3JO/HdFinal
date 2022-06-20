@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.ReviewMapper">
+	
+	<select id="selectReview" parameterType="com.hyundai.project.dto.ReviewDTO" resultType="com.hyundai.project.dto.ReviewDTO">
+        SELECT * FROM TABLE(FN_REVIEW_SELECT(#{rid, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, 
+        #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
+    	#{psid, jdbcType=VARCHAR}))
+    </select>
+	
+	<insert id="insertReview" parameterType="com.hyundai.project.dto.ReviewDTO">
+    	CALL P_REVIEW_INSERT(#{rid, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, 
+        #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
+    	#{psid, jdbcType=VARCHAR})
+    </insert>
+    
+    <update id="updateReview" statementType = "CALLABLE">
+    	CALL P_REVIEW_UPDATE(#{rid, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, 
+        #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
+    	#{psid, jdbcType=VARCHAR})
+    </update>
+    
+    <delete id="deleteReview">
+    	CALL P_REVIEW_DELETE(#{rid, jdbcType=NUMERIC})
+    </delete>
+
+
+</mapper>

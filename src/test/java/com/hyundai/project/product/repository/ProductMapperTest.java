@@ -4,6 +4,8 @@ package com.hyundai.project.product.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+
 import java.sql.SQLException;
 
 import com.hyundai.project.dto.ProductDetailDTO;
@@ -11,10 +13,9 @@ import com.hyundai.project.dto.ProductDetailDTO;
 
 
 @SpringBootTest
-
+@ComponentScan(basePackages = "com.hyundai.project.product.repository")
 public class ProductMapperTest {
 	
-	@Autowired
 	private ProductMapper productMapper;
 	
 	@Test
