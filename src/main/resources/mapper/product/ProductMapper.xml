@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.product.repository.ProductMapper">
+    <select id="getProduct" resultType="java.lang.String">
+        SELECT PCODE FROM PRODUCT WHERE PNUM = 2
+    </select>
+    <!-- 상품의 컬러 정보 가져오기 -->
+    <select id="getProductColor" resultType="com.hyundai.project.dto.productColorDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTCOLOR_GET(#{pcid}))
+    </select>
+    <!-- 신상품 20개 이하로 가져오기 -->
+    <select id="getNewProduct" resultType="com.hyundai.project.dto.productCommonDTO">
+    	SELECT * FROM TABLE(FN_NEWPRODUCT_GET(#{category}))
+    </select>
+    <!-- 상품 사이즈 정보 가져오기 -->
+    <select id="getProdeuctSize" resultType="com.hyundai.project.dto.productSizeDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTSIZE_GET(#{pcid}))
+    </select>
+    <!-- 상품 페이지 내 필요한 정보 가져오기 -->
+    <select id="getProductDetail" resultType="com.hyundai.project.dto.productDetailDTO">
+    	SELECT * FROM TABLE(FN_PRODUCT_DETAIL(#{pcid}))
+    </select>
+</mapper>
