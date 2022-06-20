@@ -8,4 +8,6 @@ public interface MemberService {
 
 	public List<MemberDTO> selectUser() throws Exception;
 	
+	void insertMember(MemberDTO memberDTO) throws Exception;
+	
 }

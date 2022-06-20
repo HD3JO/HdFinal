@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.MemberDTO;
-import com.hyundai.project.product.repository.TestProductMapper;
 import com.hyundai.project.user.repository.MemberMapper;
 
 
@@ -22,6 +21,10 @@ public class MemberServiceImpl implements MemberService {
 		MemberDTO memberDTO = new MemberDTO();
 		
 		return mapper2.getUser(memberDTO);
+	}
+	@Override
+	public void insertMember(MemberDTO memberDTO) throws Exception{
+		 mapper2.insertMember(memberDTO);
 	}
 
 }

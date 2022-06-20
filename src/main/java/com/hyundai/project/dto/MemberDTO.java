@@ -18,7 +18,7 @@ public class MemberDTO implements Serializable{
 	private String name;
 	private String address;
 	private String phone;
-	private int channel;
+	private String channel;
 	private int enable;
 	private MemberRole role;
 	private Date regdate;
