@@ -12,7 +12,7 @@ public interface MemberMapper {
 	
 	public List<MemberDTO> getUser(MemberDTO memberDTO) throws Exception;
 	
-	public void insertMember(MemberDTO memberDTO) throws SQLException;
+	public int insertMember(MemberDTO memberDTO) throws SQLException;
 	
 	public void updateMember(MemberDTO memberDTO) throws SQLException;
 	

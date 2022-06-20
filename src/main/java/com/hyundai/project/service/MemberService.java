@@ -6,8 +6,10 @@ import com.hyundai.project.dto.MemberDTO;
 
 public interface MemberService {
 
-	public List<MemberDTO> selectUser() throws Exception;
+	public List<MemberDTO> selectAllUser() throws Exception;
 	
-	void insertMember(MemberDTO memberDTO) throws Exception;
+	int insertMember(MemberDTO memberDTO) throws Exception;
+	
+	public MemberDTO selectOneUser(String email) throws Exception;
 	
 }

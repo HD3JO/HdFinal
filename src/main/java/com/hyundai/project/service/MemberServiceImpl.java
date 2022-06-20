@@ -16,15 +16,26 @@ public class MemberServiceImpl implements MemberService {
 	MemberMapper mapper2;
 	
 	@Override
-	public List<MemberDTO> selectUser() throws Exception{
+	public List<MemberDTO> selectAllUser() throws Exception{
 		System.out.println("Product Service start.....................");
 		MemberDTO memberDTO = new MemberDTO();
 		
 		return mapper2.getUser(memberDTO);
 	}
 	@Override
-	public void insertMember(MemberDTO memberDTO) throws Exception{
-		 mapper2.insertMember(memberDTO);
+	public int insertMember(MemberDTO memberDTO) throws Exception{
+		 return mapper2.insertMember(memberDTO);
+	}
+	@Override
+	public MemberDTO selectOneUser(String email) throws Exception {
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setEmail(email);
+		List<MemberDTO> memberList = mapper2.getUser(memberDTO);
+		if(memberList.size() == 0) {
+			return null;
+		}else {
+			return memberList.get(0);
+		}
 	}
 
 }

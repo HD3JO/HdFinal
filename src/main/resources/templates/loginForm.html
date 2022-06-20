@@ -15,6 +15,9 @@
 			console.log('login click');
 			var id = $("#loginForm").find("[id='username']").eq(0).val();
 			var pw = $("#loginForm").find("[id='password']").eq(0).val();
+			
+			var header = $("meta[name='_csrf_header']").attr('content');
+	     	var token = $("meta[name='_csrf']").attr('content'); 
 
 			if (id == "") {
 				layerAlert("이메일을 입력하셔야 합니다.");
@@ -31,6 +34,9 @@
 					"username" : id,
 					"password" : pw
 				},
+				beforeSend: function(xhr){
+	                   xhr.setRequestHeader(header, token);
+	               },
 				success : function(result) {
 					layerAlert("로그인에 성공했습니다.");
 					location.href = "/customLogin";
