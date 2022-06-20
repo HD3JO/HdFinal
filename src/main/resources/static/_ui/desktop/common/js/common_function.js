@@ -1992,7 +1992,7 @@ var searchAddressLayer = function(addr1, addr2, zipcode){
                     $thisLayer.remove();
                 }
             }
-            <!-- 주문서 페이지 배송지 표시란에 기본배송지 표시 제거 20191022 남일희 -->
+            
             $("#basis_bk_flag").removeClass("basis_bk_flag");
         });
         

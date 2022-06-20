@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+<script>
+	var arkQuery = $.noConflict(true);
+	$(document).ready(function() {
+
+		console.log('this is : ');
+		$("#login_btn").click(function() {
+			console.log('login click');
+			var id = $("#loginForm").find("[id='username']").eq(0).val();
+			var pw = $("#loginForm").find("[id='password']").eq(0).val();
+
+			if (id == "") {
+				layerAlert("이메일을 입력하셔야 합니다.");
+				return;
+			}
+			if (pw == "") {
+				layerAlert("비밀번호를 입력하셔야 합니다.");
+				return;
+			}
+			$.ajax({
+				type : 'POST',
+				url : "/login",
+				data : {
+					"username" : id,
+					"password" : pw
+				},
+				success : function(result) {
+					layerAlert("로그인에 성공했습니다.");
+					location.href = "/customLogin";
+				},
+				error : function(e) {
+					layerAlert("로그인에 실패했습니다.");
+					console.log(e);
+					return;
+				}
+			});
+
+		});
+	});
+</script>
+
+<div id="bodyWrap" class="login">
+	<h3 class="cnts_title">
+		<span>로그인</span>
+	</h3>
+	<div class="sub_container">
+		<div id="handsomeCust" class="login_wrap box_type_1 renewal1904">
+			<div class="border_box1">
+				<!-- 추가 190417 -->
+				<div class="inner_box">
+					<div class="title_wrap">
+						<h4>회원</h4>
+					</div>
+					<div id="hpIPLogin">
+						<!-- 스프링 시큐리티 적용하기 (황명하)  -->
+						<form id="loginForm" name="loginForm" action="/login"
+							method="post">
+							<input type="hidden" name="inputId" id="inputId" value="">
+							<fieldset>
+								<legend>로그인 입력항목</legend>
+								<div class="login_section">
+
+									<p class="login_err_txt" id="hpErrMsg"
+										style="margin-left: 0px;"></p>
+									<div>
+										<div>
+											<input type="text" id="username" name="username"
+												placeholder="아이디 / 이메일을 입력하세요." title="아이디" value="">
+										</div>
+										<div>
+											<input type="password" id="password" name="password"
+												placeholder="비밀번호를 입력하세요." title="비밀번호">
+										</div>
+									</div>
+									<a href="javascript:void(0);" class="btn_login" id="login_btn">로그인</a>
+									<div class="id_save">
+										<input type="checkbox" id="id_save" name="id_save" value="Y">
+										<label for="id_save">아이디 저장</label>
+									</div>
+								</div>
+							</fieldset>
+
+						</form>
+					</div>
+
+					<div class="section_bottom">
+						<!-- 추가 190417 -->
+						<p class="mb0">
+							<span class="bul_sty01">한섬 회원 아이디 / 비밀번호를 잊으셨나요?</span> <a
+								href="/ko/member/findIdPwPage" class="btn add_ss"
+								onclick="GA_Event('로그인', '간편회원_찾기', '한섬회원_아이디/비밀번호_찾기');">한섬
+								회원 아이디 / 비밀번호 찾기</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="border_box2">
+				<!-- 추가 190417 -->
+				<div class="inner_box step2">
+					<div class="title_wrap">
+						<h4 class="tlt_typ1">더한섬닷컴 회원 가입</h4>
+						<p class="txt" style="line-height: 1.5;">
+							본인인증 절차 없이, 더한섬닷컴에서 제공하는 서비스만 제한적으로<br>이용할 수 있는 ID를 만듭니다.
+						</p>
+						<p class="join_txt2 mt10">
+							더한섬닷컴에서 사용 가능하며, 오프라인 매장에서는 사용할 수 없습니다.<br> <span>한섬마일리지와
+								현대백화점그룹 H.Point 혜택, 한섬의 온라인 멤버십 서비스<br>‘THE 클럽’의 혜택은 제공되지
+								않습니다.
+							</span>
+						</p>
+					</div>
+					<div class="title_wrap hide" id="eg_block">
+						<a onclick="easyMemJoin();" class="btn add_ss join"
+							style="width: 366px">회원 가입</a>
+						<p class="join_txt2 mt20">
+							<span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입
+								후 이용해 주세요.
+							</span>
+						</p>
+					</div>
+					<div class="title_wrap hide" id="eg_block">
+						<a href="/oauth2/authorization/google" class="btn add_ss join"
+							style="width: 366px">구글 회원가입</a>
+						<p class="join_txt2 mt20">
+							<span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입
+								후 이용해 주세요.
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//login wrap-->
+	</div>
+	<!--//sub_container-->
+</div>
+<div class="layerArea" id="simpJoinLayer" style="display: none;">
+	<div class="layerBg" style="display: block;" tabindex="-1"></div>
+	<div class="popwrap w_type_8" id=""
+		style="position: absolute; z-index: 201; display: block;"
+		tabindex="-1">
+		<div class="pop_tltwrap3">
+			<h3>더한섬닷컴 회원가입</h3>
+		</div>
+		<div class="pop_cnt">
+			<div class="hpoint">
+				<p class="img">
+					<img
+						src="/resources/_ui/desktop/common/images/popup/join_pop_icon.jpg"
+						style="vertical-align: top">
+				</p>
+				<p class="txt">
+					H.Point통합회원 정보로 더한섬닷컴에 회원가입이 가능합니다.<br> 단, 더한섬닷컴 가입확인을 위해 아래의
+					정보로 조회가 진행됩니다.<br> 동의하시면 회원가입 해주세요.<br> <span>※
+						조회정보 : 이름, 생년월일, 휴대폰번호</span>
+				</p>
+				<div class="btnwrap mt30">
+					<input class="btn gray" value="더한섬닷컴 가입" type="button"
+						style="width: 200px" onclick="simpJoin();">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="btn_close" id="closeLayerPop"
+			onclick="layerPopup('close');"><img
+			src="/resources/_ui/desktop/common/images/popup/ico_close.png"></a>
+	</div>
+</div>
+
+</html>
