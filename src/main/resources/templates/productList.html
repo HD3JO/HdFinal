@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+
+<div id="bodyWrap" class="products">
+	<h3 class="cnts_title ou1804">
+		
+	</h3>
+	<div class="adaptive_wrap">
+		<!-- sort wrap -->
+		<div class="filterWrap hsDelivery1902">
+			<div class="items_count float_right">
+				<span class="num">${pageMaker.total}</span><span>전체</span>
+			</div>
+		</div>
+		<div class="items_list" id="listContent" style="display: block;">
+			<ul class="clearfix" id="listBody" style="display: block;">
+				<div th:each="product:${productList}">
+					<div th:switch="${status.index  % 4}">
+						<li th:case="3">
+							<div class="item_box">
+									<a href="/product/productDetail?pId=${product.PId}"
+										class="item_info1" onclick=""> <span class="item_img">
+											<img src="${product.productColorVO.pcChipImg}" id="T01_IMG_0"
+											alt="" targetcode="CS2C3HCO019LMZ_NA" class="respon_image"
+											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'">
+											<img src="${product.productColorVO.pcImg1}" id="T02_IMG_0"
+											alt="" targetcode="CS2C3HCO019LMZ_NA" class="respon_image on"
+											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'"
+											style="display: none; opacity: 1;"> <input
+											type="hidden" id="newImage1_0" value=""> <input
+											type="hidden" id="newImage2_0" value="">
+									</span> <span class="item_size" id="itemsize_0"
+										style="display: none; height: 1.67105px; padding-top: 0.664475px; margin-top: 0px; padding-bottom: 0.664475px; margin-bottom: 0px;">
+											<div id="CS2C3HCO019LMZ_NA">
+												<span><c:out value="${status.index}" /></span>
+											</div>
+									</span>
+									</a> <a href="/product/productDetail?pId=${product.PId}"
+										class="item_info2" onclick=""> <span class="brand">${product.brandVO.BName}</span>
+										<span class="title">${product.PName}</span> <span
+										class="price">₩ <span id="price_CS2C3HCO019LMZ_NA"><fmt:formatNumber
+													value="${product.productColorVO.pcPrice}" pattern="#,###" /><span></span></span></span>
+										<span class="flag"> <span class="product"></span>
+									</span>
+									</a> <a href="javascript:addWishListClick('CS2C3HCO019LMZ');"
+										class="add_wishlist " id="wish_CS2C3HCO019LMZ"
+										onclick="GA_Category('wish', $(this));brazeLogCustomEvent('0');"
+										data-value="CS2C3HCO019LMZ_NA">위시리스트 담기</a>
+								</div>
+						</li>
+						<li th:case="*">
+							<div class="item_box">
+									<a href="/product/productDetail?pId=${product.PId}"
+										class="item_info1" onclick=""> <span class="item_img">
+											<img src="${product.productColorVO.pcChipImg}" id="T01_IMG_0"
+											alt="[MAISON LOUIS MARIE] NO.09 발레 드 파니 바디 로션 237ml"
+											targetcode="CS2C3HCO019LMZ_NA" class="respon_image"
+											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'">
+											<img src="${product.productColorVO.pcImg1}" id="T02_IMG_0"
+											alt="[MAISON LOUIS MARIE] NO.09 발레 드 파니 바디 로션 237ml"
+											targetcode="CS2C3HCO019LMZ_NA" class="respon_image on"
+											onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img3.jpg'"
+											style="display: none; opacity: 1;"> <input
+											type="hidden" id="newImage1_0"
+											value="http://newmedia.thehandsome.com/CS/2C/SS/CS2C3HCO019LMZ_NA_T01.jpg">
+											<input type="hidden" id="newImage2_0"
+											value="http://newmedia.thehandsome.com/CS/2C/SS/CS2C3HCO019LMZ_NA_T02.jpg">
+									</span> <span class="item_size" id="itemsize_0"
+										style="display: none; height: 1.67105px; padding-top: 0.664475px; margin-top: 0px; padding-bottom: 0.664475px; margin-bottom: 0px;">
+											<div id="CS2C3HCO019LMZ_NA">
+												<span><c:out value="${status.index}" /></span>
+											</div>
+									</span>
+									</a> <a href="/product/productDetail?pId=${product.PId}"
+										class="item_info2" onclick=""> <span class="brand">${product.brandVO.BName}</span>
+										<span class="title">${product.PName}</span> <span
+										class="price">₩ <span id="price_CS2C3HCO019LMZ_NA"><fmt:formatNumber
+													value="${product.productColorVO.pcPrice}" pattern="#,###" /><span></span></span></span>
+										<span class="flag"> <span class="product"></span>
+									</span>
+									</a> <a href="javascript:addWishListClick('CS2C3HCO019LMZ');"
+										class="add_wishlist " id="wish_CS2C3HCO019LMZ"
+										onclick="GA_Category('wish', $(this));brazeLogCustomEvent('0');"
+										data-value="CS2C3HCO019LMZ_NA">위시리스트 담기</a>
+								</div>
+						</li>
+					</div>
+				</div>
+			</ul>
+		</div>
+		<div class="paging" style="display: block;">
+			<a class="prev2"
+				href="/product/productList?cateNo=${param.cateNo}&pageNum=1&amount=${pageMaker.amount}&level=${param.level}">처음
+				페이지로 이동</a>
+				
+			<div th:switch="${pageMaker.pageNum}">
+				<a th:case = "${pageMaker.startPage}"
+				href="/product/productList?cateNo=${param.cateNo}&pageNum=${pageMaker.pageNum}&amount=${pageMaker.amount}&level=${param.level}"
+				class="prev" th:text="이전 페이지로 이동">
+				<a th:case = "*"
+					href="/product/productList?cateNo=${param.cateNo}&pageNum=${pageMaker.pageNum - 1}&amount=${pageMaker.amount}&level=${param.level}"
+					class="prev" th:text="이전 페이지로 이동">
+				</a>
+			</div>
+			<span class="num">
+			<th:each="num ${#numbres.sequence(${pageMaker.startPage},${pageMaker.endPage})}">
+				<a href="/product/productList?cateNo=${param.cateNo}&pageNum=${num}&amount=${pageMaker.amount}&level=${param.level}"
+						class="pageBtn" th:text="${num}"></a>
+			</th:each> 
+			</span>
+			
+			<div th:switch="${pageMaker.pageNum}">
+				<a th:case = "${pageMaker.endPage}"
+				href="/product/productList?cateNo=${param.cateNo}&pageNum=${pageMaker.pageNum}&amount=${pageMaker.amount}&level=${param.level}"
+				class="next" th:text="다음 페이지로 이동">
+				<a th:case = "*"
+					href="/product/productList?cateNo=${param.cateNo}&pageNum=${pageMaker.pageNum + 1}&amount=${pageMaker.amount}&level=${param.level}"
+					class="next" th:text="다음 페이지로 이동">
+				</a>
+			</div>
+			<a
+				href="/product/productList?cateNo=${param.cateNo}&pageNum=${pageMaker.endPage}&amount=${pageMaker.amount}&level=${param.level}"
+				class="next2">마지막 페이지로 이동</a>
+		</div>
+	</div>
+</div>

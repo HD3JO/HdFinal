@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.hyundai.project.product.repository.ProductListMapper">
+ 
+ 	<resultMap type="com.hyundai.project.dto.BrandDTO" id="BrandDTO">
+	 	<result column="BNAME" property="bname"></result>
+	</resultMap>
+	<resultMap type="com.hyundai.project.dto.ProductCommonDTO" id="ProductCommonDTO">
+	 	<result column="PID" property="pid"></result>
+	 	<result column="PNAME" property="pname"></result>
+	 	<result column="PNOTE" property="pnote"></result>
+	 	<result column="BNO" property="bno"></result>
+	 	<result column="PSTATE" property="pstate"></result>
+	 </resultMap>
+	 <resultMap type="com.hyundai.project.dto.ProductColorDTO" id="ProductColorDTO">
+	 	<result column="PCCOLORCODE" property="pccolorcode"></result>
+	 	<result column="PCCHIPIMG" property="pcchipimg"></result>
+	 </resultMap>
+	 
+	 <select id="productList" resultType ="com.hyundai.project.dto.ProductViewDTO">
+	 	SELECT A.BNAME, B.PID, B.PNAME, C.PCIMG1, C.PCID, C.PCCHIPIMG, C.PCPRICE, D.CATENO
+  		FROM BRAND A, PRODUCT_COMMON B, PRODUCT_COLOR C, PRODUCT_CATEGORY D
+ 		WHERE A.BNO = B.BNO
+   		AND B.PID = C.PID
+   		AND B.PID = D.PID
+	 </select>
+	 
+	 <select id="productSize" resultType ="com.hyundai.project.dto.ProductAddSizeDTO">
+	 	SELECT A.PID, C.PSIZE
+  		FROM PRODUCT_COMMON A, PRODUCT_COLOR B ,PRODUCT_STOCK C
+		WHERE A.PID = B.PID
+   		AND B.PCID = C.PCID
+	 </select>
+ 
+ </mapper>
