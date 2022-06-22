@@ -4,12 +4,10 @@ package com.hyundai.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hyundai.project.dto.NewProductDTO;
@@ -25,10 +23,11 @@ public class ProductRESTController {
 	private ProductService productService;
 	
 	@PostMapping(value="/ProductDetail")
-	public ProductDetailDTO getProductDetail(@RequestBody ProductDetailDTO detailDTO) throws Exception {
+	public ResponseEntity<ProductDetailDTO> getProductDetail(@RequestBody ProductDetailDTO detailDTO) throws Exception {
 		// 상품 상세 정보 조회
 		// http://localhost:8080/ProductDetail?pcid=CM2B0KTO406WPK
-		return productService.getProductDetail(detailDTO.getPcid());
+		ProductDetailDTO dto =  productService.getProductDetail(detailDTO.getPcid());
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/ProductColor")

@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductSizeDTO;
@@ -37,6 +41,16 @@ public class ProductTestController {
 		
 		return "productDetail";
 	} 
+	
+	@PostMapping(value="/order/orderSheet")
+	public String productOrderSheet (OrderDTO orderDTO, Model model) {
+		System.out.println("오더페이지");
+		System.out.println(orderDTO.getEmail());
+		System.out.println(orderDTO.getPsid());
+		System.out.println(orderDTO.getTxtqty());
+		model.addAttribute("orderinfo", orderDTO);
+		return "Test"; 
+	}
 	
 	
 	@RequestMapping(value="/test")
