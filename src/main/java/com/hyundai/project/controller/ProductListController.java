@@ -24,14 +24,25 @@ public class ProductListController {
 	private ProductService productService;
 	
 	@RequestMapping(value="/productList", method=RequestMethod.GET)
-	public String productList(Model model, @RequestParam("depth1name")String depth1name,
-										   @RequestParam("depth2name")String depth2name,
-										   @RequestParam("depth3name")String depth3name) throws Exception{
-		
-		
-		List<ProductListDTO> productList = productService.getProductList(depth1name, depth2name, depth3name);
-		System.out.println(productList);
+	public String productList(Model model, @RequestParam(value="depth1name")String depth1name,
+										   @RequestParam(value="depth2name",required = false)String depth2name,
+										   @RequestParam(value="depth3name",required = false)String depth3name,
+										   @RequestParam(value="pagenum", defaultValue="1")int pagenum,
+										   @RequestParam(value="pname", required = false) String pname) throws Exception{
+	System.out.println(pname + "@@@@@@@@@@@");
+		List<ProductListDTO> productList = productService.getProductList(depth1name, depth2name, depth3name, pagenum,pname);
+		System.out.println("depth1name " +depth1name);
+		if("".equals(depth2name)) depth2name = null;
+		if("".equals(depth3name)) depth3name = null;
 		model.addAttribute("productList", productList);
+		int totalcount = productService.getProductCount(depth1name, depth2name, depth3name, pagenum, pname);
+		model.addAttribute("totalcount", totalcount);
+		model.addAttribute("endpagenum", (totalcount/12)+1);
+		model.addAttribute("depth1name",depth1name);
+		model.addAttribute("depth2name",depth2name);
+		model.addAttribute("depth3name",depth3name);
+		model.addAttribute("presentpagenum", pagenum);
+		model.addAttribute("pname", pname);
 		
 		return "productList";
 	}

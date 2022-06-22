@@ -19,6 +19,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException{
 		System.out.println("CustomAuthenticationSuccessHandler called");
+		
 		response.sendError(HttpServletResponse.SC_OK);
 	}
 

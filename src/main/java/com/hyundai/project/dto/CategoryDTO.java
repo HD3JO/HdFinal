@@ -16,4 +16,7 @@ public class CategoryDTO {
 	private String depth2name;
 	private String depth3name;
 	
+	private int pagenum;
+	private String pname;
+	
 }

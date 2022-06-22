@@ -35,4 +35,6 @@ public interface ProductMapper {
 	
 	public ProductColorDTO getProductImgByPcid(String pcid);
 	
+	public int getProductCount(CategoryDTO categoryDTO);
+	
 }

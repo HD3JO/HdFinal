@@ -24,7 +24,9 @@ public interface ProductService {
 	
 	public List<NewProductDTO> getNewProduct(String category);	
 	
-	public List<ProductListDTO> getProductList(String depth1name, String depth2name, String depth3name);
+	public List<ProductListDTO> getProductList(String depth1name, String depth2name, String depth3name, int pagenum, String pname);
 
 	public ProductColorDTO getProductImgByPcid(String pcid);
+	
+	public int getProductCount(String depth1name, String depth2name, String depth3name, int pagenum, String pname);
 }

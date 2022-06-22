@@ -26,7 +26,11 @@
     </select>
     
     <select id="getProductListByCategory" resultType="com.hyundai.project.dto.ProductViewDTO">
-    	SELECT * FROM TABLE(FN_PRODUCTLIST_BY_CATEGORY(#{depth1name, jdbcType=VARCHAR}, #{depth2name, jdbcType=VARCHAR}, #{depth3name, jdbcType=VARCHAR}))
+    	SELECT * FROM TABLE(FN_PRODUCTLIST_BY_CATEGORY(#{depth1name, jdbcType=VARCHAR}, 
+    												   #{depth2name, jdbcType=VARCHAR}, 
+    												   #{depth3name, jdbcType=VARCHAR}, 
+    												   #{pagenum}, 
+    												   #{pname, jdbcType=VARCHAR}))
     </select>
     
     <select id="getProductImgByPid" resultType="com.hyundai.project.dto.ProductImgDTO">
@@ -43,5 +47,13 @@
     
     <select id="getProductImgByPcid" resultType="com.hyundai.project.dto.ProductColorDTO">
     	SELECT PCID, PCIMG1, PCIMG2, PCIMG3 FROM PRODUCT_COLOR WHERE PCID = #{pcid}
+    </select>
+    
+    <select id="getProductCount" resultType="int">
+    SELECT FN_PRODUCTLIST_COUNT(#{depth1name, jdbcType=VARCHAR},
+    							#{depth2name, jdbcType=VARCHAR},
+    							#{depth3name, jdbcType=VARCHAR},
+    							#{pagenum}, 
+    							#{pname, jdbcType=VARCHAR}) FROM DUAL
     </select>
 </mapper>

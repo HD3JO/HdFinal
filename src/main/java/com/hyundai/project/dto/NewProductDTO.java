@@ -16,5 +16,6 @@ public class NewProductDTO {
 	private String bname;
 	private int pcprice;
 	private String pcimg1;
+	private String category;
 	private String depth1name;
 }

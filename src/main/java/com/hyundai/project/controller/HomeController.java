@@ -35,6 +35,12 @@ public class HomeController {
 		return "register";
 	}
 	
+	@RequestMapping(value="/complete", method= RequestMethod.GET)
+	public String complete() {
+		System.out.println("called complete");
+		return "complete";
+	}
+	
 //	@RequestMapping(value="/member", method=RequestMethod.GET)
 //	public ResponseEntity<String> member(){
 //		return new ResponseEntity<>("This is member", HttpStatus.OK);

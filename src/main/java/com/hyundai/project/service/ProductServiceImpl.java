@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 	//상품 사이즈들
 	//상품 컬러코드
 	@Override
-	public List<ProductListDTO> getProductList(String depth1name, String depth2name, String depth3name) {
+	public List<ProductListDTO> getProductList(String depth1name, String depth2name, String depth3name, int pagenum, String pname) {
 		// TODO Auto-generated method stub
 		List<ProductListDTO> result = new ArrayList<>();
 		
@@ -58,6 +58,8 @@ public class ProductServiceImpl implements ProductService {
 		categoryDTO.setDepth1name(depth1name);
 		categoryDTO.setDepth2name(depth2name);
 		categoryDTO.setDepth3name(depth3name);
+		categoryDTO.setPagenum(pagenum);
+		categoryDTO.setPname(pname);
 		List<ProductViewDTO> list1 =  productmapper.getProductListByCategory(categoryDTO);
 		//list1을 ProductListDTO에 매칭시켜야함 
 		for(ProductViewDTO a : list1) {
@@ -77,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 			//상품컬러코드
 			List<ProductColorDTO> list4 = productmapper.getProductColorCodeByPid(a.getPid());
 			dto.setProductColorList(list4);
+			dto.setPcid(list4.get(0).getPcid());
 			
 			
 			result.add(dto);
@@ -91,6 +94,19 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productmapper.getProductImgByPcid(pcid);
 		
+	}
+
+	@Override
+	public int getProductCount(String depth1name, String depth2name, String depth3name, int pagenum, String pname) {
+		// TODO Auto-generated method stub
+		CategoryDTO categoryDTO = new CategoryDTO();
+		categoryDTO.setDepth1name(depth1name);
+		categoryDTO.setDepth2name(depth2name);
+		categoryDTO.setDepth3name(depth3name);
+		categoryDTO.setPagenum(pagenum);
+		categoryDTO.setPname(pname);
+		
+		return productmapper.getProductCount(categoryDTO);
 	}
 	
 	
