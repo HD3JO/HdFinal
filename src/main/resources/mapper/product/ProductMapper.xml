@@ -24,4 +24,24 @@
     	SELECT * FROM TABLE(FN_PRODUCT_DETAIL(#{pcid}))
     	]]>
     </select>
+    
+    <select id="getProductListByCategory" resultType="com.hyundai.project.dto.ProductViewDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTLIST_BY_CATEGORY(#{depth1name, jdbcType=VARCHAR}, #{depth2name, jdbcType=VARCHAR}, #{depth3name, jdbcType=VARCHAR}))
+    </select>
+    
+    <select id="getProductImgByPid" resultType="com.hyundai.project.dto.ProductImgDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTIMG_GET(#{pid}))
+    </select>
+    
+    <select id="getProductsizeByPid" resultType="com.hyundai.project.dto.ProductSizeDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTSIZEBYPID_GET(#{pid}))
+    </select>
+    
+    <select id="getProductColorCodeByPid" resultType="com.hyundai.project.dto.ProductColorDTO">
+    	SELECT * FROM TABLE(FN_PRODUCTCOLORCODEBYPID_GET(#{pid}))
+    </select>
+    
+    <select id="getProductImgByPcid" resultType="com.hyundai.project.dto.ProductColorDTO">
+    	SELECT PCID, PCIMG1, PCIMG2, PCIMG3 FROM PRODUCT_COLOR WHERE PCID = #{pcid}
+    </select>
 </mapper>
