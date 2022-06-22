@@ -413,6 +413,8 @@ function testerReviewReset() { //팝업초기화
 }
 //]]>
 </script>
+<input type="hidden" id="email" th:value="${#authentication.name}"></input>
+<input type="hidden" id="pcprice" th:value="${detailDTO.pcprice}"></input>
 <div class="item_detail_info float_right" id="contentDiv" style="margin-top: 20px; top: 0px; left: 676px;">
 	<div class="info">
 		<div class="info_sect">
@@ -692,6 +694,20 @@ function fn_popupDelivery() {
 					<span class="title">수량</span>
 					<script>
 					const arkQuery = $.noConflict(true);
+					
+					function totalPrice(){
+						let price = $('#pcprice').val();
+						let quantity = $('#txtqty').val();						
+						let totalPrice = price * quantity;
+						
+						console.log(price);
+						console.log(quantity);
+						console.log(totalPrice);
+						
+						$('#sumPrice').text("₩ "+(totalPrice).toLocaleString('ko-KR'));
+					
+					}
+					
 					function quantityChange(op){
 						
                         var pcid = $('#pcid.on').attr('value');
@@ -719,6 +735,7 @@ function fn_popupDelivery() {
 						
 							$('#txtqty').val(parseInt(quantity)+1);
 						}
+						totalPrice();
 						//console.log(${detail.productColorVO.pcPrice}*$('#txtqty').val(Integer.parseInt(quantity)-1));
 					}
 					</script>
@@ -738,7 +755,7 @@ function fn_popupDelivery() {
 		<div class="total_price clearfix">
 			<div class="title float_left" style="width:auto;">총 합계</div>
 			<div class="pirce float_right">
-			<span id="sumPrice" th:text=" '₩'+  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>
+			<span id="sumPrice" th:text="'₩ ' +  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>		
 			<!-- 
 			<c:forEach items="${productDetail}" var="detail" varStatus="status">
 				<span id="sumPrice" /span>
@@ -836,48 +853,53 @@ function fn_popupDelivery() {
                             $('#orderSheet')[0].submit();
                         });
 
-                        $('#addToCartButton').click(function(){
-                            /*
-                            private String mid;
-							private int psid;
-							private int pquantity;
-                            */
-                            var pcid = $('#pcid.on').attr('value');
-                            var psize = $('#psize.on').attr('value');
-                            console.log(pcid);
-                            console.log(psize);
-                            var psid = pcid + psize;
+                        $('#addToCartButton').click(function(){                        	
+                        	const header = $("meta[name='_csrf_header']").attr('content');
+                      	  	const token = $("meta[name='_csrf']").attr('content');
+                      	  	
+                        	let pcid = $('#pcid.on').attr('value');
+                            let psize = $('#psize.on').attr('value');
+                            let psid = pcid + psize;
+                            let pquantity = $('#txtqty').val();
+                            let email =  $('#email').attr('value');
+                            
                             console.log(psid);
+                            console.log(psize);
+                            console.log(pquantity);
+                            console.log(email);
+                            
                             if(psize == undefined){
                                 alert('사이즈를 선택해주세요. ');
                                 return;
                             }
-                            var pquantity = $('#txtqty').val();
-							console.log(pquantity);
-                            var mid =  '${sessionScope.user.mid}';
-                            if(mid == null || mid == 'undefined'){
-                                location.href='/member/login';
+                            							
+                            if(email == 'anonymousUser'){
+                                location.href='/customLogin';
                             }
+                            
                             var object = {
                                     'psid' : psid,
                                     'pquantity' : pquantity,
-                                    'mid' : mid
+                                    'email' : email
                                 }
                                 var json = JSON.stringify(object);
                             $.ajax({
                                 type : 'POST',
-                                url : '/cart/insertCart',
+                                url : '/cartInsert',
                                 data : json,
                                 dataType: 'text',
                                 contentType: 'application/json; charset=utf-8',
+                                beforeSend: function(xhr){
+                                    xhr.setRequestHeader(header, token);
+                                },
                                 success : function(data){
-                                    alert('쇼핑백에 담겼습니다. ');
+                                    layerAlert('쇼핑백에 담겼습니다. ');
                                 },
                                 error : function(request, status, error){
                                     if(request.status == 401){
-                                        alert('로그인 후 쇼핑백에 담아주세요.');
+                                        layerAlert('로그인 후 쇼핑백에 담아주세요.');
                                     }
-                                    alert('쇼핑백에 담을 수 없습니다.');
+                                    layerAlert('쇼핑백에 담을 수 없습니다.');
                                     console.log("code:"+request.status+"\n"+"error:"+error);
 
                                 }

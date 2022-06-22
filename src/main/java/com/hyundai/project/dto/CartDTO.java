@@ -18,7 +18,7 @@ public class CartDTO {
 	private String pcImg1;
 	private String bname;
 	private String pname;
-	private String pcColorCode;
+	private String pcolorCode;
 	private String psize;
 	private int pcprice;
 	

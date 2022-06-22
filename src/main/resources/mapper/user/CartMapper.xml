@@ -10,16 +10,16 @@
 	
 	<!-- 상품을 장바구니에 담는 프로시저 -->
 	<insert id="cartInsert">
-		EXEC P_CART_INSERT(#{email}, #{psid}, #{pquantity})
+		CALL P_CART_INSERT(#{email}, #{psid}, #{pquantity})
 	</insert>
 	
 	<!-- 장바구니에 담긴 상품 수량을 변경하는 프로시저 -->
 	<update id="cartUpdate">
-		EXEC P_CART_UPDATE(#{pquantity}, #{psid}, #{email})
+		CALL P_CART_UPDATE(#{pquantity}, #{psid}, #{email})
 	</update>
 	
 	<!-- 장바구니 삭제 -->
-	<delete id="cartDelete" parameterType="java.util.ArrayList">
-		EXEC P_CART_DELETE(#{email}, #{psid})
+	<delete id="cartDelete">
+		CALL P_CART_DELETE(#{email}, #{psid})
 	</delete>
 </mapper>
