@@ -14,4 +14,5 @@ import lombok.ToString;
 public class ProductSizeDTO {
 	private String pid;
 	private String psize;
+	private String pcid;
 }
