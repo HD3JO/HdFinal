@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+<script type="text/javascript">
+var arkQuery = $.noConflict(true);
+
+function changeNew(e){
+	console.log(e);
+	const header = $("meta[name='_csrf_header']").attr('content');
+ 	const token = $("meta[name='_csrf']").attr('content'); 
+
+ 	const jsonData ={
+			"depth1name" : e
+	}
+ 	
+	$.ajax({
+		type : 'POST',
+		url : "/mainAjaxNew",
+		data : JSON.stringify(jsonData),
+		contentType : 'application/json',
+		dataType : 'json',
+		beforeSend: function(xhr){
+               xhr.setRequestHeader(header, token);
+           },
+		success : function(result) {
+			result.forEach(function(item,index){
+				console.log(item);
+				$('#firstnewlink'+index).attr('href','/detail?pcid='+item.pcid);
+				$('#seconnewdlink'+index).attr('href','/detail?pcid='+item.pcid);
+				$('#newimg'+index).attr('src', item.pcimg1);
+				$('#newbname'+index).text(item.bname);
+				$('#newprice'+index).text('₩'+Number(item.pcprice).toLocaleString());
+				console.log('done');
+			});
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+
+function changeBest(e){
+	console.log(e);
+	const header = $("meta[name='_csrf_header']").attr('content');
+ 	const token = $("meta[name='_csrf']").attr('content'); 
+
+ 	const jsonData ={
+			"depth1name" : e
+	}
+ 	
+	$.ajax({
+		type : 'POST',
+		url : "/mainAjaxBest",
+		data : JSON.stringify(jsonData),
+		contentType : 'application/json',
+		dataType : 'json',
+		beforeSend: function(xhr){
+               xhr.setRequestHeader(header, token);
+           },
+		success : function(result) {
+			result.forEach(function(item,index){
+				console.log(item);
+				$('#firstbestlink'+index).attr('href','/detail?pcid='+item.pcid);
+				$('#secondbestlink'+index).attr('href','/detail?pcid='+item.pcid);
+				$('#bestimg'+index).attr('src', item.pcimg1);
+				$('#bestbname'+index).text(item.bname);
+				$('#bestprice'+index).text('₩'+Number(item.pcprice).toLocaleString());
+				console.log('done');
+			});
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+
+</script>
+<body>
+	<!--     bodyWrap -->
+	<div id="bodyWrap" style="padding-bottom: 0;">
+		<!-- main_container-->
+		<div class="main_container">
+			<!-- new & best -->
+                <div class="product_list1903">
+                    <div class="nbe_cnt new">
+                        <div class="product_left_menu">
+                            <h4 class="tit">신상품</h4>
+                            <ul>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeNew('WOMEN')">여성</a></li>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeNew('MEN')">남성</a></li>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeNew('LIFESTYLE')">라이프스타일</a></li>
+                            </ul>
+                        </div>
+                        <div class="nbe_cnt_inner_wrap">
+                            <div class="nbe_cnt_inner swiper-container swiper-container-horizontal swiper-container-wp8-horizontal"
+                                id="newListSlider">
+                                <ul class="items_list swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                                    <th:block th:each="product, status : ${newproductList}">
+                                    <th:block th:switch="${status.index}">
+                                    <th:block th:case="0">
+                                    	<li class="swiper-slide swiper-slide-active">
+	                                        <div class="item_box"> 
+	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        <span class="item_img"> 
+	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
+	                                        </span> 
+	                                        </a> 
+	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
+	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
+	                                        </a> 
+	                                        </div>
+	                                    </li>
+                                    	</th:block>
+                                    	<th:block th:case="1">
+	                                    <li class="swiper-slide swiper-slide-next">
+	                                        <div class="item_box"> 
+	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        <span class="item_img"> 
+	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
+	                                        </span> 
+	                                        </a> 
+	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
+	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
+	                                        </a> 
+	                                        </div>
+	                                    </li>
+	                                    </th:block>
+	                                    <th:block th:case="2">
+	                                    <li class="swiper-slide">
+	                                        <div class="item_box"> 
+	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        <span class="item_img"> 
+	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
+	                                        </span> 
+	                                        </a> 
+	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
+	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
+	                                        </a> 
+	                                        </div>
+	                                    </li>
+	                                    </th:block>
+	                                    <th:block th:case="3">
+	                                    <li class="swiper-slide">
+	                                        <div class="item_box"> 
+	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        <span class="item_img"> 
+	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
+	                                        </span> 
+	                                        </a> 
+	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
+	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
+	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
+	                                        </a> 
+	                                        </div>
+	                                    </li>
+	                                    </th:block>
+                                    
+                                    </th:block>
+                                    </th:block>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbe_cnt best">
+                        <div class="product_left_menu">
+                            <h4 class="tit">베스트</h4>
+                            <ul>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeBest('WOMEN')">여성</a></li>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeBest('MEN')">남성</a></li>
+                                <li class="on"> <a href="javascript:void(0);" onclick="changeBest('LIFESTYLE')">라이프스타일</a></li>
+                            </ul>
+                        </div>
+                        <div class="nbe_cnt_inner_wrap">
+                            <div class="nbe_cnt_inner swiper-container swiper-container-horizontal swiper-container-wp8-horizontal"
+                                id="bestListSlider">
+                                <ul class="items_list swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                                <th:block th:each="product, status : ${bestproductList}">
+                                    <th:block th:switch="${status.index}">
+                                    <th:block th:case="0">
+                                    <li class="swiper-slide swiper-slide-active">
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/CM2C3WPC260W_BK" class="item_info1"
+                                                onclick="javascript:setEcommerceData(0, 'BEST', 'WE');"> <span
+                                                    class="item_img"> <img th:id="'bestimg'+${status.index}"
+	                                                        th:src="${product.pcimg1}"
+                                                        alt="" name="백 밴딩 원턱 팬츠" class="respon_image"
+                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
+                                                href="/ko/p/CM2C3WPC260W_BK" class="item_info2"
+                                                onclick="javascript:GA_main('best',$(this));setEcommerceData(0, 'BEST', 'WE');">
+                                                <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
+												th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>
+                                    </li>
+                                    </th:block>
+                                   <th:block th:case="1">
+                                    <li class="swiper-slide swiper-slide-next">
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/YN2C3WSC720N_BK" class="item_info1"
+                                                onclick="javascript:setEcommerceData(1, 'BEST', 'WE');"> <span
+                                                    class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
+                                                        alt="" name="[palette] 백 밴딩 셔링 스커트" class="respon_image"
+                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
+                                                href="/ko/p/YN2C3WSC720N_BK" class="item_info2"
+                                                onclick="javascript:GA_main('best',$(this));setEcommerceData(1, 'BEST', 'WE');">
+                                                <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
+                                                  th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>
+                                    </li>
+                                    </th:block>
+                                    <th:block th:case="2">
+                                    <li class="swiper-slide">
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/TM2C4KCD164W_BK" class="item_info1"
+                                                onclick="javascript:setEcommerceData(2, 'BEST', 'WE');"> <span
+                                                    class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
+                                                        alt="" name="컬러 라인 크로셰 니트 가디건" class="respon_image"
+                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
+                                                href="/ko/p/TM2C4KCD164W_BK" class="item_info2"
+                                                onclick="javascript:GA_main('best',$(this));setEcommerceData(2, 'BEST', 'WE');">
+                                                <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a>
+                                        </div>
+                                    </li>
+                                    </th:block>
+                                    <th:block th:case="3">
+                                    <li class="swiper-slide">
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/YN2C3TTO613N_BK" class="item_info1"
+                                                onclick="javascript:setEcommerceData(3, 'BEST', 'WE');"> <span
+                                                    class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
+                                                        alt="" name="[palette] 스퀘어넥 슬리브리스 탑" class="respon_image"
+                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
+                                                href="/ko/p/YN2C3TTO613N_BK" class="item_info2"
+                                                onclick="javascript:GA_main('best',$(this));setEcommerceData(3, 'BEST', 'WE');">
+                                                <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
+                                                   th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>
+                                    </li>
+                                    </th:block>
+                                    </th:block>
+                                    </th:block>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- new & best -->
+			
+		</div>
+		<!-- //main_container-->
+	</div>
+</body>
+
+</html>

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+public class BestProductDTO {
 
-public class NewProductDTO {
 	private String pid;
 	private String pcid;
 	private String bname;
