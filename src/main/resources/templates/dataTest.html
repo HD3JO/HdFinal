@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th=http://www.thymeleaf.org
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>테스트 페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var header = $("meta[name='_csrf_header']").attr('content');
+	var token = $("meta[name='_csrf']").attr('content');
+	
+	var pcid = $('#pcid').text();
+	console.log("상품번호");
+	console.log(pcid);
+	
+	var productVO = {
+			'pcid' : pcid
+	};
+	//상품 상세정보 조회
+	$.ajax({
+    	url : '/ProductDetail',
+    	data : JSON.stringify(productVO),
+    	type : 'POST',
+    	dataType : 'JSON',
+    	contentType : 'application/json',
+    	beforeSend : function(xhr){
+            xhr.setRequestHeader(header, token);
+        },
+    	success : function(data) {
+    		console.log(data);
+    		console.log("상품 상세정보 호출 성공");
+    	},
+		error : function() {
+			console.log("상품 상세정보 호출 실패");
+		}
+    });
+	
+	
+	//제품 모든 색상 조회
+	$.ajax({
+    	url : '/ProductColor',
+    	data : JSON.stringify(productVO),
+    	type : 'POST',
+    	dataType : 'JSON',
+    	contentType : 'application/json',
+    	success : function(data) {
+    		console.log(data);
+    		console.log("제품 색상 호출 성공");
+    	},
+		error : function() {
+			console.log("제품 색상 호출 실패");
+		}
+    });
+	// 제품 사이즈 조회
+	$.ajax({
+    	url : '/ProductSize',
+    	data : JSON.stringify(productVO),
+    	type : 'POST',
+    	dataType : 'JSON',
+    	contentType : 'application/json',
+    	success : function(data) {
+    		console.log(data);
+    		console.log("제품 사이즈 호출 성공");
+    	},
+		error : function() {
+			console.log("제품 사이즈 호출 실패");
+		}
+    });
+})
+
+</script>
+<div id="pcid" th:text="${pcid}" >기본 메시지</div>
+</body>
+</html>

@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDetailDTO {
+	
 	private String bname;
 	private String pname;
 	private int pcprice;
