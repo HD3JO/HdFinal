@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,5 +81,29 @@ public class CartRestController {
 								e.getMessage(), HttpStatus.BAD_REQUEST);			
 		}
 		return delete;
+	}
+	
+	// 체크박스 선택된 장바구니 상품 일괄 삭제
+	@PostMapping(value="/selectDelete")
+	public String deleteCart(@RequestBody List<CartDTO> cartList, Model model, Authentication authentication) throws Exception {
+		log.info("Called deleteCart");
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		if(userDetails == null) 
+			return "redirect:/customLogin";
+		String email = userDetails.getUsername();;
+		
+		for(CartDTO dto : cartList) {
+			log.info(dto.toString());
+			dto.setEmail(email);
+		}
+		int rows = service.selectDelete(cartList);
+		
+		cartList = service.getCartList(email);
+		
+		model.addAttribute("cartList", cartList);
+		
+		return "redirect:/cart/cartList";
 	}
 }

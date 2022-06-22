@@ -273,8 +273,8 @@
             <div class="toast_popup_pre_order1905"><!-- 토스트팝업 190507 -->
                 <p>예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.</p>
                 <span class="arr">위치아이콘</span>
-            </div>
-            <input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0" id="addToCartButton" onclick="addToCart()">
+            </div>         
+            	<input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0" id="addToCartButton">
             <!--//190508 추가 -->
             <form action="/order/orderSheet" method="POST" id="orderSheet">
                   <input type="submit" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton">
@@ -330,7 +330,7 @@
                             console.log(psid);
                             console.log(psize);
                             console.log(pquantity);
-                            console.log(email);
+                            console.log(email);                                                        
                             
                             if(pcid == undefined ){
                                 layerAlert('색상을 선택해주세요.');
@@ -343,6 +343,7 @@
                             }
                             							
                             if(email == 'anonymousUser'){
+                            	layerAlert('로그인 정보가 없어 로그인 페이지로 이동합니다.');
                                 location.href='/customLogin';
                             }
                             
@@ -350,18 +351,20 @@
                                     'psid' : psid,
                                     'pquantity' : pquantity,
                                     'email' : email
-                                }
-                                var json = JSON.stringify(object);
+                            }
+                            
+                            var json = JSON.stringify(object);
+                            
                             $.ajax({
                                 type : 'POST',
                                 url : '/cartInsert',
                                 data : json,
-                                dataType: 'text',
-                                contentType: 'application/json; charset=utf-8',
+                                contentType: 'application/json; charset=utf-8',                                
                                 beforeSend: function(xhr){
                                     xhr.setRequestHeader(header, token);
                                 },
                                 success : function(data){
+                                	console.log(data);
                                     layerAlert('쇼핑백에 담겼습니다. ');
                                 },
                                 error : function(request, status, error){

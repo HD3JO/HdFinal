@@ -9,9 +9,9 @@
 	</select>
 	
 	<!-- 상품을 장바구니에 담는 프로시저 -->
-	<insert id="cartInsert">
+	<update id="cartInsert">
 		CALL P_CART_INSERT(#{email}, #{psid}, #{pquantity})
-	</insert>
+	</update>
 	
 	<!-- 장바구니에 담긴 상품 수량을 변경하는 프로시저 -->
 	<update id="cartUpdate">
@@ -22,4 +22,13 @@
 	<delete id="cartDelete">
 		CALL P_CART_DELETE(#{email}, #{psid})
 	</delete>
+	
+	<delete id="selectDelete" parameterType="java.util.ArrayList">
+ 		DELETE CART
+ 		<where>
+ 		<foreach collection="list" item="item" open="" close="" separator="OR">
+ 			(MID = #{item.email} AND PSID = #{item.psid})
+ 		</foreach>
+ 		</where>
+ 	</delete>
 </mapper>

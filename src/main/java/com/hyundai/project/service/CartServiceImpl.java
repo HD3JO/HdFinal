@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void cartInsert(CartDTO cartDTO) throws Exception {
 		log.info("cartInsert Service..................");
-		
+
 		cartMapper.cartInsert(cartDTO);
 	}
 
@@ -48,6 +48,13 @@ public class CartServiceImpl implements CartService {
 		log.info("cartDelete Service..................");
 		
 		return cartMapper.cartDelete(cartDTO);
+	}
+
+	@Override
+	public int selectDelete(List<CartDTO> cartList) throws Exception {
+		log.info("selectDelete Service..................");
+		
+		return cartMapper.selectDelete(cartList);
 	}
 
 }
