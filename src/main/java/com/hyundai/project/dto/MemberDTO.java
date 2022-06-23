@@ -26,4 +26,7 @@ public class MemberDTO implements Serializable{
 	private Date regdate;
 	private Date moddate;
 
+	private String marketingemail;
+	private String marketingsms;
+
 }
