@@ -11,7 +11,7 @@
     <insert id="insertMember" parameterType="com.hyundai.project.dto.MemberDTO">
     	CALL P_MEMBER_INSERT(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, 
         #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, 
-        #{role, jdbcType=VARCHAR})
+        #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
     </insert>
     
     <update id="updateMember" statementType = "CALLABLE">
