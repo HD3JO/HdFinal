@@ -56,4 +56,22 @@
     							#{pagenum}, 
     							#{pname, jdbcType=VARCHAR}) FROM DUAL
     </select>
+    
+    <resultMap id="categoryListMap" type="com.hyundai.project.dto.CategoryDTO" autoMapping="true">
+    	<result column="DEPTH1NAME" property="depth1name" jdbcType="VARCHAR"/>
+    	<collection property="subList" ofType="com.hyundai.project.dto.CategoryDTO" autoMapping="true">
+	    	<result column="DEPTH2NAME" property="depth2name" jdbcType="VARCHAR" />
+    		<collection property="subList" ofType="com.hyundai.project.dto.CategoryDTO" autoMapping="true">
+		    	<result column="DEPTH3NAME" property="depth3name" jdbcType="VARCHAR" />
+    		</collection>
+    	</collection>
+    </resultMap>
+    <select id="getCategoryList" resultMap="categoryListMap">
+    	SELECT DEPTH1NAME,
+		       DEPTH2NAME,
+		       DEPTH3NAME
+		  FROM CATEGORY
+		 WHERE depth2name not in ('SPECIAL SHOP')
+		 ORDER BY CATENO
+    </select>
 </mapper>

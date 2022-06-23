@@ -109,6 +109,10 @@ public class ProductServiceImpl implements ProductService {
 		return productmapper.getProductCount(categoryDTO);
 	}
 	
+	@Override
+	public List<CategoryDTO> getCategoryList(){
+		return productmapper.getCategoryList();
+	}
 	
 
 }

@@ -37,4 +37,6 @@ public interface ProductMapper {
 	
 	public int getProductCount(CategoryDTO categoryDTO);
 	
+	public List<CategoryDTO> getCategoryList();
+	
 }
