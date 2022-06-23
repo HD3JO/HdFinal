@@ -616,23 +616,27 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 					return tag;
 				}
 
+				function logout(){
+					$('#logoutForm').submit();
+				}
+
 			</script>
 			<div class="top_nav topnav1903">
 				<div class="top_nav_wrap clearfix">
 					<div class="brand_menu brand_menu1903">
 						<ul class="clearfix">
 							<!-- 선호 브랜드 없음 -->
-							<li><span class="on"><a href="/">HOME</a></span></li>
+							<li><span class="on"><a href="/main">HOME</a></span></li>
 							<!-- 비로그인 상태 -->
-							<p class="brand_menu_guide_text" sec:authorize="!isAuthenticated()">
+							<!-- <p class="brand_menu_guide_text" sec:authorize="!isAuthenticated()">
 								로그인 후 아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
 									style="margin-top: -1px; display: inline-block;">♥</span>해주세요
-							</p>
+							</p> -->
 							<!-- 로그인 상태 -->
-							<p class="brand_menu_guide_text" sec:authorize="isAuthenticated()">
+							<!-- <p class="brand_menu_guide_text" sec:authorize="isAuthenticated()">
 								아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
 									style="margin-top: -1px; display: inline-block;">♥</span>해주세요
-							</p>
+							</p> -->
 						</ul>
 					</div>
 					<div class="gnb_sh_wrap" style="display: none;">
@@ -673,7 +677,11 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 							</li>
 							<!-- 로그인 되어 있는경우 (황명하) -->
 							<li sec:authorize="isAuthenticated()"><a>안녕하세요 <span sec:authentication="principal.name"></span>님</a></li>
-							<li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃 <!-- 로그아웃 --></a></li>
+							<li sec:authorize="isAuthenticated()">
+								<form action="/logout" method="POST" id="logoutForm">
+									<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+								</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
 							<li class="header_dropmemu mypage" sec:authorize="isAuthenticated()"><a
 								href="/member/mypage" class="btn">마이페이지</a>
 							
@@ -695,7 +703,7 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 			</div>
 			<div class="gnbwarp com clearfix">
 				<h1 class="logo logo1903">
-					<a href="/">thehandsome.com</a>
+					<a href="/main">thehandsome.com</a>
 				</h1>
 				<div class="gnb_nav gnb_nav1903 hscene1906 hscene1910">
 					<h2 class="invisible">주메뉴</h2>
@@ -710,7 +718,7 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 				<div class="util_menu util_menu1803">
 					<ul class="clearfix">
 						<li><a href="javascript:void(0);" onclick="doSearch();"><span class="ico_sh">search</span></a></li>
-						<li><a href="/cart/getList"><span
+						<li><a href="/cart/cartList"><span
 								class="ico cart">장바구니</span></a></li>
 					</ul>
 				</div>

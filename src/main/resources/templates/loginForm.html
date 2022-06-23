@@ -38,8 +38,8 @@
 	                   xhr.setRequestHeader(header, token);
 	               },
 				success : function(result) {
-					layerAlert("로그인에 성공했습니다.");
-					location.href = "/customLogin";
+					//layerAlert("로그인에 성공했습니다.");
+					location.href = "/main";
 				},
 				error : function(e) {
 					layerAlert("로그인에 실패했습니다.");
@@ -123,7 +123,7 @@
 						</p>
 					</div>
 					<div class="title_wrap hide" id="eg_block">
-						<a onclick="easyMemJoin();" class="btn add_ss join"
+						<a onclick="easyMemJoin();" href="/register" class="btn add_ss join"
 							style="width: 366px">회원 가입</a>
 						<p class="join_txt2 mt20">
 							<span>※ 간편회원은 e-Gift Card 구매 및 등록이 불가능합니다.<br>통합회원 가입

@@ -105,13 +105,13 @@ function changeBest(e){
                                     <th:block th:case="0">
                                     	<li class="swiper-slide swiper-slide-active">
 	                                        <div class="item_box"> 
-	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                        <a th:id="'firstnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
 	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        <span class="item_img"> 
 	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
 	                                        </span> 
 	                                        </a> 
-	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                        <a th:id="'secondnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info2"
 	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
 	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
@@ -122,13 +122,13 @@ function changeBest(e){
                                     	<th:block th:case="1">
 	                                    <li class="swiper-slide swiper-slide-next">
 	                                        <div class="item_box"> 
-	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                        <a th:id="'firstnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
 	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        <span class="item_img"> 
 	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
 	                                        </span> 
 	                                        </a> 
-	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                        <a th:id="'secondnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info2"
 	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
 	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
@@ -139,13 +139,13 @@ function changeBest(e){
 	                                    <th:block th:case="2">
 	                                    <li class="swiper-slide">
 	                                        <div class="item_box"> 
-	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                        <a th:id="'firstnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
 	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        <span class="item_img"> 
 	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
 	                                        </span> 
 	                                        </a> 
-	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                        <a th:id="'secondnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info2"
 	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
 	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
@@ -156,13 +156,13 @@ function changeBest(e){
 	                                    <th:block th:case="3">
 	                                    <li class="swiper-slide">
 	                                        <div class="item_box"> 
-	                                        <a th:id="'firstnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info1"
+	                                        <a th:id="'firstnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
 	                                                onclick="javascript:GA_main('newImg',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        <span class="item_img"> 
 	                                        	<img th:id="'newimg'+${status.index}" th:src="${product.pcimg1}" alt="" name="밴딩 와이드 팬츠" class="respon_image"> 
 	                                        </span> 
 	                                        </a> 
-	                                        <a th:id="'secondnewlink'+${status.index}" href="/ko/p/CM2C5WPC279W_TN" class="item_info2"
+	                                        <a th:id="'secondnewlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info2"
 	                                                onclick="javascript:GA_main('new',$(this));setEcommerceData(0, 'NEW', 'WE');">
 	                                        	<span th:id="'newbname'+${status.index}" class="brand" th:text="${product.bname}"></span> 
 	                                        	<span th:id="'newprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> 
