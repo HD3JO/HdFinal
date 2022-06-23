@@ -18,7 +18,7 @@ import com.hyundai.project.dto.ProductSizeDTO;
 import com.hyundai.project.service.ProductService;
 
 @Controller
-public class ProductTestController {
+public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
@@ -42,22 +42,10 @@ public class ProductTestController {
 		return "productDetail";
 	} 
 	
-	@PostMapping(value="/order/orderSheet")
-	public String productOrderSheet (OrderDTO orderDTO, Model model) {
-		System.out.println("오더페이지");
-		System.out.println(orderDTO.getEmail());
-		System.out.println(orderDTO.getPsid());
-		System.out.println(orderDTO.getTxtqty());
-		model.addAttribute("orderinfo", orderDTO);
-		return "Test"; 
-	}
-	
-	
+	//그냥 테스트를 위한 페이지
 	@RequestMapping(value="/test")
-	public String Test(@RequestParam String pcid, Model model) throws Exception {
+	public String Test(Model model) throws Exception {
 		
-		model.addAttribute("pcid", pcid);
-		return "dataTest";
+		return "productReview";
 	}
-	
 }
