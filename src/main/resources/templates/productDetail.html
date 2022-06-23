@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.w3.org/1999/xhtml"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   xmlns:sec="http://www.w3.org/1999/xhtml"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:replace="fragments/headerstatic :: headerstatic"></head>
 
@@ -10,101 +10,97 @@
     const arkQuery = $.noConflict(true);
    
     var header = $("meta[name='_csrf_header']").attr('content');
-	var token = $("meta[name='_csrf']").attr('content');
-	function changeColor(e){
-		console.log(e);
-		var productVO = {
-				'pcid' : $(e).attr('value')
-		};
-		//상품 상세정보 조회
-		$.ajax({
-	    	url : '/ProductDetail',
-	    	data : JSON.stringify(productVO),
-	    	type : 'POST',
-	    	dataType : 'JSON',
-	    	contentType : 'application/json',
-	    	beforeSend : function(xhr){
-	            xhr.setRequestHeader(header, token);
-	        },
-	    	success : function(data) {
-	    		console.log(data);
-	    		console.log("상품 상세정보 호출 성공");
-	    		$('#img1').attr('src', data.pcimg1);
-	    		$('#img2').attr('src', data.pcimg2);
-	    		$('#img3').attr('src', data.pcimg3);
-	    		$('#pcid').text(data.pcid);
-	    		$('#pcid').attr('value', data.pcid);
-	    	},
-			error : function() {
-				console.log("상품 상세정보 호출 실패");
-			}
-	    });
-	}
+   var token = $("meta[name='_csrf']").attr('content');
+   function changeColor(e){
+      console.log(e);
+      var productVO = {
+            'pcid' : $(e).attr('value')
+      };
+      //상품 상세정보 조회
+      $.ajax({
+          url : '/ProductDetail',
+          data : JSON.stringify(productVO),
+          type : 'POST',
+          dataType : 'JSON',
+          contentType : 'application/json',
+          beforeSend : function(xhr){
+               xhr.setRequestHeader(header, token);
+           },
+          success : function(data) {
+             console.log(data);
+             console.log("상품 상세정보 호출 성공");
+             $('#img1').attr('src', data.pcimg1);
+             $('#img2').attr('src', data.pcimg2);
+             $('#img3').attr('src', data.pcimg3);
+             $('#pcid').text(data.pcid);
+             $('#pcid').attr('value', data.pcid);
+          },
+         error : function() {
+            console.log("상품 상세정보 호출 실패");
+         }
+       });
+   }
     
     $('#customerReview').click(function(){
         fn_popupCustomerReview();
     });
-	
-	$(".btn_close").on("click", function(){
-		hideProductLayer(); 
-		$(".popwrap").hide();
-	});	
-	
-	$('.toggle_type1>dt').click(function() {
-		
-		$(this).addClass('on');
-		$(this).siblings('dt').removeClass('on');
-		
-		var beforeHeight = $(".toggle_type1").height();
-		var afterHeight = 0;
-		var scrolltop = $(window).scrollTop();
-		
-		var checkElement = $(this).next();
-		
-		if((checkElement.is('dd')) && (checkElement.is(':visible'))) {
-			$(this).removeClass('on');
-	 		checkElement.slideUp('fast', 
-	 				function(){
-	 					afterHeight = $(".toggle_type1").height();
-// 	 					bodyScroll();
-	 				});
-	 		
-		}
-		
-		var bodyScroll = function(){
-			
-			$('body,html').animate({scrollTop:parseFloat(scrolltop + (beforeHeight - afterHeight))}, 
-					function(){
-						bodyReSize();
-					}
-			);
-		}
-		
-		if($(this).next('dd').length == 0) {
-			return true;
-		} else {
-			return false; 
-		}      
-	});
-	
-	if ( 'en' == 'ko' || 'zh' == 'ko' ) {
-		showExchangeRate();
-	}
+   
+
+   $('.toggle_type1>dt').click(function() {
+      
+      $(this).addClass('on');
+      $(this).siblings('dt').removeClass('on');
+      
+      var beforeHeight = $(".toggle_type1").height();
+      var afterHeight = 0;
+      var scrolltop = $(window).scrollTop();
+      
+      var checkElement = $(this).next();
+      
+      if((checkElement.is('dd')) && (checkElement.is(':visible'))) {
+         $(this).removeClass('on');
+          checkElement.slideUp('fast', 
+                function(){
+                   afterHeight = $(".toggle_type1").height();
+//                    bodyScroll();
+                });
+          
+      }
+      
+      var bodyScroll = function(){
+         
+         $('body,html').animate({scrollTop:parseFloat(scrolltop + (beforeHeight - afterHeight))}, 
+               function(){
+                  bodyReSize();
+               }
+         );
+      }
+      
+      if($(this).next('dd').length == 0) {
+         return true;
+      } else {
+         return false; 
+      }      
+   });
+   
+   if ( 'en' == 'ko' || 'zh' == 'ko' ) {
+      showExchangeRate();
+   }
 </script>
 <body>
 <div id="bodyWrap" class="item_detail">
         <div id="oneEventLayer"></div>
         <div class="adaptive_wrap">
             <div class="clearfix prd_detail1905" id="clearfix">
-		<div class="clearfix image_view3">
+      <div class="clearfix image_view3">
             <!-- 2021.08.18 동영상 재생 수정, 상품 imageDivisionCode에 VOD가 있는 경우 동영상 url 세팅 -->
             <div class="image_view1" id="image_view1">
                 <div class="item_visual" id="imageDiv" style="margin-top: 20px;">
-	                    <ul>
-	                        <li><img th:src="${detailDTO.pcimg1}" id="img1" class="respon_image" alt=""></li>
-	                        <li><img th:src="${detailDTO.pcimg2}" id="img2" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>
-	                        <li><img th:src="${detailDTO.pcimg3}" id="img3" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>	                     
-	                    </ul>
+                       <ul>
+                           <li><img th:src="${detailDTO.pcimg1}" id="img1" class="respon_image" alt=""></li>
+                           <li><img th:src="${detailDTO.pcimg2}" id="img2" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>
+                           <li><img th:src="${detailDTO.pcimg3}" id="img3" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>                        
+                       </ul>
                 </div>
             </div>          
     </div>
@@ -112,114 +108,114 @@
 <input type="hidden" id="email" th:value="${#authentication.name}"></input>
 <input type="hidden" id="pcprice" th:value="${detailDTO.pcprice}"></input>
 <div class="item_detail_info float_right" id="contentDiv" style="margin-top: 20px; top: 0px; left: 676px;">
-	<div class="info">
-		<div class="info_sect">
-				<h4 class="item_name">
-					<div class="brand-name" id= "brand-name">
-						<a href="" onclick="" th:text="${detailDTO.bname}"></a>
-					</div>
-					<span class="name ko_fir_spel">
-						<a th:text="${detailDTO.pname}"></a>
-						<input type="hidden" id="brandName" value="">
-						<input type="hidden" id="productName" value="">
-						<input type="hidden" id="productCode" value="">
-					</span>
-				</h4>		
-				<p class="price">
-					<span th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"><fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###"/></span>
-					<input type="hidden" id="productPrice" value="${detail.productColorVO.pcPrice}">
-				</p>
-				<div class="prod-detail-con-box">					
-		       		<strong class="number-code">상품품번 : <span id="pcid" th:text="${pcid}"></span></strong>     
-		       		<div class="round-style">
-		            	<p th:text="${detailDTO.pnote}">${detailDTO.pnote}</p>
-		            </div>             
-	           </div>
-		</div>
+   <div class="info">
+      <div class="info_sect">
+            <h4 class="item_name">
+               <div class="brand-name" id= "brand-name">
+                  <a href="" onclick="" th:text="${detailDTO.bname}"></a>
+               </div>
+               <span class="name ko_fir_spel">
+                  <a th:text="${detailDTO.pname}"></a>
+                  <input type="hidden" id="brandName" value="">
+                  <input type="hidden" id="productName" value="">
+                  <input type="hidden" id="productCode" value="">
+               </span>
+            </h4>      
+            <p class="price">
+               <span th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"><fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###"/></span>
+               <input type="hidden" id="productPrice" value="${detail.productColorVO.pcPrice}">
+            </p>
+            <div class="prod-detail-con-box">               
+                   <strong class="number-code">상품품번 : <span id="pcid" th:text="${pcid}"></span></strong>     
+                   <div class="round-style">
+                     <p th:text="${detailDTO.pnote}">${detailDTO.pnote}</p>
+                  </div>             
+              </div>
+      </div>
         <div class="info_sect">
-			<ul class="point_delivery">
-				<li>
-					<span class="title">한섬마일리지</span>
-					<span class="txt" th:text="${#numbers.formatInteger(detailDTO.pcprice/100*5,3,'COMMA')} + 'M (5%)'">M(5%)</span>
-				</li>
-				
-				<li>
+         <ul class="point_delivery">
+            <li>
+               <span class="title">한섬마일리지</span>
+               <span class="txt" th:text="${#numbers.formatInteger(detailDTO.pcprice/100*5,3,'COMMA')} + 'M (5%)'">M(5%)</span>
+            </li>
+            
+            <li>
                     <span class="title">H.Point</span>
                         <span class="txt" th:text="${#numbers.formatInteger(detailDTO.pcprice/100*0.1,3,'COMMA')} + 'P (0.1%)'">P(0.1%)</span>
                 </li>
-				<li>
-					<span class="title">배송비</span>
-					<span class="txt">30,000원 이상 무료배송 (실결제 기준)</span>
+            <li>
+               <span class="title">배송비</span>
+               <span class="txt">30,000원 이상 무료배송 (실결제 기준)</span>
                 </li>
-			</ul>
-		</div>
-		<div class="info_sect">
-			<ul class="color_size_qty">
-			
-				<!-- 색상 -->
-				<li>
-					<span class="title">색상</span>
-					<div class="txt">
-						<ul class="color_chip clearfix" >
-						<input type="hidden" id="colorName">
-							<li th:each="color, status : ${colorDTOs}">
-								<input type="hidden" class="colorNameVal" th:value="${color.pcid}">								
-								<a href="javascript:void(0)"  class="" th:id="pcid"  th:value="${color.pcid}" onclick="changeColor(this)" th:style="'background-image:url(' + ${color.pcchipimg} + ');'" onmouseover="" onmouseout="" ></a>
-							</li>
-						</ul>
-					</div>
-					<span class="cl_name" id="colorNameContent"></span>
-				</li>
-				<!-- 사이즈 -->
-				<li>
-				    <span class="title">사이즈</span>
-					<span class="txt">
-					<script type="text/javascript">
-					$(document).ready(function(){
-						var tab = $('#size_tab ul li');
-						var content = $('.size_tab_container > div');
-						$('.size_tab_container > div + div').css('display','none');
-						tab.on('click', function(e){
-							e.preventDefault();
-							var tg = $(this);
-							var tc = tg.find('> a');
-							tab.find('> a').removeClass('active');
-							tc.addClass('active');
-							i = tg.index();
-							content.css('display', 'none');
-							content.eq(i).css('display', 'block');
-						});
-					});
-					</script>
-					<ul class="size_chip clearfix">
-						<li th:each = 'size : ${sizeDTOs}'>	
-						<input type="hidden" id="psize" class="colorNameVal" th:value="${size.psize}">
-							<a th:id="psize" th:value="${size.psize}" th:text="${size.psize}"></a>
-						</li>
-					</ul>
-					</span>
-					<!-- 2021.08.10 화장품 상품인 경우 사이즈조견표 영역 미노출 -->
-					<!-- 재입고알림 툴팁 -->
+         </ul>
+      </div>
+      <div class="info_sect">
+         <ul class="color_size_qty">
+         
+            <!-- 색상 -->
+            <li>
+               <span class="title">색상</span>
+               <div class="txt">
+                  <ul class="color_chip clearfix" >
+                  <input type="hidden" id="colorName">
+                     <li th:each="color, status : ${colorDTOs}">
+                        <input type="hidden" class="colorNameVal" th:value="${color.pcid}">                        
+                        <a href="javascript:void(0)"  class="" th:id="pcid"  th:value="${color.pcid}" onclick="changeColor(this)" th:style="'background-image:url(' + ${color.pcchipimg} + ');'" onmouseover="" onmouseout="" ></a>
+                     </li>
+                  </ul>
+               </div>
+               <span class="cl_name" id="colorNameContent"></span>
+            </li>
+            <!-- 사이즈 -->
+            <li>
+                <span class="title">사이즈</span>
+               <span class="txt">
+               <script type="text/javascript">
+               $(document).ready(function(){
+                  var tab = $('#size_tab ul li');
+                  var content = $('.size_tab_container > div');
+                  $('.size_tab_container > div + div').css('display','none');
+                  tab.on('click', function(e){
+                     e.preventDefault();
+                     var tg = $(this);
+                     var tc = tg.find('> a');
+                     tab.find('> a').removeClass('active');
+                     tc.addClass('active');
+                     i = tg.index();
+                     content.css('display', 'none');
+                     content.eq(i).css('display', 'block');
+                  });
+               });
+               </script>
+               <ul class="size_chip clearfix">
+                  <li th:each = 'size : ${sizeDTOs}'>   
+                  <input type="hidden" id="psize" class="colorNameVal" th:value="${size.psize}">
+                     <a th:id="psize" th:value="${size.psize}" th:text="${size.psize}"></a>
+                  </li>
+               </ul>
+               </span>
+               <!-- 2021.08.10 화장품 상품인 경우 사이즈조견표 영역 미노출 -->
+               <!-- 재입고알림 툴팁 -->
                     <!-- //재입고알림 툴팁 -->
                     </li>
-				<li>
-					<span class="title">수량</span>
-					<script>
-					
-					function totalPrice(){
-						let price = $('#pcprice').val();
-						let quantity = $('#txtqty').val();						
-						let totalPrice = price * quantity;
-						
-						console.log(price);
-						console.log(quantity);
-						console.log(totalPrice);
-						
-						$('#sumPrice').text("₩ "+(totalPrice).toLocaleString('ko-KR'));					
-					}
-					
-					function quantityChange(op){
-						
+            <li>
+               <span class="title">수량</span>
+               <script>
+               
+               function totalPrice(){
+                  let price = $('#pcprice').val();
+                  let quantity = $('#txtqty').val();                  
+                  let totalPrice = price * quantity;
+                  
+                  console.log(price);
+                  console.log(quantity);
+                  console.log(totalPrice);
+                  
+                  $('#sumPrice').text("₩ "+(totalPrice).toLocaleString('ko-KR'));               
+               }
+               
+               function quantityChange(op){
+                  
                         var pcid = $('#pcid.on').attr('value');
                         var psize = $('#psize.on').attr('value');
                         console.log(pcid);
@@ -233,48 +229,48 @@
                             layerAlert('사이즈를 선택해주세요.');
                             return;
                         }
-						
-						var quantity = $('#txtqty').val();
-						var pcid = $()
-						if(op == '-'){
-							if(quantity <= 1){
-								return;
-							}
-							$('#txtqty').val(parseInt(quantity)-1);
-						}else if(op =='+') {
-						
-							$('#txtqty').val(parseInt(quantity)+1);
-						}
-						totalPrice();						
-					}
-					</script>
-					<span class="txt">
-						<span class="qty_sel num">
-						
-							<a href="#" onclick="quantityChange('-');" class="left">이전 버튼</a>
-							<input type="text" id="txtqty" title="수량" value="1" class="mr0" readonly="readonly">
-							<a href="#" onclick="quantityChange('+');" class="right">다음 버튼</a>
-							
-						</span>
-					</span>					
-					<input type="hidden" id="erpWorkOrderNumber">     <input type="hidden" id="reserveSalesStockpile">  <input type="hidden" id="erpWorkOrderProdCode">  </li>
-			</ul>
-		</div>
-		<div class="total_price clearfix">
-			<div class="title float_left" style="width:auto;">총 합계</div>
-			<div class="pirce float_right">
-			    <span id="sumPrice" th:text="'₩ ' +  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>		
-			</div>
-		</div>
-					<!-- //st_store_wrap -->
-		<div class="btnwrap clearfix" style="position: sticky; width: 400px;">
+                  
+                  var quantity = $('#txtqty').val();
+                  var pcid = $()
+                  if(op == '-'){
+                     if(quantity <= 1){
+                        return;
+                     }
+                     $('#txtqty').val(parseInt(quantity)-1);
+                  }else if(op =='+') {
+                  
+                     $('#txtqty').val(parseInt(quantity)+1);
+                  }
+                  totalPrice();                  
+               }
+               </script>
+               <span class="txt">
+                  <span class="qty_sel num">
+                  
+                     <a href="#" onclick="quantityChange('-');" class="left">이전 버튼</a>
+                     <input type="text" id="txtqty" title="수량" value="1" class="mr0" readonly="readonly">
+                     <a href="#" onclick="quantityChange('+');" class="right">다음 버튼</a>
+                     
+                  </span>
+               </span>               
+               <input type="hidden" id="erpWorkOrderNumber">     <input type="hidden" id="reserveSalesStockpile">  <input type="hidden" id="erpWorkOrderProdCode">  </li>
+         </ul>
+      </div>
+      <div class="total_price clearfix">
+         <div class="title float_left" style="width:auto;">총 합계</div>
+         <div class="pirce float_right">
+             <span id="sumPrice" th:text="'₩ ' +  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>      
+         </div>
+      </div>
+               <!-- //st_store_wrap -->
+      <div class="btnwrap clearfix" style="position: sticky; width: 400px;">
             
             <!--190508 추가 -->
             <div class="toast_popup_pre_order1905"><!-- 토스트팝업 190507 -->
                 <p>예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.</p>
                 <span class="arr">위치아이콘</span>
             </div>         
-            	<input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0" id="addToCartButton">
+               <input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0" id="addToCartButton">
             <!--//190508 추가 -->
             <form action="/order/orderSheet" method="POST" id="orderSheet">
                   <input type="submit" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton">
@@ -283,15 +279,15 @@
                   <input type="hidden" id="txtqty" name="txtqty">
                   <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
             </form>
-	    </div>
-			<!-- st_store_wrap -->
+       </div>
+         <!-- st_store_wrap -->
                     <script>
                         $("#orderSheet").submit(function(e){
-                        	
-                        	const header = $("meta[name='_csrf_header']").attr('content');
-                      	  	const token = $("meta[name='_csrf']").attr('content');
-                      	  	
-                        	let pcid = $('#pcid.on').attr('value');
+                           
+                           const header = $("meta[name='_csrf_header']").attr('content');
+                              const token = $("meta[name='_csrf']").attr('content');
+                              
+                           let pcid = $('#pcid.on').attr('value');
                             let psize = $('#psize.on').attr('value');
                             let psid = pcid + psize;
                             let pquantity = $('#txtqty').val();
@@ -306,22 +302,22 @@
                                 layerAlert('사이즈를 선택해주세요.');
                                 return;
                             }
-                            							
+                                                 
                             if(email == 'anonymousUser'){
                                 location.href='/customLogin';
                             }
                             $('#orderSheet').children('#psid').val(psid);
                             $('#orderSheet').children('#email').val(email);
                             $('#orderSheet').children('#txtqty').val(pquantity);
-							
+                     
                             $('#orderSheet')[0].submit();
                         });
-							
-                        $('#addToCartButton').click(function(){                        	
-                        	const header = $("meta[name='_csrf_header']").attr('content');
-                      	  	const token = $("meta[name='_csrf']").attr('content');
-                      	  	
-                        	let pcid = $('#pcid.on').attr('value');
+                     
+                        $('#addToCartButton').click(function(){                           
+                           const header = $("meta[name='_csrf_header']").attr('content');
+                              const token = $("meta[name='_csrf']").attr('content');
+                              
+                           let pcid = $('#pcid.on').attr('value');
                             let psize = $('#psize.on').attr('value');
                             let psid = pcid + psize;
                             let pquantity = $('#txtqty').val();
@@ -341,9 +337,9 @@
                                 layerAlert('사이즈를 선택해주세요.');
                                 return;
                             }
-                            							
+                                                 
                             if(email == 'anonymousUser'){
-                            	layerAlert('로그인 정보가 없어 로그인 페이지로 이동합니다.');
+                               layerAlert('로그인 정보가 없어 로그인 페이지로 이동합니다.');
                                 location.href='/customLogin';
                             }
                             
@@ -364,7 +360,7 @@
                                     xhr.setRequestHeader(header, token);
                                 },
                                 success : function(data){
-                                	console.log(data);
+                                   console.log(data);
                                     layerAlert('쇼핑백에 담겼습니다. ');
                                 },
                                 error : function(request, status, error){
@@ -378,14 +374,14 @@
                             });
                         });
                     </script>
-		
-		<dl class="toggle_type1" style="margin-top:80px;">
-		<!-- 2021.08.10 화장품 상품인 경우 실측사이즈 영역 미노출 -->
-		<dt><a href="#" id="DELI_RETURN_EVT">배송 및 교환/반품</a></dt>
-		<dd>
-		    <p class="tit">배송안내</p> <dl class="info_tbl"> <dt>배송방식 :</dt> <dd>우체국택배, CJ대한통운, 부릉, 굿투럭</dd><!-- 210728 oera 신규 추가  --> <dt>배송지역 :</dt> <dd>전국 (일부 지역 제외)</dd> <dt>배송정보 :</dt> <dd>평균 입금완료일 기준 2-4일 소요됩니다 (토/일/공휴일 제외)</dd> <dt>배송비 :</dt> <dd>실결제금액 기준 30,000원 이상 결제 시 무료배송<br>30,000원 미만 결제 시 2,500원(기본 배송비)<br>* 실결제금액이란, 쿠폰/바우처 할인액 및 <br>&nbsp; 한섬마일리지/H.Point 사용 금액을 제외한 금액입니다. <br> &nbsp;&nbsp;(e-money 사용은 실결제금액에 포함)<br>* 도서산간 지역은 3,000원의 별도 배송비가 부과됩니다.<br>* 일부 도서지역은 도선료가 부가될 수 있습니다. </dd> </dl> <p class="tit mt20">교환 및 반품안내</p> <!-- info_tbl --> <dl class="info_tbl"> <dt>교환/반품 기간 :</dt> <dd>상품 수령 후, 7일 이내</dd> <dt>교환절차 :</dt> <dd style="letter-spacing: -0.2px;"> 사이즈 및 상품불량 교환만 가능(색상교환 불가)하며 교환을 원하실 경우<br> 고객센터로 문의해주시기 바랍니다. (교환 재고가 없을 경우, 환불로 안내예정)<br> 화장품은 상품 불량만 교환 가능하며(상품 개봉 후 교환 불가), 고객센터로<br> 문의해주시기 바랍니다. <!-- 210728 oera 신규 추가  --> </dd> <dt>반품절차 :</dt> <dd>[배송완료] 7일 이내에 마이페이지 주문/배송/취소/반품 메뉴에서<br> [반품신청] 버튼을 클릭 시 가능합니다.</dd> <dt>교환/반품 배송비 :</dt> <dd style="letter-spacing: -0.4px;">배송비는 5,000원 이며(반품비는 주문시 배송비 결제 유무에 따라 변동)<br>상품 불량 등의 이유로 교환/반품하실 경우, 배송비는 무료입니다.</dd> <dt>교환/반품 불가사유</dt> <dd>다음의 경우에는 교환/반품이 불가합니다. <ol class="numlist"> <li> <span class="num sum">-</span> <span class="txt">교환/반품 기간(상품 수령 후 7일 이내)을 초과하였을 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 요청에 의해 제품 사양이 변경(이니셜 제품, 사이즈 맞춤 제품 등)된 경우</span></li><li><span class="num sum">-</span><span class="txt">제품을 이미 사용하였거나, 제품 일부를 소비하였을 경우</span> </li> <!-- 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">화장품 : 상품 개봉 후 교환/반품 불가. 단 상품 불량(내용물 불량) 혹은 피부 트러블로 인한 반품은 가능(용량 1/3 미만 사용 및 의사소견서 1:1문의 첨부 필수)</span></li> <!-- // 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">식기류 : 제품 수령 후, 비닐포장을 개봉한 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 귀책사유로 인해 회수가 지연될 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">국내외 환율 변동 등에 의해 가격이 변동되는 제품의 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">문제소지가 있는 제품을 본사가 아닌, 타 업체(일반 수선실 등)에서 선처리가 된 경우</span> </li> </ol> </dd> <!-- 210728 oera 신규 추가  --> <dt>교환/반품건 배송</dt> <dd>교환/반품 시 배송 받으신 박스로 반송하셔야 합니다. <br>(한섬/오에라/리퀴드퍼퓸바 상품 함께 주문 후 교환/반품 시 각각의 박스에 나눠서 반송해주세요. 한 박스에 함께 동봉하여 반송 시 교환/반품 처리가 불가할 수 있습니다)</dd> <!-- // 210728 oera 신규 추가  --> </dl> <p class="tit mt20">환불안내</p> <p>환불은 반송제품 확인 후 진행됩니다.</p><br>
-		</dd>
-		<div class="popup_customer_review1807" id="customerReview">
+      
+      <dl class="toggle_type1" style="margin-top:80px;">
+      <!-- 2021.08.10 화장품 상품인 경우 실측사이즈 영역 미노출 -->
+      <dt><a href="#" id="DELI_RETURN_EVT">배송 및 교환/반품</a></dt>
+      <dd>
+          <p class="tit">배송안내</p> <dl class="info_tbl"> <dt>배송방식 :</dt> <dd>우체국택배, CJ대한통운, 부릉, 굿투럭</dd><!-- 210728 oera 신규 추가  --> <dt>배송지역 :</dt> <dd>전국 (일부 지역 제외)</dd> <dt>배송정보 :</dt> <dd>평균 입금완료일 기준 2-4일 소요됩니다 (토/일/공휴일 제외)</dd> <dt>배송비 :</dt> <dd>실결제금액 기준 30,000원 이상 결제 시 무료배송<br>30,000원 미만 결제 시 2,500원(기본 배송비)<br>* 실결제금액이란, 쿠폰/바우처 할인액 및 <br>&nbsp; 한섬마일리지/H.Point 사용 금액을 제외한 금액입니다. <br> &nbsp;&nbsp;(e-money 사용은 실결제금액에 포함)<br>* 도서산간 지역은 3,000원의 별도 배송비가 부과됩니다.<br>* 일부 도서지역은 도선료가 부가될 수 있습니다. </dd> </dl> <p class="tit mt20">교환 및 반품안내</p> <!-- info_tbl --> <dl class="info_tbl"> <dt>교환/반품 기간 :</dt> <dd>상품 수령 후, 7일 이내</dd> <dt>교환절차 :</dt> <dd style="letter-spacing: -0.2px;"> 사이즈 및 상품불량 교환만 가능(색상교환 불가)하며 교환을 원하실 경우<br> 고객센터로 문의해주시기 바랍니다. (교환 재고가 없을 경우, 환불로 안내예정)<br> 화장품은 상품 불량만 교환 가능하며(상품 개봉 후 교환 불가), 고객센터로<br> 문의해주시기 바랍니다. <!-- 210728 oera 신규 추가  --> </dd> <dt>반품절차 :</dt> <dd>[배송완료] 7일 이내에 마이페이지 주문/배송/취소/반품 메뉴에서<br> [반품신청] 버튼을 클릭 시 가능합니다.</dd> <dt>교환/반품 배송비 :</dt> <dd style="letter-spacing: -0.4px;">배송비는 5,000원 이며(반품비는 주문시 배송비 결제 유무에 따라 변동)<br>상품 불량 등의 이유로 교환/반품하실 경우, 배송비는 무료입니다.</dd> <dt>교환/반품 불가사유</dt> <dd>다음의 경우에는 교환/반품이 불가합니다. <ol class="numlist"> <li> <span class="num sum">-</span> <span class="txt">교환/반품 기간(상품 수령 후 7일 이내)을 초과하였을 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 요청에 의해 제품 사양이 변경(이니셜 제품, 사이즈 맞춤 제품 등)된 경우</span></li><li><span class="num sum">-</span><span class="txt">제품을 이미 사용하였거나, 제품 일부를 소비하였을 경우</span> </li> <!-- 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">화장품 : 상품 개봉 후 교환/반품 불가. 단 상품 불량(내용물 불량) 혹은 피부 트러블로 인한 반품은 가능(용량 1/3 미만 사용 및 의사소견서 1:1문의 첨부 필수)</span></li> <!-- // 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">식기류 : 제품 수령 후, 비닐포장을 개봉한 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 귀책사유로 인해 회수가 지연될 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">국내외 환율 변동 등에 의해 가격이 변동되는 제품의 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">문제소지가 있는 제품을 본사가 아닌, 타 업체(일반 수선실 등)에서 선처리가 된 경우</span> </li> </ol> </dd> <!-- 210728 oera 신규 추가  --> <dt>교환/반품건 배송</dt> <dd>교환/반품 시 배송 받으신 박스로 반송하셔야 합니다. <br>(한섬/오에라/리퀴드퍼퓸바 상품 함께 주문 후 교환/반품 시 각각의 박스에 나눠서 반송해주세요. 한 박스에 함께 동봉하여 반송 시 교환/반품 처리가 불가할 수 있습니다)</dd> <!-- // 210728 oera 신규 추가  --> </dl> <p class="tit mt20">환불안내</p> <p>환불은 반송제품 확인 후 진행됩니다.</p><br>
+      </dd>
+      <div class="popup_customer_review1807" id="customerReview">
             <a href="#;" onclick="GA_Event('상품_상세','정보','상품평');">상품평(<span id="customerReviewCnt">0</span>)
                 <div class="star_score1807" id="prodTotalStarScoreWrapper" style="display: none;">
                     <span class="cmt_star">
@@ -398,9 +394,9 @@
         <!--//상품평 btn-->
         
         </dl>
-	</div>
-	
-	<div class="clearfix mt30">
+   </div>
+   
+   <div class="clearfix mt30">
 <!-- AddToAny BEGIN -->
 <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="line-height: 32px;">
 <a class="a2a_button_facebook" onclick="GA_Event('상품_상세','공유_SNS','FACEBOOK');" target="_blank" href="/#facebook" rel="nofollow noopener"><span class="a2a_svg a2a_s__default a2a_s_facebook" style="background-color: rgb(24, 119, 242);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#FFF" d="M17.78 27.5V17.008h3.522l.527-4.09h-4.05v-2.61c0-1.182.33-1.99 2.023-1.99h2.166V4.66c-.375-.05-1.66-.16-3.155-.16-3.123 0-5.26 1.905-5.26 5.405v3.016h-3.53v4.09h3.53V27.5h4.223z"></path></svg></span><span class="a2a_label">Facebook</span></a>
@@ -411,7 +407,7 @@
 <script type="text/javascript">
 var a2a_config = a2a_config || {};
 a2a_config.num_services = 10;
-var brandName =	"[" + $('#brandName').val() + "]";
+var brandName =   "[" + $('#brandName').val() + "]";
 var productName = $('.name').contents().first().text();
 a2a_config.linkname = brandName + " " + productName;
 a2a_config.linkurl = 'http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA?lang=ko';
@@ -420,15 +416,15 @@ a2a_config.track_links = 'googl';
 <script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
 
-			</div>
-	</div>
+         </div>
+   </div>
 
-	<input type="hidden" id="viewExhibitionPageCode" value="">
-	<input type="hidden" id="viewExhibitionPageName" value="">
+   <input type="hidden" id="viewExhibitionPageCode" value="">
+   <input type="hidden" id="viewExhibitionPageName" value="">
     </div>
         </div>
-		<!--  테스트 시작 (황명하) -->
-		<div class="popwrap w_type_4" id="customerReviewDiv" style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
+      <!--  테스트 시작 (황명하) -->
+      <div class="popwrap w_type_4" id="customerReviewDiv" style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
     <!--마일리지 안내영역 1906 -->
     <div class="mileage_info_wrap1906">
         <p class="wrap_heading">상품평 작성 시 추가 마일리지를 드려요!</p>
@@ -491,16 +487,16 @@ a2a_config.track_links = 'googl';
                 <span class="cmt_per" id="totalStarScore">별점</span>
             </span>
         </div>
-        <a href="#;" class="btn_evaluation1905" id="customerReviewWrite" onclick="GA_Event('상품평','상품평 작성하기','클릭');">상품평 작성하기</a>
+        <a href="#;" class="btn_evaluation1905" id="customerReviewWrite" onclick="">상품평 작성하기</a>
     </div>
     <!-- pop_cnt-->
     <div class="pop_cnt evaluation_list1807 options">
         <div class="tab_a m3 mt20">
             <input type="hidden" id="review_tab_active" value="ALL">
             <ul id="review_tab">
-                <li id="ALL"><a href="#;" class="active" onclick="GA_Event('상품평','탭','전체');">전체 (0)</a></li>
-                <li id="PHOTO"><a href="#;" class="" onclick="GA_Event('상품평','탭','포토상품평');">포토 상품평 (0)</a></li>
-                <li id="TEXT"><a href="#;" onclick="GA_Event('상품평','탭','일반상품평');">일반 상품평 (0)</a></li>
+                <li id="ALL"><a href="#;" class="active" onclick="">전체 (0)</a></li>
+                <li id="PHOTO"><a href="#;" class="" onclick="">포토 상품평 (0)</a></li>
+                <li id="TEXT"><a href="#;" onclick="">일반 상품평 (0)</a></li>
             </ul>
         </div>
         <div class="clearfix review_tab1_1807">
@@ -511,17 +507,30 @@ a2a_config.track_links = 'googl';
         <!-- //paging -->
     </div>
     <!--// pop_cnt-->
-    <a href="javascript:void(0);" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
-		</div>
-
-    <script>
+    <a href="javascript:void(0);" id="btn_close" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
+      </div>
+      <!-- 테스트 끝 (황명하) -->
+</div>
+<div class="layerArea" id="productLayer" style="display: none;">
+        <div class="layerBg" tabindex="-1"></div>
+</div>
+<script text="javascript">
       const modal = document.getElementById("customerReviewDiv");
       const btnOpenPopup = document.getElementById("customerReview");
+      const background = document.getElementById("productLayer");
 
       btnOpenPopup.addEventListener('click', () => {
         modal.style.display = 'block';
+        background.style.display = 'block';
+        modal.style.top = '50%';
+        modal.style.top = '50%';
       });
-    </script>
-		<!-- 테스트 끝 (황명하) -->
-</div>
+
+      $("#btn_close").on("click", function(){
+      $("#customerReviewDiv").hide();
+      background.style.display = 'none';
+   });   
+
+
+</script>
 </body>
