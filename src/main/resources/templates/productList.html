@@ -163,7 +163,7 @@
 			<a class="prev2" th:href="@{/productList(depth1name=${depth1name},depth2name=${depth2name},depth3name=${depth3name},pagenum=1,pname=${pname})}">처음 페이지로 이동</a>
 			<a th:if="${presentpagenum != 1}" class="prev" th:href="@{/productList(depth1name=${depth1name},depth2name=${depth2name},depth3name=${depth3name},pagenum=${presentpagenum-1},pname=${pname})}">이전 페이지로 이동</a>
 			<span class="num">
-				<th:block th:each="num : ${#numbers.sequence(10*(presentpagenum/10)+1,endpagenum>10*(presentpagenum/10)+10 ? 10*(presentpagenum/10)+10:endpagenum )}" class="num">
+				<th:block th:each="num : ${#numbers.sequence(10*((presentpagenum-1)/10)+1,endpagenum>=10*((presentpagenum-1)/10)+10 ? 10*((presentpagenum-1)/10)+10:endpagenum )}" class="num">
 				<a th:if="${num} == ${presentpagenum}" th:text="${num}" class="pageBtn on"
 					th:href="@{/productList(depth1name=${depth1name},depth2name=${depth2name},depth3name=${depth3name},pagenum=${num},pname=${pname})}">	
 				</a>
