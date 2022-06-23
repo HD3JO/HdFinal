@@ -1,10 +1,6 @@
 package com.hyundai.project.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +31,7 @@ public class CartRestController {
 	@PostMapping(value = "/getCartList", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CartDTO>> getCartList(@RequestBody CartDTO dto) throws Exception {
 		log.info("getCartList Controller.......................");
-	
+		
 		return new ResponseEntity<>(service.getCartList(dto.getEmail()), HttpStatus.OK);
 	}
 	

@@ -118,7 +118,7 @@
 										 str += "' alt='' /> <div class='tlt_wrap'> <a href='#' class='basket_tlt'> <span class='tlt'>" + this.bname + "</span>";
 										 str += "<span class='sb_tlt'>" + this.pname + "</span> </a> <p class='color_op'>color : " + this.pcolorCode + "<span class='and_line'>/</span>size : " + this.psize + "</p> </div> </div> </td>";
 										 str += "<td class='al_middle'> <form id='updateCartForm" + index + "' action='/cartUpdate' method='post' style='text-align:center;'>";
-										 str += "<input type='hidden' name='psid' value='" + this.psid + "'/>";
+										 str += "<input type='hidden' name='psid" + index + "' value='" + this.psid + "'/>";
 										 str += "<input type='hidden' name='email' value='" + this.email + "'/>";
 										 str += "<input type='hidden' id='pquantity" + index + "' value='" + this.pquantity + "'/>";
 										 str += "<input type='hidden' name='pcprice" + index + "' value='" + this.pcprice + "' id='pcprice" + index + "'/>";
@@ -199,9 +199,9 @@
     	console.log(idx);
     	const header = $("meta[name='_csrf_header']").attr('content');
   	  	const token = $("meta[name='_csrf']").attr('content');
-  	  	
+
   	  	let object = {
-  	  		'psid' : $("input[name=psid]").val(),
+  	  		'psid' : $("input[name=psid" + idx + "]").val(),
   	  		'email' : $("input[name=email]").val() 
   	  	}
   	  	console.log(object);

@@ -287,11 +287,15 @@
                            const header = $("meta[name='_csrf_header']").attr('content');
                               const token = $("meta[name='_csrf']").attr('content');
                               
-                           let pcid = $('#pcid.on').attr('value');
+                            let pcid = $('#pcid.on').attr('value');
                             let psize = $('#psize.on').attr('value');
                             let psid = pcid + psize;
                             let pquantity = $('#txtqty').val();
                             let email =  $('#email').attr('value');
+                            
+                            if(email == 'anonymousUser'){
+                                location.href='/customLogin';
+                            }
                                                                                    
                             if(pcid == undefined ){
                                 layerAlert('색상을 선택해주세요.');
@@ -303,9 +307,6 @@
                                 return;
                             }
                                                  
-                            if(email == 'anonymousUser'){
-                                location.href='/customLogin';
-                            }
                             $('#orderSheet').children('#psid').val(psid);
                             $('#orderSheet').children('#email').val(email);
                             $('#orderSheet').children('#txtqty').val(pquantity);
@@ -326,7 +327,14 @@
                             console.log(psid);
                             console.log(psize);
                             console.log(pquantity);
-                            console.log(email);                                                        
+                            console.log(email);  
+                            
+                            if(email == 'anonymousUser'){
+                            	let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
+                            	la.confirmAction = function(){
+                            		location.href='/customLogin';
+                            	}                            	                                
+                             }
                             
                             if(pcid == undefined ){
                                 layerAlert('색상을 선택해주세요.');
@@ -336,12 +344,7 @@
                             if(psize == undefined){
                                 layerAlert('사이즈를 선택해주세요.');
                                 return;
-                            }
-                                                 
-                            if(email == 'anonymousUser'){
-                               layerAlert('로그인 정보가 없어 로그인 페이지로 이동합니다.');
-                                location.href='/customLogin';
-                            }
+                            }                                                                            
                             
                             var object = {
                                     'psid' : psid,
@@ -361,7 +364,10 @@
                                 },
                                 success : function(data){
                                    console.log(data);
-                                    layerAlert('쇼핑백에 담겼습니다. ');
+                                    let lc = new layerConfirm('쇼핑백에 담겼습니다.<br>확인하시겠습니까?', '쇼핑백 바로가기', '계속 쇼핑하기');
+                                    lc.confirmAction = function(){
+                                    	location.href="/cart/cartList";
+                                	}                                                                                                           
                                 },
                                 error : function(request, status, error){
                                     if(request.status == 401){
