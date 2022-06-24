@@ -28,5 +28,7 @@ public class MemberDTO implements Serializable{
 
 	private String marketingemail;
 	private String marketingsms;
+	
+	private String grade;
 
 }

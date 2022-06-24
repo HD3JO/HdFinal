@@ -6,7 +6,7 @@
 .main_container a img{display:inline-block;vertical-align:middle;}
 /* * * * * common * * * * */
 .item_box{position:relative;}
-.item_box a{display: block;position: relative;}
+.item_box a{display: block;}
 .item_box .item_info2 span{display:block;text-align:center;}
 .item_box .item_info2 .brand{font-family:'Apple SD Gothic Neo',"Malgun Gothic","맑은 고딕";font-size: 16px;color:#3a3a3a;margin-top:15px;font-weight:bold;}
 .item_box .item_info2 .title{color:#646464;font-family:Arial,'Apple SD Gothic Neo',sans-serif;padding:0 0;overflow:hidden;font-size:14px;letter-spacing:-.5px;max-height:40px;}

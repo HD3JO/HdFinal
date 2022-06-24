@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.user.repository.ReviewMapper">
-	
+	<!--  
 	<select id="selectReview" parameterType="com.hyundai.project.dto.ReviewDTO" resultType="com.hyundai.project.dto.ReviewDTO">
         SELECT * FROM TABLE(FN_REVIEW_SELECT(#{rid, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, 
         #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
@@ -14,7 +14,18 @@
         #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
     	#{psid, jdbcType=VARCHAR})
     </insert>
+    -->
     
+    <insert id="insertReview" parameterType="com.hyundai.project.dto.ReviewDTO">
+    	insert into review
+		values(#{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, SYSDATE, #{grade,jdbcType=VARCHAR}, 
+		#{pcid,jdbcType=VARCHAR}, #{psize,jdbcType=VARCHAR}, #{bname,jdbcType=VARCHAR}, 
+		#{pname,jdbcType=VARCHAR}, #{pcprice,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, 
+		#{enjoysize,jdbcType=VARCHAR}, #{bodytype,jdbcType=VARCHAR}, #{reviewcontent}, #{filepath,jdbcType=VARCHAR})
+    </insert>
+    
+    
+    <!--  
     <update id="updateReview" statementType = "CALLABLE">
     	CALL P_REVIEW_UPDATE(#{rid, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, 
         #{rcontent, jdbcType=VARCHAR}, #{rimage, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
@@ -24,6 +35,6 @@
     <delete id="deleteReview">
     	CALL P_REVIEW_DELETE(#{rid, jdbcType=NUMERIC})
     </delete>
-
+	-->
 
 </mapper>

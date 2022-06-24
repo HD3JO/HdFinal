@@ -14,9 +14,9 @@
         #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
     </insert>
     
-    <select id="updateMember" statementType = "CALLABLE">
-    	CALL P_MEMBER_UPDATE(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
-    </select>
+    <update id="updateMember" statementType = "CALLABLE">
+    	CALL P_MEMBER_UPDATE(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR)
+    </update>
     
     <select id="deleteMember">
     	CALL P_MEMBER_DELETE(#{email, jdbcType=VARCHAR})

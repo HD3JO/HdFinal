@@ -1,0 +1,28 @@
+package com.hyundai.project.service;
+
+import java.sql.SQLException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hyundai.project.dto.ReviewDTO;
+import com.hyundai.project.user.repository.ReviewMapper;
+
+@Service
+public class ReviewServiceImpl implements ReviewService {
+	
+	@Autowired
+	ReviewMapper reviewMapper;
+	
+	@Override
+	public void insertReview(ReviewDTO reviewDTO) {
+		
+		try {
+			reviewMapper.insertReview(reviewDTO);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

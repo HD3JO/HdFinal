@@ -9,7 +9,11 @@ import com.hyundai.project.dto.ReviewDTO;
 
 @Mapper
 public interface ReviewMapper {
-
+	
+	
+	public int insertReview(ReviewDTO reviewDTO) throws SQLException;
+	
+	/*
 	public List<ReviewDTO> selectReview(ReviewDTO reviewDTO) throws SQLException;
 	
 	public void insertReview(ReviewDTO reviewDTO) throws SQLException;
@@ -17,4 +21,5 @@ public interface ReviewMapper {
 	public void updateReview(ReviewDTO reviewDTO) throws SQLException;
 	
 	public void deleteReview(int rid) throws SQLException;
+	*/
 }

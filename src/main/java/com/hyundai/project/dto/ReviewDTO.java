@@ -13,11 +13,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReviewDTO {
 
-	private int rid;
-	private String title;
-	private String rcontent;
-	private Date rdate;
-	private String rimage;
 	private String email;
-	private String psid;
+	private String name;
+	private String rdate;
+	private String grade;
+	private String pcid;
+	private String psize;
+	private String bname;
+	private String pname;
+	private String pcprice;
+	private String age;
+	private String height;
+	private String enjoysize;
+	private String bodytype;
+	private String reviewcontent;
+	private String filepath;
 }

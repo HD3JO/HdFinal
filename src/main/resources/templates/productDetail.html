@@ -112,17 +112,17 @@
       <div class="info_sect">
             <h4 class="item_name">
                <div class="brand-name" id= "brand-name">
-                  <a href="" onclick="" th:text="${detailDTO.bname}"></a>
+                  <a id="this-brand-name" href="" onclick="" th:text="${detailDTO.bname}"></a>
                </div>
                <span class="name ko_fir_spel">
-                  <a th:text="${detailDTO.pname}"></a>
+                  <a id="this-productname" th:text="${detailDTO.pname}"></a>
                   <input type="hidden" id="brandName" value="">
                   <input type="hidden" id="productName" value="">
                   <input type="hidden" id="productCode" value="">
                </span>
             </h4>      
             <p class="price">
-               <span th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"><fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###"/></span>
+               <span id="price" th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"><fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###"/></span>
                <input type="hidden" id="productPrice" value="${detail.productColorVO.pcPrice}">
             </p>
             <div class="prod-detail-con-box">               
@@ -207,9 +207,7 @@
                   let quantity = $('#txtqty').val();                  
                   let totalPrice = price * quantity;
                   
-                  console.log(price);
-                  console.log(quantity);
-                  console.log(totalPrice);
+
                   
                   $('#sumPrice').text("₩ "+(totalPrice).toLocaleString('ko-KR'));               
                }
@@ -218,8 +216,7 @@
                   
                         var pcid = $('#pcid.on').attr('value');
                         var psize = $('#psize.on').attr('value');
-                        console.log(pcid);
-                        console.log(psize);
+
                         if(pcid == undefined ){
                             layerAlert('색상을 선택해주세요.');
                             return;
@@ -324,10 +321,6 @@
                             let pquantity = $('#txtqty').val();
                             let email =  $('#email').attr('value');
                             
-                            console.log(psid);
-                            console.log(psize);
-                            console.log(pquantity);
-                            console.log(email);  
                             
                             if(email == 'anonymousUser'){
                             	let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
@@ -515,28 +508,410 @@ a2a_config.track_links = 'googl';
     <!--// pop_cnt-->
     <a href="javascript:void(0);" id="btn_close" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
       </div>
-      <!-- 테스트 끝 (황명하) -->
+<!-- //상품평 모달 창 -->
 </div>
+
+<!-- 모달 밖 영역 -->
 <div class="layerArea" id="productLayer" style="display: none;">
         <div class="layerBg" tabindex="-1"></div>
 </div>
-<script text="javascript">
-      const modal = document.getElementById("customerReviewDiv");
-      const btnOpenPopup = document.getElementById("customerReview");
-      const background = document.getElementById("productLayer");
+<!-- //모달 밖 영역 -->
 
+
+<!--상품평 쓰기 팝업 -->
+<div class="popwrap w_type_4" id="customerReviewWriteDiv" style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
+    <div class="pop_tltwrap2 customerreviewwritediv1807">
+        <h3 id="review_title">상품평 작성하기</h3>
+        <p class="reqd_txt float_right"><strong class='reqd'>*</strong> 표시는 필수항목입니다.</p>
+    </div>
+    <div class="pop_cnt evaluation_write1905 options1811">
+        <form id="reviewForm" name="reviewForm" action="" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="productCode">
+            <input type="hidden" name="productCodeType">
+            <input type="hidden" name="orderNumber" id="orderNumber" value="">
+            <input type="hidden" name="purchaseColor" id="purchaseColor" value=""/>
+            <input type="hidden" name="purchaseColorName" id="purchaseColorName" value=""/>
+            <input type="hidden" name="purchaseSize" id="purchaseSize" value=""/>
+            <input type="hidden" name="purchaseProdYN" id="purchaseProdYN" value=""/>
+            <input type="hidden" name="orderWriteChk" id="orderWriteChk" value=""/>
+            <input type="hidden" name="closeWriteChk" id="closeWriteChk" value=""/>
+            <input type="hidden" name="productId" id="productId" value="" />
+            <input type="hidden" name="fileDeleteYN" id="fileDeleteYN">
+            
+                <!-- 상품평활성화 -->
+            <input type="hidden" name="categoryCode" id="categoryCode" value="SZ12"/>
+            <input type="hidden" name="shoulderWidth" id="shoulderWidth" value=""/>
+            <input type="hidden" name="chestSize" id="chestSize" value=""/>
+            <input type="hidden" name="waistSize" id="waistSize" value=""/>
+            <input type="hidden" name="buttSize" id="buttSize" value=""/>
+            <input type="hidden" name="totalSize" id="totalSize" value=""/>
+            <input type="hidden" name="photoAccumulationRightYn" id="photoAccumulationRightYn" value=""/>
+            <input type="hidden" name="offlineOrdDt" id="offlineOrdDt" value=""/>
+            <input type="hidden" name="offlineShpCd" id="offlineShpCd" value=""/>
+            <input type="hidden" name="offlineShpNm" id="offlineShpNm" value=""/>
+            <input type="hidden" name="tempProductId" id="tempProductId" value=""/>
+        	<input type="hidden" name="reviewFileCd" id="reviewFileCd" value=""/>
+        	<input type="hidden" name="reviewFileCd1" id="reviewFileCd1" value=""/>
+        	<input type="hidden" name="reviewFileCd2" id="reviewFileCd2" value=""/>
+        	<input type="hidden" name="reviewFileCd3" id="reviewFileCd3" value=""/>
+        	<input type="hidden" name="reviewFileCd4" id="reviewFileCd4" value=""/>
+            <fieldset>
+                <legend>상품평쓰기</legend>
+                <div class="tblwrap">
+                    <table class="tbl_wtype1">
+                        <caption>상품평쓰기 입력항목</caption>
+                        <colgroup>
+                            <col style="width:135px">
+                            <col >
+                            <col style="width:130px">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="th_space">상품명</th>
+                                <td colspan="3" style="padding:15px;">
+                                    <div class="item_box" id="reviewProductDiv">
+                                        <div class="pt_list_all">
+                                            <div><a href="#;"><img style="float: left;" src="" id="reviewProducImg"  width="100px;" height="100px;"  alt="상품 이미지" onerror="http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></a></div>
+                                            <div class="tlt_wrap review_header_wrapper">
+                                            <!-- <div class="tlt_wrap review_header_wrapper nodata"> -->
+                                                <a href="#;" class="basket_tlt">
+                                                    <span class="tlt" id="reviewProductBrandName"></span>
+                                                    <span class="sb_tlt" id="reviewProductProductName"></span>
+                                                    <span id="reviewProducPrice"></span>
+                                                </a>
+                                                <!-- 주문조회에서 넘어올시 이거 보여줌<p class="color_op" id="purchased_color_size" style="display:none;">COLOR : <span id="review_color_name"></span>   <span class="and_line">/</span>  SIZE : <span id="review_size"></span></p> -->
+                                                <div class="select_options_wrap" style="display:none;">
+                                                    <ul class="select_options">
+                                                        <li class="select_colors">
+                                                            <p><span class="compulsory">*</span> 색상<!-- 색상 --></p>
+                                                            <ul class="color_chip clearfix">
+                                                            <input type="hidden" id="colorName" value="_"/>
+	                                                                        <li id="FL2C7HCY007LDM_NA">
+	                                                                <input type="hidden" class="colorNameVal" value="_"/>
+	                                                                <a href="#;" class="beige" data-color="_" style="background:#534741 url('http://newmedia.thehandsome.com/FL/2C/FW/FL2C7HCY007LDM_NA_C01.jpg/dims/resize/24x24');" onclick="javascript:fn_clickColorCode('FL2C7HCY007LDM_NA', '_');" onmouseover="setColorName('_');" onmouseout="setColorName('');"></a>
+	                                                            </li>
+	                                                                        <li>
+                                                                    <span class="cl_name" id="colorNameContent"></span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    <li class="select_size">
+                                                        <p><span class="compulsory">*</span> 사이즈<!-- 사이즈 --></p>
+                                                            <ul class="size_chip clearfix" id="review_size_btn_area">
+                                                                <li id="FL2C7HCY007LDM_NA_FR">
+                                                                <a onclick="javascript:fn_clickSizeCode('FL2C7HCY007LDM_NA_FR');">FR</a>
+                                                                            <productDetails:popupSizeQuickReference/>
+                                                                            </li>
+                                                                        </ul>
+                                                            <!-- <ul class="size_chip clearfix">
+                                                            <li id="MN1IBKTO483W_MB_90">
+                                                                <a href="javascript:fn_detailProductAjax('MN1IBKTO483W_MB_90')">90</a>
+                                                            </li>
+                                                 </ul> -->
+                                                    </li>
+                                                </ul>
+                                                </div>
+                                                
+                                            <!-- <div class="select_checkbox">
+                                                <input type="checkbox" name="" value="" id="storePickTFC">
+                                                <label for="storePickTFC">상품을 매장에서 구매하셨나요?</label>
+                                            </div> -->
+                                            </div>
+                                            <!--20190529_selelct_group -->
+                                            <div class="select_group" id="productOption" style="display:none;">
+                                            </div>
+                                            <!--//20190529_selelct_group -->
+                                            <div class="select_checkbox" style="display:none;">
+                                                <input type="checkbox" id="packopt" name="packopt">
+                                                <label for="purchaseYN">
+                                                    매장에서 구매한 상품입니다.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="tbl_blank1807">
+                                <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr class="radio_btn_1905 bk">
+                                <th scope="row" class="th_space">연 령</th>
+                                <td colspan="3">
+                                	<input id="getAge" type="hidden">
+                                    <input class="ageG" id="ageG1" type="radio" name="age" value="18세 이하">
+                                    <label for="ageG1">18세 이하</label>
+                                    <input class="ageG" id="ageG2" type="radio" name="age" value="20대">
+                                    <label for="ageG2">20대</label>
+                                    <input class="ageG" id="ageG3" type="radio" name="age" value="30대">
+                                    <label for="ageG3">30대</label>
+                                    <input class="ageG" id="ageG4" type="radio" name="age" value="40대">
+                                    <label for="ageG4">40대</label>
+                                    <input class="ageG" id="ageG5" type="radio" name="age" value="50대">
+                                    <label for="ageG5">50대</label>
+                                    <input class="ageG"  id="ageG6" type="radio" name="age" value="60대 이상">
+                                    <label for="ageG6">60대 이상</label>
+                                    </td>
+                            </tr>
+                            <tr class="input_txt_1905">
+                                <th scope="row" class="th_space" id="thHeight">
+                                    키</th>
+                                <td><input type="text" name="height" id="height" style="width:75%; margin-right:10px;">cm</td>
+                                <th scope="row" class="th_space" id="thEnjoySize">
+                                    평소 사이즈</th>
+                                <td><input type="text" name="enjoySize" id="enjoySize" ></td>
+                            </tr>
+                            <tr class="radio_btn_1905">
+                                <th scope="row" class="th_space" id="thBodyType">
+                                    체 형</th>
+                                <td colspan="3">
+                                    <input id="dark1" type="radio" name="bodyType" value="마른 체형">
+                                    <label for="dark1">마른 체형</label>
+                                    <input id="dark2" type="radio" name="bodyType" value="보통">
+                                    <label for="dark2">보통</label>
+                                    <input id="dark3" type="radio" name="bodyType" value="통통한 체형">
+                                    <label for="dark3">통통한 체형</label>
+                                </td>
+                            </tr>
+                            <tr class="tbl_blank1807">
+                                <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <strong class="reqd" style="margin-top:6px;">*</strong>
+                                    <label for="lb1" style="margin-top:6px;">상품평<br/>
+                                        <span class="subtxt_1905">
+                                            (20자 이상<br/>&nbsp;200자 이하)</span>
+                                    </label>
+                                        </th>
+                                <td colspan="3">
+                                    <textarea id="reviewHeadline" name="headline" cols="30" rows="5" style="width:98%;height:78px" maxlength="200"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+	                            <th scope="row" id="thFile" class="th_space"><label for="file">사진등록</label></th>
+								<td>
+									<!-- File upload -->
+										
+									<div class="file_upload hs_input_file_wrap2003">
+										<div class="upload_wrap2003">	
+										<form method="post" id="upload-file-form">
+												<input type="file" id="rImage"  name="uploadfile" class="btn add_s" title="파일찾기" multiple="multiple">										 									 										 																													 
+												<label id="rImage-label" for="rImage" aria-describedby="basic-addon1"></label>
+										</form>
+										</div>
+									</div>
+									<script>
+									</script>
+									<!-- //File upload -->
+									<p class="txt_guide">10MB 미만의 jpg,gif,png 파일만 첨부하실 수 있습니다.</p>
+								</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="txt_guide">
+                        <span style='color:#e46764; font-weight: bold;'>- 상품평과 무관한 내용이거나  상품 재판매, 광고, 동일 문자의 반복 및 기타 불법적인 내용은 통보 없이 삭제되며,<br/>&nbsp;&nbsp;해당 글 작성자 ID는 글쓰기 권한이 제한됩니다.</span><br/>- 반품, 취소 등의 CS관련 글은 고객센터>1:1문의로 이동될 수 있습니다.<br/>
+                        <span>- 더한섬닷컴에서 구매한 상품의 상품평을 배송완료 30일 이내 작성 시, 추가 마일리지를 지급합니다.</span><br/>
+                        
+                        - 마일리지 지급에 대한 상세 내용은 마이페이지>내 상품평 페이지에서 확인 부탁드립니다.<br/>
+                        &nbsp;&nbsp;(마일리지 적립은 오프라인 구매 및 간편회원 제외)</p>
+                </div>
+                <div class="btnwrap mt40">
+                    <input type="button" id="reviewCancle" value="취소하기" class="btn wt">
+                    <input type="button" id="reviewWriteSend" value="등록하기" class="btn gray mr0">
+                </div>
+
+            </fieldset>
+        <div>
+<input type="hidden" name="CSRFToken" value="76a1a732-9f12-4432-b282-35a00a448651" />
+</div></form></div>
+        <a href="javascript:void(0);" id="reviewCloseBtn" style="position: absolute; top: 20px; right: 20px; width: 20px; height: 20px;"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
+</div>
+<!--//상품평 쓰기 팝업 -->
+
+
+<script text="javascript">
+
+      const modal = document.getElementById("customerReviewDiv");
+      const modalWrite = document.getElementById("customerReviewWriteDiv");
+      
+      const background = document.getElementById("productLayer");
+	
+      
+      
+      const btnOpenPopup = document.getElementById("customerReview");
+      const btnReviewWritePopup = document.getElementById("customerReviewWrite");
+      
       btnOpenPopup.addEventListener('click', () => {
         modal.style.display = 'block';
         background.style.display = 'block';
         modal.style.top = '50%';
-        modal.style.top = '50%';
       });
+	
+      //리뷰 작성하기 버튼 눌렀을 시
+      btnReviewWritePopup.addEventListener('click', () => {
+    	  modal.style.display = 'none';
+    	  modalWrite.style.display = 'block';
+          modalWrite.style.top = '50%';
+          
+          let img = $("#img1").attr("src");
+          $("#reviewProducImg").attr("src",img);
+          
+          let brandname = $("#this-brand-name").text();
+          $('#reviewProductBrandName').text(brandname);
+          
+          let productname = $("#this-productname").text();
 
+          $('#reviewProductProductName').text(productname);
+          
+          let price = $("#price").text();
+          $('#reviewProducPrice').text(price);
+          
+          
+        });
+      
+      
+      
       $("#btn_close").on("click", function(){
-      $("#customerReviewDiv").hide();
-      background.style.display = 'none';
-   });   
+	      $("#customerReviewDiv").hide();
+	      background.style.display = 'none';
+	   });   
 
+      
+      $("#reviewCloseBtn").on("click", function(){
+	      $("#customerReviewDiv").hide();
+	      $("#customerReviewWriteDiv").hide();
+	      background.style.display = 'none';
+	   });   
 
+      
+      $("#reviewCancle").on("click", function(){
+	      $("#customerReviewWriteDiv").hide();
+	      modal.style.display = 'block';
+	   });  
+      
+      
+      $("#reviewWriteSend").on("click", function(){
+	      let email = '이메일 채우자';
+	      let name = '이름 채우자';
+	      let grade = '등급 채우자';
+	      let pcid = $('#pcid').text();
+	      let psize = $('#psize.on').attr('value');
+	      let bname = $("#this-brand-name").text();
+	      let pname = $("#this-productname").text();
+	      let pcprice = $("#price").text();
+	      let age = $('input[name="age"]:checked').val();
+	      let height = $('#height').val();
+	      let enjoysize = $('#enjoySize').val();
+	      let bodytype = $('input[name="bodyType"]:checked').val();
+	      let reviewcontent = $('#reviewHeadline').val();
+	      let filepath = "";
+	      
+	      console.log(pcid);
+	      console.log(psize);
+	      console.log(bname);
+	      console.log(pname);
+	      console.log(pcprice);
+	      console.log(age);
+	      console.log(height);
+	      console.log(enjoysize);
+	      console.log(bodytype);
+	      console.log(reviewcontent);
+	      
+	      
+	      var file = $('input[name="uploadfile"]').get(0).files[0];
+	      var formData = new FormData();
+	      formData.append('file', file);
+	      /*
+	      formData.append('pcid',pcid);
+	      formData.append('psize',psize);
+	      formData.append('bname',bname);
+	      formData.append('pname',pname);
+	      formData.append('pcprice',pcprice);
+	      formData.append('age',age);
+	      formData.append('height',height);
+	      formData.append('enjoysize',enjoysize);
+	      formData.append('bodytype',bodytype);
+	      formData.append('reviewcontent',reviewcontent);
+	      console.log(file);
+	      */
+	      
+	      //
+	      
+	      $.ajax({
+		    	url : "/uploadFile",
+		    	type: "POST",
+		    	async : false,
+		        data: formData,
+		        enctype: 'multipart/form-data',
+		        processData: false,
+		        contentType: false,
+		        cache: false,
+		        beforeSend : function(xhr){
+		               xhr.setRequestHeader(header, token);
+		        },
+		        success: function (data) {
+		          // Handle upload success
+		          // ...
+		          console.log('파일 업로드 성공');
+		          console.log(data);
+		          filepath = data;
+		        },
+		        error: function () {
+		          // Handle upload error
+		          // ...
+		          console.log('파일 업로드 실패');
+		        }
+		    });
+	      
+	      console.log('파일경로는' + filepath);
+	      
+	      var object = {
+	    		  	'email' : email,
+	    		  	'name' : name,
+	    		  	'grade' : grade,
+	    	    	'pcid' : pcid,
+	    	    	'psize' : psize,
+	    	    	'bname' : bname,
+	    	    	'pname' : pname,
+	    	    	'pcprice' : pcprice,
+	    	    	'age' : age,
+	    	    	'height' : height,
+	    	    	'enjoysize' : enjoysize,
+	    	    	'bodytype' : bodytype,
+	    	    	'reviewcontent' : reviewcontent,
+	    	    	'filepath' : filepath
+	    	      }
+	    	      
+   	      var jsondata = JSON.stringify(object);
+   	      
+   	      $.ajax({
+   		    	url : "/insertReview",
+   		    	type: "POST",
+   		        data: jsondata,
+   		     	async : false,
+   		        dataType : 'JSON',
+   		        contentType: 'application/json',
+   		        cache: false,
+   		        beforeSend : function(xhr){
+   		               xhr.setRequestHeader(header, token);
+   		        },
+   		        success: function (data) {
+   		          // Handle upload success
+   		          // ...
+   		          console.log('성공했대');
+   		          console.log(data);
+   		          uuidfile = data;
+   		        },
+   		        error: function () {
+   		          // Handle upload error
+   		          // ...
+   		          console.log('실패했대');
+   		        }
+   		    });
+
+	   });  
+     
+      
+      
 </script>
 </body>

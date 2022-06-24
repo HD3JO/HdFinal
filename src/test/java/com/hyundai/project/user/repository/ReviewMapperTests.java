@@ -10,7 +10,7 @@ import com.hyundai.project.dto.ReviewDTO;
 
 @SpringBootTest
 public class ReviewMapperTests {
-
+	/*
 	@Autowired
 	ReviewMapper reviewMapper;
 	
@@ -55,4 +55,5 @@ public class ReviewMapperTests {
 	public void deleteReviewTest() throws SQLException {
 		reviewMapper.deleteReview(3);
 	}
+	*/
 }

@@ -46,6 +46,6 @@ public class ProductController {
 	@RequestMapping(value="/test")
 	public String Test(Model model) throws Exception {
 		
-		return "productReview";
+		return "Test";
 	}
 }
