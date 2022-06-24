@@ -37,5 +37,19 @@ public class MemberServiceImpl implements MemberService {
 			return memberList.get(0);
 		}
 	}
+	@Override
+	public MemberDTO updateMember(MemberDTO memberDTO) throws Exception{
+		System.out.println(memberDTO.getEmail());
+		MemberDTO vo = new MemberDTO();
+		vo.setEmail(memberDTO.getEmail());
+		MemberDTO updateUser =mapper2.getUser(vo).get(0);
+		
+		updateUser.setName(memberDTO.getName());
+		updateUser.setPhone(memberDTO.getPhone());
+		updateUser.setMarketingemail(memberDTO.getMarketingemail());
+		updateUser.setMarketingsms(memberDTO.getMarketingsms());
+		
+		return mapper2.updateMember(updateUser);
+	}
 
 }

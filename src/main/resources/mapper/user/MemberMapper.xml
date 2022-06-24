@@ -5,7 +5,7 @@
     <select id="getUser" parameterType="com.hyundai.project.dto.MemberDTO" resultType="com.hyundai.project.dto.MemberDTO">
         SELECT * FROM TABLE(FN_MEMBER_SELECT(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, 
         #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, 
-        #{role, jdbcType=VARCHAR}))
+        #{role, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}))
     </select>
     
     <insert id="insertMember" parameterType="com.hyundai.project.dto.MemberDTO">
@@ -14,11 +14,11 @@
         #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
     </insert>
     
-    <update id="updateMember" statementType = "CALLABLE">
-    	CALL P_MEMBER_UPDATE(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, #{role, jdbcType=VARCHAR})
-    </update>
+    <select id="updateMember" statementType = "CALLABLE">
+    	CALL P_MEMBER_UPDATE(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
+    </select>
     
-    <delete id="deleteMember">
+    <select id="deleteMember">
     	CALL P_MEMBER_DELETE(#{email, jdbcType=VARCHAR})
-    </delete>
+    </select>
 </mapper>

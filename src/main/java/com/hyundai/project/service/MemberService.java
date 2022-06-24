@@ -12,4 +12,6 @@ public interface MemberService {
 	
 	public MemberDTO selectOneUser(String email) throws Exception;
 	
+	public MemberDTO updateMember(MemberDTO memberDTO) throws Exception;
+	
 }
