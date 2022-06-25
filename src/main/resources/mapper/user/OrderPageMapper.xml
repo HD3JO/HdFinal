@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.OrderPageMapper">
+
+	<!-- 상품 상세보기 화면에서 주문 버튼 눌렀을 때 상품 정보 조회 -->
+	<select id="selectProduct" resultType="com.hyundai.project.dto.OrderPageDTO" parameterType="java.util.ArrayList">
+	   SELECT A.PSID, 
+       		  B.PCIMG1, 
+              D.BNAME, 
+              C.PNAME,  
+              B.PCCOLORCODE,
+              B.PCPRICE,  
+              A.PSIZE       
+	   FROM PRODUCTMANAGER.PRODUCT_STOCK A
+	   INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR B
+	   ON A.PCID = B.PCID
+	   INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON C
+	   ON B.PID = C.PID
+       INNER JOIN PRODUCTMANAGER.BRAND D
+	   ON C.BNO = D.BNO
+	   AND A.PSID IN
+	   <foreach collection="list" item="item" open="(" close=")" separator=",">
+	       #{item.psid}
+	   </foreach>
+	</select>
+
+	<!-- 결제 수단 조회 -->
+	<select id = "getPaymentMethod" resultType="com.hyundai.project.dto.PaymentMethodDTO">
+		SELECT PMCODE,
+			   PMCOMPANY,
+			   PMMETHOD
+		FROM PAYMENT_METHOD		
+	</select>
+</mapper>

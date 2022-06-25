@@ -15,7 +15,7 @@
 	
 	<!-- 장바구니에 담긴 상품 수량을 변경하는 프로시저 -->
 	<update id="cartUpdate">
-		CALL P_CART_UPDATE(#{pquantity}, #{psid}, #{email})
+		CALL P_CART_UPDATE(#{pquantity}, #{psid, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR})
 	</update>
 	
 	<!-- 장바구니 삭제 -->

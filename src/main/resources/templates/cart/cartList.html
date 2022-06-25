@@ -9,6 +9,40 @@
 <script>
 	const arkQuery = $.noConflict(true);
 	
+	setTimeout(function(){
+		// 선택상품 주문하기
+	    $("#orderSheet").submit(function(e){
+	    	const header = $("meta[name='_csrf_header']").attr('content');
+	  	  	const token = $("meta[name='_csrf']").attr('content');
+	  	  	
+	    	e.preventDefault();
+	        let form = $('#orderSheet');
+	        let count = 0;
+	        
+	        //선택한 상품 개수만큼 데이터 input 추가
+	        $('input:checkbox[name=cartlist]:checked').each(function(key, value){	        	        
+	        	  count++;
+		          console.log('count : ' + count);	 
+	  	          console.log("key : " + key);
+	  	          console.log("psid : " + value.getAttribute("psid"));
+	  	          console.log("pqauntity : " + value.getAttribute("pquantity"));
+	  	          
+	  	          let input_psid = $("<input type='hidden' value=" + value.getAttribute("psid") + " name='list["+key+"].psid' readonly>");
+	  	          let input_pquantity = $("<input type='hidden' value=" + value.getAttribute("pquantity") + " name='list["+key+"].pquantity' readonly>");
+	  	          
+	  	          form.append(input_psid);
+	  	          form.append(input_pquantity);
+	        });
+	        
+	        if(count == 0){
+	          alert('선택된 상품이 없습니다.');
+	          return false;
+	        }
+	        
+	       $('#orderSheet')[0].submit();
+	     });
+	}, 500)
+	
 	$(function(){
 		getCartList();
 		
@@ -17,7 +51,7 @@
 		$('#cartDataTotalPrice').text("₩ "+0);
 		
 		// 장바구니 상품 모두 체크했을 때 가격 합산
-		$('#entryCheckAll').click(function(){
+		$(document).on('click', '#entryCheckAll', function(){
 			if($('#entryCheckAll').is(":checked")){
 		      $("input[name=cartlist]").prop("checked",true);
 		    } 
@@ -44,8 +78,8 @@
 	      
 	      $('#selectProductCount').text(checked);
 	      calTotalPrice();
-	    }); // click function end...
-	    
+	    }); // click function end... 
+	   
 	  }); // 페이지 로드시 콜백 함수
 	
 	// 장바구니 담은 상품 전체 가격 계산 함수
@@ -53,11 +87,10 @@
         console.log("call calTotalPrice");
         var totalPrice = 0;     
         $("input[name=cartlist]:checked").each(function(key, value){
-          let num = $('#pquantity' + key).val();      
-          console.log("key : " + key);
-          console.log("quantity" + key + " : " + num);
-          console.log(value.value * num);
-          totalPrice += parseInt(value.value * num);
+          //let num = $('#pquantity' + key).val();      
+          console.log("key : " + key);          
+          console.log(value.value);
+          totalPrice += parseInt(value.value);
         });
         console.log(totalPrice);
         $('#cartDataSubtotal').text("₩ "+totalPrice.toLocaleString('ko-KR'));
@@ -113,7 +146,7 @@
 									 const plus = "+";
 									 let str = "<tr id='info" + index + "' name='entryProductInfo" + index + " data-pk='' data-deliverykind='' data-outofstock='false'";
 										 str += "data-category=''> <td class='frt'> <input type='checkbox' name='cartlist' id='cartlist" + index;
-										 str += "' data-pk='10681668861996' data-division='' data-deliverykind='' value='" + this.pcprice + "' psid='" + this.psid;
+										 str += "' data-pk='10681668861996' data-division='' data-deliverykind='' value='" + this.pquantity * this.pcprice + "' psid='" + this.psid;
 										 str += "' pquantity='" + this.pquantity + "'> </td> <td class='pt_list_wrap'> <div class='pt_list_all'> <img src='" + this.pcImg1;
 										 str += "' alt='' /> <div class='tlt_wrap'> <a href='#' class='basket_tlt'> <span class='tlt'>" + this.bname + "</span>";
 										 str += "<span class='sb_tlt'>" + this.pname + "</span> </a> <p class='color_op'>color : " + this.pcolorCode + "<span class='and_line'>/</span>size : " + this.psize + "</p> </div> </div> </td>";
@@ -228,7 +261,7 @@
     
     function selectDelete(){
     	
-    }
+    }   
 </script>
 <body>
 	<input type="hidden" id="email" th:value="${email}"></input>
@@ -320,6 +353,7 @@
 		              <a href="#;" onclick="selectRemove();"><input value="선택상품삭제" class="btn wt" type="button" /></a>
 		                <form action="/order/orderSheet" method="POST" id="orderSheet">
 		                  <input value="선택상품 주문하기"  class="btn gray mr0" type="submit"  />
+		                  <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
 		                </form>		               
 		            </div>							
 				</div>

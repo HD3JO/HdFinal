@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.OrderMapper">
+
+	<!-- 주문 페이지에서 작성한 정보 입력 -->
+	<insert id="insertOrder" parameterType="com.hyundai.project.dto.OrderDTO">
+		<selectKey keyProperty="oid" order="BEFORE" resultType="Integer">
+			select s_orders.nextval from dual
+		</selectKey>
+		INSERT 
+		INTO ORDERS(OID, 
+				    OADDRESS1,
+				    OADDRESS2,    
+				    ORECEIVER, 
+				    OTEL, 
+				    OMEMO, 
+				    OEMAIL, 
+				    OBEFOREPRICE, 
+				    OAFTERPRICE, 
+				    OSTATUS, 
+				    EMAIL,  
+				    PMCODE)
+		VALUES( 
+		       #{oaddress1}, 
+		       #{oaddress2},
+		       #{oreceiver}, 
+		       #{otel, jdbcType=VARCHAR}, 
+		       #{omemo, jdbcType=VARCHAR}, 
+		       #{oemail}, 
+		       #{obeforeprice}, 
+		       #{oafterprice}, 
+		       #{ostatus}, 
+		       #{email}, 	        
+		       #{pmcode})
+	</insert>
+	
+	<!-- -->
+	<insert id="insertOrderItem" parameterType="java.util.List">
+	 	<foreach collection="list" item="item" open ="insert all" close="select * from dual">
+	 		INTO ORDER_ITEM(PSID,
+	 						OID,
+	 						OICOUNT,
+	 						OITOTALPRICE)
+	 					VALUES(#{item.psid},
+	 							#{item.oid},
+	 							#{item.oicount},
+	 							#{item.oitotalprice})	
+	 	</foreach>
+    </insert>
+	
+	<!-- 사용자 주문 목록 조회-->
+	<select id="getOrderList" resultType="com.hyundai.project.dto.OrderDTO">
+		SELECT * FROM TABLE(FN_ORDER_SELECT(#{email}))
+	</select>
+</mapper>
