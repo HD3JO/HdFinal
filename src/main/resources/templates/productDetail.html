@@ -10,12 +10,12 @@
     const arkQuery = $.noConflict(true);
    
     var header = $("meta[name='_csrf_header']").attr('content');
-   var token = $("meta[name='_csrf']").attr('content');
-   function changeColor(e){
-      console.log(e);
-      var productVO = {
-            'pcid' : $(e).attr('value')
-      };
+    var token = $("meta[name='_csrf']").attr('content');
+    function changeColor(e){
+    	console.log(e);
+        var productVO = {
+        	'pcid' : $(e).attr('value')
+      	};
       //상품 상세정보 조회
       $.ajax({
           url : '/ProductDetail',
@@ -271,9 +271,7 @@
             <!--//190508 추가 -->
             <form action="/order/orderSheet" method="POST" id="orderSheet">
                   <input type="submit" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton">
-                  <input type="hidden" id="psid" name="psid" value="이거다잉">
-                  <input type="hidden" id="email" name="email">
-                  <input type="hidden" id="txtqty" name="txtqty">
+                  <!--<input type="hidden" id="email" name="email">-->
                   <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
             </form>
        </div>
@@ -281,17 +279,24 @@
                     <script>
                         $("#orderSheet").submit(function(e){
                            
-                           const header = $("meta[name='_csrf_header']").attr('content');
-                              const token = $("meta[name='_csrf']").attr('content');
+                            const header = $("meta[name='_csrf_header']").attr('content');
+                            const token = $("meta[name='_csrf']").attr('content');
                               
                             let pcid = $('#pcid.on').attr('value');
                             let psize = $('#psize.on').attr('value');
                             let psid = pcid + psize;
                             let pquantity = $('#txtqty').val();
-                            let email =  $('#email').attr('value');
+                            let email =  $('#email').attr('value');   
                             
-                            if(email == 'anonymousUser'){
-                                location.href='/customLogin';
+                            let form = $('#orderSheet');
+                            
+                            if(email == 'anonymousUser'){                          
+                            	let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
+                            	e.preventDefault();
+                            	
+                            	la.confirmAction = function(){                            		
+                            		location.href='/customLogin';
+                            	}                            	 
                             }
                                                                                    
                             if(pcid == undefined ){
@@ -303,19 +308,21 @@
                                 layerAlert('사이즈를 선택해주세요.');
                                 return;
                             }
-                                                 
-                            $('#orderSheet').children('#psid').val(psid);
-                            $('#orderSheet').children('#email').val(email);
-                            $('#orderSheet').children('#txtqty').val(pquantity);
+                            
+                            let input_psid = $("<input type='hidden' value=" + psid + " name='list[0].psid' readonly>");
+                            let input_pquantity = $("<input type='hidden' value=" + pquantity + " name='list[0].pquantity' readonly>");
+                            
+                            form.append(input_psid);
+                            form.append(input_pquantity);
                      
                             $('#orderSheet')[0].submit();
                         });
                      
                         $('#addToCartButton').click(function(){                           
-                           const header = $("meta[name='_csrf_header']").attr('content');
-                              const token = $("meta[name='_csrf']").attr('content');
+                        	const header = $("meta[name='_csrf_header']").attr('content');
+                            const token = $("meta[name='_csrf']").attr('content');
                               
-                           let pcid = $('#pcid.on').attr('value');
+                            let pcid = $('#pcid.on').attr('value');
                             let psize = $('#psize.on').attr('value');
                             let psid = pcid + psize;
                             let pquantity = $('#txtqty').val();
