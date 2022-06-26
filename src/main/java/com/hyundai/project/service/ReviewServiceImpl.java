@@ -1,6 +1,7 @@
 package com.hyundai.project.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import com.hyundai.project.user.repository.ReviewMapper;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-	
+
 	@Autowired
 	ReviewMapper reviewMapper;
 	
@@ -23,6 +24,12 @@ public class ReviewServiceImpl implements ReviewService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Override
+	public List<ReviewDTO> getReview(ReviewDTO reviewDTO) {
+		return reviewMapper.getReview(reviewDTO);
 	}
 
 }

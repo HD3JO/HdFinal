@@ -11,6 +11,11 @@
    
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
+    
+    
+    
+    let pcid = $('#pcid').text();
+    
     function changeColor(e){
     	console.log(e);
         var productVO = {
@@ -39,13 +44,72 @@
             console.log("상품 상세정보 호출 실패");
          }
        });
+      
+
+      
    }
     
     $('#customerReview').click(function(){
-        fn_popupCustomerReview();
+        
+        var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		let pcid = $('#pcid').text();
+		var object = {
+    	    	'pcid' : pcid,
+    	      }
+		var jsondata = JSON.stringigy(object);
+		
+		$.ajax({
+		    url : '/getReview',
+		    data : jsondata,
+		    type : 'POST',
+		    dataType : 'JSON',
+		    contentType : 'application/json',
+		    beforeSend : function(xhr){
+		         xhr.setRequestHeader(header, token);
+		     },
+		    success : function(data) {
+		       console.log(data);
+		       console.log("상품평 리스트 호출 성공");
+		    },
+		   error : function() {
+		      console.log("상품평 상세정보 호출 실패");
+		   }
+		 });
+        
     });
-   
-
+   /*
+	function fn_getReview() {
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		let pcid = $('#pcid').text();
+		var object = {
+    	    	'pcid' : pcid,
+    	      }
+		
+		var jsondata = JSON.stringigy(object);
+		
+		$.ajax({
+		    url : '/getReview',
+		    data : jsondata,
+		    type : 'POST',
+		    dataType : 'JSON',
+		    contentType : 'application/json',
+		    beforeSend : function(xhr){
+		         xhr.setRequestHeader(header, token);
+		     },
+		    success : function(data) {
+		       console.log(data);
+		       console.log("상품 상세정보 호출 성공");
+		    },
+		   error : function() {
+		      console.log("상품 상세정보 호출 실패");
+		   }
+		 });
+	}
+    */
+    
+    
    $('.toggle_type1>dt').click(function() {
       
       $(this).addClass('on');
@@ -500,13 +564,20 @@ a2a_config.track_links = 'googl';
         <div class="tab_a m3 mt20">
             <input type="hidden" id="review_tab_active" value="ALL">
             <ul id="review_tab">
-                <li id="ALL"><a href="#;" class="active" onclick="">전체 (0)</a></li>
-                <li id="PHOTO"><a href="#;" class="" onclick="">포토 상품평 (0)</a></li>
-                <li id="TEXT"><a href="#;" onclick="">일반 상품평 (0)</a></li>
+                <li id="ALL"><a href="#;" class="active" onclick="">전체 (<span id="reviewNum"></span>)</a></li>
+                <li id="PHOTO"><a href="#;" class="" onclick="">포토 상품평 (<span id="photoReviewNum"></span>)</a></li>
+                <li id="TEXT"><a href="#;" onclick="">일반 상품평 (<span id="commonReviewNum"></span>)</a></li>
             </ul>
         </div>
         <div class="clearfix review_tab1_1807">
-            <ul><li class="evaluation_view no_list_data1905" style="text-align:center">등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~<p class="gray_box"><strong>온라인 구매 후 상품평 작성 시 추가 마일리지를 드립니다!</strong><br>*최초 ‘포토 상품평’은 추가로 2,000마일리지를 더 드려요~</p></li></ul>
+            <ul id="reviewList">   	
+            	<!-- 리뷰 없을 때 보여지는 상품평 리스트 -->
+	            <!--  
+	            <li class="evaluation_view no_list_data1905" style="text-align:center">
+	            	등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~
+	            </li>
+	            -->
+            </ul>
         </div>
         <!-- paging -->
         <div class="paging mt30" id="reviewPagingDiv"><a class="prev2" href="javascript:void(0);" onclick="GA_Event('상품평', '페이지', 'PREV2')">처음 페이지로 이동</a><a href="javascript:void(0);" class="prev" onclick="GA_Event('상품평', '페이지', 'PREV')">이전 페이지로 이동</a><span class="num"><a href="javascript:void(0);" class="pageBtn" pagenum="1" onclick="GA_Event('상품평', '페이지', '1')">1</a></span><a href="javascript:void(0);" class="next" onclick="GA_Event('상품평', '페이지', 'NEXT')">다음 페이지로 이동</a><a href="javascript:void(0);" class="next2" onclick="GA_Event('상품평', '페이지', 'NEXT2')">마지막 페이지로 이동</a></div>
@@ -737,14 +808,28 @@ a2a_config.track_links = 'googl';
 
 
 <script text="javascript">
+		
+function mileageInfoView(){//noti 자세히 보기
+    $('.mileage_info_wrap1906 .btn_noti_box > span').on('click',function(){
+        if($(this).parents('.mileage_info_wrap1906').find('.noti_box').css("display") == "none"){
+            $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideDown('fast');
+            $(this).closest('.btn_noti_box').addClass('on');
+            $(this).text('닫기');
+            
+            GA_Event('상품평','마일리지 자세히 보기','클릭');
+        }else{
+            $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideUp('fast');
+            $(this).closest('.btn_noti_box').removeClass('on');
+            $(this).text('자세히 보기');
+        }
+    });
+}		
 
       const modal = document.getElementById("customerReviewDiv");
       const modalWrite = document.getElementById("customerReviewWriteDiv");
       
       const background = document.getElementById("productLayer");
-	
-      
-      
+
       const btnOpenPopup = document.getElementById("customerReview");
       const btnReviewWritePopup = document.getElementById("customerReviewWrite");
       
@@ -752,6 +837,110 @@ a2a_config.track_links = 'googl';
         modal.style.display = 'block';
         background.style.display = 'block';
         modal.style.top = '50%';
+        
+        let pcid = $('#pcid').text();
+		var object = {
+    	    	'pcid' : pcid,
+    	}
+        
+		var jsondata = JSON.stringify(object);
+        
+        $.ajax({
+		    url : '/getReview',
+		    data : jsondata,
+		    type : 'POST',
+		    dataType : 'JSON',
+		    contentType : 'application/json',
+		    beforeSend : function(xhr){
+		         xhr.setRequestHeader(header, token);
+		     },
+		    success : function(data) {
+		       console.log(data);
+		       console.log("상품평 리스트 호출 성공");
+		       var reviewlist = document.getElementById('reviewList');
+		       let htmlStr = "";
+		       $("#reviewNum").text(data.length);
+		       $("#photoReviewNum").text(data.length);
+		       $("#commonReviewNum").text(data.length);
+		       if(data.length > 0){
+		    	  $(data).each( function(index){
+		    		  var cnt = 0;
+		    		  htmlStr += "<li class='evaluation_view' id='evaluation_view"+index;
+		    		  //리뷰 내 회원 정보 (이메일, 등급, 리뷰 등록일)
+		    		  htmlStr += "'> <div class='member_info_top'> <ul> <li class='name'>"+this.email+"</li>";
+		    		  htmlStr += "<li class=grade'>"+this.grade+"</li>";
+		    		  htmlStr += "<li class='date'>"+this.rdate+"</li>";
+		    		  htmlStr += "</ul> </div> "
+		    		  //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
+		    		  htmlStr += "<div class='member_info_bottom'> <ul>";
+		    		  
+		    		  
+		    		  if(this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
+		    			  htmlStr += "<li class='choice'> • ";
+		    			  if(this.age != undefined)
+			    		  {
+			    			if(cnt != 0) {
+			    				htmlStr += " / ";
+			    			}
+			    			htmlStr += "연령 : <span>"+this.age+"</span>";  
+			    			cnt+=1;
+			    		  }
+			    		  
+			    		  if(this.height != undefined) {
+			    			  if(cnt != 0) {
+			    				  htmlStr += " / ";
+			    			  }
+			    			  htmlStr += "키 : <span>"+this.height+"</span>";
+			    			  cnt+=1;
+			    		  }
+			    		  if(this.bodytype != undefined) {
+			    			  if(cnt != 0) {
+			    				  htmlStr += " / ";
+			    			  }
+			    			  htmlStr += "체형: <span>"+this.height+"</span>";
+			    			  cnt+=1;
+			    		  }
+			    		  if(this.enjoysize != undefined) {
+			    			  if(cnt != 0) {
+			    				  htmlStr += " / ";
+			    			  }
+			    			  htmlStr += "평소 사이즈 : <span>"+this.enjoysize+"</span>";  
+			    			  cnt+=1;
+			    		  }
+			    		  htmlStr += " </li> <br> ";
+		    		  }
+		    		  
+		    		  
+		    		  
+		    		  
+		    		  
+		    		  
+		    		  //member_info_bottom 끝 
+		    		  htmlStr += "<li class=''must'> • 구매 정보 :<span> "+this.pcid+"</span>"; //나중에 색상으로(황명하)
+		    		  
+		    		  htmlStr += "</li> </ul> </div>"; 
+		    		  //사진 파일이 있는 경우
+		    		  if(this.filepath != undefined) {
+		    			  htmlStr += "<div class='review_represent_img1912'> <img src='";
+			    		  htmlStr += this.filepath+"' alt='리뷰 이미지'> </div>";
+		    		  }
+		    		  //리뷰 콘텐츠
+		    		  htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> "+this.reviewcontent+"</p> </div> </li>" ;
+		    	  }
+		    	);
+		       }
+		       else {
+		    	   htmlStr += "<li class='evaluation_view no_list_data1905' style='text-align:center'> 등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~ </li> ";
+		       }
+		       
+		       reviewlist.innerHTML = htmlStr;
+		       
+		    },
+		   error : function() {
+		      console.log("상품평 리스트 호출 실패");
+		   }
+		 });
+        
       });
 	
       //리뷰 작성하기 버튼 눌렀을 시
@@ -869,6 +1058,7 @@ a2a_config.track_links = 'googl';
 		          console.log('파일 업로드 실패');
 		        }
 		    });
+	      //추가를 위한 주석이다.
 	      
 	      console.log('파일경로는' + filepath);
 	      
@@ -915,10 +1105,11 @@ a2a_config.track_links = 'googl';
    		          console.log('실패했대');
    		        }
    		    });
+   	      	layerAlert("상품평이 등록되었습니다.");
+   	   		modal.style.display = 'block'
+   	   		$("#customerReviewWriteDiv").hide();
 
 	   });  
-     
-      
-      
+    
 </script>
 </body>

@@ -12,6 +12,8 @@ public interface ReviewMapper {
 	
 	
 	public int insertReview(ReviewDTO reviewDTO) throws SQLException;
+
+	public List<ReviewDTO> getReview(ReviewDTO reviewDTO);
 	
 	/*
 	public List<ReviewDTO> selectReview(ReviewDTO reviewDTO) throws SQLException;

@@ -24,6 +24,18 @@
 		#{enjoysize,jdbcType=VARCHAR}, #{bodytype,jdbcType=VARCHAR}, #{reviewcontent}, #{filepath,jdbcType=VARCHAR})
     </insert>
     
+    <select id="getReview" parameterType="com.hyundai.project.dto.ReviewDTO" resultType="com.hyundai.project.dto.ReviewDTO">
+    	select * from review
+		where pcid in (
+		select pcid
+		from productmanager.product_color
+		where pid = (
+		select pid from productmanager.product_color where pcid = #{pcid}
+		))
+		order by rdate desc
+    </select>
+    
+    
     
     <!--  
     <update id="updateReview" statementType = "CALLABLE">

@@ -4,9 +4,11 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +31,7 @@ public class ReviewRESTController {
 	@PostMapping(value="/uploadFile")
 	@ResponseBody
 	public String uploadFile(@RequestPart("file") MultipartFile uploadfile) {
-		
+		HttpHeaders header = new HttpHeaders();
 		String result = "";
 		try {
 		    // Get the filename and build the local file path 
@@ -62,4 +64,14 @@ public class ReviewRESTController {
 		}
 	}
 	
+	
+	@PostMapping(value="/getReview")
+	public ResponseEntity<List<ReviewDTO>> getReview (@RequestBody ReviewDTO reviewDTO) {
+		try {
+			List<ReviewDTO> dto = reviewService.getReview(reviewDTO);
+			return new ResponseEntity<>(dto, HttpStatus.OK);
+		}catch(Exception e) {
+			return null;
+		}
+	}
 }
