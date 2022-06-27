@@ -30,5 +30,6 @@ public class MemberDTO implements Serializable{
 	private String marketingsms;
 	
 	private String grade;
+	private int mileage;
 
 }
