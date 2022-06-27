@@ -3,15 +3,21 @@ package com.hyundai.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.dto.CartListDTO;
+import com.hyundai.project.dto.OrderDTO;
+import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.OrderMemberDTO;
 import com.hyundai.project.dto.OrderPageDTO;
 import com.hyundai.project.dto.PaymentMethodDTO;
@@ -19,10 +25,7 @@ import com.hyundai.project.service.OrderMemberService;
 import com.hyundai.project.service.OrderPageService;
 import com.hyundai.project.service.OrderService;
 
-import lombok.extern.log4j.Log4j2;
-
 @Controller
-@Log4j2
 @RequestMapping("/order")
 public class OrderController {
 
@@ -67,5 +70,22 @@ public class OrderController {
 		model.addAttribute("payList", paylist);
 		
 		return "order/order"; 
+	}
+	
+	@PostMapping("/insertOrder")
+	public ResponseEntity<String> insertOrder(@RequestBody OrderDTO orderDTO) throws Exception{
+		List<OrderItemDTO> orderItemList = orderDTO.getOrderItemList();
+		int rows = orderService.insertOrder(orderDTO, orderItemList);		
+
+		if(rows == 0) {
+			return new ResponseEntity<>("Order is fail.", HttpStatus.FORBIDDEN);
+		}
+		
+		return new ResponseEntity<>("Order is done.", HttpStatus.OK);
+	}
+	
+	@GetMapping("/orderComplete")
+	public String orderComplete() {
+		return "/order/orderComplete";
 	}
 }

@@ -8,25 +8,26 @@
 <header th:replace="fragments/header :: header"></header>
 <script>
 	const arkQuery = $.noConflict(true);
-	
+
 	$(document).ready(function(){
+		
 	    let length = $('.price_wrap_price').length;
 	    let totalPrice = 0;
 	    for(let i = 0 ; i < length; i++){
 	        totalPrice += parseInt($('.price_wrap_price')[i].getAttribute('price'));	    
 	    }
 	    
-	    console.log(totalPrice);
+	    console.log("@@@"+totalPrice);
 	    
 	    $('#subTotal').text('₩ '+totalPrice.toLocaleString('ko-KR'));
 	    $('#deliveryCost').text('₩ 0');
 	    $('#totalPrice').text('₩ '+totalPrice.toLocaleString('ko-KR'));
-	    $('#total').text(totalPrice.toLocaleString('ko-KR'));
+	    $('#total').text(totalPrice.toLocaleString('ko-KR'));	       
 	});
-	
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	// daum 주소 API
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -114,13 +115,13 @@
                                             <div class="tlt_wrap">
                                                 <a href="" class="basket_tlt">
                                                     <span class="tlt" th:text="${product.bname}"></span>
-                                                    <span class="sb_tlt" th:text="${product.pname}"></span>
+                                                    <span id="pname" class="sb_tlt" th:text="${product.pname}"></span>
                                                 </a>
                                                 <p class="color_op" th:text="'color : ' + ${product.pccolorcode} + ' / ' + 'size : ' + ${product.psize}"></p>
                                             </div>
                                         </div> <!-- //pt_list_all -->
                                     </td>
-                                    <td id="'Oicount' + ${status.index}" th:text="${product.pquantity}"></td>
+                                    <td th:id="'Oicount' + ${status.index}" th:text="${product.pquantity}"></td>
                                     <td>
                                         <!-- price_wrap -->
                                         <div class="price_wrap ">
@@ -154,15 +155,15 @@
                             <tbody>
                                 <tr>
                                     <th scope="row" class="th_space">주문자</th>
-                                    <td th:text="${member.name}"></td>
+                                    <td id="name" th:text="${member.name}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">휴대폰</th>
-                                    <td th:text="${member.phone}"></td>
+                                    <td id="phone" th:text="${member.phone}"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="th_space">E-mail</th>
-                                    <td th:text="${member.email}"></td>
+                                    <td id="email" th:text="${member.email}"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -320,17 +321,14 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
                                 <tr>
-                                    <th scope="row" class="th_space"><label for="mail">수령인
-                                            E-mail</label></th>
+                                    <th scope="row" class="th_space"><label for="mail">수령인 E-mail</label></th>
                                     <td>
                                         <!-- email --> <input type="text" id="mail" name="mail"
                                             title="이메일 아이디" class="em_form" /> <span
                                             class="andmail">@</span>
                                         <select title="이메일 계정"
-                                            id="emailDelySel" class="em_select">
-                                            
+                                            id="emailDelySel" class="em_select">  
                                             <option value="naver.com">naver.com</option>
                                             <option value="gmail.com">gmail.com</option>
                                             <option value="daum.net">daum.net</option>
@@ -351,6 +349,7 @@
                     
                     <!--//title_wrap & table wrap2-->
                     <!--title_wrap & table wrap5-->
+                    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>                    
                     <div class="title_wrap clearfix mt40">
                         <h4 class="float_left">결제 수단 선택</h4>
                     </div>
@@ -365,18 +364,29 @@
                                 <tr>
                                     <th scope="row" class="th_space">결제수단 선택</th>
                                     <td>
-                                        <div class="rd_wrap payment_way1907">                                                                                          
-                                        </div> <!-- ckout_wrap -->
-
-                                      
+                                        <div class="rd_wrap payment_way1907">
+                                        	<ul>
+	                                        	<!-- #2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 (가상계좌 선택 삭제) 51013 -->
+	                                            <span id="kakaoPay">
+	                                            	<li>
+														<input type="radio" name="mode" id="sel_rd5" value="PM01" onclick=""> 
+		                                                <label for="sel_rd5" class="mr20">카카오 페이</label><br>
+		                                            </li>
+	                                            </span>
+	                                            <span id="payCo">
+	                                            	<li>
+														<input type="radio" name="mode" id="sel_rd5" value="PM02" onclick=""> 
+		                                                <label for="sel_rd5" class="mr20">페이코</label><br>
+		                                            </li>
+	                                            </span>                                                   
+                                        	</ul>                                                                                          
+                                        </div> <!-- ckout_wrap -->  
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <!--//title_wrap & table wrap5-->
-
-                  
                 </div>
                 <!--//orderwrap left-->
                 <!--orderwrap right-->
@@ -388,20 +398,15 @@
                             <hr />
                             <dl class="clearfix">
                                 <dt>상품 합계</dt>
-                                <dd id="subTotal">
-                                    </dd>
+                                <dd id="subTotal"></dd>
                                 <dt>배송비</dt>
-                                <dd id="deliveryCost">
-                                    </dd>
+                                <dd id="deliveryCost"></dd>
                             </dl>
                         </div>
                         <div class="total">
                             <dl class="clearfix">
-                                <dt>
-                                    합계</dt>
-                                <dd id="totalPrice">
-                                    
-                                    </dd>
+                                <dt>합계</dt>
+                                <dd id="totalPrice"></dd>
                             </dl>
                         </div>
                         <input type="hidden" name="total" id="total" />
@@ -425,18 +430,158 @@
                         </div>
                     </div>
                     <!--//point & agreement box-->
-                    <span id="doOrderBtn">
-                        <a href="#;" class="btn gray " onclick="doOrder();">
-                            결제하기</a>
+                    <span id="doOrderBtn">                     
+                     		<a href="#;" id="payment" class="btn gray" onclick="doOrder();">결제하기</a>                     		                        
                     </span>
                 </div>
+                <script>    
+             // 결제하기 버튼 script
+            	function doOrder() {
+            		const length = $('.al_middle').length;
+            		const header = $("meta[name='_csrf_header']").attr('content');
+            		const token = $("meta[name='_csrf']").attr('content');
+                    let psid = '';
+                    let Oicount = '';
+                    let Oitotalprice = '';
+                    
+                    let OrderItemList = [];
+                    for(let i = 0 ; i<length;i++){
+                        psid = $('#psid'+i).val();
+                        Oicount = $('#Oicount'+i).text();
+                        Oitotalprice = $('#Oitotalprice'+i).attr('price');
+                        let OrderItemVO = {
+                            'psid' : psid,
+                            'oicount' : Oicount,
+                            'oitotalprice' : Oitotalprice
+                        }
+                        OrderItemList.push(OrderItemVO);
+                    }
+                    
+                    let Oaddress1 = $('#address').val() + ' ' + $('#line1').val();
+                    let Oaddress2 = $('#line2').val();
+                    let Oreceiver = $('#rcpt_name').val();
+                    let Ophone = $('#hp').val() + $('#hp_num2').val() + $('#hp_num3').val();
+                    let Otel = $('#ph').val() + $('#ph_num2').val() + $('#ph_num3').val();
+                    let Omemo = $('#orderr').val();
+                    let Oemail = $('#mail').val() + '@' + $('#emailDelySel').val();
+                    let Obefroeprice = $('#total').text().replace(/,/gi,'');
+                    let Oafterprice = $('#total').text().replace(/,/gi,'');
+                    let Ostatus = '주문완료';
+                    let email = $('#email').text();
+                    let Pmcode = $('input[name="mode"]:checked').val();                   
+            		
+            		if(Oaddress1 == '' || Oaddress2 == ''){
+            	    	layerAlert('배송지 주소 우편 번호를 입력해주세요.');	    	
+            	        return;
+            	    }
+            	    if(Oreceiver == ''){
+            	        layerAlert('수령인을 입력해 주세요.');
+            	        return;
+            	    }
+            	    if($('#hp_num2').val() == ''){
+            	        layerAlert('배송지 주소 휴대폰 번호를 적어주세요.');
+            	        return;
+            	    }
+            	    if($('#hp_num3').val() == '' ){
+            	        layerAlert('배송지 주소 휴대폰 번호를 적어주세요.');
+            	        return;
+            	    }
+            	    if(Pmcode == undefined){
+            	        layerAlert('결제수단을 선택해주세요 ');
+            	        return;
+            	    }
+            	    if(!$('#agree').is(':checked')){
+            	    	layerAlert('구매자 동의 항목을 체크하여 주세요.');
+            	        return;
+            	    }  
+            	    
+            	    if($('#mail').val() == '')
+            	    	Oemail = ''; 
+            	    
+                    let orderDTO = {
+                            'oaddress1' : Oaddress1,
+                            'oaddress2' : Oaddress2,
+                            'oreceiver' : Oreceiver,
+                            'ophone' : Ophone,
+                            'otel' : Otel,
+                            'omemo' : Omemo,
+                            'oemail' : Oemail,
+                            'obefroeprice' : Obefroeprice,
+                            'oafterprice' : Oafterprice,
+                            'ostatus' : Ostatus,
+                            'email' : email,                
+                            'pmcode' : Pmcode,
+                            'orderItemList' : OrderItemList
+                     }
+                    
+                    let json = JSON.stringify(orderDTO);
+                    console.log(json);
+            	    
+            	    // 카카오 결제 API에 전달할 값
+            	    let pname = $('#pname').text();
+            	    let name = $('#name').text();
+            	    let phone = $('#phone').text();
+            	    let totalPrice = 0;	    
+            	    for(let i = 0 ; i < length; i++){
+            	        totalPrice += parseInt($('.price_wrap_price')[i].getAttribute('price'));	    
+            	    }	 
+            	        
+            		//카카오 결제 API
+            		const IMP = window.IMP; // 생략가능
+            		IMP.init('imp93401382');  // 가맹점 식별코드		
+            		IMP.request_pay({
+            		    pg : 'kakaopay', //pg사 선택 (kakao, kakaopay 둘다 가능)
+            		    pay_method: 'card',
+            		    merchant_uid : 'merchant_' + new Date().getTime(), //주문번호
+            		    name : pname, // 상품명
+            		    amount : totalPrice, // 가격
+            		    //customer_uid 파라메터가 있어야 빌링키 발급을 시도함
+            		    customer_uid : email + new Date().getTime(),
+            		    buyer_email : email,
+            		    buyer_name : name,
+            		    buyer_tel : phone,
+            		    buyer_addr : Oaddress1 + Oaddress2,
+            		}, function(rsp) { //callback
+            		    if ( rsp.success ) {
+            		      console.log('빌링키 발급 성공', rsp)
+            		      //빌링키 발급이 완료되었으므로, 서버에 결제 요청
+            		      alert('예약 결제가 완료되었습니다!');
+            		      
+	              		    $.ajax({
+	            	            type : 'POST',
+	            	              url : '/order/insertOrder',
+	            	              data : json,
+	            	              contentType: 'application/json; charset=utf-8',
+	            	              dataType: 'text',
+	            	              beforeSend: function(xhr){
+	            	                  xhr.setRequestHeader(header, token);
+	            	              },
+	            	              success: function(data){
+	            	                layerAlert('주문에 성공했습니다. ');
+	            	                console.log(data.oid);
+	            	                location.href="/order/orderComplete";
+	            	                
+	            	              },
+	            	              error: function(request, status, error){
+	            	                layerAlert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            	                layerAlert('주문에 실패했습니다.');
+	            	              }
+	            	        });
+            		    } else {
+            		      let msg = '결제에 실패하였습니다.\n';
+            		      msg += rsp.error_msg;
+            		      layerAlert(msg);
+            		      return false;
+            		    }            	
+            			}
+            	);
+             }
+                </script>
                 <!--//orderwrap right-->
             </div>
             <!--//orderwrap-->
         </div>
         <!--//sub_container-->
-    </form>
-    <!--layer pop-->
 </div>
 </body>
 </html>

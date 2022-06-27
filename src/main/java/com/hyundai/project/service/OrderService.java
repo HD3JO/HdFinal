@@ -10,4 +10,8 @@ public interface OrderService {
 	public int insertOrder(OrderDTO orderDTO, List<OrderItemDTO> orderItemList) throws Exception;
 	
 	public List<OrderDTO> getOrderList(String email) throws Exception;
+	
+	public List<OrderItemDTO> getOrderListForAdmin() throws Exception;
+	
+	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
 }

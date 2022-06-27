@@ -53,8 +53,20 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<OrderDTO> getOrderList(String email) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return orderMapper.getOrderList(email);
+	}
+
+	@Override
+	public List<OrderItemDTO> getOrderListForAdmin() throws Exception {
+		
+		return orderMapper.getOrderListForAdmin();
+	}
+
+	@Override
+	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception {
+		
+		return orderMapper.updateOrder(orderItemDTO);
 	}
 	
 }

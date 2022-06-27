@@ -16,5 +16,7 @@ public interface OrderMapper {
 	
 	public List<OrderDTO> getOrderList(String email) throws Exception;
 	
-	//public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
+	public List<OrderItemDTO> getOrderListForAdmin() throws Exception;
+	
+	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
 }

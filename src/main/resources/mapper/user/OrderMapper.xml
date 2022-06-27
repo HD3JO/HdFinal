@@ -6,36 +6,42 @@
 	<!-- 주문 페이지에서 작성한 정보 입력 -->
 	<insert id="insertOrder" parameterType="com.hyundai.project.dto.OrderDTO">
 		<selectKey keyProperty="oid" order="BEFORE" resultType="Integer">
-			select s_orders.nextval from dual
+			SELECT SEQ_ORDERS.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT 
-		INTO ORDERS(OID, 
+		INTO ORDERS(
+					OID, 
 				    OADDRESS1,
 				    OADDRESS2,    
-				    ORECEIVER, 
+				    ORECEIVER,
+				    OPHONE, 
 				    OTEL, 
 				    OMEMO, 
 				    OEMAIL, 
 				    OBEFOREPRICE, 
 				    OAFTERPRICE, 
 				    OSTATUS, 
-				    EMAIL,  
-				    PMCODE)
+				    EMAIL, 
+				    PMCODE
+				    )
 		VALUES( 
-		       #{oaddress1}, 
-		       #{oaddress2},
-		       #{oreceiver}, 
+			   #{oid},		       
+			   #{oaddress1, jdbcType=VARCHAR}, 
+		       #{oaddress2, jdbcType=VARCHAR},
+		       #{oreceiver, jdbcType=VARCHAR}, 
+		       #{ophone, jdbcType=VARCHAR},
 		       #{otel, jdbcType=VARCHAR}, 
 		       #{omemo, jdbcType=VARCHAR}, 
-		       #{oemail}, 
-		       #{obeforeprice}, 
-		       #{oafterprice}, 
-		       #{ostatus}, 
-		       #{email}, 	        
-		       #{pmcode})
+		       #{oemail, jdbcType=VARCHAR}, 
+		       #{obeforeprice, jdbcType=INTEGER}, 
+		       #{oafterprice, jdbcType=INTEGER}, 
+		       #{ostatus, jdbcType=VARCHAR}, 
+		       #{email, jdbcType=VARCHAR}, 	        
+		       #{pmcode, jdbcType=VARCHAR}
+		       )
 	</insert>
 	
-	<!-- -->
+	<!-- 각 주문 별로 주문한 상품 입력 -->
 	<insert id="insertOrderItem" parameterType="java.util.List">
 	 	<foreach collection="list" item="item" open ="insert all" close="select * from dual">
 	 		INTO ORDER_ITEM(PSID,
@@ -49,8 +55,20 @@
 	 	</foreach>
     </insert>
 	
-	<!-- 사용자 주문 목록 조회-->
+	<!-- 사용자 주문 내역 조회-->
 	<select id="getOrderList" resultType="com.hyundai.project.dto.OrderDTO">
 		SELECT * FROM TABLE(FN_ORDER_SELECT(#{email}))
 	</select>
+	
+	<!-- 관리자 페이지 회원 주문 내역 조회 -->
+	<select id="getOrderListForAdmin">
+	</select>
+	
+	<!-- 관리자 페이지 주문 상태 변경 -->
+	 <update id="updateOrder" parameterType="com.hyundai.project.dto.OrderItemDTO">
+ 	 	UPDATE ORDER_ITEM
+ 	 	SET OSTATUS = '배송완료'
+ 	 	WHERE PSID = #{psid}
+ 	    AND OID = #{oid}
+ 	</update>
 </mapper>
