@@ -5,7 +5,13 @@
     <select id="getUser" parameterType="com.hyundai.project.dto.MemberDTO" resultType="com.hyundai.project.dto.MemberDTO">
         SELECT * FROM TABLE(FN_MEMBER_SELECT(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, 
         #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, 
-        #{role, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}))
+        #{role, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}))
+    </select>
+    
+    <select id="selectUserAdmin" parameterType="com.hyundai.project.dto.MemberDTO" resultType="com.hyundai.project.dto.MemberDTO">
+    	SELECT * FROM TABLE(FN_MEMBER_SELECT(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, 
+        #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, 
+        #{role, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}))
     </select>
     
     <insert id="insertMember" parameterType="com.hyundai.project.dto.MemberDTO">

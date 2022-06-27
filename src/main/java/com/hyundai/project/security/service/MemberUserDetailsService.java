@@ -44,7 +44,7 @@ public class MemberUserDetailsService implements UserDetailsService{
 		
 		//MemberDTO -> MemberUserDetails 변화
 		MemberUserDetails memberUserDetails = new MemberUserDetails(result2.getEmail(), result2.getPassword()
-				, 0, authorities);
+				, 0, authorities, result2.getGrade());
 		
 		//MemberUserDetails 값 세팅
 		memberUserDetails.setEmail(result2.getEmail());

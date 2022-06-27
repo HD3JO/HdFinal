@@ -20,19 +20,23 @@ public class MemberUserDetails extends User implements OAuth2User{
 	private String email;
 	private String name;
 	private String channel;
+	private String grade;
 	
 	private Map<String, Object> OA2_attr;
 	
 	public MemberUserDetails(String username, String password, int fromSocial
-			, List<GrantedAuthority> authorities) {
+			, List<GrantedAuthority> authorities, String grade) {
 		super(username, password, authorities);
 		this.email = username;
+		this.grade = grade;
 	}
 	
 	public MemberUserDetails(String username, String password, int fromsocial,
-			List<GrantedAuthority> authorities, Map<String, Object> OA2_attr) {
-		this(username, password, fromsocial, authorities);
+			List<GrantedAuthority> authorities, Map<String, Object> OA2_attr, String grade) {
+		this(username, password, fromsocial, authorities, grade);
 		this.OA2_attr = OA2_attr;
+		this.email = username;
+		this.grade = grade;
 		
 	}
 	

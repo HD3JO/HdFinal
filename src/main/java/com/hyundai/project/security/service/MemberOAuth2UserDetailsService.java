@@ -84,7 +84,7 @@ public class MemberOAuth2UserDetailsService
 	       authorities.add(
 	               new SimpleGrantedAuthority("ROLE_" + memberVO.getRole()));      
 	       
-	       MemberUserDetails memberUserDetails = new MemberUserDetails(memberVO.getEmail(), memberVO.getPassword(), 1, authorities,oAuth2User.getAttributes());
+	       MemberUserDetails memberUserDetails = new MemberUserDetails(memberVO.getEmail(), memberVO.getPassword(), 1, authorities,oAuth2User.getAttributes(), memberVO.getGrade());
 	       memberUserDetails.setName(memberVO.getName());
 	       memberUserDetails.setChannel(memberVO.getChannel());
 	       return memberUserDetails;
