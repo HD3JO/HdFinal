@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- default header name is X-CSRF-TOKEN -->
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <title>SB Admin 2 - Tables</title>
+
+    <!-- Custom fonts for this template -->
+     <link
+	  href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	  rel="stylesheet"
+	/>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+   
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body id="page-top">
+	<script>
+	const modifyMemberMap = new Map();
+	
+	function changeSelect(e){
+		console.log($(e).val());
+		console.log($(e).attr('idx'));
+		const idx = $(e).attr('idx');
+		const modEmail = $('#email'+idx).val();
+		
+		modifyMemberMapCheck(modEmail);
+		
+		const modId = $(e).attr('id');
+		//가입형태 channel
+		if(modId.includes('channel')){
+			modifyMemberMap.get(modEmail).channel = $(e).val();
+		}
+		//상태 enable
+		if(modId.includes('enable')){
+			modifyMemberMap.get(modEmail).enable = $(e).val();
+		}
+		//권한일때 role
+		if(modId.includes('role')){
+			modifyMemberMap.get(modEmail).role = $(e).val();
+		}
+	}
+	
+	//map에 이메일 체크해서 값 처리하는 함수 
+	function modifyMemberMapCheck(modEmail){
+		//modifyMemberMap에 email이 존재할 경우와 아닐 경우 나눠서 체크
+        if(modifyMemberMap.get(modEmail)!= undefined){
+        	console.log('이메일이 존재 ');
+        	
+        }else{
+        	//이메일이 존재하지 않음
+        	console.log('이메일 존재하지 않음 새로운 map 생성');
+        	modifyMemberMap.set(modEmail, { email : modEmail});
+        }
+	}
+	
+	function modifyMemberAjax(){
+		const data = [];
+		modifyMemberMap.forEach(function(item){
+		    data.push(item);
+		});
+		
+		console.log(data);
+		//ajax 요청 보내기
+		const header = $("meta[name='_csrf_header']").attr('content');
+     	const token = $("meta[name='_csrf']").attr('content'); 
+		console.log(header, token);
+		if(data.length == 0){
+			$('#exampleModalLabel').text('수정할 멤버가 없습니다.');
+			$('#alertModal').modal();
+			return;
+		}
+		console.log(data);
+		$.ajax({
+			  url : '/admin/modifyMember',
+	          data : JSON.stringify(data),
+	          type : 'POST',
+	          dataType : 'text',
+	          contentType : 'application/json',
+	          beforeSend : function(xhr){
+	               xhr.setRequestHeader(header, token);
+	          },
+	          success : function(data) {
+	        	   console.log(data);
+	        	   
+		 		   $('#successModal').modal();
+	               
+	          },
+	         error : function(request, status, error) {
+	        	$('#exampleModalLabel').text('멤버정보 수정에 실패했습니다.');
+	 			$('#alertModal').modal();
+	 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 			
+	         }
+		});
+	}
+	
+	$(document).ready(function(){
+		//수정에 성공했을때 페이지 로
+		$('#successModalBtn').click(function(){
+			console.log('ddd');
+			location.reload();
+		});
+		
+		$(".member input").change(function() {
+	        const idx = $(this).attr('idx');
+	        const modEmail = $('#email'+idx).val();
+	        
+	        modifyMemberMapCheck(modEmail);
+	        //현재 입력 수정된 input의 id를 얻어와서 어떤값이변경되었는지 체크에서 넣어줌	
+	        const modId = $(this).attr('id');
+	        
+	        //name
+	        if(modId.includes('name')){
+	        	modifyMemberMap.get(modEmail).name = $(this).val();
+	        }
+	        //address
+			if(modId.includes('address')){
+				modifyMemberMap.get(modEmail).address = $(this).val();
+	        }
+	        //phone
+			if(modId.includes('phone')){
+				modifyMemberMap.get(modEmail).phone = $(this).val();
+	        }
+	        //channel
+			if(modId.includes('channel')){
+				console.log('channel'+ $(this).val());
+				modifyMemberMap.get(modEmail).channel = $(this).val();
+			}
+	        //enable
+			if(modId.includes('enable')){
+				console.log('enable : ' + $(this).val());
+				modifyMemberMap.get(modEmail).enable = $(this).val();
+			}
+	        //role
+			if(modId.includes('role')){
+				console.log('role : ' + $(this).val());
+				modifyMemberMap.get(modEmail).role = $(this).val();
+			}
+	        //regdate
+			if(modId.includes('regdate')){
+				console.log('regdate : ' + $(this).val());
+				modifyMemberMap.get(modEmail).regdate = $(this).val();
+			}
+	        //moddate
+			if(modId.includes('moddate')){
+				
+				modifyMemberMap.get(modEmail).moddate = $(this).val();
+			}
+	        //marketingsms
+			if(modId.includes('marketingsms')){
+				console.log("marketingsms check : " + $(this).val());
+				if($('#'+modId).is(':checked')){
+					modifyMemberMap.get(modEmail).marketingsms = 'Y';	
+				}else{
+					modifyMemberMap.get(modEmail).marketingsms = 'N';
+				}
+				
+			}	
+	        //marketingemail
+			if(modId.includes('marketingemail')){
+				console.log("marketingsms check : " + $(this).val());
+				if($('#'+modId).is(':checked')){
+					modifyMemberMap.get(modEmail).marketingemail = 'Y';	
+				}else{
+					modifyMemberMap.get(modEmail).marketingemail = 'N';
+				}
+				
+			}
+	        console.log(modifyMemberMap);
+	     });	
+	});
+	
+	</script>
+	<style>
+		td input{
+			border:none;
+		}
+	</style>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <ul th:replace="admin/slider :: slider"></ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <nav th:replace="admin/topbar :: topbar"></nav>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">멤버 관리</h1>
+                    <p class="mb-4">멤버를 관리할 수 있는 화면입니다. <a target="_blank"
+                            href="https://datatables.net">관련 링크(차후 삭제)</a>.</p>
+                            
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="/admin/membertables" method="POST">
+                        <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <div class="input-group">
+                            <label>Email : </label>
+                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2" name="email">
+                            <label>Name : </label>
+                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2" name="name">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">멤버 리스트</h6>
+                            <button type="button" onclick="modifyMemberAjax()" class="btn btn-primary">수정</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>가입형태</th>
+                                            <th>상태</th>
+                                            <th>권한</th>
+                                            <th>SMS 동의</th>
+                                            <th>EMAIL 동의</th>
+                                            <th>가입날짜</th>
+                                            <th>최근수정날짜</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr class="member" th:each="member, status: ${memberList}">
+                                            <td>
+                                            	<input th:id="'email'+${status.index}" th:idx="${status.index}" th:value="${member.email}" readOnly/>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'name'+${status.index}" th:idx="${status.index}" th:value="${member.name}"/>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'address'+${status.index}" th:idx="${status.index}" th:value="${member.address}" />
+                                            </td>
+                                            <td>
+                                            	<input th:id="'phone'+${status.index}" th:idx="${status.index}" th:value="${member.phone}"></input>
+                                            </td>
+                                            <td>
+                                            	<input type="hidden" th:value="${member.channel}"/>
+                                            	<select th:id="'channel'+${status.index}" th:idx="${status.index}" name="channel" onchange="changeSelect(this)">
+                                            		<!-- <option value="G" th:selected="${member.channel} == 'G'">구글</option>
+                                            		<option value="C" th:selected="${member.channel} == 'c'">간편</option> -->
+                                            		<option value="G" th:selected="${#strings.equalsIgnoreCase('G',member.channel)}">구글</option>
+                                            		<option value="C" th:selected="${#strings.equalsIgnoreCase('c',member.channel)}">간편</option>
+                                            	</select>
+                                            </td>
+                                            <td>
+                                            	<input type="hidden" th:value="${member.enable}"/>
+                                            	<select th:id="'enable'+${status.index}" th:idx="${status.index}" name="enable" onchange="changeSelect(this)">
+                                            		<option value="1" th:selected="${member.enable}=='1'">활성</option>
+                                            		<option value="0" th:selected="${member.enable}=='0'">휴면</option>
+                                            	</select>
+                                            </td>
+                                            <td>
+                                            	<input type="hidden" th:value="${member.role}"/>
+                                            	<select th:id="'role'+${status.index}" th:idx="${status.index}" name="role" onchange="changeSelect(this)">
+                                            		<!-- <option value="ADMIN" th:selected="${member.role} == 'ADMIN'">관리자</option>
+                                            		<option value="USER" th:selected="${member.role} == 'USER'">일반</option> -->
+                                            		<option value="ADMIN" th:selected="${#strings.equalsIgnoreCase('ADMIN',member.role)}">관리자</option>
+                                            		<option value="USER" th:selected="${#strings.equalsIgnoreCase('USER', member.role)}">일반</option>
+                                            	</select>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'marketingsms'+${status.index}" th:idx="${status.index}" name="marketingsms" type="checkbox" th:checked="${member.marketingsms}=='Y'?'true':'false'" ></input>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'marketingemail'+${status.index}" th:idx="${status.index}" name="marketingemail" type="checkbox" th:checked="${member.marketingemail}=='Y'?'true':'false'" ></input>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'regdate'+${status.index}" th:idx="${status.index}" name="regdate" type="date"  th:value="${member.regdate}" readOnly/>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'moddate'+${status.index}" th:idx="${status.index}" name="moddate" type="date"  th:value="${member.moddate}" readOnly/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+				
+				<!-- Fail Modal-->
+			    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+			                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			        	</div>
+			    	</div>
+			    </div>
+			    
+			    <!-- Success Modal-->
+			    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="successModalLabel">멤버정보를 수정하였습니다.</h5>
+			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			        	</div>
+			    	</div>
+				</div>
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

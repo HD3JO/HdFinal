@@ -17,4 +17,8 @@ public interface MemberMapper {
 	public MemberDTO updateMember(MemberDTO memberDTO) throws SQLException;
 	
 	public void deleteMember(String email) throws SQLException;
+	
+	public List<MemberDTO> selectUserAdmin(MemberDTO memberDTO) throws Exception;
+	
+	//public void updateMemberAdmin(MemberDTO memberDTO) throws SQLException;
 }
