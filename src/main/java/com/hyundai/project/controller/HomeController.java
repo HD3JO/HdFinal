@@ -40,25 +40,4 @@ public class HomeController {
 		System.out.println("called complete");
 		return "complete";
 	}
-	
-//	@RequestMapping(value="/member", method=RequestMethod.GET)
-//	public ResponseEntity<String> member(){
-//		return new ResponseEntity<>("This is member", HttpStatus.OK);
-//	}
-	@RequestMapping(value="/admin", method=RequestMethod.GET)
-	public ResponseEntity<String> admin(){
-		return new ResponseEntity<>("This is admin", HttpStatus.OK);
-	}
-	
-//	@RequestMapping(value="/isduplemail", method=RequestMethod.GET)
-//	@ResponseBody
-//	public ResponseEntity<String> isdulpemail(@RequestParam("email") String email) throws Exception{
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@MemberController isdulpeamil : " +email);
-//		MemberDTO memberDTO = memberService.selectOneUser(email);
-//		if(memberDTO == null) {
-//			return new ResponseEntity<>("SUCEESS", HttpStatus.OK);
-//		}else {
-//			return new ResponseEntity<>("FAILURE", HttpStatus.OK);
-//		}
-//	}
 }

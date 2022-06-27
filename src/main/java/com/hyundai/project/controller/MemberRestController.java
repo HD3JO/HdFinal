@@ -1,5 +1,7 @@
 package com.hyundai.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +18,14 @@ import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberRole;
 import com.hyundai.project.dto.MemberUserDetails;
 import com.hyundai.project.service.MemberService;
-import com.hyundai.project.service.OrderService;
+
 
 @Controller
 @RequestMapping("/member/*")
 public class MemberRestController {
 	@Autowired
 	private MemberService memberService;
-	private OrderService orderService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -116,14 +118,5 @@ public class MemberRestController {
 	@RequestMapping(value="/mypoint", method=RequestMethod.GET)
 	public String mypoint() {
 		return "mypoint";
-	}
-	
-	//고석준 20220627 작성 회원탈퇴 AJAX 요청 받음.
-	@RequestMapping(value="/secession", method=RequestMethod.POST)
-	public ResponseEntity<String> secession(Authentication authentication) throws Exception {
-		MemberUserDetails auth = (MemberUserDetails)authentication.getPrincipal();
-		
-		memberService.secession(auth.getEmail());
-		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 	}
 }
