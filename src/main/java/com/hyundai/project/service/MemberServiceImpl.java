@@ -52,14 +52,26 @@ public class MemberServiceImpl implements MemberService {
 		return mapper2.updateMember(updateUser);
 	}
 	@Override
-	public void secession(String email) throws Exception {
+	public List<MemberDTO> selectUserAdmin(MemberDTO memberDTO) throws Exception {
 		// TODO Auto-generated method stub
-		MemberDTO vo = new MemberDTO();
-		vo.setEmail(email);
-		MemberDTO secessionUser = mapper2.getUser(vo).get(0);
-		secessionUser.setEnable(0);//사용자 비활성화 
-		
-		mapper2.updateMember(secessionUser);
+		return mapper2.selectUserAdmin(memberDTO);
+	}
+	@Override
+	public void updateMemeberAdmin(List<MemberDTO> memberList) throws Exception {
+		// TODO Auto-generated method stub
+		for(MemberDTO dto : memberList) {
+			String email = dto.getEmail();
+			
+			MemberDTO updateMember = new MemberDTO();
+			updateMember.setEmail(email);
+			updateMember = mapper2.getUser(updateMember).get(0);
+			
+			updateMember.updateMember(dto);
+			
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			System.out.println(updateMember);
+			mapper2.updateMember(updateMember);
+		}
 		
 	}
 
