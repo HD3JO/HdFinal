@@ -88,6 +88,38 @@ $(document).ready(function(){
 			}
 	 	});
 	});
+	
+	$("#memberSecessionBtn").click(function(){
+		console.log('memberSecessionBtn clicked');
+		const header = $("meta[name='_csrf_header']").attr('content');
+	 	const token = $("meta[name='_csrf']").attr('content');
+	 	
+		$.ajax({
+	 		type : "POST",
+	 		url : "/member/secession",
+	 		dataType : 'text',
+	 		contentType : 'application/json',
+	 		beforeSend: function(xhr){
+	            xhr.setRequestHeader(header, token);
+	        }, 
+	        success : function(result) {
+	        	if(result=='SUCCESS'){
+	        		var lc = new layerAlert('회원탈퇴 되었습니다.');
+                    lc.confirmAction = function(){
+                        //alert화면 실행후 후속 처리 부분 추가
+                    	logout();
+                    };
+	            }else{
+	            	layerAlert('회원탈퇴에 실패했습니다.');
+	            }
+			},
+			 error:function(request,status,error)
+			 {    
+				 console.log(request, status, error);
+				 layerAlert('회원탈퇴에 실패했습니다.');
+			}
+	 	});
+	});
 });
 </script>
 <body>
@@ -246,7 +278,7 @@ $(document).ready(function(){
 
 		<!-- btn_btwrap -->
 		<div class="btn_btwrap">
-			<input type="button" class="btn wt_ss" value="회원탈퇴" id="memberSecessionBtn">
+			<input type="button" class="btn wt_ss" value="회원탈퇴" id="memberSecessionBtn" >
 		</div>
 		<div class="btnwrap mypage2">
 			<input type="button" class="btn wt" value="취소" id="cancleBtn">
