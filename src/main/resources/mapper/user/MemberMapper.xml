@@ -38,4 +38,10 @@
         #{address, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{channel, jdbcType=VARCHAR}, #{enable, jdbcType=NUMERIC}, 
         #{role, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}, #{mileage, jdbcType=NUMERIC}))
     </select>
+    
+    <update id="secession">
+    	UPDATE MEMBER
+    	   SET ENABLE = 0
+    	 WHERE EMAIL = #{email}
+    </update>
 </mapper>
