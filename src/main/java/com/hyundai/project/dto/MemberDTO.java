@@ -30,7 +30,7 @@ public class MemberDTO implements Serializable{
 	private String marketingsms;
 	
 	private String grade;
-  private int mileage;
+	private int mileage;
 	
 	public void updateMember(MemberDTO dto) {
 		// TODO Auto-generated method stub
@@ -74,6 +74,8 @@ public class MemberDTO implements Serializable{
 		if(dto.getGrade() != null) {
 			this.grade = dto.getGrade();
 		}
+		
+		this.mileage = dto.getMileage();
 	}
 
 }

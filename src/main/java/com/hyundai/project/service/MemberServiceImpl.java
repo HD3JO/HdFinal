@@ -74,5 +74,13 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	}
+	
+	@Override
+	public void secession(String email) {
+		MemberDTO dto = new MemberDTO();
+		dto.setEmail(email);
+		mapper2.secession(dto);
+		
+	}
 
 }

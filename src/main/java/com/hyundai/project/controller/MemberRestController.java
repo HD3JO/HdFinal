@@ -119,4 +119,13 @@ public class MemberRestController {
 	public String mypoint() {
 		return "mypoint";
 	}
+	
+	@RequestMapping(value="/secession", method=RequestMethod.POST)
+	public ResponseEntity<String> secession(Authentication authentication) throws Exception{
+		MemberUserDetails dto = (MemberUserDetails)authentication.getPrincipal();
+		String email = dto.getEmail();
+		memberService.secession(email);
+		
+		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+	}
 }
