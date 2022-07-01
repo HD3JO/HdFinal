@@ -19,7 +19,8 @@
 				    OMEMO, 
 				    OEMAIL, 
 				    OBEFOREPRICE, 
-				    OAFTERPRICE, 
+				    OAFTERPRICE,
+				    MILEAGE, 
 				    OSTATUS, 
 				    EMAIL, 
 				    PMCODE
@@ -35,6 +36,7 @@
 		       #{oemail, jdbcType=VARCHAR}, 
 		       #{obeforeprice, jdbcType=INTEGER}, 
 		       #{oafterprice, jdbcType=INTEGER}, 
+		       #{mileage, jdbcType=INTEGER},
 		       #{ostatus, jdbcType=VARCHAR}, 
 		       #{email, jdbcType=VARCHAR}, 	        
 		       #{pmcode, jdbcType=VARCHAR}
@@ -54,6 +56,13 @@
 	 							#{item.oitotalprice})	
 	 	</foreach>
     </insert>
+    
+    <!-- 마일리지 적립 -->
+    <update id="updateMileage" parameterType="com.hyundai.project.dto.OrderDTO">
+    	UPDATE MEMBER
+    	SET MILEAGE = MILEAGE + #{mileage, jdbcType=INTEGER}
+    	WHERE EMAIL = #{email, jdbcType=VARCHAR}
+    </update>
 	
 	<!-- 사용자 주문 내역 조회-->
 	<select id="getOrderList" resultType="com.hyundai.project.dto.OrderDTO">

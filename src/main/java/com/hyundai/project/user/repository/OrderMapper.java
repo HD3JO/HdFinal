@@ -18,5 +18,7 @@ public interface OrderMapper {
 	
 	public List<OrderItemDTO> getOrderListForAdmin() throws Exception;
 	
+	public int updateMileage(OrderDTO orderDTO) throws Exception;
+	
 	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
 }

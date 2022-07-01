@@ -21,6 +21,7 @@ public class OrderDTO {
 	private String oemail;
 	private int obeforeprice;
 	private int oafterprice;
+	private int mileage;
 	private String ostatus;
 	private String email;
 	private String pmcode;

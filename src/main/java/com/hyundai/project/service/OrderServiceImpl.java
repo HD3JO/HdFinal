@@ -44,6 +44,8 @@ public class OrderServiceImpl implements OrderService {
 			
 		}
 		
+		orderMapper.updateMileage(orderDTO);
+		
 		if(rows > 0) {
 			cartMapper.selectDelete(cartList);
 		}
@@ -68,5 +70,4 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orderMapper.updateOrder(orderItemDTO);
 	}
-	
 }

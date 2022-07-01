@@ -15,14 +15,13 @@
 	    let totalPrice = 0;
 	    for(let i = 0 ; i < length; i++){
 	        totalPrice += parseInt($('.price_wrap_price')[i].getAttribute('price'));	    
-	    }
-	    
-	    console.log("@@@"+totalPrice);
+	    }	    
 	    
 	    $('#subTotal').text('₩ '+totalPrice.toLocaleString('ko-KR'));
 	    $('#deliveryCost').text('₩ 0');
 	    $('#totalPrice').text('₩ '+totalPrice.toLocaleString('ko-KR'));
-	    $('#total').text(totalPrice.toLocaleString('ko-KR'));	       
+	    $('#total').text(totalPrice.toLocaleString('ko-KR'));
+	    $('#txtMileage').text('한섬마일리지 ' + (totalPrice*0.05).toLocaleString('ko-KR') + 'M');
 	});
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -367,18 +366,12 @@
                                         <div class="rd_wrap payment_way1907">
                                         	<ul>
 	                                        	<!-- #2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 (가상계좌 선택 삭제) 51013 -->
-	                                            <span id="kakaoPay">
+	                                            <span id="Pay" th:each="payment, status : ${payList}">
 	                                            	<li>
-														<input type="radio" name="mode" id="sel_rd5" value="PM01" onclick=""> 
-		                                                <label for="sel_rd5" class="mr20">카카오 페이</label><br>
+														<input type="radio" name="paymode" th:id="'pay'+ ${status.index}" th:value="${payment.pmcode}" onclick=""> 
+		                                                <label for="sel_rd5" class="mr20" th:text="${payment.pmcompany}"></label><br>
 		                                            </li>
-	                                            </span>
-	                                            <span id="payCo">
-	                                            	<li>
-														<input type="radio" name="mode" id="sel_rd5" value="PM02" onclick=""> 
-		                                                <label for="sel_rd5" class="mr20">페이코</label><br>
-		                                            </li>
-	                                            </span>                                                   
+	                                            </span>                                                  
                                         	</ul>                                                                                          
                                         </div> <!-- ckout_wrap -->  
                                     </td>
@@ -415,6 +408,12 @@
                     <!--//final payment sum box-->
                     <!--point & agreement box-->
                     <div class="p_a_box">
+	                    <div class="point">
+	                                        <p class="tlt">구매 시 지급예정 포인트</p>	                                        
+	                                        <p class="txt" id="txtMileage"></p>
+	                                    <input type="hidden" name="accumulationPoint" id="accumulationPoint" value="28250">
+	                                    <input type="hidden" name="accumulationHPoint" id="accumulationHPoint" value="565">    
+	                    </div>
                         <div class="agree">
                             <input type="checkbox" id="agree" /><label for="agree" class="tlt"> 구매자
                                 동의</label>
@@ -466,9 +465,10 @@
                     let Oemail = $('#mail').val() + '@' + $('#emailDelySel').val();
                     let Obefroeprice = $('#total').text().replace(/,/gi,'');
                     let Oafterprice = $('#total').text().replace(/,/gi,'');
+                    let Mileage = $('#txtMileage').text().replace(/[^0-9]/gi,'');
                     let Ostatus = '주문완료';
                     let email = $('#email').text();
-                    let Pmcode = $('input[name="mode"]:checked').val();                   
+                    let Pmcode = $('input[name="paymode"]:checked').val();                   
             		
             		if(Oaddress1 == '' || Oaddress2 == ''){
             	    	layerAlert('배송지 주소 우편 번호를 입력해주세요.');	    	
@@ -508,6 +508,7 @@
                             'oemail' : Oemail,
                             'obefroeprice' : Obefroeprice,
                             'oafterprice' : Oafterprice,
+                            'mileage' : Mileage,
                             'ostatus' : Ostatus,
                             'email' : email,                
                             'pmcode' : Pmcode,
@@ -521,61 +522,68 @@
             	    let pname = $('#pname').text();
             	    let name = $('#name').text();
             	    let phone = $('#phone').text();
+            	    let pg = 0; 
             	    let totalPrice = 0;	    
             	    for(let i = 0 ; i < length; i++){
             	        totalPrice += parseInt($('.price_wrap_price')[i].getAttribute('price'));	    
-            	    }	 
-            	        
-            		//카카오 결제 API
-            		const IMP = window.IMP; // 생략가능
-            		IMP.init('imp93401382');  // 가맹점 식별코드		
-            		IMP.request_pay({
-            		    pg : 'kakaopay', //pg사 선택 (kakao, kakaopay 둘다 가능)
-            		    pay_method: 'card',
-            		    merchant_uid : 'merchant_' + new Date().getTime(), //주문번호
-            		    name : pname, // 상품명
-            		    amount : totalPrice, // 가격
-            		    //customer_uid 파라메터가 있어야 빌링키 발급을 시도함
-            		    customer_uid : email + new Date().getTime(),
-            		    buyer_email : email,
-            		    buyer_name : name,
-            		    buyer_tel : phone,
-            		    buyer_addr : Oaddress1 + Oaddress2,
-            		}, function(rsp) { //callback
-            		    if ( rsp.success ) {
-            		      console.log('빌링키 발급 성공', rsp)
-            		      //빌링키 발급이 완료되었으므로, 서버에 결제 요청
-            		      alert('예약 결제가 완료되었습니다!');
-            		      
-	              		    $.ajax({
-	            	            type : 'POST',
-	            	              url : '/order/insertOrder',
-	            	              data : json,
-	            	              contentType: 'application/json; charset=utf-8',
-	            	              dataType: 'text',
-	            	              beforeSend: function(xhr){
-	            	                  xhr.setRequestHeader(header, token);
-	            	              },
-	            	              success: function(data){
-	            	                layerAlert('주문에 성공했습니다. ');
-	            	                console.log(data.oid);
-	            	                location.href="/order/orderComplete";
-	            	                
-	            	              },
-	            	              error: function(request, status, error){
-	            	                layerAlert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            	                layerAlert('주문에 실패했습니다.');
-	            	              }
-	            	        });
-            		    } else {
-            		      let msg = '결제에 실패하였습니다.\n';
-            		      msg += rsp.error_msg;
-            		      layerAlert(msg);
-            		      return false;
-            		    }            	
-            			}
-            	);
-             }
+            	    }
+            	    
+            	    if($('input[name="paymode"]:checked').val() == 'PM01')
+            	    	pg = 'kakaopay';
+            	    else if($('input[name="paymode"]:checked').val() == 'PM02')
+            	    	pg = 'payco';
+            	    else if($('input[name="paymode"]:checked').val() == 'PM03')
+            	    	pg = 'tosspay';
+            	    
+                		// 결제 API
+                		const IMP = window.IMP; // 생략가능
+                		IMP.init('imp93401382');  // 가맹점 식별코드		
+                		IMP.request_pay({
+                		    pg : pg, //pg사 선택
+                		    pay_method: 'card',
+                		    merchant_uid : 'merchant_' + new Date().getTime(), //주문번호
+                		    name : pname, // 상품명
+                		    amount : totalPrice, // 가격
+                		    //customer_uid 파라메터가 있어야 빌링키 발급을 시도함
+                		    customer_uid : email + new Date().getTime(),
+                		    buyer_email : email,
+                		    buyer_name : name,
+                		    buyer_tel : phone,
+                		    buyer_addr : Oaddress1 + Oaddress2,                		   
+                		}, function(rsp) { //callback
+                		    if ( rsp.success ) {
+                		      console.log('빌링키 발급 성공', rsp)
+                		      //빌링키 발급이 완료되었으므로, 서버에 결제 요청
+                		      alert('예약 결제가 완료되었습니다!');
+                		      
+    	              		    $.ajax({
+    	            	            type : 'POST',
+    	            	              url : '/order/insertOrder',
+    	            	              data : json,
+    	            	              contentType: 'application/json; charset=utf-8',
+    	            	              dataType: 'text',
+    	            	              beforeSend: function(xhr){
+    	            	                  xhr.setRequestHeader(header, token);
+    	            	              },
+    	            	              success: function(data){
+    	            	                layerAlert('주문에 성공했습니다. ');
+    	            	                console.log(data.oid);
+    	            	                location.href="/order/orderComplete";
+    	            	                
+    	            	              },
+    	            	              error: function(request, status, error){
+    	            	                layerAlert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    	            	                layerAlert('주문에 실패했습니다.');
+    	            	              }
+    	            	        });
+                		    } else {
+                		      let msg = '결제에 실패하였습니다.\n';
+                		      msg += rsp.error_msg;
+                		      layerAlert(msg);
+                		      return false;
+                		    }            	
+                		});              
+                }
                 </script>
                 <!--//orderwrap right-->
             </div>
