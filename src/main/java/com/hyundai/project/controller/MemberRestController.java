@@ -18,7 +18,6 @@ import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberRole;
 import com.hyundai.project.dto.MemberUserDetails;
 import com.hyundai.project.dto.OrderListDTO;
-import com.hyundai.project.dto.OrderReviewedDTO;
 import com.hyundai.project.dto.ReviewDTO;
 import com.hyundai.project.service.MemberService;
 import com.hyundai.project.service.OrderService;
@@ -130,7 +129,7 @@ public class MemberRestController {
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
 		//List<OrderReviewedDTO> reviewedList = reviewService.mywroteReview(authDTO.getEmail());
 		System.out.println(orderList.size() + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",orderList);
+		
 		model.addAttribute("orderList", orderList);
 		//model.addAttribute("reviewedList", reviewedList);
 		System.out.println(orderList);

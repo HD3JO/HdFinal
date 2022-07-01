@@ -1,24 +1,22 @@
 package com.hyundai.project.dto;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class ProductColorDTO implements Serializable {
-	private String pid;
+public class PurchasedProductDTO {
+	private String email;
 	private String pcid;
+	private String psid;
 	private String pccolorcode;
-	private String pcchipimg;
+	private String psize;
 	private String pcimg1;
-	private String pcimg2;
-	private String pcimg3;
+	private String oreceiver;
+	private String ostatus;
+	//   ORECEIVER,  OSTATUS,
 }

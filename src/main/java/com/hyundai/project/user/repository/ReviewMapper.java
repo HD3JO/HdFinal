@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hyundai.project.dto.PurchasedProductDTO;
 import com.hyundai.project.dto.ReviewDTO;
 
 @Mapper
@@ -14,6 +15,8 @@ public interface ReviewMapper {
 	public int insertReview(ReviewDTO reviewDTO) throws SQLException;
 
 	public List<ReviewDTO> getReview(ReviewDTO reviewDTO);
+
+	public List<PurchasedProductDTO> isPurchased(PurchasedProductDTO purchasedProductDTO);
 	
 	/*
 	public List<ReviewDTO> selectReview(ReviewDTO reviewDTO) throws SQLException;

@@ -28,4 +28,5 @@ public class ReviewDTO {
 	private String bodytype;
 	private String reviewcontent;
 	private String filepath;
+	private String pccolorcode;
 }
