@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+
+<script type="text/javascript">
+var arkQuery = $.noConflict(true);
+
+const header = $("meta[name='_csrf_header']").attr('content');
+const token = $("meta[name='_csrf']").attr('content');
+
+var memberDTO ={
+		
+		name : $("#name").text(),
+		email : $("#email").text()
+}
+
+</script>
+
+
+<body oncontextmenu='return false'>
+	<!-- Loading -->
+	<div class="loading_bar" id="loadingBarDiv" style="display:none;">
+		<img src="/_ui/desktop/common/images/common/loading.gif" alt="loading"/>
+		<span>�로딩중</span>
+	</div>
+	<!-- //Loading -->
+
+	
+	<form id="CSRFForm" action="/ko/mypage" method="post"><div>
+<input type="hidden" name="CSRFToken" value="2bd763d3-b621-44c9-8386-8c829a4f7bbb" />
+</div></form>
+		<div id="bodyWrap">
+	<h3 class="cnts_title">
+		<span id="menuTitle">마이페이지</span>
+	</h3>
+	<div class="sub_container">
+		<!-- lnb -->
+		<div class="lnb_wrap">
+			<h4><a th:href="@{/member/mypage}" >마이페이지<!-- 마이페이지 --></a></h4>
+			<div class="lnb">
+						<dl>
+							<dt><a th:href="@{/member/myorder}" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a></dt>
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/modify}" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a></dt>
+							
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/myreview}" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a></dt>
+						</dl>
+					</div>
+				</div>
+		<!-- //lnb -->
+		<!-- cnts -->
+	<div class="sub_cnts">
+    <form id="hpointHiddenForm" method="post" action="" target="joinStart_window">
+        <input type="hidden" name="prtnrReqGb" value="02" />
+        <input type="hidden" name="prtnrId" value="D080" />
+        <input type="hidden" name="chnnlId" value="1705" />
+        <input type="hidden" name="ptcoReqnMdaInf"  id="ptcoReqnMdaInf" value="" />
+    </form>
+    <form id="orderSearchForm" action="/ko/mypage/order/myorderlist" >
+        <input type="hidden" name="sterm" class="input_date" title="기간 입력" id="sterm" value="" readonly />
+        <input type="hidden" name="eterm" class="input_date" title="기간 입력" id="eterm" value="" readonly />
+    </form>
+    <!-- 회원정보 -->
+    <div class="profile_info1 clearfix review_betterment1905">
+            <div class="name ">
+                    <span id="name" class="ico_grade" th:text="${#authentication.principal.name}+' 님 '"></span>
+                    <span class="grade_txt" th:id="grade_txt"></span>
+                </div>
+                <div class="pointbox_cover">
+	                <div class="point_wrap">
+	                    <div class="point" style="border-left:0;padding-left:0;">
+	                        <p class="title" th:text="'한섬마일리지'"></p>
+	                        <a class="count" th:href="@{/member/mypoint}" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');">0&nbsp;<span>M</span></a>
+	                    </div>
+<!-- 	                     <div class="point"> -->
+<!-- 	                                <p class="title">H.POINT</p> -->
+<!-- 	                                <a class="count" th:href="@{https://www.h-point.co.kr/cu/myh/myPnt.shd}" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">0&nbsp;<span>P</span></a> -->
+<!-- 	                            </div> -->
+<!-- 	                        <div class="point"> -->
+<!-- 	                        <p class="title">GIFT CARD</p> -->
+<!-- 	                        <a class="count" th:href="@{/ko/mypage/mygiftcard}" onclick="GA_Event('마이페이지','회원정보','GIFT CARD');">0&nbsp;<span>원</span></a> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="point"> -->
+<!-- 	                        <p class="title">e-money</p> -->
+<!-- 	                        <a class="count" th:href="@{/ko/mypage/myEGiftCard}" onclick="GA_Event('마이페이지','회원정보','E-MONEY');">0&nbsp;<span>원</span></a> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="point"> -->
+<!-- 	                        <p class="title">COUPON</p> -->
+<!-- 	                        <a class="count" th:href="@{/ko/mypage/voucher}" onclick="GA_Event('마이페이지','회원정보','COUPON');">0&nbsp;<span>장</span></a> -->
+<!-- 	                    </div> -->
+	                    <div class="point review">
+							<p class="title">상품평</p>
+<!-- 							<img th:src="@{https://www.thehandsome.com/_ui/desktop/common/images/common/ico_ques2.png}" alt="상품평이란?" class="tlt"> -->
+							<a th:href="@{/member/myreview}" class="count" onclick="GA_Event('마이페이지','회원정보','상품평');">0&nbsp;<span>개</span></a>
+						</div>
+	                   </div>
+                </div>
+            </div>
+            <!-- 회원정보 -->
+				<!-- 최근주문 -->
+				<div class="title_wrap">
+					<h4 class="float_left">
+						최근주문
+						<!-- 최근주문 -->
+					</h4>
+					<p class="txt_line" th:text="${#authentication.principal.name}+' 고객님께서 최근 1개월 내 주문하신 내역입니다. '">
+					</p>
+					<div class="btn_wrap">
+						<a th:href="@{/member/myorder}" class="btn add_ss"
+							onclick="GA_Event('마이페이지','최근주문','전체보기');">전체보기</a>
+					</div>
+				</div>
+				<!-- table -->
+    <div class="tblwrap lncl1812"><!-- 클래스추가 181204 -->
+        <table class="tbl_ltype review_betterment1905">
+            <caption>상품평 리스트</caption>
+            <colgroup class="interval1812"><!-- 수정 181204 -->
+                <col style="width:60px">
+                <col style="width:100px">
+                <col style="width:42px">
+                <col style="width:107px">
+                <col style="width:108px">
+                <col style="width:50px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">주문번호<!-- 주문번호 --></th>
+                    <th scope="col">상품정보<!-- 상품정보 --></th>
+                    <th scope="col">수량<!-- 수량 --></th><!-- 스타일추가 181204 -->
+                    <th scope="col">판매가<!-- 판매가 --></th>
+                    <th scope="col">주문상태<!-- 주문상태 --></th>
+                    <th scope="col">구분<!-- 구분 --></th>
+                </tr>
+            </thead>
+            <tbody id="listBody">
+						<div th:if="${#lists.isEmpty(orderList)}">
+							<tr>
+								<td colspan="6" class="no_data">
+								최근 주문 내역이 없습니다.
+								</td>
+							</tr>
+						</div>
+						<div th:if="${!#lists.isEmpty(orderList)}">
+							<tr th:each="product : ${orderList}">
+								<td class="pt_list_wrap">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="${product.oid}"></span>
+									</div> <!-- //Price -->
+								</td>
+								<td class="pt_list_wrap">
+									<!-- pt_list_all -->
+									<div class="pt_list_all">
+										<a id="productfirst"
+											 th:href="@{/detail(pcid=${product.pcid})}"
+											onclick="javascript:void(0);"> 
+											<img th:id="productimg"
+											th:src="${product.pcimg1}" alt="">
+										</a>
+										<div class="tlt_wrap">
+										<a th:id="productsecond"
+											th:href="@{/detail(pcid=${product.pcid})}" class="basket_tlt"
+											onclick="javascript:void(0);"> 
+											<span class="tlt"
+											th:text=${product.bname}></span>
+											 <span class="sb_tlt"
+											th:text=${product.pname}> </span>
+										</a>
+
+										<p class="color_op">
+
+											<span th:id="productcolorcode"
+												th:text="${product.pccolorcode}"> </span> <span
+												class="and_line">/</span> <span th:id="productsize"
+												th:text="${product.psize}"> </span>
+										</p>
+									</div>
+										</div>
+									</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="${product.oicount}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="${product.ostatus}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span></span> <input type="hidden" name="checkZeroPrice"
+											value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+							</tr>
+						</div>
+					</tbody>
+        </table>
+    </div>
+			<!-- table -->
+    <!-- 위시리스트 -->
+	</div>
+		<!-- //cnts -->
+	</div>
+</div>
+
+</body>
+</html>

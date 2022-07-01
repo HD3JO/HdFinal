@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
+import com.hyundai.project.dto.OrderListDTO;
 
 @Mapper
 public interface OrderMapper {
@@ -19,4 +20,10 @@ public interface OrderMapper {
 	public List<OrderItemDTO> getOrderListForAdmin() throws Exception;
 	
 	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
+	//public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
+	
+	public List<OrderListDTO> selectOrderList(String email) throws Exception;
+	
+	public List<OrderListDTO> selectOrderListByOneMonth(String email) throws Exception;
 }
+

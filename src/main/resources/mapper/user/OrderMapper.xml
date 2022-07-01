@@ -71,4 +71,46 @@
  	 	WHERE PSID = #{psid}
  	    AND OID = #{oid}
  	</update>
+	
+	
+	<select id="selectOrderList" resultType="com.hyundai.project.dto.OrderListDTO">
+        SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+    		FROM ORDERS A
+    		INNER JOIN ORDER_ITEM B
+    		ON A.oid = B.oid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
+    		ON B.psid = C.psid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
+    		ON C.pcid = D.pcid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON E
+    		ON D.pid = E.pid
+    		INNER JOIN PRODUCTMANAGER.BRAND F
+    		ON E.bno = F.bno
+    		INNER JOIN MEMBER G
+    		ON A.email = G.email
+    		where G.email = #{email}
+    		order by odate desc
+    </select>
+    
+    <select id="selectOrderListByOneMonth" resultType="com.hyundai.project.dto.OrderListDTO">
+        SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+    		FROM ORDERS A
+    		INNER JOIN ORDER_ITEM B
+    		ON A.oid = B.oid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
+    		ON B.psid = C.psid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
+    		ON C.pcid = D.pcid
+    		INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON E
+    		ON D.pid = E.pid
+    		INNER JOIN PRODUCTMANAGER.BRAND F
+    		ON E.bno = F.bno
+    		INNER JOIN MEMBER G
+    		ON A.email = G.email
+    		where G.email = #{email} AND odate BETWEEN sysdate-30 and sysdate
+    		order by odate desc
+    </select>
+ 
 </mapper>

@@ -12,6 +12,7 @@ import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.user.repository.CartMapper;
 import com.hyundai.project.user.repository.OrderMapper;
+import com.hyundai.project.dto.OrderListDTO;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -69,4 +70,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.updateOrder(orderItemDTO);
 	}
 	
+	@Override
+	public List<OrderListDTO> selectOrderList(String email) throws Exception {
+		OrderListDTO orderListDTO = new OrderListDTO();
+		return orderMapper.selectOrderList(email);
+	}
+	
+	@Override
+	public List<OrderListDTO> selectOrderListByOneMonth(String email) throws Exception {
+		OrderListDTO orderListDTO = new OrderListDTO();
+		return orderMapper.selectOrderListByOneMonth(email);
+	}
 }
+
