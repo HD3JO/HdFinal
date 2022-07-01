@@ -14,10 +14,13 @@ import com.hyundai.project.dto.ProductImgDTO;
 import com.hyundai.project.dto.ProductListDTO;
 import com.hyundai.project.dto.ProductSizeDTO;
 import com.hyundai.project.dto.ProductViewDTO;
+import com.hyundai.project.dto.PurchasedProductDTO;
 import com.hyundai.project.product.repository.ProductMapper;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+
 	@Autowired
 	ProductMapper productmapper;
 	

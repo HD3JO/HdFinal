@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+
+<script type="text/javascript">
+	var arkQuery = $.noConflict(true);
+
+	function mywroteReview(e) {
+		const header = $("meta[name='_csrf_header']").attr('content');
+		const token = $("meta[name='_csrf']").attr('content');
+
+		console.log(e);
+
+		var jsonData = {
+			"email" : e
+		}
+
+		$.ajax({
+			type : 'POST',
+			url : "/member/mywroteReview",
+			data : JSON.stringify(jsonData),
+			contentType : 'application/json',
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				result.forEach(function(item) {
+					console.log(item);
+					$('#reviewdate').text(item.rdate);
+					$('#productfirst')
+							.attr('href', '/detail?pcid=' + item.pcid);
+					$('#productsecond').attr('href',
+							'/detail?pcid=' + item.pcid);
+					$('#productimg').attr('src', item.pcimg1);
+					$('#productbname').text(item.bname);
+					$('#productpname').text(item.pname);
+					$('#productcolorcode').text(item.pcolorcode);
+					$('#productsize').text(item.psize);
+					console.log('done');
+				});
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+</script>
+
+<body>
+	<div id="bodyWrap">
+		<h3 class="cnts_title">
+			<span id="menuTitle">내 상품평</span>
+		</h3>
+		<div class="sub_container">
+			<!-- lnb -->
+			<div class="lnb_wrap">
+				<h4>
+					<a th:href="@{/member/mypage}">마이페이지<!-- 마이페이지 --></a>
+				</h4>
+				<div class="lnb">
+						<dl>
+							<dt><a th:href="@{/member/myorder}" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a></dt>
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/modify}" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a></dt>
+							
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/myreview}" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a></dt>
+						</dl>
+					</div>
+			</div>
+			<!-- //lnb -->
+			<!-- cnts -->
+			<div class="sub_cnts">
+				<div class="review_betterment1905">
+					<div class="my_review_wrap1905">
+						<h4>상품평 작성 시 추가 마일리지를 드려요!</h4>
+						<div class="my_review_wrap_box">
+							<div class="left">
+								<p>• 온라인 구매 상품평 작성 시</p>
+								<ul class="online">
+									<li><span class="img">정상상품</span> <span>구매금액의<br>
+										<b>0.5%</b></span></li>
+									<li><span class="img">아울렛상품</span> <span>구매금액의<br>
+										<b>0.1%</b></span></li>
+									<li><span class="img">포토상품평</span> <span>(상품별 최초)<br>
+										<b>2,000마일리지</b></span></li>
+								</ul>
+							</div>
+							<div class="right">
+								<p>• 온라인/오프라인 구매</p>
+								<ul class="offline">
+									<li><span class="img">베스트리뷰</span> <span>매월 5명<br>
+										<b>10만원</b> 바우처
+									</span></li>
+								</ul>
+							</div>
+						</div>
+						<div class="info">
+							<ul class="bul_sty01_li">
+								<li>마일리지는 배송 완료일로부터 30일 이내, 작성한 상품평에 한하여 제공됩니다.</li>
+								<li>상품평 작성 시, 제공되는 추가 마일리지는 온라인에서 구입한 상품에 한하여 제공됩니다.</li>
+								<li>베스트 리뷰는 온라인/오프라인에서 구매한 상품의 상품평 전체를 대상으로 선정합니다.</li>
+								<li>할인, 쿠폰 적용 후 실결제금액이 5,000원 이상인 상품에 한하여 지급됩니다.</li>
+								<li>판매가 종료된 상품의 경우, 상품 상세페이지가 소멸되어 상품평 작성 및 마일리지 적립이
+									불가능합니다.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="tab_a review_betterment1905 m2" id="brandIntroTab">
+						<ul>
+							<li class="write on"><a href="javascript:void(0);"
+								class="active">작성
+									가능한 상품평</a></li>
+							<li class="wrote"><a href="javascript:void(0);" class="" onclick="mywroteReview('ysk@gmail.com')">
+							작성한 상품평</a></li>
+						</ul>
+					</div>
+
+					<!-- Table -->
+					<div class="review_tab_01">
+						<!-- 190528_상품평개선 -->
+						<div class="tblwrap">
+							<table class="tbl_ltype my_review_table review_betterment1905">
+								<caption>내 상품평 목록</caption>
+								<colgroup>
+									<col>
+									<col style="width: 105px">
+									<col style="width: 130px">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">주문 상품정보</th>
+										<th scope="col">배송 상태</th>
+										<th scope="col">작성 상태</th>
+									</tr>
+								</thead>
+
+								<tbody id="writeListBody">
+									<div th:if="${#lists.isEmpty(orderList)}">
+									<tr>
+										<td colspan="6" class="no_data">리뷰를 작성할 상품이 없습니다.</td>
+									</tr>
+									</div>
+									<div th:if="${!#lists.isEmpty(orderList)}">
+										<tr th:each="product : ${orderList}">
+										<td class="pt_list_wrap">
+											<!-- pt_list_all -->
+											
+											<div class="pt_list_all">
+												<a id="productfirst"
+													th:href="@{/detail(pcid=${product.pcid})}"
+													onclick="javascript:void(0);">
+													<img th:id="productimg" th:src="${product.pcimg1}" alt="">
+												</a>
+												<div class="tlt_wrap">
+													<a th:id="productsecond"
+														th:href="@{/detail(pcid=${product.pcid})}"
+														class="basket_tlt"
+														onclick="javascript:setEcommerceData('0', 'Click ADD');GA_Event('쇼핑백','상품','[ICONIC] 칼라리스 재킷');">
+														<span th:id="'productbname'" class="tlt"
+														th:text="${product.bname}"></span> <span
+														th:id="'productpname'" class="sb_tlt"
+														th:text="${product.pname}"></span>
+													</a>
+
+													<p class="color_op">
+
+													<span th:id="productcolorcode"
+														th:text="${product.pccolorcode}"></span>
+													<span
+														class="and_line">/</span> 
+													<span th:id="productsize"
+														th:text="${product.psize}"></span>
+													</p>
+												</div>
+												
+											</div>
+										</td>
+										<td class="al_middle">
+											<!-- Price -->
+											<div class="price_wrap">
+												<span th:id="'productostatus'" th:text="${product.ostatus}"></span>
+												<input type="hidden" name="checkZeroPrice" value="795000.0">
+											</div> <!-- //Price -->
+										</td>
+										<td class="al_middle">
+											<!-- Price -->
+											<div class="price_wrap">
+												<span></span> <input type="hidden" name="checkZeroPrice"
+													value="000000">
+											</div> <!-- //Price -->
+										</td>
+
+
+										<!-- //pt_list_all-->
+
+										</tr>
+									</div>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- //Table -->
+					<!-- Table -->
+					<div class="review_tab_02" style="display: none;">
+						<div class="tblwrap">
+							<table
+								class="tbl_ltype my_review_table review_betterment1905 add_arr190830">
+								<caption>내 상품평 목록</caption>
+								<colgroup>
+									<col style="width: 100px">
+									<col>
+									<col style="width: 107px">
+									<col style="width: 123px">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">작성일</th>
+										<th scope="col">상품정보</th>
+										<th scope="col">상품평 수정</th>
+										<th scope="col">마일리지</th>
+									</tr>
+								</thead>
+								<tbody id="listBody">
+								<div th:if="${#lists.isEmpty(reviewedList)}">
+								<tr>
+									<td colspan="4" class="no_data">등록된 상품평이 없습니다. 최초의 상품평을
+											등록해 주세요. <!-- 등록된 상품평이 없습니다. -->
+									</td>
+								</tr>
+								</div>
+									
+								<div th:if="${!#lists.isEmpty(reviewedList)}">
+								<tr th:each="review : ${reviewedList}">
+								<td class="pt_list_wrap">
+									<!-- Price -->
+									<div class="tlt_wrap">
+										<span th:id="reviewdate" th:text="${review.rdate}"></span>
+									</div> <!-- //Price -->
+								</td>
+								<td class="pt_list_wrap">
+									<!-- pt_list_all -->
+									<div class="pt_list_all">
+										<a id="productfirst"
+											 th:href="@{/detail(pcid=${review.pcid})}"
+											onclick="javascript:void(0);"> 
+											<img th:id="productimg"
+											th:src="${review.pcimg1}" alt="">
+										</a>
+										<div class="tlt_wrap">
+										<a th:id="productsecond"
+											th:href="@{/detail(pcid=${review.pcid})}" class="basket_tlt"
+											onclick="javascript:void(0);"> 
+											<span class="tlt"
+											th:text=${review.bname}></span>
+											 <span class="sb_tlt"
+											th:text=${review.pname}> </span>
+										</a>
+
+										<p class="color_op">
+
+											<span th:id="productcolorcode"
+												th:text="${review.pccolorcode}"> </span> <span
+												class="and_line">/</span> <span th:id="productsize"
+												th:text="${review.psize}"> </span>
+										</p>
+									</div>
+										</div>
+									</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span></span> <input type="hidden" name="checkZeroPrice"
+											value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+							</tr>
+						</div>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- //Table -->
+					<!-- paging -->
+					<div class="paging prPaging" style="display: none;"></div>
+					<!-- //paging -->
+					<div class="gd_wrap review_betterment1905" style="border-top: 0;">
+						<dl class="gd_list">
+							<dt class="grd_inf">안내 및 유의사항</dt>
+							<dd>
+								<ul class="bul_sty01_li">
+									<li>상품평 작성 마일리지는 정상 0.5%, 아울렛 0.1% 적립됩니다.</li>
+									<li>마일리지는 온라인에서 구입한 상품의 상품평에 한하여 제공됩니다.</li>
+									<li>상품평 작성 마일리지는 배송 완료일로부터 30일 이내 작성 시, 작성일 1일 이후 적립됩니다.</li>
+									<li>구매 마일리지 적립 전에 작성한 상품평에 대해서는, 구매 마일리지 적립일에 합산 적립됩니다.</li>
+									<li>마일리지의 유효기간은 적립일로부터 2년입니다.</li>
+									<li>오프라인 매장에서 구매한 상품의 상품평 작성은 가능하나, 마일리지 적립 대상은 아닙니다.</li>
+									<li>상품평은 홍보, 이벤트 등 다양한 방법으로 활용될 수 있습니다.</li>
+									<li>아래와 같은 상품평은 사전 동의 없이 미게시로 전환될 수 있으며, 지급된 마일리지는 자동으로
+										회수됩니다.<br> 1)부당 리뷰(직접 촬영하지 않은 캡쳐 사진, 해석 및 식별이 불가능한 리뷰, 타
+										상품에 대한 리뷰, 제 3자 사진 도움 등)<br> 2)약관 및 법률 위배(비속어, 허위사실 등)<br>
+										3)상기 내용에 준하는 사유라고 합리적으로 판단되는 경우
+									</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<!-- //cnts -->
+		</div>
+	</div>
+
+</body>
+</html>

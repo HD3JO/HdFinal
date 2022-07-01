@@ -466,7 +466,7 @@
 .st_receipt_wrap .tlt{float:left;margin-top:12px;cursor:pointer;}
 .st_receipt_wrap .store_pickup{padding-bottom:20px;border-bottom:1px solid #e0dedf;}
 .st_receipt_wrap .store_pickup > .text{margin-left:6px;}
-.st_receipt_wrap .fourpm{padding-top:20px;border-top:1px solid #e0dedf;margin-top:20px;position:relative;}
+.st_receipt_wrap .fourpm.on{padding-top:20px;border-top:1px solid #e0dedf;margin-top:20px;position:relative;}
 .st_receipt_wrap .fourpm > .text{margin-left:20px;}
 .st_receipt_wrap .text p:last-child{font-size:11px;color:#777;margin-left:2px;}
 .st_receipt_wrap .store_pickup .delch_box{top:58px;left:49px;width:375px;}
@@ -484,7 +484,7 @@
 .filterWrap li.athome_filter .input_wrap label{color:#c69c6c;padding-left:20px;background:url('/_ui/desktop/common/images/common/list_athome.png') 2px 0 no-repeat;}
 
 /*at home 서비스 - 상품상세*/
-.st_receipt_wrap .athome_svc{padding-top:20px;border-top:1px solid #e0dedf;margin-top:20px;position:relative;}
+.st_receipt_wrap .athome_svc.on{padding-top:20px;border-top:1px solid #e0dedf;margin-top:20px;position:relative;}
 .st_receipt_wrap .athome_svc > .text{margin-left:31px;}
 .st_receipt_wrap .athome_svc .input_wrap label{background-position:0 -61px;}
 .st_receipt_wrap .athome_svc > .text .btn_chg{position:absolute;display:inline-block;background:#fff;border:1px solid #e3e3e3;padding:8px 10px;top:23px;right:0;font-size:11px;}
@@ -652,7 +652,7 @@
 
 /*상품상세 - 퀵배송 UI*/
 .st_receipt_wrap .quick_deliv .text p:nth-child(2){width:210px;height:23px;font-size:11px;color:#777;margin-left:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.st_receipt_wrap .quick_deliv{padding-top:20px;margin-top:20px;border-top:1px solid #e0dedf;position:relative;}
+.st_receipt_wrap .quick_deliv.on{padding-top:20px;margin-top:20px;border-top:1px solid #e0dedf;position:relative;}
 .st_receipt_wrap .quick_deliv .input_wrap label{background-position:0 -85px;padding-left:33px;}
 .st_receipt_wrap .quick_deliv > .text{margin-left:16px;max-width:215px;}
 .st_receipt_wrap .quick_deliv .delch_box{top:140px;left:36px;width:395px;}

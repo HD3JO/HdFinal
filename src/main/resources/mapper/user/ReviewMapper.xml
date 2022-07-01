@@ -21,7 +21,7 @@
 		values(#{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, SYSDATE, #{grade,jdbcType=VARCHAR}, 
 		#{pcid,jdbcType=VARCHAR}, #{psize,jdbcType=VARCHAR}, #{bname,jdbcType=VARCHAR}, 
 		#{pname,jdbcType=VARCHAR}, #{pcprice,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, 
-		#{enjoysize,jdbcType=VARCHAR}, #{bodytype,jdbcType=VARCHAR}, #{reviewcontent}, #{filepath,jdbcType=VARCHAR})
+		#{enjoysize,jdbcType=VARCHAR}, #{bodytype,jdbcType=VARCHAR}, #{reviewcontent}, #{filepath,jdbcType=VARCHAR}, #{pccolorcode,jdbcType=VARCHAR})
     </insert>
     
     <select id="getReview" parameterType="com.hyundai.project.dto.ReviewDTO" resultType="com.hyundai.project.dto.ReviewDTO">
@@ -35,6 +35,20 @@
 		order by rdate desc
     </select>
     
+    <select id="isPurchased" parameterType="com.hyundai.project.dto.PurchasedProductDTO" resultType="com.hyundai.project.dto.PurchasedProductDTO">
+		select OINFO.PSID, PCID, PCCOLORCODE, PSIZE, ORECEIVER, EMAIL, OSTATUS, PCIMG1
+		from (select PSID, orders.OSTATUS AS OSTATUS, EMAIL , ORECEIVER from order_item 
+		INNER JOIN orders ON order_item.oid = orders.oid where orders.OSTATUS='주문완료' AND OEMAIL=#{email}) 
+		OINFO
+		INNER JOIN
+		(select PSID, PSIZE, PS.PCID, PCCOLORCODE, PCIMG1 from productmanager.product_Stock PS
+		INNER JOIN productmanager.product_color PC
+		ON PS.pcid = PC.pcid
+		where PID IN
+		(SELECT pid from productmanager.product_color where pcid = #{pcid})) 
+		PINFO
+		ON OINFO.PSID = PINFO.PSID
+    </select>    
     
     
     <!--  

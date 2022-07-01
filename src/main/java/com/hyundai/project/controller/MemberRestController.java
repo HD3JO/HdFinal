@@ -17,17 +17,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberRole;
 import com.hyundai.project.dto.MemberUserDetails;
+import com.hyundai.project.dto.OrderListDTO;
+import com.hyundai.project.dto.ReviewDTO;
 import com.hyundai.project.service.MemberService;
+import com.hyundai.project.service.OrderService;
+import com.hyundai.project.service.ReviewService;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
+//@Slf4j
 @Controller
 @RequestMapping("/member/*")
 public class MemberRestController {
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private ReviewService reviewService;
 	
 	@RequestMapping(value="/isduplemail", method=RequestMethod.POST)
 	@ResponseBody
@@ -67,10 +77,13 @@ public class MemberRestController {
 		return new ResponseEntity<String>("FAILURE", HttpStatus.BAD_REQUEST);
 	}
 	@RequestMapping(value="/mypage", method=RequestMethod.GET)
-	public String mypage(Model model) throws Exception {
-		
-		MemberDTO memberDTO = new MemberDTO();
-		model.addAttribute("mypage", memberDTO);
+	public String mypage(Model model, Authentication authentication) throws Exception {
+		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
+		MemberDTO memberDTO = memberService.selectOneUser(authDTO.getEmail());
+		List<OrderListDTO> orderList = orderService.selectOrderListByOneMonth(authDTO.getEmail());
+		String name = memberDTO.getName();
+		model.addAttribute("name", name);
+		model.addAttribute("orderList", orderList);
 		return "mypage";
 	}
 	
@@ -96,23 +109,38 @@ public class MemberRestController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/myorder", method=RequestMethod.GET)
+	public String myorder(Model model, Authentication authentication) throws Exception {
+		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
+		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
+		model.addAttribute("orderList", orderList);
+		return "myorder";
+	}
+	
 	@RequestMapping(value="/mygrade", method=RequestMethod.GET)
 	public String mygrade() {
 		return "mygrade";
 	}
 	
-//	@RequestMapping(value="/myreview", method=RequestMethod.GET)
-//	public String myreview(Model model, Authentication authentication) throws Exception {
-//		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
-//		MemberDTO dto = memberService.selectOneUser(authDTO.getEmail());
-//		List<OrderListDTO> orderListDTO = orderService.selectOrderList(dto);
-//		return "myreview";
-//	}
+	@RequestMapping(value="/myreview", method=RequestMethod.GET)
+	public String myreview(Model model, Authentication authentication) throws Exception {
+		System.out.println("myReviewCalled");
+		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
+		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
+		//List<OrderReviewedDTO> reviewedList = reviewService.mywroteReview(authDTO.getEmail());
+		System.out.println(orderList.size() + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		model.addAttribute("orderList", orderList);
+		//model.addAttribute("reviewedList", reviewedList);
+		System.out.println(orderList);
+		return "myreview";
+	}
 	
-//	@RequestMapping(value="/myreview", method=RequestMethod.POST)
-//	public List<OrderListDTO> selectOrderList(@RequestBody OrderListDTO orderListDTO) throws Exception{
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+orderListDTO);
-//		return orderService.selectOrderList(email);
+//	@RequestMapping(value="/mywroteReview", method=RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseEntity<List<OrderReviewedDTO>> mywroteReview(@RequestBody ReviewDTO reviewDTO) throws Exception{
+//		List<OrderReviewedDTO> reviewedList = reviewService.mywroteReview(reviewDTO.getEmail());
+//		return new ResponseEntity<List<OrderReviewedDTO>>(reviewedList, HttpStatus.OK);
 //	}
 	
 	@RequestMapping(value="/mypoint", method=RequestMethod.GET)

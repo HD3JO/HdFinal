@@ -1,1115 +1,1592 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-   xmlns:sec="http://www.w3.org/1999/xhtml"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:replace="fragments/headerstatic :: headerstatic"></head>
 
 <header th:replace="fragments/header :: header"></header>
 <script>
     const arkQuery = $.noConflict(true);
-   
+
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
-    
-    
-    
-    let pcid = $('#pcid').text();
-    
-    function changeColor(e){
-    	console.log(e);
-        var productVO = {
-        	'pcid' : $(e).attr('value')
-      	};
-      //상품 상세정보 조회
-      $.ajax({
-          url : '/ProductDetail',
-          data : JSON.stringify(productVO),
-          type : 'POST',
-          dataType : 'JSON',
-          contentType : 'application/json',
-          beforeSend : function(xhr){
-               xhr.setRequestHeader(header, token);
-           },
-          success : function(data) {
-             console.log(data);
-             console.log("상품 상세정보 호출 성공");
-             $('#img1').attr('src', data.pcimg1);
-             $('#img2').attr('src', data.pcimg2);
-             $('#img3').attr('src', data.pcimg3);
-             $('#pcid').text(data.pcid);
-             $('#pcid').attr('value', data.pcid);
-          },
-         error : function() {
-            console.log("상품 상세정보 호출 실패");
-         }
-       });
-      
 
-      
-   }
-    
-    $('#customerReview').click(function(){
-        
+
+
+    let pcid = $('#pcid').text();
+
+    function changeColor(e) {
+        console.log(e);
+        var productVO = {
+            'pcid': $(e).attr('value')
+        };
+        //상품 상세정보 조회
+        $.ajax({
+            url: '/ProductDetail',
+            data: JSON.stringify(productVO),
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                console.log(data);
+                console.log("상품 상세정보 호출 성공");
+                $('#img1').attr('src', data.pcimg1);
+                $('#img2').attr('src', data.pcimg2);
+                $('#img3').attr('src', data.pcimg3);
+                $('#pcid').text(data.pcid);
+                $('#pcid').attr('value', data.pcid);
+            },
+            error: function () {
+                console.log("상품 상세정보 호출 실패");
+            }
+        });
+
+
+
+    }
+
+    $('#customerReview').click(function () {
+
         var header = $("meta[name='_csrf_header']").attr('content');
-		var token = $("meta[name='_csrf']").attr('content');
-		let pcid = $('#pcid').text();
-		var object = {
-    	    	'pcid' : pcid,
-    	      }
-		var jsondata = JSON.stringigy(object);
-		
-		$.ajax({
-		    url : '/getReview',
-		    data : jsondata,
-		    type : 'POST',
-		    dataType : 'JSON',
-		    contentType : 'application/json',
-		    beforeSend : function(xhr){
-		         xhr.setRequestHeader(header, token);
-		     },
-		    success : function(data) {
-		       console.log(data);
-		       console.log("상품평 리스트 호출 성공");
-		    },
-		   error : function() {
-		      console.log("상품평 상세정보 호출 실패");
-		   }
-		 });
-        
+        var token = $("meta[name='_csrf']").attr('content');
+        let pcid = $('#pcid').text();
+        var object = {
+            'pcid': pcid,
+        }
+        var jsondata = JSON.stringigy(object);
+
+        $.ajax({
+            url: '/getReview',
+            data: jsondata,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                console.log(data);
+                console.log("상품평 리스트 호출 성공");
+
+            },
+            error: function () {
+                console.log("상품평 상세정보 호출 실패");
+            }
+        });
+
     });
-   /*
-	function fn_getReview() {
-		var header = $("meta[name='_csrf_header']").attr('content');
-		var token = $("meta[name='_csrf']").attr('content');
-		let pcid = $('#pcid').text();
-		var object = {
-    	    	'pcid' : pcid,
-    	      }
-		
-		var jsondata = JSON.stringigy(object);
-		
-		$.ajax({
-		    url : '/getReview',
-		    data : jsondata,
-		    type : 'POST',
-		    dataType : 'JSON',
-		    contentType : 'application/json',
-		    beforeSend : function(xhr){
-		         xhr.setRequestHeader(header, token);
-		     },
-		    success : function(data) {
-		       console.log(data);
-		       console.log("상품 상세정보 호출 성공");
-		    },
-		   error : function() {
-		      console.log("상품 상세정보 호출 실패");
-		   }
-		 });
-	}
-    */
-    
-    
-   $('.toggle_type1>dt').click(function() {
-      
-      $(this).addClass('on');
-      $(this).siblings('dt').removeClass('on');
-      
-      var beforeHeight = $(".toggle_type1").height();
-      var afterHeight = 0;
-      var scrolltop = $(window).scrollTop();
-      
-      var checkElement = $(this).next();
-      
-      if((checkElement.is('dd')) && (checkElement.is(':visible'))) {
-         $(this).removeClass('on');
-          checkElement.slideUp('fast', 
-                function(){
-                   afterHeight = $(".toggle_type1").height();
-//                    bodyScroll();
-                });
-          
-      }
-      
-      var bodyScroll = function(){
-         
-         $('body,html').animate({scrollTop:parseFloat(scrolltop + (beforeHeight - afterHeight))}, 
-               function(){
-                  bodyReSize();
+    /*
+     function fn_getReview() {
+         var header = $("meta[name='_csrf_header']").attr('content');
+         var token = $("meta[name='_csrf']").attr('content');
+         let pcid = $('#pcid').text();
+         var object = {
+                 'pcid' : pcid,
                }
-         );
-      }
-      
-      if($(this).next('dd').length == 0) {
-         return true;
-      } else {
-         return false; 
-      }      
-   });
-   
-   if ( 'en' == 'ko' || 'zh' == 'ko' ) {
-      showExchangeRate();
-   }
+     	
+         var jsondata = JSON.stringigy(object);
+     	
+         $.ajax({
+             url : '/getReview',
+             data : jsondata,
+             type : 'POST',
+             dataType : 'JSON',
+             contentType : 'application/json',
+             beforeSend : function(xhr){
+                  xhr.setRequestHeader(header, token);
+              },
+             success : function(data) {
+                console.log(data);
+                console.log("상품 상세정보 호출 성공");
+             },
+            error : function() {
+               console.log("상품 상세정보 호출 실패");
+            }
+          });
+     }
+     */
+
+
+    $('.toggle_type1>dt').click(function () {
+
+        $(this).addClass('on');
+        $(this).siblings('dt').removeClass('on');
+
+        var beforeHeight = $(".toggle_type1").height();
+        var afterHeight = 0;
+        var scrolltop = $(window).scrollTop();
+
+        var checkElement = $(this).next();
+
+        if ((checkElement.is('dd')) && (checkElement.is(':visible'))) {
+            $(this).removeClass('on');
+            checkElement.slideUp('fast',
+                function () {
+                    afterHeight = $(".toggle_type1").height();
+                    //                    bodyScroll();
+                });
+
+        }
+
+        var bodyScroll = function () {
+
+            $('body,html').animate({ scrollTop: parseFloat(scrolltop + (beforeHeight - afterHeight)) },
+                function () {
+                    bodyReSize();
+                }
+            );
+        }
+
+        if ($(this).next('dd').length == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    if ('en' == 'ko' || 'zh' == 'ko') {
+        showExchangeRate();
+    }
 </script>
+
 <body>
-<div id="bodyWrap" class="item_detail">
+    <div id="bodyWrap" class="item_detail">
         <div id="oneEventLayer"></div>
         <div class="adaptive_wrap">
             <div class="clearfix prd_detail1905" id="clearfix">
-      <div class="clearfix image_view3">
-            <!-- 2021.08.18 동영상 재생 수정, 상품 imageDivisionCode에 VOD가 있는 경우 동영상 url 세팅 -->
-            <div class="image_view1" id="image_view1">
-                <div class="item_visual" id="imageDiv" style="margin-top: 20px;">
-                       <ul>
-                           <li><img th:src="${detailDTO.pcimg1}" id="img1" class="respon_image" alt=""></li>
-                           <li><img th:src="${detailDTO.pcimg2}" id="img2" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>
-                           <li><img th:src="${detailDTO.pcimg3}" id="img3" class="respon_image" alt="" onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></li>                        
-                       </ul>
+                <div class="clearfix image_view3">
+                    <!-- 2021.08.18 동영상 재생 수정, 상품 imageDivisionCode에 VOD가 있는 경우 동영상 url 세팅 -->
+                    <div class="image_view1" id="image_view1">
+                        <div class="item_visual" id="imageDiv" style="margin-top: 20px;">
+                            <ul>
+                                <li><img th:src="${detailDTO.pcimg1}" id="img1" class="respon_image" alt=""></li>
+                                <li><img th:src="${detailDTO.pcimg2}" id="img2" class="respon_image" alt=""
+                                        onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'">
+                                </li>
+                                <li><img th:src="${detailDTO.pcimg3}" id="img3" class="respon_image" alt=""
+                                        onerror="this.src='http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>          
-    </div>
-<!-- 품절상품포함 여부 -->
-<input type="hidden" id="email" th:value="${#authentication.name}"></input>
-<input type="hidden" id="pcprice" th:value="${detailDTO.pcprice}"></input>
-<div class="item_detail_info float_right" id="contentDiv" style="margin-top: 20px; top: 0px; left: 676px;">
-   <div class="info">
-      <div class="info_sect">
-            <h4 class="item_name">
-               <div class="brand-name" id= "brand-name">
-                  <a id="this-brand-name" href="" onclick="" th:text="${detailDTO.bname}"></a>
-               </div>
-               <span class="name ko_fir_spel">
-                  <a id="this-productname" th:text="${detailDTO.pname}"></a>
-                  <input type="hidden" id="brandName" value="">
-                  <input type="hidden" id="productName" value="">
-                  <input type="hidden" id="productCode" value="">
-               </span>
-            </h4>      
-            <p class="price">
-               <span id="price" th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"><fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###"/></span>
-               <input type="hidden" id="productPrice" value="${detail.productColorVO.pcPrice}">
-            </p>
-            <div class="prod-detail-con-box">               
-                   <strong class="number-code">상품품번 : <span id="pcid" th:text="${pcid}"></span></strong>     
-                   <div class="round-style">
-                     <p th:text="${detailDTO.pnote}">${detailDTO.pnote}</p>
-                  </div>             
-              </div>
-      </div>
-        <div class="info_sect">
-         <ul class="point_delivery">
-            <li>
-               <span class="title">한섬마일리지</span>
-               <span class="txt" th:text="${#numbers.formatInteger(detailDTO.pcprice/100*5,3,'COMMA')} + 'M (5%)'">M(5%)</span>
-            </li>
-            
-            <li>
-                    <span class="title">H.Point</span>
-                        <span class="txt" th:text="${#numbers.formatInteger(detailDTO.pcprice/100*0.1,3,'COMMA')} + 'P (0.1%)'">P(0.1%)</span>
-                </li>
-            <li>
-               <span class="title">배송비</span>
-               <span class="txt">30,000원 이상 무료배송 (실결제 기준)</span>
-                </li>
-         </ul>
-      </div>
-      <div class="info_sect">
-         <ul class="color_size_qty">
-         
-            <!-- 색상 -->
-            <li>
-               <span class="title">색상</span>
-               <div class="txt">
-                  <ul class="color_chip clearfix" >
-                  <input type="hidden" id="colorName">
-                     <li th:each="color, status : ${colorDTOs}">
-                        <input type="hidden" class="colorNameVal" th:value="${color.pcid}">                        
-                        <a href="javascript:void(0)"  class="" th:id="pcid"  th:value="${color.pcid}" onclick="changeColor(this)" th:style="'background-image:url(' + ${color.pcchipimg} + ');'" onmouseover="" onmouseout="" ></a>
-                     </li>
-                  </ul>
-               </div>
-               <span class="cl_name" id="colorNameContent"></span>
-            </li>
-            <!-- 사이즈 -->
-            <li>
-                <span class="title">사이즈</span>
-               <span class="txt">
-               <script type="text/javascript">
-               $(document).ready(function(){
-                  var tab = $('#size_tab ul li');
-                  var content = $('.size_tab_container > div');
-                  $('.size_tab_container > div + div').css('display','none');
-                  tab.on('click', function(e){
-                     e.preventDefault();
-                     var tg = $(this);
-                     var tc = tg.find('> a');
-                     tab.find('> a').removeClass('active');
-                     tc.addClass('active');
-                     i = tg.index();
-                     content.css('display', 'none');
-                     content.eq(i).css('display', 'block');
-                  });
-               });
-               </script>
-               <ul class="size_chip clearfix">
-                  <li th:each = 'size : ${sizeDTOs}'>   
-                  <input type="hidden" id="psize" class="colorNameVal" th:value="${size.psize}">
-                     <a th:id="psize" th:value="${size.psize}" th:text="${size.psize}"></a>
-                  </li>
-               </ul>
-               </span>
-               <!-- 2021.08.10 화장품 상품인 경우 사이즈조견표 영역 미노출 -->
-               <!-- 재입고알림 툴팁 -->
-                    <!-- //재입고알림 툴팁 -->
-                    </li>
-            <li>
-               <span class="title">수량</span>
-               <script>
-               
-               function totalPrice(){
-                  let price = $('#pcprice').val();
-                  let quantity = $('#txtqty').val();                  
-                  let totalPrice = price * quantity;
-                  
+                <!-- 품절상품포함 여부 -->
+                <input type="hidden" id="email" th:value="${#authentication.name}"></input>
+                <input type="hidden" id="grade" th:if="${#authentication.name} != 'anonymousUser'"
+                    th:value="${#authentication.principal.grade}"></input> <!-- 등급추가 (황명하) -->
+                <input type="hidden" id="pcprice" th:value="${detailDTO.pcprice}"></input>
+                <div class="item_detail_info float_right" id="contentDiv"
+                    style="margin-top: 20px; top: 0px; left: 676px;">
+                    <div class="info">
+                        <div class="info_sect">
+                            <h4 class="item_name">
+                                <div class="brand-name" id="brand-name">
+                                    <a id="this-brand-name" href="" onclick="" th:text="${detailDTO.bname}"></a>
+                                </div>
+                                <span class="name ko_fir_spel">
+                                    <a id="this-productname" th:text="${detailDTO.pname}"></a>
+                                    <input type="hidden" id="brandName" value="">
+                                    <input type="hidden" id="productName" value="">
+                                    <input type="hidden" id="productCode" value="">
+                                </span>
+                            </h4>
+                            <p class="price">
+                                <span id="price" th:text=" ₩ + ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}">
+                                    <fmt:formatNumber value="${detail.productColorVO.pcPrice}" pattern="#,###" />
+                                </span>
+                                <input type="hidden" id="productPrice" value="${detail.productColorVO.pcPrice}">
+                            </p>
+                            <div class="prod-detail-con-box">
+                                <strong class="number-code">상품품번 : <span id="pcid" th:text="${pcid}"></span></strong>
+                                <div class="round-style">
+                                    <p th:text="${detailDTO.pnote}">${detailDTO.pnote}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info_sect">
+                            <ul class="point_delivery">
+                                <li>
+                                    <span class="title">한섬마일리지</span>
+                                    <span class="txt"
+                                        th:text="${#numbers.formatInteger(detailDTO.pcprice/100*5,3,'COMMA')} + 'M (5%)'">M(5%)</span>
+                                </li>
 
-                  
-                  $('#sumPrice').text("₩ "+(totalPrice).toLocaleString('ko-KR'));               
-               }
-               
-               function quantityChange(op){
-                  
-                        var pcid = $('#pcid.on').attr('value');
-                        var psize = $('#psize.on').attr('value');
+                                <li>
+                                    <span class="title">H.Point</span>
+                                    <span class="txt"
+                                        th:text="${#numbers.formatInteger(detailDTO.pcprice/100*0.1,3,'COMMA')} + 'P (0.1%)'">P(0.1%)</span>
+                                </li>
+                                <li>
+                                    <span class="title">배송비</span>
+                                    <span class="txt">30,000원 이상 무료배송 (실결제 기준)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="info_sect">
+                            <ul class="color_size_qty">
 
-                        if(pcid == undefined ){
-                            layerAlert('색상을 선택해주세요.');
-                            return;
-                        }
-                        
-                        if(psize == undefined){
-                            layerAlert('사이즈를 선택해주세요.');
-                            return;
-                        }
-                  
-                  var quantity = $('#txtqty').val();
-                  var pcid = $()
-                  if(op == '-'){
-                     if(quantity <= 1){
-                        return;
-                     }
-                     $('#txtqty').val(parseInt(quantity)-1);
-                  }else if(op =='+') {
-                  
-                     $('#txtqty').val(parseInt(quantity)+1);
-                  }
-                  totalPrice();                  
-               }
-               </script>
-               <span class="txt">
-                  <span class="qty_sel num">
-                  
-                     <a href="#" onclick="quantityChange('-');" class="left">이전 버튼</a>
-                     <input type="text" id="txtqty" title="수량" value="1" class="mr0" readonly="readonly">
-                     <a href="#" onclick="quantityChange('+');" class="right">다음 버튼</a>
-                     
-                  </span>
-               </span>               
-               <input type="hidden" id="erpWorkOrderNumber">     <input type="hidden" id="reserveSalesStockpile">  <input type="hidden" id="erpWorkOrderProdCode">  </li>
-         </ul>
-      </div>
-      <div class="total_price clearfix">
-         <div class="title float_left" style="width:auto;">총 합계</div>
-         <div class="pirce float_right">
-             <span id="sumPrice" th:text="'₩ ' +  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>      
-         </div>
-      </div>
-               <!-- //st_store_wrap -->
-      <div class="btnwrap clearfix" style="position: sticky; width: 400px;">
-            
-            <!--190508 추가 -->
-            <div class="toast_popup_pre_order1905"><!-- 토스트팝업 190507 -->
-                <p>예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.</p>
-                <span class="arr">위치아이콘</span>
-            </div>         
-               <input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0" id="addToCartButton">
-            <!--//190508 추가 -->
-            <form action="/order/orderSheet" method="POST" id="orderSheet">
-                  <input type="submit" value="바로주문" class="btn order float_right mr0" id="addToCartBuyNowButton">
-                  <!--<input type="hidden" id="email" name="email">-->
-                  <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
-            </form>
-       </div>
-         <!-- st_store_wrap -->
-                    <script>
-                        $("#orderSheet").submit(function(e){
-                           
-                            const header = $("meta[name='_csrf_header']").attr('content');
-                            const token = $("meta[name='_csrf']").attr('content');
-                              
-                            let pcid = $('#pcid.on').attr('value');
-                            let psize = $('#psize.on').attr('value');
-                            let psid = pcid + psize;
-                            let pquantity = $('#txtqty').val();
-                            let email =  $('#email').attr('value');   
-                            
-                            let form = $('#orderSheet');
-                            
-                            if(email == 'anonymousUser'){                          
-                            	let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
-                            	e.preventDefault();
-                            	
-                            	la.confirmAction = function(){                            		
-                            		location.href='/customLogin';
-                            	}                            	 
-                            }
-                                                                                   
-                            if(pcid == undefined ){
-                                layerAlert('색상을 선택해주세요.');
-                                return;
-                            }
-                            
-                            if(psize == undefined){
-                                layerAlert('사이즈를 선택해주세요.');
-                                return;
-                            }
-                            
-                            let input_psid = $("<input type='hidden' value=" + psid + " name='list[0].psid' readonly>");
-                            let input_pquantity = $("<input type='hidden' value=" + pquantity + " name='list[0].pquantity' readonly>");
-                            
-                            form.append(input_psid);
-                            form.append(input_pquantity);
-                     
-                            $('#orderSheet')[0].submit();
-                        });
-                     
-                        $('#addToCartButton').click(function(){                           
-                        	const header = $("meta[name='_csrf_header']").attr('content');
-                            const token = $("meta[name='_csrf']").attr('content');
-                              
-                            let pcid = $('#pcid.on').attr('value');
-                            let psize = $('#psize.on').attr('value');
-                            let psid = pcid + psize;
-                            let pquantity = $('#txtqty').val();
-                            let email =  $('#email').attr('value');
-                            
-                            
-                            if(email == 'anonymousUser'){
-                            	let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
-                            	la.confirmAction = function(){
-                            		location.href='/customLogin';
-                            	}                            	                                
-                             }
-                            
-                            if(pcid == undefined ){
-                                layerAlert('색상을 선택해주세요.');
-                                return;
-                            }
-                            
-                            if(psize == undefined){
-                                layerAlert('사이즈를 선택해주세요.');
-                                return;
-                            }                                                                            
-                            
-                            var object = {
-                                    'psid' : psid,
-                                    'pquantity' : pquantity,
-                                    'email' : email
-                            }
-                            
-                            var json = JSON.stringify(object);
-                            
-                            $.ajax({
-                                type : 'POST',
-                                url : '/cartInsert',
-                                data : json,
-                                contentType: 'application/json; charset=utf-8',                                
-                                beforeSend: function(xhr){
-                                    xhr.setRequestHeader(header, token);
-                                },
-                                success : function(data){
-                                   console.log(data);
-                                    let lc = new layerConfirm('쇼핑백에 담겼습니다.<br>확인하시겠습니까?', '쇼핑백 바로가기', '계속 쇼핑하기');
-                                    lc.confirmAction = function(){
-                                    	location.href="/cart/cartList";
-                                	}                                                                                                           
-                                },
-                                error : function(request, status, error){
-                                    if(request.status == 401){
-                                        layerAlert('로그인 후 쇼핑백에 담아주세요.');
+                                <!-- 색상 -->
+                                <li>
+                                    <span class="title">색상</span>
+                                    <div class="txt">
+                                        <ul class="color_chip clearfix">
+                                            <input type="hidden" id="colorName">
+                                            <li th:each="color, status : ${colorDTOs}">
+                                                <input type="hidden" class="colorNameVal" th:value="${color.pcid}">
+                                                <a href="javascript:void(0)" class="" th:id="pcid"
+                                                    th:value="${color.pcid}" onclick="changeColor(this)"
+                                                    th:style="'background-image:url(' + ${color.pcchipimg} + ');'"
+                                                    onmouseover="" onmouseout=""></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="cl_name" id="colorNameContent"></span>
+                                </li>
+                                <!-- 사이즈 -->
+                                <li>
+                                    <span class="title">사이즈</span>
+                                    <span class="txt">
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                var tab = $('#size_tab ul li');
+                                                var content = $('.size_tab_container > div');
+                                                $('.size_tab_container > div + div').css('display', 'none');
+                                                tab.on('click', function (e) {
+                                                    e.preventDefault();
+                                                    var tg = $(this);
+                                                    var tc = tg.find('> a');
+                                                    tab.find('> a').removeClass('active');
+                                                    tc.addClass('active');
+                                                    i = tg.index();
+                                                    content.css('display', 'none');
+                                                    content.eq(i).css('display', 'block');
+                                                });
+                                            });
+                                        </script>
+                                        <ul class="size_chip clearfix">
+                                            <li th:each='size : ${sizeDTOs}'>
+                                                <input type="hidden" id="psize" class="colorNameVal"
+                                                    th:value="${size.psize}">
+                                                <a th:id="psize" th:value="${size.psize}" th:text="${size.psize}"></a>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                    <!-- 2021.08.10 화장품 상품인 경우 사이즈조견표 영역 미노출 -->
+                                    <!-- 재입고알림 툴팁 -->
+                                    <!-- //재입고알림 툴팁 -->
+                                </li>
+                                <li>
+                                    <span class="title">수량</span>
+                                    <script>
+
+                                        function totalPrice() {
+                                            let price = $('#pcprice').val();
+                                            let quantity = $('#txtqty').val();
+                                            let totalPrice = price * quantity;
+
+
+
+                                            $('#sumPrice').text("₩ " + (totalPrice).toLocaleString('ko-KR'));
+                                        }
+
+                                        function quantityChange(op) {
+
+                                            var pcid = $('#pcid.on').attr('value');
+                                            var psize = $('#psize.on').attr('value');
+
+                                            if (pcid == undefined) {
+                                                layerAlert('색상을 선택해주세요.');
+                                                return;
+                                            }
+
+                                            if (psize == undefined) {
+                                                layerAlert('사이즈를 선택해주세요.');
+                                                return;
+                                            }
+
+                                            var quantity = $('#txtqty').val();
+                                            var pcid = $()
+                                            if (op == '-') {
+                                                if (quantity <= 1) {
+                                                    return;
+                                                }
+                                                $('#txtqty').val(parseInt(quantity) - 1);
+                                            } else if (op == '+') {
+
+                                                $('#txtqty').val(parseInt(quantity) + 1);
+                                            }
+                                            totalPrice();
+                                        }
+                                    </script>
+                                    <span class="txt">
+                                        <span class="qty_sel num">
+
+                                            <a href="#" onclick="quantityChange('-');" class="left">이전 버튼</a>
+                                            <input type="text" id="txtqty" title="수량" value="1" class="mr0"
+                                                readonly="readonly">
+                                            <a href="#" onclick="quantityChange('+');" class="right">다음 버튼</a>
+
+                                        </span>
+                                    </span>
+                                    <input type="hidden" id="erpWorkOrderNumber"> <input type="hidden"
+                                        id="reserveSalesStockpile"> <input type="hidden" id="erpWorkOrderProdCode">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="total_price clearfix">
+                            <div class="title float_left" style="width:auto;">총 합계</div>
+                            <div class="pirce float_right">
+                                <span id="sumPrice"
+                                    th:text="'₩ ' +  ${#numbers.formatInteger(detailDTO.pcprice,3,'COMMA')}"></span>
+                            </div>
+                        </div>
+                        <!-- //st_store_wrap -->
+                        <div class="btnwrap clearfix" style="position: sticky; width: 400px;">
+
+                            <!--190508 추가 -->
+                            <div class="toast_popup_pre_order1905">
+                                <!-- 토스트팝업 190507 -->
+                                <p>예약 주문이 가능한 옵션(컬러/사이즈)가 있습니다. <br>옵션 선택 후 배송 예정일을 확인해 주세요.</p>
+                                <span class="arr">위치아이콘</span>
+                            </div>
+                            <input type="button" value="쇼핑백 담기" class="btn cart1803 float_left ml0"
+                                id="addToCartButton">
+                            <!--//190508 추가 -->
+                            <form action="/order/orderSheet" method="POST" id="orderSheet">
+                                <input type="submit" value="바로주문" class="btn order float_right mr0"
+                                    id="addToCartBuyNowButton">
+                                <!--<input type="hidden" id="email" name="email">-->
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            </form>
+                        </div>
+                        <!-- st_store_wrap -->
+                        <script>
+                            $("#orderSheet").submit(function (e) {
+
+                                const header = $("meta[name='_csrf_header']").attr('content');
+                                const token = $("meta[name='_csrf']").attr('content');
+
+                                let pcid = $('#pcid.on').attr('value');
+                                let psize = $('#psize.on').attr('value');
+                                let psid = pcid + psize;
+                                let pquantity = $('#txtqty').val();
+                                let email = $('#email').attr('value');
+
+                                let form = $('#orderSheet');
+
+                                if (email == 'anonymousUser') {
+                                    let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
+                                    e.preventDefault();
+
+                                    la.confirmAction = function () {
+                                        location.href = '/customLogin';
                                     }
-                                    layerAlert('쇼핑백에 담을 수 없습니다.');
-                                    console.log("code:"+request.status+"\n"+"error:"+error);
-
                                 }
+
+                                if (pcid == undefined) {
+                                    layerAlert('색상을 선택해주세요.');
+                                    return;
+                                }
+
+                                if (psize == undefined) {
+                                    layerAlert('사이즈를 선택해주세요.');
+                                    return;
+                                }
+
+                                let input_psid = $("<input type='hidden' value=" + psid + " name='list[0].psid' readonly>");
+                                let input_pquantity = $("<input type='hidden' value=" + pquantity + " name='list[0].pquantity' readonly>");
+
+                                form.append(input_psid);
+                                form.append(input_pquantity);
+
+                                $('#orderSheet')[0].submit();
                             });
-                        });
-                    </script>
-      
-      <dl class="toggle_type1" style="margin-top:80px;">
-      <!-- 2021.08.10 화장품 상품인 경우 실측사이즈 영역 미노출 -->
-      <dt><a href="#" id="DELI_RETURN_EVT">배송 및 교환/반품</a></dt>
-      <dd>
-          <p class="tit">배송안내</p> <dl class="info_tbl"> <dt>배송방식 :</dt> <dd>우체국택배, CJ대한통운, 부릉, 굿투럭</dd><!-- 210728 oera 신규 추가  --> <dt>배송지역 :</dt> <dd>전국 (일부 지역 제외)</dd> <dt>배송정보 :</dt> <dd>평균 입금완료일 기준 2-4일 소요됩니다 (토/일/공휴일 제외)</dd> <dt>배송비 :</dt> <dd>실결제금액 기준 30,000원 이상 결제 시 무료배송<br>30,000원 미만 결제 시 2,500원(기본 배송비)<br>* 실결제금액이란, 쿠폰/바우처 할인액 및 <br>&nbsp; 한섬마일리지/H.Point 사용 금액을 제외한 금액입니다. <br> &nbsp;&nbsp;(e-money 사용은 실결제금액에 포함)<br>* 도서산간 지역은 3,000원의 별도 배송비가 부과됩니다.<br>* 일부 도서지역은 도선료가 부가될 수 있습니다. </dd> </dl> <p class="tit mt20">교환 및 반품안내</p> <!-- info_tbl --> <dl class="info_tbl"> <dt>교환/반품 기간 :</dt> <dd>상품 수령 후, 7일 이내</dd> <dt>교환절차 :</dt> <dd style="letter-spacing: -0.2px;"> 사이즈 및 상품불량 교환만 가능(색상교환 불가)하며 교환을 원하실 경우<br> 고객센터로 문의해주시기 바랍니다. (교환 재고가 없을 경우, 환불로 안내예정)<br> 화장품은 상품 불량만 교환 가능하며(상품 개봉 후 교환 불가), 고객센터로<br> 문의해주시기 바랍니다. <!-- 210728 oera 신규 추가  --> </dd> <dt>반품절차 :</dt> <dd>[배송완료] 7일 이내에 마이페이지 주문/배송/취소/반품 메뉴에서<br> [반품신청] 버튼을 클릭 시 가능합니다.</dd> <dt>교환/반품 배송비 :</dt> <dd style="letter-spacing: -0.4px;">배송비는 5,000원 이며(반품비는 주문시 배송비 결제 유무에 따라 변동)<br>상품 불량 등의 이유로 교환/반품하실 경우, 배송비는 무료입니다.</dd> <dt>교환/반품 불가사유</dt> <dd>다음의 경우에는 교환/반품이 불가합니다. <ol class="numlist"> <li> <span class="num sum">-</span> <span class="txt">교환/반품 기간(상품 수령 후 7일 이내)을 초과하였을 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 요청에 의해 제품 사양이 변경(이니셜 제품, 사이즈 맞춤 제품 등)된 경우</span></li><li><span class="num sum">-</span><span class="txt">제품을 이미 사용하였거나, 제품 일부를 소비하였을 경우</span> </li> <!-- 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">화장품 : 상품 개봉 후 교환/반품 불가. 단 상품 불량(내용물 불량) 혹은 피부 트러블로 인한 반품은 가능(용량 1/3 미만 사용 및 의사소견서 1:1문의 첨부 필수)</span></li> <!-- // 210728 oera 신규 추가  --> <li> <span class="num sum">-</span> <span class="txt">식기류 : 제품 수령 후, 비닐포장을 개봉한 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">고객님의 귀책사유로 인해 회수가 지연될 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">국내외 환율 변동 등에 의해 가격이 변동되는 제품의 경우</span> </li> <li> <span class="num sum">-</span> <span class="txt">문제소지가 있는 제품을 본사가 아닌, 타 업체(일반 수선실 등)에서 선처리가 된 경우</span> </li> </ol> </dd> <!-- 210728 oera 신규 추가  --> <dt>교환/반품건 배송</dt> <dd>교환/반품 시 배송 받으신 박스로 반송하셔야 합니다. <br>(한섬/오에라/리퀴드퍼퓸바 상품 함께 주문 후 교환/반품 시 각각의 박스에 나눠서 반송해주세요. 한 박스에 함께 동봉하여 반송 시 교환/반품 처리가 불가할 수 있습니다)</dd> <!-- // 210728 oera 신규 추가  --> </dl> <p class="tit mt20">환불안내</p> <p>환불은 반송제품 확인 후 진행됩니다.</p><br>
-      </dd>
-      <div class="popup_customer_review1807" id="customerReview">
-            <a href="#;" onclick="GA_Event('상품_상세','정보','상품평');">상품평(<span id="customerReviewCnt">0</span>)
-                <div class="star_score1807" id="prodTotalStarScoreWrapper" style="display: none;">
+
+                            $('#addToCartButton').click(function () {
+                                const header = $("meta[name='_csrf_header']").attr('content');
+                                const token = $("meta[name='_csrf']").attr('content');
+
+                                let pcid = $('#pcid.on').attr('value');
+                                let psize = $('#psize.on').attr('value');
+                                let psid = pcid + psize;
+                                let pquantity = $('#txtqty').val();
+                                let email = $('#email').attr('value');
+
+
+                                if (email == 'anonymousUser') {
+                                    let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
+                                    la.confirmAction = function () {
+                                        location.href = '/customLogin';
+                                    }
+                                }
+
+                                if (pcid == undefined) {
+                                    layerAlert('색상을 선택해주세요.');
+                                    return;
+                                }
+
+                                if (psize == undefined) {
+                                    layerAlert('사이즈를 선택해주세요.');
+                                    return;
+                                }
+
+                                var object = {
+                                    'psid': psid,
+                                    'pquantity': pquantity,
+                                    'email': email
+                                }
+
+                                var json = JSON.stringify(object);
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/cartInsert',
+                                    data: json,
+                                    contentType: 'application/json; charset=utf-8',
+                                    beforeSend: function (xhr) {
+                                        xhr.setRequestHeader(header, token);
+                                    },
+                                    success: function (data) {
+                                        console.log(data);
+                                        let lc = new layerConfirm('쇼핑백에 담겼습니다.<br>확인하시겠습니까?', '쇼핑백 바로가기', '계속 쇼핑하기');
+                                        lc.confirmAction = function () {
+                                            location.href = "/cart/cartList";
+                                        }
+                                    },
+                                    error: function (request, status, error) {
+                                        if (request.status == 401) {
+                                            layerAlert('로그인 후 쇼핑백에 담아주세요.');
+                                        }
+                                        layerAlert('쇼핑백에 담을 수 없습니다.');
+                                        console.log("code:" + request.status + "\n" + "error:" + error);
+
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <dl class="toggle_type1" style="margin-top:80px;">
+                            <!-- 2021.08.10 화장품 상품인 경우 실측사이즈 영역 미노출 -->
+                            <dt><a href="#" id="DELI_RETURN_EVT">배송 및 교환/반품</a></dt>
+                            <dd>
+                                <p class="tit">배송안내</p>
+                                <dl class="info_tbl">
+                                    <dt>배송방식 :</dt>
+                                    <dd>우체국택배, CJ대한통운, 부릉, 굿투럭</dd><!-- 210728 oera 신규 추가  -->
+                                    <dt>배송지역 :</dt>
+                                    <dd>전국 (일부 지역 제외)</dd>
+                                    <dt>배송정보 :</dt>
+                                    <dd>평균 입금완료일 기준 2-4일 소요됩니다 (토/일/공휴일 제외)</dd>
+                                    <dt>배송비 :</dt>
+                                    <dd>실결제금액 기준 30,000원 이상 결제 시 무료배송<br>30,000원 미만 결제 시 2,500원(기본 배송비)<br>* 실결제금액이란,
+                                        쿠폰/바우처 할인액 및 <br>&nbsp; 한섬마일리지/H.Point 사용 금액을 제외한 금액입니다. <br>
+                                        &nbsp;&nbsp;(e-money 사용은 실결제금액에 포함)<br>* 도서산간 지역은 3,000원의 별도 배송비가 부과됩니다.<br>* 일부
+                                        도서지역은 도선료가 부가될 수 있습니다. </dd>
+                                </dl>
+                                <p class="tit mt20">교환 및 반품안내</p> <!-- info_tbl -->
+                                <dl class="info_tbl">
+                                    <dt>교환/반품 기간 :</dt>
+                                    <dd>상품 수령 후, 7일 이내</dd>
+                                    <dt>교환절차 :</dt>
+                                    <dd style="letter-spacing: -0.2px;"> 사이즈 및 상품불량 교환만 가능(색상교환 불가)하며 교환을 원하실 경우<br>
+                                        고객센터로 문의해주시기 바랍니다. (교환 재고가 없을 경우, 환불로 안내예정)<br> 화장품은 상품 불량만 교환 가능하며(상품 개봉 후 교환
+                                        불가), 고객센터로<br> 문의해주시기 바랍니다.
+                                        <!-- 210728 oera 신규 추가  -->
+                                    </dd>
+                                    <dt>반품절차 :</dt>
+                                    <dd>[배송완료] 7일 이내에 마이페이지 주문/배송/취소/반품 메뉴에서<br> [반품신청] 버튼을 클릭 시 가능합니다.</dd>
+                                    <dt>교환/반품 배송비 :</dt>
+                                    <dd style="letter-spacing: -0.4px;">배송비는 5,000원 이며(반품비는 주문시 배송비 결제 유무에 따라 변동)<br>상품
+                                        불량 등의 이유로 교환/반품하실 경우, 배송비는 무료입니다.</dd>
+                                    <dt>교환/반품 불가사유</dt>
+                                    <dd>다음의 경우에는 교환/반품이 불가합니다. <ol class="numlist">
+                                            <li> <span class="num sum">-</span> <span class="txt">교환/반품 기간(상품 수령 후 7일
+                                                    이내)을 초과하였을 경우</span> </li>
+                                            <li> <span class="num sum">-</span> <span class="txt">고객님의 요청에 의해 제품 사양이
+                                                    변경(이니셜 제품, 사이즈 맞춤 제품 등)된 경우</span></li>
+                                            <li><span class="num sum">-</span><span class="txt">제품을 이미 사용하였거나, 제품 일부를
+                                                    소비하였을 경우</span> </li> <!-- 210728 oera 신규 추가  -->
+                                            <li> <span class="num sum">-</span> <span class="txt">화장품 : 상품 개봉 후 교환/반품
+                                                    불가. 단 상품 불량(내용물 불량) 혹은 피부 트러블로 인한 반품은 가능(용량 1/3 미만 사용 및 의사소견서 1:1문의
+                                                    첨부 필수)</span></li> <!-- // 210728 oera 신규 추가  -->
+                                            <li> <span class="num sum">-</span> <span class="txt">식기류 : 제품 수령 후, 비닐포장을
+                                                    개봉한 경우</span> </li>
+                                            <li> <span class="num sum">-</span> <span class="txt">고객님의 귀책사유로 인해 회수가 지연될
+                                                    경우</span> </li>
+                                            <li> <span class="num sum">-</span> <span class="txt">국내외 환율 변동 등에 의해 가격이
+                                                    변동되는 제품의 경우</span> </li>
+                                            <li> <span class="num sum">-</span> <span class="txt">문제소지가 있는 제품을 본사가 아닌, 타
+                                                    업체(일반 수선실 등)에서 선처리가 된 경우</span> </li>
+                                        </ol>
+                                    </dd> <!-- 210728 oera 신규 추가  -->
+                                    <dt>교환/반품건 배송</dt>
+                                    <dd>교환/반품 시 배송 받으신 박스로 반송하셔야 합니다. <br>(한섬/오에라/리퀴드퍼퓸바 상품 함께 주문 후 교환/반품 시 각각의 박스에 나눠서
+                                        반송해주세요. 한 박스에 함께 동봉하여 반송 시 교환/반품 처리가 불가할 수 있습니다)</dd>
+                                    <!-- // 210728 oera 신규 추가  -->
+                                </dl>
+                                <p class="tit mt20">환불안내</p>
+                                <p>환불은 반송제품 확인 후 진행됩니다.</p><br>
+                            </dd>
+                            <div class="popup_customer_review1807" id="customerReview">
+                                <a href="#;" onclick="GA_Event('상품_상세','정보','상품평');">상품평(<span
+                                        id="customerReviewCnt"></span>)
+                                    <script>
+                                        $(document).ready(function () {
+                                            let pcid = $('#pcid').text();
+                                            var object = {
+                                                'pcid': pcid,
+                                            }
+
+                                            var jsondata = JSON.stringify(object);
+
+                                            $.ajax({
+                                                url: '/getReview',
+                                                data: jsondata,
+                                                type: 'POST',
+                                                dataType: 'JSON',
+                                                contentType: 'application/json',
+                                                beforeSend: function (xhr) {
+                                                    xhr.setRequestHeader(header, token);
+                                                },
+                                                success: function (data) {
+                                                    console.log(data);
+                                                    console.log("상품평 리스트 호출 성공");
+                                                    $("#customerReviewCnt").text(data.length);
+
+                                                },
+                                                error: function () {
+                                                    console.log("상품평 리스트 호출 실패");
+                                                }
+                                            });
+                                        });
+
+                                    </script>
+                                    <div class="star_score1807" id="prodTotalStarScoreWrapper" style="display: none;">
+                                        <span class="cmt_star">
+                                            <!-- 별점에 따라 class명 변경 (star1, star2 ,star3, star4, star5) -->
+                                            <span class="cmt_per" id="prodTotalStarScore">별점</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <!--//상품평 btn-->
+
+                        </dl>
+                    </div>
+
+                    <div class="clearfix mt30">
+                        <!-- AddToAny BEGIN -->
+                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="line-height: 32px;">
+                            <a class="a2a_button_facebook" onclick="GA_Event('상품_상세','공유_SNS','FACEBOOK');"
+                                target="_blank" href="/#facebook" rel="nofollow noopener"><span
+                                    class="a2a_svg a2a_s__default a2a_s_facebook"
+                                    style="background-color: rgb(24, 119, 242);"><svg focusable="false"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <path fill="#FFF"
+                                            d="M17.78 27.5V17.008h3.522l.527-4.09h-4.05v-2.61c0-1.182.33-1.99 2.023-1.99h2.166V4.66c-.375-.05-1.66-.16-3.155-.16-3.123 0-5.26 1.905-5.26 5.405v3.016h-3.53v4.09h3.53V27.5h4.223z">
+                                        </path>
+                                    </svg></span><span class="a2a_label">Facebook</span></a>
+                            <a class="a2a_button_twitter" onclick="GA_Event('상품_상세','공유_SNS','TWITTER');"
+                                target="_blank" href="/#twitter" rel="nofollow noopener"><span
+                                    class="a2a_svg a2a_s__default a2a_s_twitter"
+                                    style="background-color: rgb(29, 155, 240);"><svg focusable="false"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <path fill="#FFF"
+                                            d="M28 8.557a9.913 9.913 0 01-2.828.775 4.93 4.93 0 002.166-2.725 9.738 9.738 0 01-3.13 1.194 4.92 4.92 0 00-3.593-1.55 4.924 4.924 0 00-4.794 6.049c-4.09-.21-7.72-2.17-10.15-5.15a4.942 4.942 0 00-.665 2.477c0 1.71.87 3.214 2.19 4.1a4.968 4.968 0 01-2.23-.616v.06c0 2.39 1.7 4.38 3.952 4.83-.414.115-.85.174-1.297.174-.318 0-.626-.03-.928-.086a4.935 4.935 0 004.6 3.42 9.893 9.893 0 01-6.114 2.107c-.398 0-.79-.023-1.175-.068a13.953 13.953 0 007.55 2.213c9.056 0 14.01-7.507 14.01-14.013 0-.213-.005-.426-.015-.637.96-.695 1.795-1.56 2.455-2.55z">
+                                        </path>
+                                    </svg></span><span class="a2a_label">Twitter</span></a>
+                            <a href="javascript:fnSharePin(&quot;http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA&quot;);"
+                                class="pinterest" onclick="GA_Event('상품_상세','공유_SNS','PRINTEREST');"></a>
+                            <input type="hidden" id="url"
+                                value="http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA">
+                            <div style="clear: both;"></div>
+                        </div>
+                        <script type="text/javascript">
+                            var a2a_config = a2a_config || {};
+                            a2a_config.num_services = 10;
+                            var brandName = "[" + $('#brandName').val() + "]";
+                            var productName = $('.name').contents().first().text();
+                            a2a_config.linkname = brandName + " " + productName;
+                            a2a_config.linkurl = 'http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA?lang=ko';
+                            a2a_config.track_links = 'googl';
+                        </script>
+                        <script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+                        <!-- AddToAny END -->
+
+                    </div>
+                </div>
+
+                <input type="hidden" id="viewExhibitionPageCode" value="">
+                <input type="hidden" id="viewExhibitionPageName" value="">
+            </div>
+        </div>
+        <!--  테스트 시작 (황명하) -->
+        <div class="popwrap w_type_4" id="customerReviewDiv"
+            style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
+            <!--마일리지 안내영역 1906 -->
+            <div class="mileage_info_wrap1906">
+                <p class="wrap_heading">상품평 작성 시 추가 마일리지를 드려요!</p>
+                <div class="mileage_info_box">
+                    <div class="review_w">
+                        <p class="review_w_tit">• 온라인 구매 상품평 작성 시</p>
+                        <ul>
+                            <li>
+                                <div class="ico_mileage1906">
+                                    정상상품
+                                </div>
+                                <p><strong>정상상품</strong><br>구매금액의 <b>0.5%</b></p>
+                            </li>
+                            <li>
+                                <div class="ico_mileage1906">
+                                    아울렛상품
+                                </div>
+                                <p><strong>아울렛상품</strong><br>구매금액의 <b>0.1%</b></p>
+                            </li>
+                            <li>
+                                <div class="ico_mileage1906">
+                                    포토상품평
+                                </div>
+                                <p><strong>포토상품평</strong><br>(상품별 최초)<br><b>2,000마일리지</b></p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="best_review">
+                        <p class="review_w_tit">• 온라인/오프라인 구매</p>
+                        <ul>
+                            <li>
+                                <div class="ico_mileage1906">
+                                    베스트리뷰
+                                </div>
+                                <p><strong>베스트리뷰</strong><br>매월 5명 <b>10만원</b> 바우처</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="noti_box" style="display:none;">
+                    <ul class="bul_sty01_li">
+                        <li>마일리지는 배송 완료일로부터 30일 이내, 작성한 상품평에 한하여 제공됩니다.</li>
+                        <li>상품평 작성 시, 제공되는 추가 마일리지는 온라인에서 구입한 상품에 한하여 제공됩니다.</li>
+                        <li>베스트 리뷰는 온라인/오프라인에서 구매한 상품의 상품평 전체를 대상으로 선정합니다.</li>
+                        <li>할인, 쿠폰 적용 후 실결제금액이 5,000원 이상인 상품에 한하여 지급됩니다.</li>
+                        <li>판매가 종료된 상품의 경우, 상품 상세페이지가 소멸되어 상품평 작성 및 마일리지 적립이 불가능합니다.</li>
+                    </ul>
+                </div>
+                <div class="btn_noti_box"><span>자세히 보기</span></div>
+            </div>
+            <!--//마일리지 안내영역 1906 -->
+            <div class="pop_tltwrap2 pb0 customerreviewdiv1905">
+
+                <h3>
+                    상품평(<span id="review_cnt" class="review_cnt">0</span>)
+                </h3>
+                <div class="star_score1807" id="totalStarScoreWrapper" style="display: none;">
                     <span class="cmt_star">
-                       <!-- 별점에 따라 class명 변경 (star1, star2 ,star3, star4, star5) -->
-                        <span class="cmt_per" id="prodTotalStarScore">별점</span>
+                        <!-- 별점에 따라 class명 변경 (star1, star2 ,star3, star4, star5) -->
+                        <span class="cmt_per" id="totalStarScore">별점</span>
                     </span>
                 </div>
-            </a>
-        </div>
-        <!--//상품평 btn-->
-        
-        </dl>
-   </div>
-   
-   <div class="clearfix mt30">
-<!-- AddToAny BEGIN -->
-<div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="line-height: 32px;">
-<a class="a2a_button_facebook" onclick="GA_Event('상품_상세','공유_SNS','FACEBOOK');" target="_blank" href="/#facebook" rel="nofollow noopener"><span class="a2a_svg a2a_s__default a2a_s_facebook" style="background-color: rgb(24, 119, 242);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#FFF" d="M17.78 27.5V17.008h3.522l.527-4.09h-4.05v-2.61c0-1.182.33-1.99 2.023-1.99h2.166V4.66c-.375-.05-1.66-.16-3.155-.16-3.123 0-5.26 1.905-5.26 5.405v3.016h-3.53v4.09h3.53V27.5h4.223z"></path></svg></span><span class="a2a_label">Facebook</span></a>
-<a class="a2a_button_twitter" onclick="GA_Event('상품_상세','공유_SNS','TWITTER');" target="_blank" href="/#twitter" rel="nofollow noopener"><span class="a2a_svg a2a_s__default a2a_s_twitter" style="background-color: rgb(29, 155, 240);"><svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#FFF" d="M28 8.557a9.913 9.913 0 01-2.828.775 4.93 4.93 0 002.166-2.725 9.738 9.738 0 01-3.13 1.194 4.92 4.92 0 00-3.593-1.55 4.924 4.924 0 00-4.794 6.049c-4.09-.21-7.72-2.17-10.15-5.15a4.942 4.942 0 00-.665 2.477c0 1.71.87 3.214 2.19 4.1a4.968 4.968 0 01-2.23-.616v.06c0 2.39 1.7 4.38 3.952 4.83-.414.115-.85.174-1.297.174-.318 0-.626-.03-.928-.086a4.935 4.935 0 004.6 3.42 9.893 9.893 0 01-6.114 2.107c-.398 0-.79-.023-1.175-.068a13.953 13.953 0 007.55 2.213c9.056 0 14.01-7.507 14.01-14.013 0-.213-.005-.426-.015-.637.96-.695 1.795-1.56 2.455-2.55z"></path></svg></span><span class="a2a_label">Twitter</span></a>
-<a href="javascript:fnSharePin(&quot;http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA&quot;);" class="pinterest" onclick="GA_Event('상품_상세','공유_SNS','PRINTEREST');"></a>
-<input type="hidden" id="url" value="http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA">
-<div style="clear: both;"></div></div>
-<script type="text/javascript">
-var a2a_config = a2a_config || {};
-a2a_config.num_services = 10;
-var brandName =   "[" + $('#brandName').val() + "]";
-var productName = $('.name').contents().first().text();
-a2a_config.linkname = brandName + " " + productName;
-a2a_config.linkurl = 'http://www.thehandsome.com/ko/HANDSOME/BEAUTY/Body-Hair-Care/Hand%C2%B7BodyLotion-Cream-Oil/%5BMAISON-LOUIS-MARIE%5D-NO-04-%EB%B6%80%EC%95%84-%EB%93%9C-%EB%B0%9C%EB%A6%B0%EC%BD%94%ED%8A%B8-%EB%B0%94%EB%94%94-%EB%A1%9C%EC%85%98-237ml/p/CS2C3HCO018LMZ_NA?lang=ko';
-a2a_config.track_links = 'googl';
-</script>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<!-- AddToAny END -->
-
-         </div>
-   </div>
-
-   <input type="hidden" id="viewExhibitionPageCode" value="">
-   <input type="hidden" id="viewExhibitionPageName" value="">
-    </div>
-        </div>
-      <!--  테스트 시작 (황명하) -->
-      <div class="popwrap w_type_4" id="customerReviewDiv" style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
-    <!--마일리지 안내영역 1906 -->
-    <div class="mileage_info_wrap1906">
-        <p class="wrap_heading">상품평 작성 시 추가 마일리지를 드려요!</p>
-        <div class="mileage_info_box">
-            <div class="review_w">
-                <p class="review_w_tit">• 온라인 구매 상품평 작성 시</p>
-                <ul>
-                    <li>
-                        <div class="ico_mileage1906">
-                            정상상품
-                        </div>
-                        <p><strong>정상상품</strong><br>구매금액의 <b>0.5%</b></p>
-                    </li>
-                    <li>
-                        <div class="ico_mileage1906">
-                            아울렛상품
-                        </div>
-                        <p><strong>아울렛상품</strong><br>구매금액의 <b>0.1%</b></p>
-                    </li>
-                    <li>
-                        <div class="ico_mileage1906">
-                            포토상품평
-                        </div>
-                        <p><strong>포토상품평</strong><br>(상품별 최초)<br><b>2,000마일리지</b></p>
-                    </li>
-                </ul>
+                <a href="#;" class="btn_evaluation1905" id="customerReviewWrite" onclick="">상품평 작성하기</a>
             </div>
-            <div class="best_review">
-                <p class="review_w_tit">• 온라인/오프라인 구매</p>
-                <ul>
-                    <li>
-                        <div class="ico_mileage1906">
-                            베스트리뷰
-                        </div>
-                        <p><strong>베스트리뷰</strong><br>매월 5명 <b>10만원</b> 바우처</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="noti_box" style="display:none;">
-            <ul class="bul_sty01_li">
-                <li>마일리지는 배송 완료일로부터 30일 이내, 작성한 상품평에 한하여 제공됩니다.</li>
-                <li>상품평 작성 시, 제공되는 추가 마일리지는 온라인에서 구입한 상품에 한하여 제공됩니다.</li>
-                <li>베스트 리뷰는 온라인/오프라인에서 구매한 상품의 상품평 전체를 대상으로 선정합니다.</li>
-                <li>할인, 쿠폰 적용 후 실결제금액이 5,000원 이상인 상품에 한하여 지급됩니다.</li>
-                <li>판매가 종료된 상품의 경우, 상품 상세페이지가 소멸되어 상품평 작성 및 마일리지 적립이 불가능합니다.</li>
-            </ul>
-        </div>
-        <div class="btn_noti_box"><span>자세히 보기</span></div>
-    </div>
-        <!--//마일리지 안내영역 1906 -->
-    <div class="pop_tltwrap2 pb0 customerreviewdiv1905">
-    
-        <h3>
-            상품평(<span id="review_cnt" class="review_cnt">0</span>)
-        </h3>
-        <div class="star_score1807" id="totalStarScoreWrapper" style="display: none;">
-            <span class="cmt_star">
-                 <!-- 별점에 따라 class명 변경 (star1, star2 ,star3, star4, star5) -->
-                <span class="cmt_per" id="totalStarScore">별점</span>
-            </span>
-        </div>
-        <a href="#;" class="btn_evaluation1905" id="customerReviewWrite" onclick="">상품평 작성하기</a>
-    </div>
-    <!-- pop_cnt-->
-    <div class="pop_cnt evaluation_list1807 options">
-        <div class="tab_a m3 mt20">
-            <input type="hidden" id="review_tab_active" value="ALL">
-            <ul id="review_tab">
-                <li id="ALL"><a href="#;" class="active" onclick="">전체 (<span id="reviewNum"></span>)</a></li>
-                <li id="PHOTO"><a href="#;" class="" onclick="">포토 상품평 (<span id="photoReviewNum"></span>)</a></li>
-                <li id="TEXT"><a href="#;" onclick="">일반 상품평 (<span id="commonReviewNum"></span>)</a></li>
-            </ul>
-        </div>
-        <div class="clearfix review_tab1_1807">
-            <ul id="reviewList">   	
-            	<!-- 리뷰 없을 때 보여지는 상품평 리스트 -->
-	            <!--  
+            <!-- pop_cnt-->
+            <div class="pop_cnt evaluation_list1807 options">
+                <div class="tab_a m3 mt20">
+                    <input type="hidden" id="review_tab_active" value="ALL">
+                    <ul id="review_tab">
+                        <li id="ALL"><a href="#;" class="active" onclick="">전체 (<span id="reviewNum"></span>)</a></li>
+                        <li id="PHOTO"><a href="#;" class="" onclick="">포토 상품평 (<span id="photoReviewNum"></span>)</a>
+                        </li>
+                        <li id="TEXT"><a href="#;" onclick="">일반 상품평 (<span id="commonReviewNum"></span>)</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix review_tab1_1807">
+                    <ul id="reviewList">
+                        <!-- 리뷰 없을 때 보여지는 상품평 리스트 -->
+                        <!--  
 	            <li class="evaluation_view no_list_data1905" style="text-align:center">
 	            	등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~
 	            </li>
 	            -->
-            </ul>
+                    </ul>
+                </div>
+                <!-- paging -->
+                <div class="paging mt30" id="reviewPagingDiv"><a class="prev2" href="javascript:void(0);"
+                        onclick="GA_Event('상품평', '페이지', 'PREV2')">처음 페이지로 이동</a><a href="javascript:void(0);"
+                        class="prev" onclick="GA_Event('상품평', '페이지', 'PREV')">이전 페이지로 이동</a><span class="num"><a
+                            href="javascript:void(0);" class="pageBtn" pagenum="1"
+                            onclick="GA_Event('상품평', '페이지', '1')">1</a></span><a href="javascript:void(0);" class="next"
+                        onclick="GA_Event('상품평', '페이지', 'NEXT')">다음 페이지로 이동</a><a href="javascript:void(0);"
+                        class="next2" onclick="GA_Event('상품평', '페이지', 'NEXT2')">마지막 페이지로 이동</a></div>
+                <!-- //paging -->
+            </div>
+            <!--// pop_cnt-->
+            <a href="javascript:void(0);" id="btn_close" class="btn_close"><img
+                    src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
         </div>
-        <!-- paging -->
-        <div class="paging mt30" id="reviewPagingDiv"><a class="prev2" href="javascript:void(0);" onclick="GA_Event('상품평', '페이지', 'PREV2')">처음 페이지로 이동</a><a href="javascript:void(0);" class="prev" onclick="GA_Event('상품평', '페이지', 'PREV')">이전 페이지로 이동</a><span class="num"><a href="javascript:void(0);" class="pageBtn" pagenum="1" onclick="GA_Event('상품평', '페이지', '1')">1</a></span><a href="javascript:void(0);" class="next" onclick="GA_Event('상품평', '페이지', 'NEXT')">다음 페이지로 이동</a><a href="javascript:void(0);" class="next2" onclick="GA_Event('상품평', '페이지', 'NEXT2')">마지막 페이지로 이동</a></div>
-        <!-- //paging -->
+        <!-- //상품평 모달 창 -->
     </div>
-    <!--// pop_cnt-->
-    <a href="javascript:void(0);" id="btn_close" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
-      </div>
-<!-- //상품평 모달 창 -->
-</div>
 
-<!-- 모달 밖 영역 -->
-<div class="layerArea" id="productLayer" style="display: none;">
+    <!-- 모달 밖 영역 -->
+    <div class="layerArea" id="productLayer" style="display: none;">
         <div class="layerBg" tabindex="-1"></div>
-</div>
-<!-- //모달 밖 영역 -->
-
-
-<!--상품평 쓰기 팝업 -->
-<div class="popwrap w_type_4" id="customerReviewWriteDiv" style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
-    <div class="pop_tltwrap2 customerreviewwritediv1807">
-        <h3 id="review_title">상품평 작성하기</h3>
-        <p class="reqd_txt float_right"><strong class='reqd'>*</strong> 표시는 필수항목입니다.</p>
     </div>
-    <div class="pop_cnt evaluation_write1905 options1811">
-        <form id="reviewForm" name="reviewForm" action="" method="post" enctype="multipart/form-data">
-        	<input type="hidden" name="productCode">
-            <input type="hidden" name="productCodeType">
-            <input type="hidden" name="orderNumber" id="orderNumber" value="">
-            <input type="hidden" name="purchaseColor" id="purchaseColor" value=""/>
-            <input type="hidden" name="purchaseColorName" id="purchaseColorName" value=""/>
-            <input type="hidden" name="purchaseSize" id="purchaseSize" value=""/>
-            <input type="hidden" name="purchaseProdYN" id="purchaseProdYN" value=""/>
-            <input type="hidden" name="orderWriteChk" id="orderWriteChk" value=""/>
-            <input type="hidden" name="closeWriteChk" id="closeWriteChk" value=""/>
-            <input type="hidden" name="productId" id="productId" value="" />
-            <input type="hidden" name="fileDeleteYN" id="fileDeleteYN">
-            
+    <!-- //모달 밖 영역 -->
+
+
+    <!--상품평 쓰기 팝업 -->
+    <div class="popwrap w_type_4" id="customerReviewWriteDiv"
+        style="top: 1221.33px; position: absolute; z-index: 101; display: none;">
+        <div class="pop_tltwrap2 customerreviewwritediv1807">
+            <h3 id="review_title">상품평 작성하기</h3>
+            <p class="reqd_txt float_right"><strong class='reqd'>*</strong> 표시는 필수항목입니다.</p>
+        </div>
+        <div class="pop_cnt evaluation_write1905 options1811">
+            <form id="reviewForm" name="reviewForm" action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="productCode" id="purchaseCode" value="">
+                <input type="hidden" name="productCodeType">
+                <input type="hidden" name="orderNumber" id="orderNumber" value="">
+                <input type="hidden" name="purchaseColor" id="purchaseColor" value="" />
+                <input type="hidden" name="purchaseColorName" id="purchaseColorName" value="" />
+                <input type="hidden" name="purchaseSize" id="purchaseSize" value="" />
+                <input type="hidden" name="purchaseProdYN" id="purchaseProdYN" value="" />
+                <input type="hidden" name="orderWriteChk" id="orderWriteChk" value="" />
+                <input type="hidden" name="closeWriteChk" id="closeWriteChk" value="" />
+                <input type="hidden" name="productId" id="productId" value="" />
+                <input type="hidden" name="fileDeleteYN" id="fileDeleteYN">
+
                 <!-- 상품평활성화 -->
-            <input type="hidden" name="categoryCode" id="categoryCode" value="SZ12"/>
-            <input type="hidden" name="shoulderWidth" id="shoulderWidth" value=""/>
-            <input type="hidden" name="chestSize" id="chestSize" value=""/>
-            <input type="hidden" name="waistSize" id="waistSize" value=""/>
-            <input type="hidden" name="buttSize" id="buttSize" value=""/>
-            <input type="hidden" name="totalSize" id="totalSize" value=""/>
-            <input type="hidden" name="photoAccumulationRightYn" id="photoAccumulationRightYn" value=""/>
-            <input type="hidden" name="offlineOrdDt" id="offlineOrdDt" value=""/>
-            <input type="hidden" name="offlineShpCd" id="offlineShpCd" value=""/>
-            <input type="hidden" name="offlineShpNm" id="offlineShpNm" value=""/>
-            <input type="hidden" name="tempProductId" id="tempProductId" value=""/>
-        	<input type="hidden" name="reviewFileCd" id="reviewFileCd" value=""/>
-        	<input type="hidden" name="reviewFileCd1" id="reviewFileCd1" value=""/>
-        	<input type="hidden" name="reviewFileCd2" id="reviewFileCd2" value=""/>
-        	<input type="hidden" name="reviewFileCd3" id="reviewFileCd3" value=""/>
-        	<input type="hidden" name="reviewFileCd4" id="reviewFileCd4" value=""/>
-            <fieldset>
-                <legend>상품평쓰기</legend>
-                <div class="tblwrap">
-                    <table class="tbl_wtype1">
-                        <caption>상품평쓰기 입력항목</caption>
-                        <colgroup>
-                            <col style="width:135px">
-                            <col >
-                            <col style="width:130px">
-                            <col>
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th scope="row" class="th_space">상품명</th>
-                                <td colspan="3" style="padding:15px;">
-                                    <div class="item_box" id="reviewProductDiv">
-                                        <div class="pt_list_all">
-                                            <div><a href="#;"><img style="float: left;" src="" id="reviewProducImg"  width="100px;" height="100px;"  alt="상품 이미지" onerror="http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></a></div>
-                                            <div class="tlt_wrap review_header_wrapper">
-                                            <!-- <div class="tlt_wrap review_header_wrapper nodata"> -->
-                                                <a href="#;" class="basket_tlt">
-                                                    <span class="tlt" id="reviewProductBrandName"></span>
-                                                    <span class="sb_tlt" id="reviewProductProductName"></span>
-                                                    <span id="reviewProducPrice"></span>
-                                                </a>
-                                                <!-- 주문조회에서 넘어올시 이거 보여줌<p class="color_op" id="purchased_color_size" style="display:none;">COLOR : <span id="review_color_name"></span>   <span class="and_line">/</span>  SIZE : <span id="review_size"></span></p> -->
-                                                <div class="select_options_wrap" style="display:none;">
-                                                    <ul class="select_options">
-                                                        <li class="select_colors">
-                                                            <p><span class="compulsory">*</span> 색상<!-- 색상 --></p>
-                                                            <ul class="color_chip clearfix">
-                                                            <input type="hidden" id="colorName" value="_"/>
-	                                                                        <li id="FL2C7HCY007LDM_NA">
-	                                                                <input type="hidden" class="colorNameVal" value="_"/>
-	                                                                <a href="#;" class="beige" data-color="_" style="background:#534741 url('http://newmedia.thehandsome.com/FL/2C/FW/FL2C7HCY007LDM_NA_C01.jpg/dims/resize/24x24');" onclick="javascript:fn_clickColorCode('FL2C7HCY007LDM_NA', '_');" onmouseover="setColorName('_');" onmouseout="setColorName('');"></a>
-	                                                            </li>
-	                                                                        <li>
-                                                                    <span class="cl_name" id="colorNameContent"></span>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    <li class="select_size">
-                                                        <p><span class="compulsory">*</span> 사이즈<!-- 사이즈 --></p>
-                                                            <ul class="size_chip clearfix" id="review_size_btn_area">
-                                                                <li id="FL2C7HCY007LDM_NA_FR">
-                                                                <a onclick="javascript:fn_clickSizeCode('FL2C7HCY007LDM_NA_FR');">FR</a>
-                                                                            <productDetails:popupSizeQuickReference/>
-                                                                            </li>
-                                                                        </ul>
-                                                            <!-- <ul class="size_chip clearfix">
+                <input type="hidden" name="categoryCode" id="categoryCode" value="SZ12" />
+                <input type="hidden" name="shoulderWidth" id="shoulderWidth" value="" />
+                <input type="hidden" name="chestSize" id="chestSize" value="" />
+                <input type="hidden" name="waistSize" id="waistSize" value="" />
+                <input type="hidden" name="buttSize" id="buttSize" value="" />
+                <input type="hidden" name="totalSize" id="totalSize" value="" />
+                <input type="hidden" name="photoAccumulationRightYn" id="photoAccumulationRightYn" value="" />
+                <input type="hidden" name="offlineOrdDt" id="offlineOrdDt" value="" />
+                <input type="hidden" name="offlineShpCd" id="offlineShpCd" value="" />
+                <input type="hidden" name="offlineShpNm" id="offlineShpNm" value="" />
+                <input type="hidden" name="tempProductId" id="tempProductId" value="" />
+                <input type="hidden" name="reviewFileCd" id="reviewFileCd" value="" />
+                <input type="hidden" name="reviewFileCd1" id="reviewFileCd1" value="" />
+                <input type="hidden" name="reviewFileCd2" id="reviewFileCd2" value="" />
+                <input type="hidden" name="reviewFileCd3" id="reviewFileCd3" value="" />
+                <input type="hidden" name="reviewFileCd4" id="reviewFileCd4" value="" />
+                <input type="hidden" id="purchasedProduct" value="" />
+                <input type="hidden" name="reviewFileCd4" id="reviewFileCd4" value="" />
+
+                <fieldset>
+                    <legend>상품평쓰기</legend>
+                    <div class="tblwrap">
+                        <table class="tbl_wtype1">
+                            <caption>상품평쓰기 입력항목</caption>
+                            <colgroup>
+                                <col style="width:135px">
+                                <col>
+                                <col style="width:130px">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="th_space">상품명</th>
+                                    <td colspan="3" style="padding:15px;">
+                                        <div class="item_box" id="reviewProductDiv">
+                                            <div class="pt_list_all">
+                                                <div><a href="#;"><img style="float: left;" src="" id="reviewProducImg"
+                                                            width="100px;" height="100px;" alt="상품 이미지"
+                                                            onerror="http://cdn.thehandsome.com/_ui/desktop/common/images/products/no_img1.jpg'"></a>
+                                                </div>
+                                                <div class="tlt_wrap review_header_wrapper">
+                                                    <!-- <div class="tlt_wrap review_header_wrapper nodata"> -->
+                                                    <a href="#;" class="basket_tlt">
+                                                        <span class="tlt" id="reviewProductBrandName"></span>
+                                                        <span class="sb_tlt" id="reviewProductProductName"></span>
+                                                        <span id="reviewProducPrice"></span>
+                                                    </a>
+                                                    <!-- 주문조회에서 넘어올시 이거 보여줌<p class="color_op" id="purchased_color_size" style="display:none;">COLOR : <span id="review_color_name"></span>   <span class="and_line">/</span>  SIZE : <span id="review_size"></span></p> -->
+                                                    <div class="select_options_wrap" style="display:none;">
+                                                        <ul class="select_options">
+                                                            <li class="select_colors">
+                                                                <p><span class="compulsory">*</span> 색상
+                                                                    <!-- 색상 -->
+                                                                </p>
+                                                                <ul class="color_chip clearfix">
+                                                                    <input type="hidden" id="colorName" value="_" />
+                                                                    <li id="FL2C7HCY007LDM_NA">
+                                                                        <input type="hidden" class="colorNameVal"
+                                                                            value="_" />
+                                                                        <a href="#;" class="beige" data-color="_"
+                                                                            style="background:#534741 url('http://newmedia.thehandsome.com/FL/2C/FW/FL2C7HCY007LDM_NA_C01.jpg/dims/resize/24x24');"
+                                                                            onclick="javascript:fn_clickColorCode('FL2C7HCY007LDM_NA', '_');"
+                                                                            onmouseover="setColorName('_');"
+                                                                            onmouseout="setColorName('');"></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span class="cl_name"
+                                                                            id="colorNameContent"></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="select_size">
+                                                                <p><span class="compulsory">*</span> 사이즈
+                                                                    <!-- 사이즈 -->
+                                                                </p>
+                                                                <ul class="size_chip clearfix"
+                                                                    id="review_size_btn_area">
+                                                                    <li id="FL2C7HCY007LDM_NA_FR">
+                                                                        <a
+                                                                            onclick="javascript:fn_clickSizeCode('FL2C7HCY007LDM_NA_FR');">FR</a>
+                                                                        <productDetails:popupSizeQuickReference />
+                                                                    </li>
+                                                                </ul>
+                                                                <!-- <ul class="size_chip clearfix">
                                                             <li id="MN1IBKTO483W_MB_90">
                                                                 <a href="javascript:fn_detailProductAjax('MN1IBKTO483W_MB_90')">90</a>
                                                             </li>
                                                  </ul> -->
-                                                    </li>
-                                                </ul>
-                                                </div>
-                                                
-                                            <!-- <div class="select_checkbox">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <!-- <div class="select_checkbox">
                                                 <input type="checkbox" name="" value="" id="storePickTFC">
                                                 <label for="storePickTFC">상품을 매장에서 구매하셨나요?</label>
                                             </div> -->
-                                            </div>
-                                            <!--20190529_selelct_group -->
-                                            <div class="select_group" id="productOption" style="display:none;">
-                                            </div>
-                                            <!--//20190529_selelct_group -->
-                                            <div class="select_checkbox" style="display:none;">
-                                                <input type="checkbox" id="packopt" name="packopt">
-                                                <label for="purchaseYN">
-                                                    매장에서 구매한 상품입니다.</label>
+                                                </div>
+                                                <!--20190529_selelct_group -->
+                                                <div class="select_group" id="productOption" style="display:none;">
+                                                </div>
+                                                <!--//20190529_selelct_group -->
+                                                <div class="select_checkbox" style="display:none;">
+                                                    <input type="checkbox" id="packopt" name="packopt">
+                                                    <label for="purchaseYN">
+                                                        매장에서 구매한 상품입니다.</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="tbl_blank1807">
-                                <td colspan="4">&nbsp;</td>
-                            </tr>
-                            <tr class="radio_btn_1905 bk">
-                                <th scope="row" class="th_space">연 령</th>
-                                <td colspan="3">
-                                	<input id="getAge" type="hidden">
-                                    <input class="ageG" id="ageG1" type="radio" name="age" value="18세 이하">
-                                    <label for="ageG1">18세 이하</label>
-                                    <input class="ageG" id="ageG2" type="radio" name="age" value="20대">
-                                    <label for="ageG2">20대</label>
-                                    <input class="ageG" id="ageG3" type="radio" name="age" value="30대">
-                                    <label for="ageG3">30대</label>
-                                    <input class="ageG" id="ageG4" type="radio" name="age" value="40대">
-                                    <label for="ageG4">40대</label>
-                                    <input class="ageG" id="ageG5" type="radio" name="age" value="50대">
-                                    <label for="ageG5">50대</label>
-                                    <input class="ageG"  id="ageG6" type="radio" name="age" value="60대 이상">
-                                    <label for="ageG6">60대 이상</label>
                                     </td>
-                            </tr>
-                            <tr class="input_txt_1905">
-                                <th scope="row" class="th_space" id="thHeight">
-                                    키</th>
-                                <td><input type="text" name="height" id="height" style="width:75%; margin-right:10px;">cm</td>
-                                <th scope="row" class="th_space" id="thEnjoySize">
-                                    평소 사이즈</th>
-                                <td><input type="text" name="enjoySize" id="enjoySize" ></td>
-                            </tr>
-                            <tr class="radio_btn_1905">
-                                <th scope="row" class="th_space" id="thBodyType">
-                                    체 형</th>
-                                <td colspan="3">
-                                    <input id="dark1" type="radio" name="bodyType" value="마른 체형">
-                                    <label for="dark1">마른 체형</label>
-                                    <input id="dark2" type="radio" name="bodyType" value="보통">
-                                    <label for="dark2">보통</label>
-                                    <input id="dark3" type="radio" name="bodyType" value="통통한 체형">
-                                    <label for="dark3">통통한 체형</label>
-                                </td>
-                            </tr>
-                            <tr class="tbl_blank1807">
-                                <td colspan="4">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <strong class="reqd" style="margin-top:6px;">*</strong>
-                                    <label for="lb1" style="margin-top:6px;">상품평<br/>
-                                        <span class="subtxt_1905">
-                                            (20자 이상<br/>&nbsp;200자 이하)</span>
-                                    </label>
-                                        </th>
-                                <td colspan="3">
-                                    <textarea id="reviewHeadline" name="headline" cols="30" rows="5" style="width:98%;height:78px" maxlength="200"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-	                            <th scope="row" id="thFile" class="th_space"><label for="file">사진등록</label></th>
-								<td>
-									<!-- File upload -->
-										
-									<div class="file_upload hs_input_file_wrap2003">
-										<div class="upload_wrap2003">	
-										<form method="post" id="upload-file-form">
-												<input type="file" id="rImage"  name="uploadfile" class="btn add_s" title="파일찾기" multiple="multiple">										 									 										 																													 
-												<label id="rImage-label" for="rImage" aria-describedby="basic-addon1"></label>
-										</form>
-										</div>
-									</div>
-									<script>
-									</script>
-									<!-- //File upload -->
-									<p class="txt_guide">10MB 미만의 jpg,gif,png 파일만 첨부하실 수 있습니다.</p>
-								</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="txt_guide">
-                        <span style='color:#e46764; font-weight: bold;'>- 상품평과 무관한 내용이거나  상품 재판매, 광고, 동일 문자의 반복 및 기타 불법적인 내용은 통보 없이 삭제되며,<br/>&nbsp;&nbsp;해당 글 작성자 ID는 글쓰기 권한이 제한됩니다.</span><br/>- 반품, 취소 등의 CS관련 글은 고객센터>1:1문의로 이동될 수 있습니다.<br/>
-                        <span>- 더한섬닷컴에서 구매한 상품의 상품평을 배송완료 30일 이내 작성 시, 추가 마일리지를 지급합니다.</span><br/>
-                        
-                        - 마일리지 지급에 대한 상세 내용은 마이페이지>내 상품평 페이지에서 확인 부탁드립니다.<br/>
-                        &nbsp;&nbsp;(마일리지 적립은 오프라인 구매 및 간편회원 제외)</p>
+                                </tr>
+                                <tr class="tbl_blank1807">
+                                    <td colspan="4">&nbsp;</td>
+                                </tr>
+                                <tr class="radio_btn_1905 bk">
+                                    <th scope="row" class="th_space">연 령</th>
+                                    <td colspan="3">
+                                        <input id="getAge" type="hidden">
+                                        <input class="ageG" id="ageG1" type="radio" name="age" value="18세 이하">
+                                        <label for="ageG1">18세 이하</label>
+                                        <input class="ageG" id="ageG2" type="radio" name="age" value="20대">
+                                        <label for="ageG2">20대</label>
+                                        <input class="ageG" id="ageG3" type="radio" name="age" value="30대">
+                                        <label for="ageG3">30대</label>
+                                        <input class="ageG" id="ageG4" type="radio" name="age" value="40대">
+                                        <label for="ageG4">40대</label>
+                                        <input class="ageG" id="ageG5" type="radio" name="age" value="50대">
+                                        <label for="ageG5">50대</label>
+                                        <input class="ageG" id="ageG6" type="radio" name="age" value="60대 이상">
+                                        <label for="ageG6">60대 이상</label>
+                                    </td>
+                                </tr>
+                                <tr class="input_txt_1905">
+                                    <th scope="row" class="th_space" id="thHeight">
+                                        키</th>
+                                    <td><input type="text" name="height" id="height"
+                                            style="width:75%; margin-right:10px;">cm</td>
+                                    <th scope="row" class="th_space" id="thEnjoySize">
+                                        평소 사이즈</th>
+                                    <td><input type="text" name="enjoySize" id="enjoySize"></td>
+                                </tr>
+                                <tr class="radio_btn_1905">
+                                    <th scope="row" class="th_space" id="thBodyType">
+                                        체 형</th>
+                                    <td colspan="3">
+                                        <input id="dark1" type="radio" name="bodyType" value="마른 체형">
+                                        <label for="dark1">마른 체형</label>
+                                        <input id="dark2" type="radio" name="bodyType" value="보통">
+                                        <label for="dark2">보통</label>
+                                        <input id="dark3" type="radio" name="bodyType" value="통통한 체형">
+                                        <label for="dark3">통통한 체형</label>
+                                    </td>
+                                </tr>
+                                <tr class="tbl_blank1807">
+                                    <td colspan="4">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <strong class="reqd" style="margin-top:6px;">*</strong>
+                                        <label for="lb1" style="margin-top:6px;">상품평<br />
+                                            <span class="subtxt_1905">
+                                                (20자 이상<br />&nbsp;200자 이하)</span>
+                                        </label>
+                                    </th>
+                                    <td colspan="3">
+                                        <textarea id="reviewHeadline" name="headline" cols="30" rows="5"
+                                            style="width:98%;height:78px" maxlength="200"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" id="thFile" class="th_space"><label for="file">사진등록</label></th>
+                                    <td>
+                                        <!-- File upload -->
+
+                                        <div class="file_upload hs_input_file_wrap2003">
+                                            <div class="upload_wrap2003">
+                                                <form method="post" id="upload-file-form">
+                                                    <input type="file" id="rImage" name="uploadfile" class="btn add_s"
+                                                        title="파일찾기" multiple="multiple">
+                                                    <label id="rImage-label" for="rImage"
+                                                        aria-describedby="basic-addon1"></label>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <script>
+                                        </script>
+                                        <!-- //File upload -->
+                                        <p class="txt_guide">10MB 미만의 jpg,gif,png 파일만 첨부하실 수 있습니다.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="txt_guide">
+                            <span style='color:#e46764; font-weight: bold;'>- 상품평과 무관한 내용이거나 상품 재판매, 광고, 동일 문자의 반복 및 기타
+                                불법적인 내용은 통보 없이 삭제되며,<br />&nbsp;&nbsp;해당 글 작성자 ID는 글쓰기 권한이 제한됩니다.</span><br />- 반품, 취소
+                            등의 CS관련 글은 고객센터>1:1문의로 이동될 수 있습니다.<br />
+                            <span>- 더한섬닷컴에서 구매한 상품의 상품평을 배송완료 30일 이내 작성 시, 추가 마일리지를 지급합니다.</span><br />
+
+                            - 마일리지 지급에 대한 상세 내용은 마이페이지>내 상품평 페이지에서 확인 부탁드립니다.<br />
+                            &nbsp;&nbsp;(마일리지 적립은 오프라인 구매 및 간편회원 제외)
+                        </p>
+                    </div>
+                    <div class="btnwrap mt40">
+                        <input type="button" id="reviewCancle" value="취소하기" class="btn wt">
+                        <input type="button" id="reviewWriteSend" value="등록하기" class="btn gray mr0">
+                    </div>
+
+                </fieldset>
+                <div>
+                    <input type="hidden" name="CSRFToken" value="76a1a732-9f12-4432-b282-35a00a448651" />
                 </div>
-                <div class="btnwrap mt40">
-                    <input type="button" id="reviewCancle" value="취소하기" class="btn wt">
-                    <input type="button" id="reviewWriteSend" value="등록하기" class="btn gray mr0">
-                </div>
-
-            </fieldset>
-        <div>
-<input type="hidden" name="CSRFToken" value="76a1a732-9f12-4432-b282-35a00a448651" />
-</div></form></div>
-        <a href="javascript:void(0);" id="reviewCloseBtn" style="position: absolute; top: 20px; right: 20px; width: 20px; height: 20px;"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
-</div>
-<!--//상품평 쓰기 팝업 -->
+            </form>
+        </div>
+        <a href="javascript:void(0);" id="reviewCloseBtn"
+            style="position: absolute; top: 20px; right: 20px; width: 20px; height: 20px;"><img
+                src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
+    </div>
+    <!--//상품평 쓰기 팝업 -->
 
 
-<script text="javascript">
-		
-function mileageInfoView(){//noti 자세히 보기
-    $('.mileage_info_wrap1906 .btn_noti_box > span').on('click',function(){
-        if($(this).parents('.mileage_info_wrap1906').find('.noti_box').css("display") == "none"){
-            $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideDown('fast');
-            $(this).closest('.btn_noti_box').addClass('on');
-            $(this).text('닫기');
-            
-            GA_Event('상품평','마일리지 자세히 보기','클릭');
-        }else{
-            $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideUp('fast');
-            $(this).closest('.btn_noti_box').removeClass('on');
-            $(this).text('자세히 보기');
+    <script text="javascript">
+
+        function mileageInfoView() {//noti 자세히 보기
+            $('.mileage_info_wrap1906 .btn_noti_box > span').on('click', function () {
+                if ($(this).parents('.mileage_info_wrap1906').find('.noti_box').css("display") == "none") {
+                    $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideDown('fast');
+                    $(this).closest('.btn_noti_box').addClass('on');
+                    $(this).text('닫기');
+
+                    GA_Event('상품평', '마일리지 자세히 보기', '클릭');
+                } else {
+                    $(this).parents('.mileage_info_wrap1906').find('.noti_box').stop().slideUp('fast');
+                    $(this).closest('.btn_noti_box').removeClass('on');
+                    $(this).text('자세히 보기');
+                }
+            });
         }
-    });
-}		
 
-      const modal = document.getElementById("customerReviewDiv");
-      const modalWrite = document.getElementById("customerReviewWriteDiv");
-      
-      const background = document.getElementById("productLayer");
+        const modal = document.getElementById("customerReviewDiv");
+        const modalWrite = document.getElementById("customerReviewWriteDiv");
 
-      const btnOpenPopup = document.getElementById("customerReview");
-      const btnReviewWritePopup = document.getElementById("customerReviewWrite");
-      
-      btnOpenPopup.addEventListener('click', () => {
-        modal.style.display = 'block';
-        background.style.display = 'block';
-        modal.style.top = '50%';
-        
-        let pcid = $('#pcid').text();
-		var object = {
-    	    	'pcid' : pcid,
-    	}
-        
-		var jsondata = JSON.stringify(object);
-        
-        $.ajax({
-		    url : '/getReview',
-		    data : jsondata,
-		    type : 'POST',
-		    dataType : 'JSON',
-		    contentType : 'application/json',
-		    beforeSend : function(xhr){
-		         xhr.setRequestHeader(header, token);
-		     },
-		    success : function(data) {
-		       console.log(data);
-		       console.log("상품평 리스트 호출 성공");
-		       var reviewlist = document.getElementById('reviewList');
-		       let htmlStr = "";
-		       $("#reviewNum").text(data.length);
-		       $("#photoReviewNum").text(data.length);
-		       $("#commonReviewNum").text(data.length);
-		       if(data.length > 0){
-		    	  $(data).each( function(index){
-		    		  var cnt = 0;
-		    		  htmlStr += "<li class='evaluation_view' id='evaluation_view"+index;
-		    		  //리뷰 내 회원 정보 (이메일, 등급, 리뷰 등록일)
-		    		  htmlStr += "'> <div class='member_info_top'> <ul> <li class='name'>"+this.email+"</li>";
-		    		  htmlStr += "<li class=grade'>"+this.grade+"</li>";
-		    		  htmlStr += "<li class='date'>"+this.rdate+"</li>";
-		    		  htmlStr += "</ul> </div> "
-		    		  //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
-		    		  htmlStr += "<div class='member_info_bottom'> <ul>";
-		    		  
-		    		  
-		    		  if(this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
-		    			  htmlStr += "<li class='choice'> • ";
-		    			  if(this.age != undefined)
-			    		  {
-			    			if(cnt != 0) {
-			    				htmlStr += " / ";
-			    			}
-			    			htmlStr += "연령 : <span>"+this.age+"</span>";  
-			    			cnt+=1;
-			    		  }
-			    		  
-			    		  if(this.height != undefined) {
-			    			  if(cnt != 0) {
-			    				  htmlStr += " / ";
-			    			  }
-			    			  htmlStr += "키 : <span>"+this.height+"</span>";
-			    			  cnt+=1;
-			    		  }
-			    		  if(this.bodytype != undefined) {
-			    			  if(cnt != 0) {
-			    				  htmlStr += " / ";
-			    			  }
-			    			  htmlStr += "체형: <span>"+this.height+"</span>";
-			    			  cnt+=1;
-			    		  }
-			    		  if(this.enjoysize != undefined) {
-			    			  if(cnt != 0) {
-			    				  htmlStr += " / ";
-			    			  }
-			    			  htmlStr += "평소 사이즈 : <span>"+this.enjoysize+"</span>";  
-			    			  cnt+=1;
-			    		  }
-			    		  htmlStr += " </li> <br> ";
-		    		  }
-		    		  
-		    		  
-		    		  
-		    		  
-		    		  
-		    		  
-		    		  //member_info_bottom 끝 
-		    		  htmlStr += "<li class=''must'> • 구매 정보 :<span> "+this.pcid+"</span>"; //나중에 색상으로(황명하)
-		    		  
-		    		  htmlStr += "</li> </ul> </div>"; 
-		    		  //사진 파일이 있는 경우
-		    		  if(this.filepath != undefined) {
-		    			  htmlStr += "<div class='review_represent_img1912'> <img src='";
-			    		  htmlStr += this.filepath+"' alt='리뷰 이미지'> </div>";
-		    		  }
-		    		  //리뷰 콘텐츠
-		    		  htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> "+this.reviewcontent+"</p> </div> </li>" ;
-		    	  }
-		    	);
-		       }
-		       else {
-		    	   htmlStr += "<li class='evaluation_view no_list_data1905' style='text-align:center'> 등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~ </li> ";
-		       }
-		       
-		       reviewlist.innerHTML = htmlStr;
-		       
-		    },
-		   error : function() {
-		      console.log("상품평 리스트 호출 실패");
-		   }
-		 });
-        
-      });
-	
-      //리뷰 작성하기 버튼 눌렀을 시
-      btnReviewWritePopup.addEventListener('click', () => {
-    	  modal.style.display = 'none';
-    	  modalWrite.style.display = 'block';
-          modalWrite.style.top = '50%';
-          
-          let img = $("#img1").attr("src");
-          $("#reviewProducImg").attr("src",img);
-          
-          let brandname = $("#this-brand-name").text();
-          $('#reviewProductBrandName').text(brandname);
-          
-          let productname = $("#this-productname").text();
+        const background = document.getElementById("productLayer");
 
-          $('#reviewProductProductName').text(productname);
-          
-          let price = $("#price").text();
-          $('#reviewProducPrice').text(price);
-          
-          
+        const btnOpenPopup = document.getElementById("customerReview");
+        const btnReviewWritePopup = document.getElementById("customerReviewWrite");
+		
+        const btnAllReview = document.getElementById("ALL");
+        const btnPhotoReview = document.getElementById("PHOTO");
+        const btnTextReview = document.getElementById("TEXT");
+        
+        
+        function getReviewAjax() {
+            //호출 Ajax 시작
+
+            let pcid = $('#pcid').text();
+            var object = {
+                'pcid': pcid,
+            }
+
+            var jsondata = JSON.stringify(object);
+
+            $.ajax({
+                url: '/getReview',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("상품평 리스트 호출 성공");
+                    var reviewlist = document.getElementById('reviewList');
+                    let htmlStr = "";
+                    $("#reviewNum").text(data.length);
+                    
+                    // $("#photoReviewNum").text(data.length);
+                    // $("#commonReviewNum").text(data.length);
+                    if (data.length > 0) {
+                        $(data).each(function (index) {
+                            var cnt = 0;
+                            htmlStr += "<li class='evaluation_view' id='evaluation_view" + index;
+                            //리뷰 내 회원 정보 (이메일, 등급, 리뷰 등록일)
+                            htmlStr += "'> <div class='member_info_top'> <ul> <li class='name'>" + (this.email).substr(0,3) + "***</li>";
+                            htmlStr += "<li class=grade'>" + this.grade + "</li>";
+                            htmlStr += "<li class='date'>" + this.rdate + "</li>";
+                            htmlStr += "</ul> </div> "
+                            //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
+                            htmlStr += "<div class='member_info_bottom'> <ul>";
+
+
+                            if (this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
+                                htmlStr += "<li class='choice'> • ";
+                                if (this.age != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "연령 : <span>" + this.age + "</span>";
+                                    cnt += 1;
+                                }
+
+                                if (this.height != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "키 : <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.bodytype != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "체형: <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.enjoysize != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "평소 사이즈 : <span>" + this.enjoysize + "</span>";
+                                    cnt += 1;
+                                }
+                                htmlStr += " </li> <br> ";
+                            }
+
+                            //member_info_bottom 끝 
+                            htmlStr += "<li class=''must'> • 구매 정보 :<span> " + this.pname + "</span> / 색상: <span>" + this.pccolorcode + "</span> / 사이즈 : <span>" + this.psize + "</span>";
+
+
+                            htmlStr += "</li> </ul> </div>";
+                            //사진 파일이 있는 경우
+                            if (this.filepath != undefined) {
+                                htmlStr += "<div class='review_represent_img1912'> <img src='";
+                                htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                            }
+                            //리뷰 콘텐츠
+                            htmlStr += "<div class=''> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
+                        }
+                        );
+                    }
+                    else {
+                        htmlStr += "<li class='evaluation_view no_list_data1905' style='text-align:center'> 등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~ </li> ";
+                    }
+
+                    reviewlist.innerHTML = htmlStr;
+
+                },
+                error: function () {
+                    console.log("상품평 리스트 호출 실패");
+                }
+            });
+            
+            
+            $.ajax({
+                url: '/getPhotoReview',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("포토 상품평 리스트 개수 성공");
+                    $("#photoReviewNum").text(data.length);
+					
+                },
+                error: function () {
+                    console.log("포토 상품평 리스트 개수 실패");
+                }
+            });
+            
+            
+            $.ajax({
+                url: '/getCommonReview',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("일반 상품평 리스트 개수 성공");
+                    $("#commonReviewNum").text(data.length);
+					
+                },
+                error: function () {
+                    console.log("일반 상품평 리스트 개수 실패");
+                }
+            });
+            
+            
+            //호출 Ajax 끝
+        }
+		//펑션 끝
+		
+		//상품평 창 열기 버튼
+        btnOpenPopup.addEventListener('click', () => {
+            modal.style.display = 'block';
+            background.style.display = 'block';
+            modal.style.top = '50%';
+
+            getReviewAjax();
+            
         });
-      
-      
-      
-      $("#btn_close").on("click", function(){
-	      $("#customerReviewDiv").hide();
-	      background.style.display = 'none';
-	   });   
+		
+		//전제 상품평 클릭 버튼
+        btnAllReview.addEventListener('click', () => {
+            
+        	getReviewAjax();
+            
+        });
+		
+		//포토 상품평 버튼 클릭 이벤트
+        btnPhotoReview.addEventListener('click', () => {
 
-      
-      $("#reviewCloseBtn").on("click", function(){
-	      $("#customerReviewDiv").hide();
-	      $("#customerReviewWriteDiv").hide();
-	      background.style.display = 'none';
-	   });   
+            let pcid = $('#pcid').text();
+            var object = {
+                'pcid': pcid,
+            }
 
-      
-      $("#reviewCancle").on("click", function(){
-	      $("#customerReviewWriteDiv").hide();
-	      modal.style.display = 'block';
-	   });  
-      
-      
-      $("#reviewWriteSend").on("click", function(){
-	      let email = '이메일 채우자';
-	      let name = '이름 채우자';
-	      let grade = '등급 채우자';
-	      let pcid = $('#pcid').text();
-	      let psize = $('#psize.on').attr('value');
-	      let bname = $("#this-brand-name").text();
-	      let pname = $("#this-productname").text();
-	      let pcprice = $("#price").text();
-	      let age = $('input[name="age"]:checked').val();
-	      let height = $('#height').val();
-	      let enjoysize = $('#enjoySize').val();
-	      let bodytype = $('input[name="bodyType"]:checked').val();
-	      let reviewcontent = $('#reviewHeadline').val();
-	      let filepath = "";
-	      
-	      console.log(pcid);
-	      console.log(psize);
-	      console.log(bname);
-	      console.log(pname);
-	      console.log(pcprice);
-	      console.log(age);
-	      console.log(height);
-	      console.log(enjoysize);
-	      console.log(bodytype);
-	      console.log(reviewcontent);
-	      
-	      
-	      var file = $('input[name="uploadfile"]').get(0).files[0];
-	      var formData = new FormData();
-	      formData.append('file', file);
-	      /*
-	      formData.append('pcid',pcid);
-	      formData.append('psize',psize);
-	      formData.append('bname',bname);
-	      formData.append('pname',pname);
-	      formData.append('pcprice',pcprice);
-	      formData.append('age',age);
-	      formData.append('height',height);
-	      formData.append('enjoysize',enjoysize);
-	      formData.append('bodytype',bodytype);
-	      formData.append('reviewcontent',reviewcontent);
-	      console.log(file);
-	      */
-	      
-	      //
-	      
-	      $.ajax({
-		    	url : "/uploadFile",
-		    	type: "POST",
-		    	async : false,
-		        data: formData,
-		        enctype: 'multipart/form-data',
-		        processData: false,
-		        contentType: false,
-		        cache: false,
-		        beforeSend : function(xhr){
-		               xhr.setRequestHeader(header, token);
-		        },
-		        success: function (data) {
-		          // Handle upload success
-		          // ...
-		          console.log('파일 업로드 성공');
-		          console.log(data);
-		          filepath = data;
-		        },
-		        error: function () {
-		          // Handle upload error
-		          // ...
-		          console.log('파일 업로드 실패');
-		        }
-		    });
-	      //추가를 위한 주석이다.
-	      
-	      console.log('파일경로는' + filepath);
-	      
-	      var object = {
-	    		  	'email' : email,
-	    		  	'name' : name,
-	    		  	'grade' : grade,
-	    	    	'pcid' : pcid,
-	    	    	'psize' : psize,
-	    	    	'bname' : bname,
-	    	    	'pname' : pname,
-	    	    	'pcprice' : pcprice,
-	    	    	'age' : age,
-	    	    	'height' : height,
-	    	    	'enjoysize' : enjoysize,
-	    	    	'bodytype' : bodytype,
-	    	    	'reviewcontent' : reviewcontent,
-	    	    	'filepath' : filepath
-	    	      }
-	    	      
-   	      var jsondata = JSON.stringify(object);
-   	      
-   	      $.ajax({
-   		    	url : "/insertReview",
-   		    	type: "POST",
-   		        data: jsondata,
-   		     	async : false,
-   		        dataType : 'JSON',
-   		        contentType: 'application/json',
-   		        cache: false,
-   		        beforeSend : function(xhr){
-   		               xhr.setRequestHeader(header, token);
-   		        },
-   		        success: function (data) {
-   		          // Handle upload success
-   		          // ...
-   		          console.log('성공했대');
-   		          console.log(data);
-   		          uuidfile = data;
-   		        },
-   		        error: function () {
-   		          // Handle upload error
-   		          // ...
-   		          console.log('실패했대');
-   		        }
-   		    });
-   	      	layerAlert("상품평이 등록되었습니다.");
-   	   		modal.style.display = 'block'
-   	   		$("#customerReviewWriteDiv").hide();
+            var jsondata = JSON.stringify(object);
 
-	   });  
-    
-</script>
+            $.ajax({
+                url: '/getPhotoReview',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("상품평 리스트 호출 성공");
+                    var reviewlist = document.getElementById('reviewList');
+                    let htmlStr = "";
+                    if (data.length > 0) {
+                        $(data).each(function (index) {
+                            var cnt = 0;
+                            htmlStr += "<li class='evaluation_view' id='evaluation_view" + index;
+                            //리뷰 내 회원 정보 (이메일, 등급, 리뷰 등록일)
+                            htmlStr += "'> <div class='member_info_top'> <ul> <li class='name'>" + (this.email).substr(0,3) + "***</li>";
+                            htmlStr += "<li class=grade'>" + this.grade + "</li>";
+                            htmlStr += "<li class='date'>" + this.rdate + "</li>";
+                            htmlStr += "</ul> </div> "
+                            //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
+                            htmlStr += "<div class='member_info_bottom'> <ul>";
+
+
+                            if (this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
+                                htmlStr += "<li class='choice'> • ";
+                                if (this.age != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "연령 : <span>" + this.age + "</span>";
+                                    cnt += 1;
+                                }
+
+                                if (this.height != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "키 : <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.bodytype != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "체형: <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.enjoysize != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "평소 사이즈 : <span>" + this.enjoysize + "</span>";
+                                    cnt += 1;
+                                }
+                                htmlStr += " </li> <br> ";
+                            }
+
+                            //member_info_bottom 끝 
+                            htmlStr += "<li class=''must'> • 구매 정보 :<span> " + this.pname + "</span> / 색상: <span>" + this.pccolorcode + "</span> / 사이즈 : <span>" + this.psize + "</span>";
+
+
+                            htmlStr += "</li> </ul> </div>";
+                            //사진 파일이 있는 경우
+                            if (this.filepath != undefined) {
+                                htmlStr += "<div class='review_represent_img1912'> <img src='";
+                                htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                            }
+                            //리뷰 콘텐츠
+                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
+                        }
+                        );
+                    }
+                    else {
+                        htmlStr += "<li class='evaluation_view no_list_data1905' style='text-align:center'> 등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~ </li> ";
+                    }
+
+                    reviewlist.innerHTML = htmlStr;
+
+                },
+                error: function () {
+                    console.log("상품평 리스트 호출 실패");
+                }
+            });
+            
+        });
+		
+		//일반 상품평 클릭 버튼
+        btnTextReview.addEventListener('click', () => {
+
+        	let pcid = $('#pcid').text();
+            var object = {
+                'pcid': pcid,
+            }
+
+            var jsondata = JSON.stringify(object);
+
+            $.ajax({
+                url: '/getCommonReview',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log("상품평 리스트 호출 성공");
+                    var reviewlist = document.getElementById('reviewList');
+                    let htmlStr = "";
+
+                    if (data.length > 0) {
+                        $(data).each(function (index) {
+                            var cnt = 0;
+                            htmlStr += "<li class='evaluation_view' id='evaluation_view" + index;
+                            //리뷰 내 회원 정보 (이메일, 등급, 리뷰 등록일)
+                            htmlStr += "'> <div class='member_info_top'> <ul> <li class='name'>" + (this.email).substr(0,3) + "***</li>";
+                            htmlStr += "<li class=grade'>" + this.grade + "</li>";
+                            htmlStr += "<li class='date'>" + this.rdate + "</li>";
+                            htmlStr += "</ul> </div> "
+                            //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
+                            htmlStr += "<div class='member_info_bottom'> <ul>";
+
+
+                            if (this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
+                                htmlStr += "<li class='choice'> • ";
+                                if (this.age != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "연령 : <span>" + this.age + "</span>";
+                                    cnt += 1;
+                                }
+
+                                if (this.height != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "키 : <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.bodytype != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "체형: <span>" + this.height + "</span>";
+                                    cnt += 1;
+                                }
+                                if (this.enjoysize != undefined) {
+                                    if (cnt != 0) {
+                                        htmlStr += " / ";
+                                    }
+                                    htmlStr += "평소 사이즈 : <span>" + this.enjoysize + "</span>";
+                                    cnt += 1;
+                                }
+                                htmlStr += " </li> <br> ";
+                            }
+
+                            //member_info_bottom 끝 
+                            htmlStr += "<li class=''must'> • 구매 정보 :<span> " + this.pname + "</span> / 색상: <span>" + this.pccolorcode + "</span> / 사이즈 : <span>" + this.psize + "</span>";
+
+
+                            htmlStr += "</li> </ul> </div>";
+                            //사진 파일이 있는 경우
+                            if (this.filepath != undefined) {
+                                htmlStr += "<div class='review_represent_img1912'> <img src='";
+                                htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                            }
+                            //리뷰 콘텐츠
+                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
+                        }
+                        );
+                    }
+                    else {
+                        htmlStr += "<li class='evaluation_view no_list_data1905' style='text-align:center'> 등록된 상품평이 없습니다.<br>이 상품에 대한 첫 번재 리뷰 글을 작성해주세요~ </li> ";
+                    }
+
+                    reviewlist.innerHTML = htmlStr;
+
+                },
+                error: function () {
+                    console.log("상품평 리스트 호출 실패");
+                }
+            });
+        	
+        });
+		
+		
+
+        //리뷰 작성하기 버튼 눌렀을 시
+        btnReviewWritePopup.addEventListener('click', () => {
+			
+
+            if ($('#email').attr('value') == 'anonymousUser') {
+                layerAlert("로그인 후 이용해주세요.");
+                return;
+            }
+
+            let email = $('#email').attr('value');
+            let pcid = $('#pcid').text();
+            let psize;
+            let img;
+            var object = {
+                'email': email,
+                'pcid': pcid
+            }
+            var jsondata = JSON.stringify(object);
+
+            $.ajax({
+                url: '/isPurchased',
+                data: jsondata,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data.length);
+                    console.log(data[0]);
+                    console.log("구매확인 성공");
+                    modal.style.display = 'none';
+                    modalWrite.style.display = 'block';
+                    modalWrite.style.top = '50%';
+
+                    $('#purchaseCode').attr('value', data[0].pcid);
+                    $('#purchaseSize').attr('value', data[0].psize);
+                    $('#purchaseColorName').attr('value', data[0].pccolorcode);
+
+
+                    console.log('구매 : ' + data[0].pcid);
+                    console.log('구매 : ' + data[0].psize);
+                    console.log('구매 : ' + data[0].pccolorcode);
+
+                    $("#reviewProducImg").attr("src", data[0].pcimg1);
+                },
+                error: function () {
+                    console.log("구매확인 실패");
+                    layerAlert('해당 상품에 대한 주문 내역이 없습니다. <br></br> 오프라인에서 구매하신 경우 1~2일 후<br> 상품평 작성 가능합니다.<br>' +
+                        '(1~2일 경과 후에도 상품평 작성이 불가한 <br>경우 고객센터로 문의 부탁드립니다.)');
+                    return;
+                }
+            });
+            /*
+            let img = $("#img1").attr("src");
+            $("#reviewProducImg").attr("src",img);
+            */
+            let brandname = $("#this-brand-name").text();
+            $('#reviewProductBrandName').text(brandname);
+
+            let productname = $("#this-productname").text();
+
+            $('#reviewProductProductName').text(productname);
+
+            let price = $("#price").text();
+            $('#reviewProducPrice').text(price);
+			
+            //getReviewAjax();
+        });
+
+
+
+        $("#btn_close").on("click", function () {
+            $("#customerReviewDiv").hide();
+            background.style.display = 'none';
+        });
+
+
+        $("#reviewCloseBtn").on("click", function () {
+            $("#customerReviewDiv").hide();
+            $("#customerReviewWriteDiv").hide();
+            background.style.display = 'none';
+        });
+
+
+        $("#reviewCancle").on("click", function () {
+            $("#customerReviewWriteDiv").hide();
+            modal.style.display = 'block';
+        });
+
+
+        $("#reviewWriteSend").on("click", function () {
+            let email = $('#email').attr('value');
+            let name = $('#email').attr('value');
+            let grade = $('#grade').attr('value');
+            let bname = $("#this-brand-name").text();
+            let pname = $("#this-productname").text();
+            let pcprice = $("#price").text();
+            let age = $('input[name="age"]:checked').val();
+            let height = $('#height').val();
+            let enjoysize = $('#enjoySize').val();
+            let bodytype = $('input[name="bodyType"]:checked').val();
+            let reviewcontent = $('#reviewHeadline').val();
+            let filepath = "";
+
+            var file = $('input[name="uploadfile"]').get(0).files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            if (reviewcontent.length < 20 || reviewcontent.length > 200) {
+                layerAlert("상품평을 20자 이상, 200이하 이내로 작성해주세요.");
+                return;
+            }
+
+
+            $.ajax({
+                url: "/uploadFile",
+                type: "POST",
+                async: false,
+                data: formData,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    // Handle upload success
+                    // ...
+                    console.log('파일 업로드 성공');
+                    console.log(data);
+                    filepath = data;
+                },
+                error: function () {
+                    // Handle upload error
+                    // ...
+                    console.log('파일 업로드 실패');
+                }
+            });
+            //추가를 위한 주석이다.
+
+            console.log('파일경로는' + filepath);
+            console.log($('#purchaseCode').val());
+            console.log($('#purchaseSize').val());
+            console.log('브랜드' + bname);
+            console.log(pname);
+            console.log(pcprice);
+            console.log(age);
+            console.log(height);
+            console.log(enjoysize);
+            console.log(bodytype);
+            console.log('리뷰 길이' + reviewcontent.length);
+            console.log('컬러코드 ' + $('#purchaseColorName').val());
+
+
+
+
+
+            var object = {
+                'email': email,
+                'name': name,
+                'grade': grade,
+                'pcid': $('#purchaseCode').val(),
+                'psize': $('#purchaseSize').val(),
+                'bname': bname,
+                'pname': pname,
+                'pcprice': pcprice,
+                'age': age,
+                'height': height,
+                'enjoysize': enjoysize,
+                'bodytype': bodytype,
+                'reviewcontent': reviewcontent,
+                'filepath': filepath,
+                'pccolorcode': $('#purchaseColorName').val(),
+
+            }
+
+            var jsondata = JSON.stringify(object);
+
+            $.ajax({
+                url: "/insertReview",
+                type: "POST",
+                data: jsondata,
+                async: false,
+                dataType: 'JSON',
+                contentType: 'application/json',
+                cache: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    // Handle upload success
+                    // ...
+                    console.log('성공했대');
+                    console.log(data);
+                    uuidfile = data;
+                },
+                error: function () {
+                    // Handle upload error
+                    // ...
+                    console.log('실패했대');
+                }
+            });
+            layerAlert("상품평이 등록되었습니다.");
+            modal.style.display = 'block'
+            $("#customerReviewWriteDiv").hide();
+            
+            getReviewAjax();
+        });
+
+    </script>
 </body>

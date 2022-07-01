@@ -12,6 +12,7 @@ import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductListDTO;
 import com.hyundai.project.dto.ProductSizeDTO;
+import com.hyundai.project.dto.PurchasedProductDTO;
 
 @Service
 public interface ProductService {
@@ -31,4 +32,5 @@ public interface ProductService {
 	public int getProductCount(String depth1name, String depth2name, String depth3name, int pagenum, String pname);
 	
 	public List<CategoryDTO> getCategoryList();
+
 }
