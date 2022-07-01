@@ -38,7 +38,7 @@
     <select id="isPurchased" parameterType="com.hyundai.project.dto.PurchasedProductDTO" resultType="com.hyundai.project.dto.PurchasedProductDTO">
 		select OINFO.PSID, PCID, PCCOLORCODE, PSIZE, ORECEIVER, EMAIL, OSTATUS, PCIMG1
 		from (select PSID, orders.OSTATUS AS OSTATUS, EMAIL , ORECEIVER from order_item 
-		INNER JOIN orders ON order_item.oid = orders.oid where orders.OSTATUS='주문완료' AND OEMAIL=#{email}) 
+		INNER JOIN orders ON order_item.oid = orders.oid where orders.OSTATUS='주문완료' AND EMAIL=#{email}) 
 		OINFO
 		INNER JOIN
 		(select PSID, PSIZE, PS.PCID, PCCOLORCODE, PCIMG1 from productmanager.product_Stock PS
