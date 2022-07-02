@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.dto.CartListDTO;
+import com.hyundai.project.dto.OrderCompleteDTO;
 import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.OrderMemberDTO;
@@ -73,19 +75,24 @@ public class OrderController {
 	}
 	
 	@PostMapping("/insertOrder")
-	public ResponseEntity<String> insertOrder(@RequestBody OrderDTO orderDTO) throws Exception{
+	public ResponseEntity<OrderDTO> insertOrder(@RequestBody OrderDTO orderDTO) throws Exception{
 		List<OrderItemDTO> orderItemList = orderDTO.getOrderItemList();
 		int rows = orderService.insertOrder(orderDTO, orderItemList);		
 
 		if(rows == 0) {
-			return new ResponseEntity<>("Order is fail.", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<OrderDTO>(HttpStatus.FORBIDDEN);
 		}
 		
-		return new ResponseEntity<>("Order is done.", HttpStatus.OK);
+		return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
 	}
 	
 	@GetMapping("/orderComplete")
-	public String orderComplete() {
+	public String orderComplete(@RequestParam String oid, Model model) throws Exception {
+		
+		List<OrderCompleteDTO> completeList = orderService.getOrderComplete(oid);
+		model.addAttribute("complete", completeList);
+		
+		
 		return "/order/orderComplete";
 	}
 }

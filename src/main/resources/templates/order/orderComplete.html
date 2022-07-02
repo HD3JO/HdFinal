@@ -17,18 +17,14 @@ var arkQuery = $.noConflict(true);
                 <span>주문완료</span>
             </h3>
             <!--//title-->
-            <!--tab-->
-            <!--//tab-->
             <!--sub_container-->
             <div class="sub_container">
                 <!--title wrap-->
                 <div class="order_title ">
                 <p class="title">주문이 완료되었습니다.</p>
-				<p class="s_title">주문번호 : 220623P14173089 (주문일시 : 2022.06.23 09:48)</p>
+				<p class="s_title" th:text="'주문번호 :' + ${complete[0].oid} + ' (주문일시 :' + ${complete[0].odate} +')'"></p>			
             </div>
-                
-                <!--//title wrap-->
-                
+                <!--//title wrap-->                
                 <!--table wrap-->
                     <div class="tblwrap">
                         <table class="tbl_ltype ">
@@ -47,75 +43,33 @@ var arkQuery = $.noConflict(true);
                             </thead>
                             <tbody>
 
-                            <tr class="al_middle">
+                            <tr th:each="list, status : ${complete}" class="al_middle">
                                     <td class="frt">
                                         <!-- pt_list_all -->
                                         <div class="pt_list_all">
-                                            <a href="/ko/HANDSOME/LIFESTYLE/DESK/STATIONERY/%5BWRAP-MAGAZINE%5D-%EC%B6%95%ED%95%98-%EC%B9%B4%EB%93%9C/p/FL2C3HSY014LMW_WT_FR">
-	                                                <img src="http://newmedia.thehandsome.com/FL/2C/SS/FL2C3HSY014LMW_WT_S01.jpg" alt="" />
+                                            <a href="">
+	                                                <img th:src="${list.pcimg1}" alt="" />
 	                                                        </a>
                                             <div class="tlt_wrap">
-                                                <a href="/ko/HANDSOME/LIFESTYLE/DESK/STATIONERY/%5BWRAP-MAGAZINE%5D-%EC%B6%95%ED%95%98-%EC%B9%B4%EB%93%9C/p/FL2C3HSY014LMW_WT_FR" class="basket_tlt">
-                                                    <span class="tlt">the CASHMERE</span>
-                                                    <span class="sb_tlt">[WRAP MAGAZINE] 축하 카드</span>                                                            
+                                                <a href="" class="basket_tlt">
+                                                    <span class="tlt" th:text="${list.bname}"></span>
+                                                    <span class="sb_tlt" th:text="${list.pname}"></span>                                                            
                                                     </a>
                                                 
-                                                <p class="color_op">
-                                                            
-                                                                color : WHITE<span class="and_line">/</span>
-                                                        
-                                                                size : FR</p>
-                                                        </div>
+                                                <p class="color_op" th:text="'color :' + ${list.pccolorcode} + ' / ' + 'size : ' + ${list.psize}"></p>
+                                            </div>
                                         </div>
                                         <!-- //pt_list_all -->
                                     </td>
-                                    <td>1</td>
+                                    <td th:text="${list.oicount}"></td>
                                     <td>
                                         <!-- price_wrap -->
                                         <div class="price_wrap">
-                                            <span>₩6,000</span>
+                                            <span th:text="'₩' + ${#numbers.formatInteger(list.pcprice, 3, 'COMMA')}"></span>
                                         </div>
                                         <!-- //price_wrap -->
                                     </td>
-                                </tr>
-                                <!-- AceCounter eCommerce (Cart_InOut) v7.5 Start -->
-                                <!-- Data Allocation (Cart_InOut) -->
-                                <script language='javascript' type="text/javascript">
-                                    _A_amt[_ace_countvar]='6000'; 
-                                    _A_nl[_ace_countvar]='1';   
-                                    _A_pl[_ace_countvar]='FL2C3HSY014LMW_WT_FR';       
-                                    _A_pn[_ace_countvar]='[WRAP MAGAZINE] 축하 카드';    
-                                    _A_ct[_ace_countvar]='the CASHMERE';  
-                                    _ace_countvar++;
-                                </script>
-                                <!-- AceCounter eCommerce (Cart_InOut) v7.5 End -->
-                                <!-- Beshow Loop Start-->
-                                <script type="text/javascript"> 
-                                // 더한섬 추가 부분
-                                var beshow_orderItemNumber_str = 'FL2C3HSY014LMW_WT_FR'; // 상품코드 입력 (관리자에서 테깅시에 상품코드 SJ1I1WPC662W 부문만 입력 해야 함)
-                                var beshow_orderItemNumber_arr = beshow_orderItemNumber_str.split('_');
-                                var beshow_orderItemNumber = '';
-                                if(beshow_orderItemNumber_arr.length > 0) { beshow_orderItemNumber = beshow_orderItemNumber_arr[0]; }
-                                // 더한섬 추가 부분
-                                
-                                strack.execute('setOrderItemNumber', beshow_orderItemNumber); 
-                                strack.execute('setOrderItemLink', '/ko/HANDSOME/LIFESTYLE/DESK/STATIONERY/%5BWRAP-MAGAZINE%5D-%EC%B6%95%ED%95%98-%EC%B9%B4%EB%93%9C/p/FL2C3HSY014LMW_WT_FR'); 
-                                strack.execute('setOrderItemImage', 'http://newmedia.thehandsome.com/FL/2C/SS/FL2C3HSY014LMW_WT_S01.jpg'); 
-                                strack.execute('setOrderItemName', '[WRAP MAGAZINE] 축하 카드'); 
-                                strack.execute('setOrderItemPrice', '6000'); 
-                                strack.execute('setOrderItemQuantity', '1');   </script>
-                                <!-- Beshow Loop End -->
-                                <!-- adinsight 주문 상품별 아이디 받아옴. start-->
-								<script type="text/javascript"> 
-								 if(typeof TRS_PRODUCT == 'undefined') {
-								  	  TRS_PRODUCT = '' + 'FL2C3HSY014LMW_WT_FR'; // 상품아이디 변수(상품코드)
-								  	  TRS_ORDER_PRODUCT = '' + 'FL2C3HSY014LMW_WT_FR' + '@' + '[WRAP MAGAZINE] 축하 카드' + '@' + '6000' + '@' + '1';
-								 }else {
-								  TRS_PRODUCT = TRS_PRODUCT + ' $ '+ 'FL2C3HSY014LMW_WT_FR'; // 상품아이디 변수(상품코드)
-								  TRS_ORDER_PRODUCT += ' $ ' + 'FL2C3HSY014LMW_WT_FR' + '@' + '[WRAP MAGAZINE] 축하 카드' + '@' + '6000' + '@' + '1';
-								 }
-								</script>
-								<!-- adinsight 주문 상품별 아이디 받아옴. end-->
+                                </tr>                               
                             </tbody>
                         </table>
                     </div>
@@ -126,7 +80,7 @@ var arkQuery = $.noConflict(true);
                         <div class="total_price_wrap">
                             <dl>
                                 <dt>상품 합계</dt>
-                                <dd>₩6,000</dd>
+                                <dd th:text="'₩' + ${#numbers.formatInteger(complete[0].oafterprice, 3, 'COMMA')}"></dd>
                                 
                                 <dt class="delch_wrap">
                                     <p class="tlt_ship">배송비</p>
@@ -140,11 +94,11 @@ var arkQuery = $.noConflict(true);
                                     </div>
                                     <!--//delivery charge layer popup-->
                                 </dt>
-                                <dd>₩2,500</dd>
+                                <dd>₩0</dd>
                                 </dl>
                             <dl class="total">
                                 <dt>합계</dt>
-                                <dd>₩8,500</dd>
+                                <dd th:text="'₩' + ${#numbers.formatInteger(complete[0].oafterprice, 3, 'COMMA')}"></dd>
                             </dl>
                         </div>
                         <!-- //total -->
@@ -162,22 +116,22 @@ var arkQuery = $.noConflict(true);
                             <col />
                         </colgroup>
                         <tbody>
-                        <tr>
+                        	<tr>
                                 <th scope="row" class="th_space">카드사</th>
-                                <td>국민카드 (949094**********)</td>
-                            </tr>
-                            <tr>
+                                <td th:text="${complete[0].pmcompany}"></td>
+                        	</tr>
+                        	<tr>
                                 <th scope="row" class="th_space">결제금액</th>
-                                <td>₩8,500</td>
-                            </tr>
-                            </tbody>
+                                <td th:text="'₩' + ${#numbers.formatInteger(complete[0].oafterprice, 3, 'COMMA')}"></td>
+                        	</tr>
+                        </tbody>
                     </table>
                 </div>
                 <!--//title wrap & table wrap1-->
                 <!--title wrap & table wrap2-->
                 <div class="title_wrap clearfix">
                     <h4 class="float_left">한섬마일리지</h4>
-                    <p class="reqd_txt float_right">(배송 완료 시점을 기준으로 10일 후 지급됩니다.)</p>
+                    <p class="reqd_txt float_right"></p>
                 </div>
                 <div class="tblwrap mb40">
                     <table class="tbl_wtype1">
@@ -189,16 +143,15 @@ var arkQuery = $.noConflict(true);
                         <tbody>
                             <tr>
                                 <th scope="row" class="th_space">지급 예정 한섬마일리지</th>
-                                <td>300 M</td>
+                                <td th:text="${#numbers.formatInteger(complete[0].mileage, 3, 'COMMA')} + ' M'"></td>
                                 <th scope="row" class="th_space">지급 예정 H.Point</th>
-                                <td>6 P</td>
+                                <td>0 P</td>
                                 </tr>
                         </tbody>
                     </table>
                 </div>
                 <!--//title wrap & table wrap2-->
                 <!--title wrap & table wrap3-->
-
                 <div class="title_wrap clearfix">
                     <h4 class="float_left">주문자 정보</h4>
                 </div>
@@ -212,15 +165,15 @@ var arkQuery = $.noConflict(true);
                         <tbody>
                             <tr>
                                 <th scope="row" class="th_space">주문자</th>
-                                <td>황명하</td>
+                                <td th:text="${complete[0].name}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">휴대폰</th>
-                                <td>010-8434-2676</td>
+                                <td th:text="${complete[0].phone}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">E-MAIL</th>
-                                <td>ghkd2676@naver.com</td>
+                                <td th:text="${complete[0].email}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -229,409 +182,43 @@ var arkQuery = $.noConflict(true);
                 
                 <!--title wrap & table wrap4-->
                 <div class="title_wrap clearfix">
-                    <h4 class="float_left">
-배송지 정보</h4>
+                    <h4 class="float_left">배송지 정보</h4>
                 </div>
                 <div class="tblwrap">
                     <table class="tbl_wtype1 ">    
-                        <caption>
-배송지 정보</caption>
+                        <caption>배송지 정보</caption>
                         <colgroup>
                             <col style="width:140px" />
                             <col />
                         </colgroup>
                         <tbody>
-                        <tr>
+                        	<tr>
                                 <th scope="row" class="th_space">배송지 주소</th>
-                                <td>(15339) 경기도 안산시 단원구 당곡2로 30(고잔동, 주공아파트)&nbsp;905동 805호</td>
+                                <td th:text="${complete[0].oaddress1}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">수령인</th>
-                                <td>황명하</td>
+                                <td th:text="${complete[0].oreceiver}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">휴대폰</th>
-                                <td>010-8434-2676</td>
+                                <td th:text="${complete[0].ophone}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">연락처</th>
                                 <td></td>
                             </tr>
-                            </tbody>
+                    	</tbody>
                     </table>
                 </div>
-                <!--//title wrap & table wrap4-->
-                <div class="btnwrap order ">
-<a href="#;" onclick="myordersPage();"><input value="주문내역조회" class="btn wt" type="button" /></a>
-                   <a href="#;" onclick="continuePage();"><input value="쇼핑계속하기" class="btn gray mr0" type="button" /></a>
-                </div>
+                <!--//title wrap & table wrap4-->              
             </div>
-            <!--//sub_container--> 
+            <!--//sub_container-->
+            <div class="btnwrap order">
+            	<a href="/member/myorder"><input value="주문내역조회" class="btn wt" type="button"/></a>
+            	<a href="/main"><input value="쇼핑계속하기" class="btn gray mr0" type="button"/></a>
+            </div> 
         </div>
-        <!-- //bodyWrap -->
-        
-        <!-- 210728 oera 신규 추가 -->
-		<!-- 오에라 마일리지 자세히보기 팝업-->
-		<div class="popwrap w_type_4" id="popupOeraMileage" style="display:none;">
-			<div class="pop_cnt">
-				<h3>오에라 마일리지란?</h3>						
-				<p class="sub-desc">더한섬닷컴/오프라인 매장에서 오에라 상품 구매 시 상품 구매금액의 <br>01.~0.15%가 적립됩니다 (등급별 상이) <br>적립된 마일리지는 리워드 상품으로 교환할 수 있습니다<br>(리워드 상품은 오에라 사이트에서 확인 가능합니다)</p>
-				<h3>오에라 마일리지 적립 방법</h3>
-				<ul class="oera-mileage-desc">
-					<li>								
-						<div class="icon"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/beauty/ico_mileage01.gif" alt=""></div>
-						<dl class="desc">
-							<dt>오에라 상품 구매</dt>
-							<dd>더한섬닷컴에서 오에라 상품 구매</dd>
-						</dl>
-					</li>
-					<li>
-						<div class="icon"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/beauty/ico_mileage02.gif" alt=""></div>
-						<dl class="desc">
-							<dt>오에라 마일리지 적립 신청</dt>
-							<dd>더한섬닷컴 주문완료 페이지에서<br>'정보 제공 동의 및 마일리지 신청' 필수<br><span class="notice">(미신청 시 오에라 마일리지 적립 불가)</span></dd>
-						</dl>
-					</li>
-					<li>
-						<div class="icon"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/beauty/ico_mileage03.gif" alt=""></div>
-						<dl class="desc">
-							<dt>오에라 마일리지 적립 완료 및 조회</dt>
-							<dd>오에라 사이트에서 H.Point 회원정보로<br>가입/로그인 시 오에라 마일리지 적립/조회<br><span class="notice">(더한섬닷컴 배송완료 10일 후 조회 가능)</span></dd>
-						</dl>
-					</li>
-				</ul>
-				<div class="btn-area"><a href="https://www.oera.com" target="_blank" class="btn">오에라 사이트 바로가기</a></div>
-				<dl class="p-info-agree">
-					<dt>개인정보 제 3자 제공 항목</dt>
-					<dd>더한섬닷컴 제휴사(한섬라이프앤, 오에라)에 마일리지 적립을 위해 필요한 정보가 제공됩니다</dd>
-					<dd>
-						<ul>
-							<li>제휴사 : 한섬라이프앤</li>
-							<li>사용목적 : 오에라 마일리지 적립 시 고객 식별</li>
-							<li>제공정보 : 이름 , 더한섬닷컴 ID, 식별번호 , 휴대폰번호, 더한섬닷컴 주문 정보 (주문 상품/금액)</li>
-							<li>보유기간 : 법령에 따른 보관 의무기간 동안 보관</li>
-						</ul>
-
-					</dd>
-				</dl>
-
-			</div>
-			<a href="javascript:void(0);" class="btn_close"><img src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
-		</div>		
-		<!-- // 210728 oera 신규 추가 -->
-                
-        <!-- AceCounter eCommerce (Buy_Finish) v7.5 Start -->
-        <script language='javascript' type="text/javascript">
-        var _AEC_order_code='220623P14173089';        // 주문코드
-        var _amt = '8500';              // 총 구매액 
-        AEC_B_L();          // 구매완료 함수
-        </script>
-        <!-- AceCounter eCommerce (Buy_Finish) v7.5 End -->
-        <!--Beshow Script Start -->
-        <script type="text/javascript">
-        strack.execute('setStore', 'thehandsome');
-        strack.execute('setDomain', location.host);
-        strack.execute('setDevice', '1'); 
-        strack.execute('setUserId', '');  
-        strack.execute('setOrderId', '220623P14173089'); 
-        strack.execute('setOrderPrice', '8500'); 
-        strack.execute('setOrderPhoneNumber', ''); 
-        strack.trackOrder();
-        </script>
-        <!--Beshow Script End-->
-		<script type="text/javascript">
-        
-        if(typeof kakaoPixel !== 'undefined'){
-			var kakaoTrackId = '3482319208237780781'; //개발
-			if(location.href.indexOf("www.thehandsome.com") > -1) kakaoTrackId = '7855119525940511046'; //운영
-			kakaoPixel(kakaoTrackId).pageView();
-			kakaoPixel(kakaoTrackId).purchase({
-				total_quantity: "1", // 주문 내 상품 개수(optional)
-				total_price: "8500",  // 주문 총 가격(optional)
-				currency: "KRW",     // 주문 가격의 화폐 단위(optional, 기본 값은 KRW)
-				products: // 주문 내 상품 정보(optional)
-				    [          
-					    
-					    { name: '[WRAP MAGAZINE] 축하 카드', quantity: "1", price: '6000'}
-				    ]
-			});
-        }
-		</script>
-        <!-- 3주년 경품응모 이벤트 팝업 -->
-	    <div class="layerArea" id="productLayer" style="display: none;">
-	        <div class="layerBg"></div>
-	    </div>
-	    
-	    <div class="evt_wtgf_pop" style="display:none;position:absolute;top:50%;left:50%;z-index:200;margin-left:-222.5px;margin-top:-276px;">
-            <div class="evt_wtgf_pop_inner" style="position:relative;">
-                <img src="http://cdn.thehandsome.com/pc/event/detail/image/181109_event/pop.jpg" alt="더한섬닷컴에서 준비한 SPECIAL GIFT. LATT BY T 캐시미어 장갑 or TIME HOMME 구스 머플러">
-                <a href="/ko/magazine/events/8798517909376" style="width:270px;height:50px;position:absolute;bottom:40px;left:93px;text-indent:-999em;overflow:hidden;">사은품 받기</a>
-            </div>
-            <a href="#;" class="btn_close" style="width:22px;height:22px;background:url('/_ui/desktop/common/images/products/close_btn_grey_1807.png') no-repeat;right:15px;top:15px;padding:0;">닫기</a>
-        </div>
-        
-        <!-- adinsight 주문 총금액 받아옴. start -->
-		<script language='javascript'> 
-		 var TRS_AMT= '8500';	// 구매금액합계 변수 
-		 var TRS_ORDER_ID='220623P14173089'; // 주문번호
-		</script>
-		<!-- adinsight 주문 총금액 받아옴. end -->
-		        
-<!-- footerWrap -->
-
-<script type="text/javascript">
-//<![CDATA[ 
-
-$(document).ready(function(){
-    var ua = navigator.userAgent.toLowerCase();
-    // 익스플로러 브라우저 아닐 때만 인스타 링크버튼 노출
-    if((ua.indexOf('trident') == -1) && (ua.indexOf("msie") == -1) ){
-        $("#f_insta").show();
-    }
-});
-
-getNewsList("/ko/magazine");
-
-
-// 2022.03.29 푸터 공지사항 추가
-getFooterNotices("/ko/svcenter");
-
-
-function moveMobile(){
-// 	location.href = location.href.replace("?uiel=Desktop", "") + "?uiel=Mobile";
-	location.href = "/ko/?uiel=Mobile";
-}
-
-
-function setLogout(){
-    var ssoUrl = 'https://sso.h-point.co.kr:29865' + "/co/setDscdToknJSONP.hd";
-    gfnSsoDscdToknReqAjax(ssoUrl, hplogoutSuccess);
-}
-
-function hplogoutSuccess(data){
-    deletecookie("UID");   
-    deletecookie("criteoEmail"); 
-    deletecookie("memberGb");
-    location.href = "/ko/logout";
-}
-
-//]]>
-</script>
-<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
-        <script type="text/javascript">
-	        var _nasa={};
-	        var totalprice_cnv = "8500";
-	        _nasa["cnv"] = wcs.cnv("1",totalprice_cnv); // 주문완료 전환유형, 전환가치
-        </script>
-    <!-- 네이버 애널리틱스 전환페이지 설정 : e -->
-	<form name="accessiblityForm">
-		<input type="hidden" id="accesibility_refreshScreenReaderBufferField" name="accesibility_refreshScreenReaderBufferField" value=""/>
-	</form>
-	<div id="ariaStatusMsg" class="skip" role="status" aria-relevant="text" aria-live="polite"></div>
-	
-	<!--loadingbar-->
-	<div class="layerBg"></div>
-	<!--//loadingbar-->
-	
-	<div class="layerArea" id="mapleLayer" style="display:none;">
-	   <div class="layerBg"></div>
-	</div>
-	
-	<!-- Google 리마케팅 태그 코드 -->
-	<script type="text/javascript">
-	/* <![CDATA[ */
-	var google_conversion_id = 943253288;
-	var google_custom_params = window.google_tag_params;
-	var google_remarketing_only = true;
-	/* ]]> */
-	</script>
-	<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-	</script>
-	<noscript>
-	<div style="display:inline;">
-	<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?value=0&amp;guid=ON&amp;script=0"/>
-	</div>
-	</noscript>
-	
-	<script type="text/javascript">  
-	
-	    var virtusizeViewYn = false;
-	    
-	        virtusizeViewYn = true;
-	        
-	    if(virtusizeViewYn){
-	         
-	    }
-	</script>
-
-<input type="hidden" id="apiConfmKey" value="U01TX0FVVEgyMDE5MDYxNzE2NDczMzEwODgxNTI="/>
-
-<!-- GTM 추적코드 추가 -->
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PCJDFJ"
-     height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- Beusable(뷰저블 코드) : s -->
-<!-- Beusable(뷰저블 코드) : e -->
-
-<!-- Braze(브레이즈 스니펫 코드) : s -->
-<script type="text/javascript">
-    +function(a,p,P,b,y){a.appboy={};a.appboyQueue=[];for(var s="initialize destroy getDeviceId toggleAppboyLogging setLogger openSession changeUser requestImmediateDataFlush requestFeedRefresh subscribeToFeedUpdates requestContentCardsRefresh subscribeToContentCardsUpdates logCardImpressions logCardClick logCardDismissal logFeedDisplayed logContentCardsDisplayed logInAppMessageImpression logInAppMessageClick logInAppMessageButtonClick logInAppMessageHtmlClick subscribeToNewInAppMessages subscribeToInAppMessage removeSubscription removeAllSubscriptions logCustomEvent logPurchase isPushSupported isPushBlocked isPushGranted isPushPermissionGranted registerAppboyPushMessages unregisterAppboyPushMessages trackLocation stopWebTracking resumeWebTracking wipeData ab ab.DeviceProperties ab.User ab.User.Genders ab.User.NotificationSubscriptionTypes ab.User.prototype.getUserId ab.User.prototype.setFirstName ab.User.prototype.setLastName ab.User.prototype.setEmail ab.User.prototype.setGender ab.User.prototype.setDateOfBirth ab.User.prototype.setCountry ab.User.prototype.setHomeCity ab.User.prototype.setLanguage ab.User.prototype.setEmailNotificationSubscriptionType ab.User.prototype.setPushNotificationSubscriptionType ab.User.prototype.setPhoneNumber ab.User.prototype.setAvatarImageUrl ab.User.prototype.setLastKnownLocation ab.User.prototype.setUserAttribute ab.User.prototype.setCustomUserAttribute ab.User.prototype.addToCustomAttributeArray ab.User.prototype.removeFromCustomAttributeArray ab.User.prototype.incrementCustomUserAttribute ab.User.prototype.addAlias ab.User.prototype.setCustomLocationAttribute ab.InAppMessage ab.InAppMessage.SlideFrom ab.InAppMessage.ClickAction ab.InAppMessage.DismissType ab.InAppMessage.OpenTarget ab.InAppMessage.ImageStyle ab.InAppMessage.TextAlignment ab.InAppMessage.Orientation ab.InAppMessage.CropType ab.InAppMessage.prototype.subscribeToClickedEvent ab.InAppMessage.prototype.subscribeToDismissedEvent ab.InAppMessage.prototype.removeSubscription ab.InAppMessage.prototype.removeAllSubscriptions ab.InAppMessage.prototype.closeMessage ab.InAppMessage.Button ab.InAppMessage.Button.prototype.subscribeToClickedEvent ab.InAppMessage.Button.prototype.removeSubscription ab.InAppMessage.Button.prototype.removeAllSubscriptions ab.SlideUpMessage ab.ModalMessage ab.FullScreenMessage ab.HtmlMessage ab.ControlMessage ab.Feed ab.Feed.prototype.getUnreadCardCount ab.ContentCards ab.ContentCards.prototype.getUnviewedCardCount ab.Card ab.Card.prototype.dismissCard ab.ClassicCard ab.CaptionedImage ab.Banner ab.ControlCard ab.WindowUtils display display.automaticallyShowNewInAppMessages display.showInAppMessage display.showFeed display.destroyFeed display.toggleFeed display.showContentCards display.hideContentCards display.toggleContentCards sharedLib".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.appboy,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.appboyQueue.push(arguments); return true}"))()}window.appboy.getUser=function(){return new window.appboy.ab.User};window.appboy.getCachedFeed=function(){return new window.appboy.ab.Feed};window.appboy.getCachedContentCards=function(){return new window.appboy.ab.ContentCards};(y=p.createElement(P)).type='text/javascript';
-        y.src='https://js.appboycdn.com/web-sdk/2.7/appboy.min.js';
-        y.async=1;(b=p.getElementsByTagName(P)[0]).parentNode.insertBefore(y,b)
-    }(window,document,'script');
-
-    try {
-        appboy.initialize('26020c09-35b8-44d0-b579-7e31f4c82527',{baseUrl:'https://sdk.iad-06.braze.com/api/v3'});
-        appboy.display.automaticallyShowNewInAppMessages();
-        appboy.openSession();
-    } catch (e) {
-        console.log(e);
-    }
-</script>
-<!-- Braze(브레이즈 스니펫 코드) : e -->
-<script type="text/javascript">
-
-		var currentSendTime = new Date().format("HH:mm:ss");
-		var b_userId = ""
-		  , b_gender = "u"
-		  , b_pushEventYN = "N"
-		  , b_pushEventAgreeDate = ""
-		  , b_grade = ""
-		  , b_userToken = "";
-		
-		
-		chkLoginAfterOneTimeCall();
-
-		
-		function verificationAndProcessing(){
-		    
-		    if("578a119c1767bd0555249f250a3200c3" != null){
-		        b_userId = "578a119c1767bd0555249f250a3200c3";
-		    }
-		    
-		    
-		    if("MALE" != null && "MALE" != ""){
-		        
-			            b_gender = "m";
-			        
-		    }
-		    
-		    
-		    if("true" != null && "true" != ""){
-		        if("true" == "true" || "true" == true){
-                    b_pushEventYN = "Y";
-                }else{
-                    b_pushEventYN = "N";
-                }
-		    }
-		    
-		    
-            getPushEventChangeDate();
-		    
-		    
-            if("FRIEND" != null){
-                b_grade = "FRIEND";
-            }
-            
-            if("8929525956612" != null){
-                b_userToken = "8929525956612";
-            }
-		}
-		
-		
-		function updateBrazeSendYN(){
-			$.ajax({
-				url: '/ko/common/updateBrazeSendYn',
-				type: "GET",
-				success: function(data){
-					sendBraze();
-				},
-				error: function(xhr, Status, error) {
-					console.log(error);
-				}
-			});
-		}
-		
-		
-		function chkLoginAfterOneTimeCall(){
-		    var brazeSendYN = "Y";
-		    
-		    if(brazeSendYN == "" || brazeSendYN == "Y"){ 
-                
-            }else{
-                
-                verificationAndProcessing();
-                updateBrazeSendYN();
-                
-            }
-		}
-		
-		
-		function sendBraze(){
-			
-			appboy.getUser().setFirstName("");
-			appboy.getUser().setLastName("");
-			
-			appboy.changeUser(b_userId);
-			
-			
-			appboy.getUser().setCustomUserAttribute(
-				"pushEventYN",
-				b_pushEventYN
-			);
-			
-			
-            if(b_pushEventAgreeDate != ""){
-                appboy.getUser().setCustomUserAttribute(
-                    "pushEventAgreeDate",
-                    b_pushEventAgreeDate
-                );
-            }
-			
-			appboy.getUser().setCustomUserAttribute(
-                "currentSendTime",
-                currentSendTime
-            );
-            
-            appboy.getUser().setCustomUserAttribute(
-                "userToken",
-                b_userToken
-            );
-			
-            
-            brazeLogCustomEventLogin();
-		}
-		
-		function getPushEventChangeDate(){
-            $.ajax({
-                url: '/ko/common/getPushEventChangeDate',
-                type: "GET",
-                success: function(data){
-                    if(data != null && data != ""){
-                        b_pushEventAgreeDate=data;
-                    }
-                },
-                error: function(xhr, Status, error) {
-                    console.log(error);
-                }
-           });
-            
-        }
-		
-		function brazeLogCustomEventLogin(){
-		    var currentActionTime = new Date().format("yyyyMMddHHmmss");
-		    
-		    appboy.logCustomEvent(
-		        "LCE_userLogin",
-		        {
-		            "accessDate"  : currentActionTime
-		        }
-		    );
-		}
-	</script>
+        <!-- //bodyWrap -->      	
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.project.dto.CartDTO;
+import com.hyundai.project.dto.OrderCompleteDTO;
 import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.user.repository.CartMapper;
@@ -82,6 +83,12 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderListDTO> selectOrderListByOneMonth(String email) throws Exception {
 		OrderListDTO orderListDTO = new OrderListDTO();
 		return orderMapper.selectOrderListByOneMonth(email);
+	}
+
+	@Override
+	public List<OrderCompleteDTO> getOrderComplete(String oid) throws Exception {
+		
+		return orderMapper.getOrderComplete(oid);
 	}
 }
 

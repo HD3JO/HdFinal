@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hyundai.project.dto.OrderCompleteDTO;
 import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.OrderListDTO;
@@ -27,5 +28,7 @@ public interface OrderMapper {
 	public List<OrderListDTO> selectOrderList(String email) throws Exception;
 	
 	public List<OrderListDTO> selectOrderListByOneMonth(String email) throws Exception;
+	
+	public List<OrderCompleteDTO> getOrderComplete(String oid) throws Exception;
 }
 

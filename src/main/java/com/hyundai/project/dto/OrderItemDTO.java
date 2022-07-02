@@ -15,5 +15,5 @@ public class OrderItemDTO {
 	
 	private String pname;
 	private String ostatus;
-	private String mid;
+	private String email;
 }

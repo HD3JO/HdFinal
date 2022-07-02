@@ -73,6 +73,46 @@
 	<select id="getOrderListForAdmin">
 	</select>
 	
+	<!-- 주문완료 페이지 -->
+	<select id="getOrderComplete" resultType="com.hyundai.project.dto.OrderCompleteDTO">
+		SELECT A.OID
+		       , TO_CHAR(A.ODATE, 'YYYY.MM.DD HH:MM') AS ODATE
+		       , A.OAFTERPRICE
+		       , A.MILEAGE
+		       , A.OADDRESS1
+		       , A.OADDRESS2
+		       , A.ORECEIVER
+		       , A.OPHONE
+		       , B.NAME
+		       , B.PHONE
+		       , B.EMAIL
+		       , C.PSID
+		       , C.OICOUNT
+		       , D.PSIZE 
+		       , E.PCPRICE
+		       , E.PCIMG1
+       	       , E.PCCOLORCODE		 
+		       , F.PNAME
+		       , G.BNAME
+		       , H.PMCOMPANY
+		FROM ORDERS A 
+		INNER JOIN MEMBER B
+		ON A.EMAIL = B.EMAIL
+		INNER JOIN ORDER_ITEM C
+		ON A.OID = C.OID
+		INNER JOIN PAYMENT_METHOD H
+		ON A.PMCODE = H.PMCODE  
+		INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK D
+		ON C.PSID = D.PSID 
+		INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR E
+		ON D.PCID = E.PCID
+		INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON F
+		ON E.PID = F.PID 
+		INNER JOIN PRODUCTMANAGER.BRAND G
+		ON F.BNO = G.BNO 
+		AND A.OID = #{oid}
+	</select>
+	
 	<!-- 관리자 페이지 주문 상태 변경 -->
 	 <update id="updateOrder" parameterType="com.hyundai.project.dto.OrderItemDTO">
  	 	UPDATE ORDER_ITEM
@@ -121,5 +161,5 @@
     		where G.email = #{email} AND odate BETWEEN sysdate-30 and sysdate
     		order by odate desc
     </select>
- 
+    <!-- 주문 취소 -->
 </mapper>
