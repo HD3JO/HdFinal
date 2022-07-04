@@ -13,6 +13,10 @@
     <select id="getNewProduct" resultType="com.hyundai.project.dto.NewProductDTO">
     	SELECT * FROM TABLE(FN_NEWPRODUCT_GET(#{category}))
     </select>
+<!-- 리뷰 많은 순 20개 이하로 가져오기 -->
+    <select id="getBestProduct" resultType="com.hyundai.project.dto.BestProductDTO">
+    	SELECT * FROM TABLE(FN_BESTPRODUCT_GET(#{category}))
+    </select>
     <!-- 상품 사이즈 정보 가져오기 -->
     <select id="getProductSize" resultType="com.hyundai.project.dto.ProductSizeDTO">
     	SELECT * FROM TABLE(FN_PRODUCTSIZE_GET(#{pcid}))

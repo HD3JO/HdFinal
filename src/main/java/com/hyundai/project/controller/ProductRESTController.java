@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyundai.project.dto.BestProductDTO;
 import com.hyundai.project.dto.NewProductDTO;
 import com.hyundai.project.dto.ProductColorDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
@@ -49,6 +50,13 @@ public class ProductRESTController {
 		// 카테고리별(MEN/WOMEN/LIFESTYLE/KIDS) 신상품 20개 이하로 조회
 		// http://localhost:8080/NewProduct?category=MEN
 		return productService.getNewProduct(newProductDTO.getCategory());
+	}
+	
+	@PostMapping(value="/BestProduct")
+	public List<NewProductDTO> getBestProduct(@RequestBody BestProductDTO bestProductDTO) {
+		// 카테고리별(MEN/WOMEN/LIFESTYLE/KIDS) 신상품 20개 이하로 조회
+		// http://localhost:8080/NewProduct?category=MEN
+		return productService.getNewProduct(bestProductDTO.getCategory());
 	}
 	
 }

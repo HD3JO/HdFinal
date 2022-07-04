@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.hyundai.project.dto.BestProductDTO;
 import com.hyundai.project.dto.CategoryDTO;
 import com.hyundai.project.dto.NewProductDTO;
 import com.hyundai.project.dto.ProductColorDTO;
@@ -24,6 +25,8 @@ public interface ProductService {
 	public List<ProductSizeDTO> getProductSize(String pcid);
 	
 	public List<NewProductDTO> getNewProduct(String category);	
+	
+	public List<BestProductDTO> getBestProduct(String category);	
 	
 	public List<ProductListDTO> getProductList(String depth1name, String depth2name, String depth3name, int pagenum, String pname);
 

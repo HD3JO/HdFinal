@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hyundai.project.dto.BestProductDTO;
 import com.hyundai.project.dto.CategoryDTO;
 import com.hyundai.project.dto.NewProductDTO;
 import com.hyundai.project.dto.ProductColorDTO;
@@ -24,6 +25,12 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductMapper productmapper;
 	
+	@Override
+	public List<BestProductDTO> getBestProduct(String category) {
+		// TODO Auto-generated method stub
+		return productmapper.getBestProduct(category);
+	}
+
 	@Override
 	public List<ProductColorDTO> getProductColor(String pcid) {
 		return productmapper.getProductColor(pcid);

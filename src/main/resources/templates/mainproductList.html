@@ -195,13 +195,14 @@ function changeBest(e){
                                     <th:block th:switch="${status.index}">
                                     <th:block th:case="0">
                                     <li class="swiper-slide swiper-slide-active">
-                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/CM2C3WPC260W_BK" class="item_info1"
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
                                                 onclick="javascript:setEcommerceData(0, 'BEST', 'WE');"> <span
                                                     class="item_img"> <img th:id="'bestimg'+${status.index}"
 	                                                        th:src="${product.pcimg1}"
                                                         alt="" name="백 밴딩 원턱 팬츠" class="respon_image"
-                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
-                                                href="/ko/p/CM2C3WPC260W_BK" class="item_info2"
+                                                        onclick="GA_main('bestImg',$(this))"> </span> </a> 
+                                                        <a th:id="'secondbestlink'+${status.index}"
+                                                class="item_info2"
                                                 onclick="javascript:GA_main('best',$(this));setEcommerceData(0, 'BEST', 'WE');">
                                                 <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
 												th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>
@@ -209,12 +210,12 @@ function changeBest(e){
                                     </th:block>
                                    <th:block th:case="1">
                                     <li class="swiper-slide swiper-slide-next">
-                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/YN2C3WSC720N_BK" class="item_info1"
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
                                                 onclick="javascript:setEcommerceData(1, 'BEST', 'WE');"> <span
                                                     class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
                                                         alt="" name="[palette] 백 밴딩 셔링 스커트" class="respon_image"
                                                         onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
-                                                href="/ko/p/YN2C3WSC720N_BK" class="item_info2"
+                                                 class="item_info2"
                                                 onclick="javascript:GA_main('best',$(this));setEcommerceData(1, 'BEST', 'WE');">
                                                 <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
                                                   th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>
@@ -222,12 +223,12 @@ function changeBest(e){
                                     </th:block>
                                     <th:block th:case="2">
                                     <li class="swiper-slide">
-                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/TM2C4KCD164W_BK" class="item_info1"
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
                                                 onclick="javascript:setEcommerceData(2, 'BEST', 'WE');"> <span
                                                     class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
                                                         alt="" name="컬러 라인 크로셰 니트 가디건" class="respon_image"
                                                         onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
-                                                href="/ko/p/TM2C4KCD164W_BK" class="item_info2"
+                                                class="item_info2"
                                                 onclick="javascript:GA_main('best',$(this));setEcommerceData(2, 'BEST', 'WE');">
                                                 <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a>
                                         </div>
@@ -235,12 +236,12 @@ function changeBest(e){
                                     </th:block>
                                     <th:block th:case="3">
                                     <li class="swiper-slide">
-                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" href="/ko/p/YN2C3TTO613N_BK" class="item_info1"
+                                        <div class="item_box"> <a th:id="'firstbestlink'+${status.index}" th:href="@{/detail(pcid=${product.pcid})}" class="item_info1"
                                                 onclick="javascript:setEcommerceData(3, 'BEST', 'WE');"> <span
                                                     class="item_img"> <img th:id="'bestimg'+${status.index}" th:src="${product.pcimg1}"
                                                         alt="" name="[palette] 스퀘어넥 슬리브리스 탑" class="respon_image"
                                                         onclick="GA_main('bestImg',$(this))"> </span> </a> <a th:id="'secondbestlink'+${status.index}"
-                                                href="/ko/p/YN2C3TTO613N_BK" class="item_info2"
+                                                class="item_info2"
                                                 onclick="javascript:GA_main('best',$(this));setEcommerceData(3, 'BEST', 'WE');">
                                                 <span th:id="'bestbname'+${status.index}" class="brand" th:text="${product.bname}"></span> <span
                                                    th:id="'bestprice' + ${status.index}" class="price" th:text="'₩'+${#numbers.formatInteger(product.pcprice,3,'COMMA')}"></span> </a> </div>

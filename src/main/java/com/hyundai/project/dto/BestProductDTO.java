@@ -17,4 +17,6 @@ public class BestProductDTO {
 	private int pcprice;
 	private String pcimg1;
 	private String depth1name;
+	private int rcount;
+	private String category;
 }

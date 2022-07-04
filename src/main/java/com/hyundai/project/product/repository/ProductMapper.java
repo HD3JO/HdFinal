@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hyundai.project.dto.BestProductDTO;
 import com.hyundai.project.dto.CategoryDTO;
 import com.hyundai.project.dto.NewProductDTO;
 import com.hyundai.project.dto.ProductColorDTO;
@@ -38,5 +39,7 @@ public interface ProductMapper {
 	public int getProductCount(CategoryDTO categoryDTO);
 	
 	public List<CategoryDTO> getCategoryList();
+
+	public List<BestProductDTO> getBestProduct(String category);
 	
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,25 @@ public class ReviewRESTController {
 	@Autowired
 	ReviewService reviewService;
 	ProductService productService;
+	
+	/*
+	@Value("${spring.servlet.multipart.location}")
+    private String dir;
+    @PostMapping("/upload")
+    public List<FileDTO> upload(@RequestParam("uploadfile") MultipartFile[] uploadfile, Model model){
+        List<FileDTO> list = new ArrayList<>();
+
+        for(MultipartFile file: uploadfile){
+            FileDTO dto = new FileDTO(UUID.randomUUID().toString(), file.getContentType());
+            list.add(dto);
+            File newFileName = new File(dto.getFileName());
+            try{
+                file.transferTo(newFileName);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+	*/
 	
 	@PostMapping(value="/uploadFile")
 	@ResponseBody

@@ -365,7 +365,7 @@
                         <!-- st_store_wrap -->
                         <script>
                             $("#orderSheet").submit(function (e) {
-
+								
                                 const header = $("meta[name='_csrf_header']").attr('content');
                                 const token = $("meta[name='_csrf']").attr('content');
 
@@ -374,9 +374,10 @@
                                 let psid = pcid + psize;
                                 let pquantity = $('#txtqty').val();
                                 let email = $('#email').attr('value');
-
+                                let rv = true;
                                 let form = $('#orderSheet');
 
+                                
                                 if (email == 'anonymousUser') {
                                     let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
                                     e.preventDefault();
@@ -385,16 +386,19 @@
                                         location.href = '/customLogin';
                                     }
                                 }
-
+                                
                                 if (pcid == undefined) {
-                                    layerAlert('색상을 선택해주세요.');
-                                    return;
+                                    let la = new layerAlert('색상을 선택해주세요.');
+                                    
+                                    return rv = false;
                                 }
 
                                 if (psize == undefined) {
-                                    layerAlert('사이즈를 선택해주세요.');
-                                    return;
+                                	let la = new layerAlert('사이즈를 선택해주세요.');
+                                	
+                                	return rv = false;
                                 }
+
 
                                 let input_psid = $("<input type='hidden' value=" + psid + " name='list[0].psid' readonly>");
                                 let input_pquantity = $("<input type='hidden' value=" + pquantity + " name='list[0].pquantity' readonly>");
@@ -680,7 +684,7 @@
             <div class="pop_tltwrap2 pb0 customerreviewdiv1905">
 
                 <h3>
-                    상품평(<span id="review_cnt" class="review_cnt">0</span>)
+                    상품평(<span id="review_cnt" class="review_cnt"></span>)
                 </h3>
                 <div class="star_score1807" id="totalStarScoreWrapper" style="display: none;">
                     <span class="cmt_star">
@@ -993,7 +997,9 @@
                 }
             });
         }
-
+		
+        mileageInfoView();
+        
         const modal = document.getElementById("customerReviewDiv");
         const modalWrite = document.getElementById("customerReviewWriteDiv");
 
@@ -1032,6 +1038,7 @@
                     var reviewlist = document.getElementById('reviewList');
                     let htmlStr = "";
                     $("#reviewNum").text(data.length);
+                    $("#review_cnt").text(data.length);
                     
                     // $("#photoReviewNum").text(data.length);
                     // $("#commonReviewNum").text(data.length);
@@ -1490,8 +1497,10 @@
                 layerAlert("상품평을 20자 이상, 200이하 이내로 작성해주세요.");
                 return;
             }
-
-
+			
+            
+            
+            /* 기존 업로드 Ajax
             $.ajax({
                 url: "/uploadFile",
                 type: "POST",
@@ -1518,7 +1527,8 @@
                 }
             });
             //추가를 위한 주석이다.
-
+			*/
+            
             console.log('파일경로는' + filepath);
             console.log($('#purchaseCode').val());
             console.log($('#purchaseSize').val());

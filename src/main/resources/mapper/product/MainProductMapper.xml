@@ -7,6 +7,6 @@
     </select>
     
     <select id="getBestProduct" parameterType = "String" resultType="com.hyundai.project.dto.BestProductDTO">
-        SELECT * FROM TABLE(FN_NEWPRODUCT_GET(#{depth1name, jdbcType=VARCHAR}))
+        SELECT * FROM TABLE(FN_BESTPRODUCT_GET(#{depth1name, jdbcType=VARCHAR}))
     </select>
 </mapper>
