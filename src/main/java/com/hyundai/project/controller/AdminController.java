@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hyundai.project.dto.AdminProductDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.ProductCommonDTO;
+import com.hyundai.project.dto.ProductDetailDTO;
+import com.hyundai.project.dto.ProductStockDTO;
+import com.hyundai.project.service.AdminProductService;
 import com.hyundai.project.service.MemberService;
 
 @Controller
@@ -19,6 +24,8 @@ import com.hyundai.project.service.MemberService;
 public class AdminController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private AdminProductService adminProductService;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
@@ -73,6 +80,42 @@ public class AdminController {
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/producttables", method=RequestMethod.GET)
+	public String producttablesGet(Model model) throws Exception{
+		model.addAttribute("brandlist", adminProductService.getBrand());
+		
+		return "admin/producttables";
+	}
+	
+	@RequestMapping(value="/producttables", method=RequestMethod.POST)
+	public String producttablesGet(Model model, AdminProductDTO adminProductCommon) throws Exception{
+		System.out.println(adminProductCommon+"@@@@@@@@@@@@@@@");
+		model.addAttribute("selectedBname",adminProductCommon.getBname());
+		model.addAttribute("selectedPname",adminProductCommon.getPname());
+		
+		model.addAttribute("brandlist", adminProductService.getBrand());
+		List<AdminProductDTO> list = adminProductService.getProductCommon(adminProductCommon);
+		model.addAttribute("productlist", list);
+		return "admin/producttables";
+	}
+	
+	@RequestMapping(value="/productDetail", method=RequestMethod.POST)
+	public ResponseEntity<List<ProductDetailDTO>> productDetailPost(@RequestBody ProductCommonDTO productCommonDTO) throws Exception{
+		List<ProductDetailDTO> list = adminProductService.getProductDetail(productCommonDTO.getPid());
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updateProductStock", method=RequestMethod.POST)
+	public ResponseEntity<String> updateProductStock(@RequestBody List<ProductStockDTO> productStockDTOList) throws Exception{
+		for(ProductStockDTO a : productStockDTOList) {
+			System.out.println(a);
+		}
+		adminProductService.updateProductStock(productStockDTOList);
+		
+		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+	}
+	
 
 	@RequestMapping(value="/utilities-animation", method=RequestMethod.GET)
 	public String utilitiesAnimation() {

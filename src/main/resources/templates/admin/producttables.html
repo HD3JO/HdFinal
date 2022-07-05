@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+
+<title>SB Admin 2 - Tables</title>
+
+<!-- Custom fonts for this template -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet" />
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+
+<!-- Custom styles for this template -->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+</head>
+
+<body id="page-top">
+	<script type="text/javascript">
+		const data = [];
+		function updateProductStock(){
+			const len = $('.data').length;
+			for(let i=0; i<len; i++){
+				const psid = $('#psid'+i).text();
+				const psstock = $('#psstock'+i).val();
+				data.push({
+					psid : psid,
+					psstock : psstock
+				});
+			}
+			console.log(data);
+			
+			const header = $("meta[name='_csrf_header']").attr('content');
+	     	const token = $("meta[name='_csrf']").attr('content'); 
+			
+			$.ajax({
+				 url : '/admin/updateProductStock',
+		          data : JSON.stringify(data),
+		          type : 'POST',
+		          dataType : 'text',
+		          contentType : 'application/json',
+		          beforeSend : function(xhr){
+		               xhr.setRequestHeader(header, token);
+		          },
+		          success : function(data) {
+		        	   console.log(data);
+		        	   $('#successModalLabel').text('수량을 수정하였습니다.');
+		        	   $('#successModal').modal();
+		          },
+		         error : function(request, status, error) {
+		 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		 			$('#successModalLabel').text('수량 수정에 실패하였습니다.');
+		        	$('#successModal').modal();
+		         }
+			})
+		}
+		
+		function changeCarousel(idx){
+			//console.log(idx);
+			$('.carousel').hide();
+			$('#carousel'+idx).show();
+		}
+	
+		function productModal(idx) {
+			$('#productModal').modal();
+
+			const header = $("meta[name='_csrf_header']").attr('content');
+			const token = $("meta[name='_csrf']").attr('content');
+			$
+					.ajax({
+						url : '/admin/productDetail',
+						data : JSON.stringify({
+							pid : $('#pid' + idx).text()
+						}),
+						type : 'POST',
+						contentType : 'application/json',
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(header, token);
+						},
+						success : function(data) {
+							let html = '';
+
+							for (key in data) {
+								html += '<tr onclick="changeCarousel('+key+')" class="data">';
+								html += '<td id="pcid'+key+'" style="display:none;">'
+										+ data[key].pcid + '</td>';
+								html += '<td id="psid'+key+'" style="display:none;">'
+										+ data[key].psid + '</td>';
+								html += '<td>' + data[key].pcprice + '₩</td>';
+								html += '<td>' + data[key].psize + '</td>';
+								html += '<td>' + data[key].pccolorcode
+										+ '</td>';
+								html += '<td><img src="'+data[key].pcchipimg+'" style="width:1rem; height:1rem;"></img></td>';
+								html += '<td><input id="psstock'+key+'" style="width:4rem;" type="number" value="' + data[key].psstock + '" min="0"></input></td>';
+								//html += '<td>' + data[key].psstock + '</td>';
+								html += '</tr>';
+							}
+
+							let sliderhtml = '';
+							for (key in data) {
+								if(key != 0){
+									sliderhtml += '<div id="carousel'+key+'" class="carousel slide" data-ride="carousel" style="display:none;">'
+								}else{
+									sliderhtml += '<div id="carousel'+key+'" class="carousel slide" data-ride="carousel">'
+								}
+								sliderhtml += '<div class="carousel-inner" style="max-height: 32rem">'
+								sliderhtml += '<div class="carousel-item active">'
+								sliderhtml += '<img src="'+data[key].pcimg1+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
+								sliderhtml += '</div>'
+								sliderhtml += '<div class="carousel-item">'
+								sliderhtml += '<img src="'+data[key].pcimg2+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
+								sliderhtml += '</div>'
+								sliderhtml += '<div class="carousel-item">'
+								sliderhtml += '<img src="'+data[key].pcimg3+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
+								sliderhtml += '</div>'
+								sliderhtml += '</div>'
+								sliderhtml += '<button class="carousel-control-prev" type="button" data-target="#carousel'+key+'" data-slide="prev" style="border:none; backgroud:none;">'
+								sliderhtml += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'
+								sliderhtml += '<span class="sr-only">Previous</span>'
+								sliderhtml += '</button>'
+								sliderhtml += '<button class="carousel-control-next" type="button" data-target="#carousel'+key+'" data-slide="next" style="border:none; backgroud:none;">'
+								sliderhtml += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
+								sliderhtml += '<span class="sr-only">Next</span>'
+								sliderhtml += '</button>'
+								sliderhtml += '</div>'
+							}
+
+							$("#dynamicTbody").empty();
+							$("#dynamicTbody").append(html);
+
+							$("#pcimgslide").empty();
+							$("#pcimgslide").append(sliderhtml);
+						},
+						error : function(request, status, error) {
+
+							console.log("code:" + request.status + "\n"
+									+ "message:" + request.responseText + "\n"
+									+ "error:" + error);
+
+						}
+					})
+		}
+
+
+	</script>
+	<style>
+td input {
+	border: none;
+}
+</style>
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<ul th:replace="admin/slider :: slider"></ul>
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<nav th:replace="admin/topbar :: topbar"></nav>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<h1 class="h3 mb-2 text-gray-800">상품수량 관리</h1>
+					<p class="mb-4">
+						상품의 수량을 관리할 수 있는 화면입니다. <a target="_blank"
+							href="https://datatables.net">관련 링크(차후 삭제)</a>.
+					</p>
+
+					<form class="user" action="/admin/producttables" method="POST">
+						<input id="csrf" type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}">
+						<div class="form-group row">
+							<div class="col-sm-1 col-form-label">
+								<label>브랜드 : </label>
+							</div>
+							<div class="col-sm-3">
+								<select class="form-select form-select-sm" name="bname">
+									<option th:each="brand : ${brandlist}" th:text="${brand.bname}"
+										th:value="${brand.bname}"
+										th:selected="${#strings.equalsIgnoreCase(selectedBname, brand.bname)}"></option>
+								</select>
+							</div>
+							<div class="col-sm-1 col-form-label">
+								<label>상품명 : </label>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control bg-light border-1 small"
+									placeholder="Search for..." aria-label="Search"
+									aria-describedby="basic-addon2" name="pname"
+									th:value="${selectedPname}">
+							</div>
+							<div>
+								<button class="btn btn-primary" type="submit" value="검색">
+									검색 <i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+
+					</form>
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th>브랜드명</th>
+											<th>상품코드</th>
+											<th>상품명</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr class="product" th:each="product, status: ${productlist}"
+											th:onclick="'productModal('+${status.index}+')'">
+											<td><span th:id="'bname'+${status.index}"
+												th:idx="${status.index}" th:text="${product.bname}" /></td>
+											<td><span th:id="'pid'+${status.index}"
+												th:idx="${status.index}" th:text="${product.pid}" /></td>
+											<td><span th:id="'pname'+${status.index}"
+												th:idx="${status.index}" th:text="${product.pname}" /></td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+
+				<!-- Success Modal-->
+				<div class="modal fade" id="productModal" tabindex="-1"
+					role="dialog" aria-labelledby="productModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="productModalLabel">상품정보</h5>
+								<button class="close" id="productModalBtn" type="button"
+									data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="pcimgslide" class="h-50"></div>
+								<div class="table-responsive">
+									<table class="table table-sm">
+										<thead>
+											<tr>
+												<th style="display: none;">pcid</th>
+												<th style="display: none;">psid</th>
+												<th>가격</th>
+												<th>사이즈</th>
+												<th>색코드</th>
+												<th>색</th>
+												<th>수량</th>
+											</tr>
+										</thead>
+										<tbody id="dynamicTbody">
+											<tr>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+												<td>aaa</td>
+												<td>bbb</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" type="button"
+									data-dismiss="modal">닫기</button>
+								<a class="btn btn-primary" href="javascript:void(0);" onclick="updateProductStock()">수정하기</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Success Modal-->
+			    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="successModalLabel">수량 모달</h5>
+			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			        	</div>
+			    	</div>
+				</div>
+			</div>
+			<!-- End of Main Content -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>
