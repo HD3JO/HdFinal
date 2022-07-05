@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>한섬 커뮤니티 Sommunity</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_gallery.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/board.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_list.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/css3.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/dark.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+<link rel="stylesheet"
+	href="/sommunity/assets/css/fontawesome-all.min.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/main.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/button.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/responsive-grid.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
+<noscript>
+	<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
+</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<!-- Logo -->
+				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
+						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
+					class="title"></span>
+				</a>
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/sommunity/home">Home</a></li>
+				<li><a href="/customLogin">로그인</a></li>
+				<li><a href="/customLogin">회원가입</a></li>
+				<li><a href="elements.html">마이페이지</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div class="main">
+			<div class="inner">
+				<div class="xet_content">
+					<script>
+						var default_style = 'list';
+						var doc_img = 'Y';
+					</script>
+	
+					<div id="xet-boardWrp" class="light">
+						<div class="mg-b15">
+							<button type="button" id="cancelButton"
+								th:attr="onclick=|goBoard('${bname}')|"
+								class="xet_btn medium white"> 취소
+							</button>
+						</div>
+						<script type="text/javascript">
+							function goBoard(bname) {
+								location.href = '/sommunity/board?bname='+bname;
+							}
+						</script>
+						<form action="./" method="post" onsubmit="" id="fo_write" class="boardWrite">
+							<input type="hidden" name="error_return_url"
+								value="">
+							<input type="hidden" name="act" value="dispBoardWrite">
+							<input type="hidden" name="vid" value=""> 
+							<input type="hidden" name="mid" value="simple_board_test"> 
+							<input type="hidden" name="document_srl" value="0">
+							<!-- 내용 입력폼에 기본내용 출력 -->
+							<input type="hidden" name="content" value="">
+							<div class="boardEditor">
+								<div class="boardWriteHeader">
+									<div class="write_type">
+										<div class="input_form">
+											<!-- 제목 기본내용 입력 -->
+											<input type="text" name="brand" id="postBrand"
+												class="inputText" title="제목" th:value="${bname} + ' 게시판'"
+												onfocus="if(this.value==this.title) this.value='';" disabled>
+										</div>
+									</div>
+									
+									<div class="write_type"> 
+										<select id="postHeader"name="search_target" required>
+	                                        <option value="" style="display : none;" selected>머리글 선택</option>
+	                                        <option value="[잡담]">[잡담]</option>
+	                                        <option value="[구매후기]">[구매후기]</option>
+	                                        <option value="[정보]">[정보]</option>
+	                                    </select> 
+									</div>
+									<div class="write_type">
+										<div class="input_form">
+											<!-- 제목 기본내용 입력 -->
+											<input type="text" name="title" id="postTitle"
+												class="inputText" title="제목" value="" 
+												onfocus="if(this.value==this.title) this.value='';"
+												placeholder="제목" required>
+										</div>
+									</div>
+								</div>
+	
+								<div class="editor">
+									<!-- css -->
+									<!-- JS -->
+									<!--#JSPLUGIN:ckeditor-->
+									<div id="ckeditor_instance_19" data-editor-sequence="19"
+										data-editor-primary-key-name="document_srl"
+										data-editor-content-key-name="content"
+										style="min-height: 500px;">
+										<textarea rows="" cols="" id="postContent" name="content" placeholder="내용을 입력하세요." style="min-height: 500px;" required></textarea>
+									</div>
+									<!--#JSPLUGIN:jquery.fileupload-->
+									<!--#JSPLUGIN:jquery.finderSelect-->
+									<!--#JSPLUGIN:handlebars-->
+									<div id="xefu-container-19" class="xefu-container xe-clearfix"
+										data-editor-sequence="19">
+	
+										<div class="xefu-dropzone">
+											<span class="xefu-btn fileinput-button xefu-act-selectfile">
+												<span><i class="xi-icon xi-file-add"></i> 파일 첨부</span> <input
+												id="xe-fileupload" type="file" class="fileupload-processing "
+												value="파일 첨부" name="Filedata" data-auto-upload="true"
+												data-editor-sequence="19" multiple="">
+											</span>
+											
+											<p class="upload_info">
+												
+											</p>
+											<p class="xefu-progress-status" style="display: none;">
+												파일 업로드 중... (<span class="xefu-progress-percent">0%</span>)
+											</p>
+											<div class="xefu-progressbar" style="display: none;">
+												<div></div>
+											</div>
+										</div>
+	
+										<div class="xefu-controll xe-clearfix" style="display: none;">
+											<div style="float: left;">
+												<span class="file_count">0</span>개 첨부 됨 (<span
+													class="attached_size">0Byte</span> / <span
+													class="allowed_attach_size">2.00MB</span>)
+											</div>
+											<div style="float: right">
+												<input type="button" class="xefu-btn xefu-act-link-selected"
+													style="vertical-align: middle; vertical-align: middle;"
+													value="본문 삽입"> <input type="button"
+													class="xefu-btn xefu-act-delete-selected"
+													style="vertical-align: middle; vertical-align: middle;"
+													value="선택 삭제">
+											</div>
+										</div>
+										<div class="xefu-list" style="display: none;">
+											<div class="xefu-list-images">
+												<ul>
+												</ul>
+											</div>
+											<div class="xefu-list-files">
+												<ul>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<script>
+										jQuery(function($) {
+											// uploader
+											var setting = {
+												maxFileSize : 2097152,
+												limitMultiFileUploadSize : 2097152
+											};
+											var uploader = $('#xefu-container-19')
+													.xeUploader(setting);
+											window.xe.msg_exceeds_limit_size = '허용된 용량을 초과하여 첨부가 되지 않았습니다.';
+											window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
+											window.xe.msg_file_cart_is_null = '삭제할 파일을 선택해주세요.';
+											window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
+											window.xe.msg_not_allowed_filetype = '업로드할 수 없는 파일 형식입니다.';
+											window.xe.msg_file_upload_error = '파일 업로드 중 에러가 발생하였습니다.';
+										});
+									</script>
+									<script>
+										(function($) {
+											"use strict";
+											// editor
+											$(function() {
+												CKEDITOR.config.customConfig = '';
+												var settings = {
+													ckeconfig : {
+														height : '500',
+														skin : 'moono',
+														contentsCss : '/modules/editor/styles/ckeditor_light/editor.css?1645423739',
+														xe_editor_sequence : 19,
+														toolbarCanCollapse : true,
+														language : "ko"
+													},
+													loadXeComponent : true,
+													enableToolbar : true,
+													content_field : jQuery('[name=content]')
+												};
+												CKEDITOR.dtd.$removeEmpty.ins = 0;
+												CKEDITOR.dtd.$removeEmpty.i = 0;
+												settings.ckeconfig.xe_component_arrays = {
+													emoticon : '이모티콘 출력',
+													image_link : '이미지 추가',
+													poll_maker : '설문조사',
+													image_gallery : '이미지 갤러리'
+												};
+	
+												var ckeApp = $(
+														'#ckeditor_instance_19')
+														.XeCkEditor(settings);
+											});
+										})(jQuery);
+									</script>
+								</div>
+	
+								<div class="boardNavigation">
+									<button type="submit" accesskey="s"
+										class="xet_btn large submit xet_btn_block">등록</button>
+	
+									<div class="mg-t10">
+										<button type="button" onclick="doDocumentSave(this);"
+											class="xet_btn medium white">  임시 저장
+										</button>
+										<button type="button" onclick="doDocumentLoad(this);"
+											class="xet_btn medium white"> 불러오기
+										</button>
+									</div>
+	
+								</div>
+							</div>
+						</form>
+						<!-- // 하단 내용 // -->
+					</div>
+					<!-- board End -->
+					<!-- // 게시판 끝 // -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<section>
+				<h2>Follow</h2>
+				<ul class="icons">
+					<li><a href="https://www.facebook.com/thehandsome.official/"
+						class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="https://www.instagram.com/thehandsome_official/"
+						class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon solid style2 fa-phone"><span
+							class="label">Phone</span></a></li>
+					<li><a href="#" class="icon solid style2 fa-envelope"><span
+							class="label">Email</span></a></li>
+				</ul>
+			</section>
+			<ul class="copyright">
+				<li>&copy; Untitled. All rights reserved</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</div>
+	</footer>
+
+	</div>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/board.js"></script>
+	<script src="assets/js/jquery.plugins.min.js"></script>
+
+</body>
+
+</html>

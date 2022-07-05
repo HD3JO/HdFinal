@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>한섬 커뮤니티 Sommunity</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_gallery.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/board.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_list.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/css3.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/dark.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/main.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/button.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/responsive-grid.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
+    <link rel="stylesheet" href="/sommunity/assets/css/editor.css" />
+    <noscript>
+        <link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
+    </noscript>
+</head>
+
+<body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Header -->
+        <header id="header">
+            <div class="inner">
+
+                <!-- Logo -->
+                <a href="/sommunity/home" class="logo"> <span class="symbol"><img src="images/sommunity.png"
+                            style="margin: 0 auto;" alt="" /></span><span class="title"></span>
+                </a>
+                <!-- Nav -->
+                <nav>
+                    <ul>
+                        <li><a href="#menu">Menu</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <h2>Menu</h2>
+            <ul>
+				<li><a href="/sommunity/home">Home</a></li>
+				<li><a href="/customLogin">로그인</a></li>
+				<li><a href="/customLogin">회원가입</a></li>
+				<li><a href="elements.html">마이페이지</a></li>
+			</ul>
+        </nav>
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+            	<!--
+                <h1 th:text="${#strings.toUpperCase(bname)}"></h1>
+                -->
+                <span class="image main"><img th:src="'images/'+${bname}+'_long.jpg'" alt="" /></span>
+            </div>
+            <div class="inner">
+	            <div class="xet_content">
+	                <script>
+	                    var default_style = 'list';
+	                    var doc_img = 'Y';
+	                </script>
+	
+	                <div id="xet-boardWrp" class="light">
+	
+	                    <div class="xet-boardHeader">
+	                        <div class="mg-b30 text-center">
+	                            <h1 th:text="${#strings.toUpperCase(bname)} + ' 게시판'"></h1>
+	                        </div>
+	                    </div>
+	                    <div id="ajax-boardContent">
+	                        <div class="xet-listWrp">
+	                            <div class="xet-listTableWrp">
+	                                <table cellspacing="0" border="0" cellpadding="0" summary="List of Articles"
+	                                    class="xet-listTable">
+	                                    <thead>
+	                                        <tr>
+	                                            <th scope="col">번호</th>
+	                                            <th scope="col">제목</th>
+	                                            <th scope="col">작성자</th>
+	                                            <th scope="col">날짜</th>
+	                                            <th scope="col">조회 수</th>
+	                                            <th scope="col"></th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                        <tr class="notice-item" style="background-color: rgba(144, 144, 144, 0.075);">
+	                                            <td>
+	                                                <span class="notice-text">공지</span>
+	                                            </td>
+	                                            <td class="td-subject" colspan="6">
+	                                                <a href="https://demo.xetemplate.com/simple_board_test/3661"
+	                                                    class="subject">이곳은 자유롭게 테스트 할 수 있습니다.</a>
+	                                            </td>
+	                                        </tr>
+	                                        <tr class="bg2">
+	                                            <td>
+	                                                <span alt="번호">번호</span>
+	                                            </td>
+	                                            <td class="td-subject">
+	                                                <a href="" class="subject" a>제목</a>
+	                                            </td>
+	                                            <td><a href="" class="member_0" onclick="return false" alt="작성자">작성자</a></td>
+	                                            <td>작성일</td>
+	                                            <td>조회수</td>
+	                                            <td>
+	                                            </td>
+	                                        </tr>
+	                                        <tr class="bg1">
+	                                            <td>
+	                                                <span>12</span>
+	                                            </td>
+	                                            <td class="td-subject">
+	                                                <a href="https://demo.xetemplate.com/simple_board_test/3667"
+	                                                    class="subject">test</a>
+	                                            </td>
+	                                            <td><a href="#popup_menu_area" class="member_0" onclick="return false">d</a>
+	                                            </td>
+	                                            <td>2022.02.05</td>
+	                                            <td>23</td>
+												<!-- img 태그 -->
+	                                            <td>
+	                                                <a href="" class="thumbnail" style="width: 80px">
+	                                                    <em>123</em> <img
+	                                                        src="https://demo.xetemplate.com/files/thumbnails/667/003/80x80.crop.jpg"
+	                                                        alt=""> </a>
+	                                            </td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                            </div>
+	                        </div>
+							<!-- 페이징 -->
+	                        <ul class="boardPagination">
+	                            <li>
+	                                <strong class="page_on">1</strong>
+	                            </li>
+	                        </ul>
+	                    </div>
+						<div class="xet-clearfix boardHeaderCateWrp">
+	                        <div class="float-right">
+	                            <button id ="Wbutton" class="xet_btn submit xet_btn_block" th:attr="onclick=|goWriteForm('${bname}')|">쓰기</button>
+	                        </div>
+	                    </div>
+						<script type="text/javascript">
+							function goWriteForm(bname) {
+								location.href = '/sommunity/write?bname='+bname;
+							}
+						</script>
+	                    <div class="boardSearch">
+	                        <form action="https://demo.xetemplate.com/" method="get"
+	                            onsubmit="return procFilter(this, search)" id="fo_search" class="boardSearchForm"><input
+	                                type="hidden" name="act" value="">
+	                            <input type="hidden" name="vid" value="">
+	                            <input type="hidden" name="mid" value="simple_board_test">
+	                            <input type="hidden" name="category" value="">
+	                            <input type="hidden" id="bname" name="bname" th:value="${bname}">
+	                            <div class="boardSearchWrp">
+	                                <span class="search-target">
+	                                    <select name="search_target">
+	                                        <option value="title_content">제목+내용</option>
+	                                        <option value="title">제목</option>
+	                                        <option value="content">내용</option>
+	                                        <option value="comment">댓글</option>
+	                                        <option value="nick_name">닉네임</option>
+	                                        <option value="user_id">아이디</option>
+	                                        <option value="tag">태그</option>
+	                                    </select>
+	                                </span>
+	                                <input type="text" name="search_keyword" value="" title="검색" class="inputText"
+	                                    accesskey="S" placeholder="">
+	                                <span class="search-btn">
+	                                    <button type="submit"
+	                                        onclick="jQuery(this).parents('form#fo_search').submit();return false;"
+	                                        alt="검색"></button> </span>
+	                            </div>
+	                        </form>
+	                    </div> <!-- // 하단 내용 // -->
+	                </div><!-- board End -->
+	                <!-- // 게시판 끝 // -->
+	            </div>
+			</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <h2>Follow</h2>
+                <ul class="icons">
+                    <li><a href="https://www.facebook.com/thehandsome.official/"
+                            class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://www.instagram.com/thehandsome_official/"
+                            class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+                    <li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+                </ul>
+            </section>
+            <ul class="copyright">
+                <li>&copy; Untitled. All rights reserved</li>
+                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    </div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/board.js"></script>
+    <script src="assets/js/jquery.plugins.min.js"></script>
+
+</body>
+
+</html>

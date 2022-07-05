@@ -17,7 +17,7 @@ public class SommunityController {
 		return "sommunity/index";
 	}
 	
-	@GetMapping("/brand")
+	@GetMapping("/board")
 	public String brandBoard(@RequestParam("bname") String bname, Model model) {
 		model.addAttribute("bname", bname);
 		return "sommunity/board";
