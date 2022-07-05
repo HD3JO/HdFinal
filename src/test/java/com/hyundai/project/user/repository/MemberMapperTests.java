@@ -38,12 +38,12 @@ public class MemberMapperTests {
 		MemberDTO member = new MemberDTO();
 		member.setEmail("seokjune96@gmail.com");
 		//member.setPassword(passwordEncoder.encode("1234"));
-		member.setName("고석준2");
-		member.setAddress("서울시 강남구 테헤란로 250");
-		member.setPhone("010-1111-2222");
-		member.setChannel("c");
-		member.setEnable(1);
-		member.setRole(MemberRole.USER);
+//		member.setName("고석준2");
+//		member.setAddress("서울시 강남구 테헤란로 250");
+//		member.setPhone("010-1111-2222");
+//		member.setChannel("c");
+//		member.setEnable(1);
+//		member.setRole(MemberRole.USER);
 		
 		System.out.println(memberMapper.getUser(member).get(0));
 	}

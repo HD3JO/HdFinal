@@ -167,6 +167,10 @@
 				
 				modifyMemberMap.get(modEmail).moddate = $(this).val();
 			}
+	        //mileage
+	        if(modId.includes('mileage')){
+	        	modifyMemberMap.get(modEmail).mileage = $(this).val();
+	        }
 	        //marketingsms
 			if(modId.includes('marketingsms')){
 				console.log("marketingsms check : " + $(this).val());
@@ -219,20 +223,28 @@
                     <p class="mb-4">멤버를 관리할 수 있는 화면입니다. <a target="_blank"
                             href="https://datatables.net">관련 링크(차후 삭제)</a>.</p>
                             
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="/admin/membertables" method="POST">
+                    <form class="user" action="/admin/membertables" method="POST">
                         <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <div class="input-group">
-                            <label>Email : </label>
-                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2" name="email">
-                            <label>Name : </label>
-                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2" name="name">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
+                        <div class="form-group row">
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>Email : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+	                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+	                                aria-label="Search" aria-describedby="basic-addon2" name="email">	
+                        	</div>
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>Name : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+	                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+	                                aria-label="Search" aria-describedby="basic-addon2" name="name">
+                        	</div>
+                        	<div>
+                        		<button class="btn btn-primary" type="submit" value="검색">검색
+	                                <i class="fas fa-search fa-sm"></i>
+	                            </button>
+                        	</div>
                         </div>
                     </form>
 
@@ -251,6 +263,7 @@
                                             <th>Name</th>
                                             <th>Address</th>
                                             <th>Phone</th>
+                                            <th>마일리지</th>
                                             <th>가입형태</th>
                                             <th>상태</th>
                                             <th>권한</th>
@@ -273,7 +286,10 @@
                                             	<input th:id="'address'+${status.index}" th:idx="${status.index}" th:value="${member.address}" />
                                             </td>
                                             <td>
-                                            	<input th:id="'phone'+${status.index}" th:idx="${status.index}" th:value="${member.phone}"></input>
+                                            	<input th:id="'phone'+${status.index}" th:idx="${status.index}" th:value="${member.phone}" style="width:120px;"></input>
+                                            </td>
+                                            <td>
+                                            	<input th:id="'mileage'+${status.index}" th:idx="${status.index}" th:value="${member.mileage}" type="number" style="width:100px;"></input>
                                             </td>
                                             <td>
                                             	<input type="hidden" th:value="${member.channel}"/>
