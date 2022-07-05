@@ -23,7 +23,8 @@ public interface OrderMapper {
 	public int updateMileage(OrderDTO orderDTO) throws Exception;
 	
 	public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
-	//public int updateOrder(OrderItemDTO orderItemDTO) throws Exception;
+	
+	public int updateStock(List<OrderItemDTO> orderItemList) throws Exception;
 	
 	public List<OrderListDTO> selectOrderList(String email) throws Exception;
 	
