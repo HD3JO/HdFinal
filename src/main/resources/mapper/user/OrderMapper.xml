@@ -63,6 +63,14 @@
     	SET MILEAGE = MILEAGE + #{mileage, jdbcType=INTEGER}
     	WHERE EMAIL = #{email, jdbcType=VARCHAR}
     </update>
+    
+    <update id="updateStock" parameterType="java.util.List"> 
+    	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close=";END;">
+    		UPDATE PRODUCTMANAGER.PRODUCT_STOCK
+    		SET PSSTOCK = PSSTOCK - #{item.oicount, jdbcType=INTEGER}
+    		WHERE PSID = #{item.psid, jdbcType=VARCHAR}
+    	</foreach>
+    </update>
 	
 	<!-- 사용자 주문 내역 조회-->
 	<select id="getOrderList" resultType="com.hyundai.project.dto.OrderDTO">
