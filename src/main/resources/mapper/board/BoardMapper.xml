@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.board.repository.BoardMapper">
+
+	<select id="getBoard" resultType="com.hyundai.project.dto.BoardDTO">
+		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
+		from board
+		where brand = #{brand}
+		order by bdate desc
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
+		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
+		values (board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent},#{bauthor}, sysdate)
+	</insert>
+	
 </mapper>

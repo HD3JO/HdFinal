@@ -3,6 +3,7 @@ package com.hyundai.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import lombok.extern.log4j.Log4j2;
 public class CartRestController {
 	
 	@Autowired
+	@Qualifier(value="CartServiceImpl")
 	CartService service;
 	
 	// 사용자가 담은 장바구니 목록을 조회

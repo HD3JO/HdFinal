@@ -6,6 +6,8 @@
 <head>
 <title>한섬 커뮤니티 Sommunity</title>
 <meta charset="utf-8" />
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
@@ -24,6 +26,18 @@
 <link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
+
+<!-- Scripts -->
+<script src="/sommunity/assets/js/jquery.min.js"></script>
+<script src="/sommunity/assets/js/browser.min.js"></script>
+<script src="/sommunity/assets/js/breakpoints.min.js"></script>
+<script src="/sommunity/assets/js/util.js"></script>
+<script src="/sommunity/assets/js/main.js"></script>
+<script src="/sommunity/assets/js/board.js"></script>
+<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
+<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
+<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 <noscript>
 	<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
 </noscript>
@@ -47,7 +61,10 @@
 						<li><a href="#menu">Menu</a></li>
 					</ul>
 				</nav>
-
+				<div class="mg-b30 text-center" style="text-align : center;">
+					<h1 class="text-center" th:text="${#strings.toUpperCase(bname)} + ' 게시판 글쓰기'"></h1>
+					<h2 id="contextPathHolder" th:text="${#httpServletRequest.getContextPath()}"/>
+				</div>
 			</div>
 		</header>
 
@@ -65,6 +82,7 @@
 		<!-- Main -->
 		<div class="main">
 			<div class="inner">
+	            <div class="xet_content">
 				<div class="xet_content">
 					<script>
 						var default_style = 'list';
@@ -83,28 +101,23 @@
 								location.href = '/sommunity/board?bname='+bname;
 							}
 						</script>
-						<form action="./" method="post" onsubmit="" id="fo_write" class="boardWrite">
-							<input type="hidden" name="error_return_url"
-								value="">
-							<input type="hidden" name="act" value="dispBoardWrite">
-							<input type="hidden" name="vid" value=""> 
-							<input type="hidden" name="mid" value="simple_board_test"> 
-							<input type="hidden" name="document_srl" value="0">
-							<!-- 내용 입력폼에 기본내용 출력 -->
-							<input type="hidden" name="content" value="">
+						<form action="/sommunity/writeComplete" method="POST" id="boardForm" class="boardWrite">
+						<!--  brand v, bheader, btitle, bcontent v, bauthor -->
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							<input type="hidden" name="bauthor" id="bauthor" th:value="${#authentication.name}" >
+							<input type="hidden" name="brand" id="brand" th:value=${bname}>
 							<div class="boardEditor">
 								<div class="boardWriteHeader">
+									<!-- 
 									<div class="write_type">
 										<div class="input_form">
-											<!-- 제목 기본내용 입력 -->
-											<input type="text" name="brand" id="postBrand"
-												class="inputText" title="제목" th:value="${bname} + ' 게시판'"
+											<input type="text" class="inputText" title="제목" th:value="${bname} + ' 게시판'"
 												onfocus="if(this.value==this.title) this.value='';" disabled>
 										</div>
 									</div>
-									
+									-->
 									<div class="write_type"> 
-										<select id="postHeader"name="search_target" required>
+										<select id="bheader"name="bheader" required>
 	                                        <option value="" style="display : none;" selected>머리글 선택</option>
 	                                        <option value="[잡담]">[잡담]</option>
 	                                        <option value="[구매후기]">[구매후기]</option>
@@ -114,7 +127,7 @@
 									<div class="write_type">
 										<div class="input_form">
 											<!-- 제목 기본내용 입력 -->
-											<input type="text" name="title" id="postTitle"
+											<input type="text" name="btitle" id="btitle"
 												class="inputText" title="제목" value="" 
 												onfocus="if(this.value==this.title) this.value='';"
 												placeholder="제목" required>
@@ -129,9 +142,29 @@
 									<div id="ckeditor_instance_19" data-editor-sequence="19"
 										data-editor-primary-key-name="document_srl"
 										data-editor-content-key-name="content"
-										style="min-height: 500px;">
-										<textarea rows="" cols="" id="postContent" name="content" placeholder="내용을 입력하세요." style="min-height: 500px;" required></textarea>
+										style="height: auto; background-color: #fff;">
+
+								      <textarea id="bcontent" name="bcontent" rows="10" cols="100" style="width: 100%;"></textarea>
+								      
+										<script>
+										let oEditors = []
+										
+										smartEditor = function() {
+										  console.log("Naver SmartEditor")
+										  nhn.husky.EZCreator.createInIFrame({
+										    oAppRef: oEditors,
+										    elPlaceHolder: "bcontent",
+										    sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+										    fCreator: "createSEditor2"
+										  })
+										}
+										
+										$(document).ready(function() {
+										  smartEditor()
+										})
+										</script> 								      
 									</div>
+
 									<!--#JSPLUGIN:jquery.fileupload-->
 									<!--#JSPLUGIN:jquery.finderSelect-->
 									<!--#JSPLUGIN:handlebars-->
@@ -200,53 +233,66 @@
 											window.xe.msg_file_upload_error = '파일 업로드 중 에러가 발생하였습니다.';
 										});
 									</script>
-									<script>
-										(function($) {
-											"use strict";
-											// editor
-											$(function() {
-												CKEDITOR.config.customConfig = '';
-												var settings = {
-													ckeconfig : {
-														height : '500',
-														skin : 'moono',
-														contentsCss : '/modules/editor/styles/ckeditor_light/editor.css?1645423739',
-														xe_editor_sequence : 19,
-														toolbarCanCollapse : true,
-														language : "ko"
-													},
-													loadXeComponent : true,
-													enableToolbar : true,
-													content_field : jQuery('[name=content]')
-												};
-												CKEDITOR.dtd.$removeEmpty.ins = 0;
-												CKEDITOR.dtd.$removeEmpty.i = 0;
-												settings.ckeconfig.xe_component_arrays = {
-													emoticon : '이모티콘 출력',
-													image_link : '이미지 추가',
-													poll_maker : '설문조사',
-													image_gallery : '이미지 갤러리'
-												};
-	
-												var ckeApp = $(
-														'#ckeditor_instance_19')
-														.XeCkEditor(settings);
-											});
-										})(jQuery);
-									</script>
+									
 								</div>
 	
 								<div class="boardNavigation">
-									<button type="submit" accesskey="s"
-										class="xet_btn large submit xet_btn_block">등록</button>
-	
+									<button type="button" class="xet_btn large submit xet_btn_block" onclick="changeQueryString(this)">등록</button>
 									<div class="mg-t10">
 										<button type="button" onclick="doDocumentSave(this);"
-											class="xet_btn medium white">  임시 저장
-										</button>
-										<button type="button" onclick="doDocumentLoad(this);"
-											class="xet_btn medium white"> 불러오기
-										</button>
+											class="xet_btn medium white">  임시 저장 </button>
+										<script>
+										
+										function checkForm(){
+											console.log('checkForm called');
+											let btitle = document.querySelector("#btitle").value;
+											let bheader = document.querySelector("#bheader").value;
+											let bcontent = document.querySelector("#bcontent").value;
+											let checkFormFlag = true;
+											
+											if(bheader === ''|| bheader == undefined){
+												alert('머릿글을 선택해주세요.');
+												checkFormFlag = false;
+											}else if(btitle === '' || btitle == undefined){
+												alert('제목을 입력해주세요.');
+												checkFormFlag = false;
+											}else if(bcontent == '<p>&nbsp;</p>' || bcontent === '' || bcontent === undefined){
+												alert('입력된 내용이 없습니다. ');
+												checkFormFlag = false;
+											}
+											return checkFormFlag;
+										}
+										
+										
+										
+										function changeQueryString(obj){
+											oEditors.getById["bcontent"].exec("UPDATE_CONTENTS_FIELD", []); //스마트 에디터 값을 텍스트컨텐츠로 전달  
+											
+											
+											if(checkForm()){
+												var action = document.querySelector("#boardForm");
+												console.log(action)
+												action.submit();
+											}
+										}
+
+										function doDocumentSave() {
+											
+											let bheader = $('#bheader').val();
+											let btitle = $('#btitle').val();
+											//textarea 값 불러옴
+											oEditors.getById["bcontent"].exec("UPDATE_CONTENTS_FIELD", [])
+											let bcontent = document.getElementById("bcontent").value;
+											if(bcontent == '<p>&nbsp;</p>' || bcontent == '') {
+												console.log('내용 빔');
+											    return;
+											 }else {
+												console.log(bheader);
+												console.log(btitle);
+												console.log(bcontent);
+											 }
+										}
+										</script>
 									</div>
 	
 								</div>
@@ -285,14 +331,6 @@
 	</footer>
 
 	</div>
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/board.js"></script>
-	<script src="assets/js/jquery.plugins.min.js"></script>
 
 </body>
 
