@@ -40,4 +40,14 @@
 		WHERE EMAIL = #{email, jdbcType=VARCHAR}
 		AND MILEAGE >= #{pmileage, jdbcType=INTEGER}
 	</update>
+	
+	<!-- 드로우 당첨자의 정보를 INSERT하는 SQL -->
+	<insert id="insertWinning">
+		INSERT
+		INTO DRAWS
+		VALUES(#{email, jdbcType=VARCHAR},
+		       #{psid, jdbcType=VARCHAR},
+		       #{pcid, jdbcType=VARCHAR},
+		       #{pid, jdbcType=VARCHAR});
+	</insert>
 </mapper>
