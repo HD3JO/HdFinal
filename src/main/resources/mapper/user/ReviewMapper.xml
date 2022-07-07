@@ -48,8 +48,14 @@
 		(SELECT pid from productmanager.product_color where pcid = #{pcid})) 
 		PINFO
 		ON OINFO.PSID = PINFO.PSID
-    </select>    
+    </select>
     
+    <select id="reviewcount" parameterType = "String" resultType="int">
+    select count(*) 
+    from review
+    where email=#{email, jdbcType=VARCHAR}
+    
+    </select>    
     
     <!--  
     <update id="updateReview" statementType = "CALLABLE">

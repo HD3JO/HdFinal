@@ -2,6 +2,9 @@ package com.hyundai.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,6 +117,14 @@ public class AdminController {
 		adminProductService.updateProductStock(productStockDTOList);
 		
 		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/chat", method=RequestMethod.GET)
+	public String chat(HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionId", "master");
+		
+		return "admin/chat";
 	}
 	
 

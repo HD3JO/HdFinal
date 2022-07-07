@@ -39,7 +39,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewMapper.isPurchased(purchasedProductDTO);
 	}
 	
-	
-	
+	@Override
+	public int reviewcount(String email) {
+		
+		return reviewMapper.reviewcount(email);
+	}
 
 }

@@ -14,4 +14,7 @@ public interface ReviewService {
 	List<ReviewDTO> getReview(ReviewDTO reviewDTO);
 
 	List<PurchasedProductDTO> isPurchased(PurchasedProductDTO purchasedProductDTO);
+	
+	int reviewcount(String email);
+	
 }

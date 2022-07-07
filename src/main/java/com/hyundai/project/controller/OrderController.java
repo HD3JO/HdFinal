@@ -18,11 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hyundai.project.dto.CartDTO;
 import com.hyundai.project.dto.CartListDTO;
 import com.hyundai.project.dto.OrderCompleteDTO;
+import com.hyundai.project.dto.EmailDTO;
+import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.MemberUserDetails;
 import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderItemDTO;
+import com.hyundai.project.dto.OrderListDTO;
 import com.hyundai.project.dto.OrderMemberDTO;
 import com.hyundai.project.dto.OrderPageDTO;
 import com.hyundai.project.dto.PaymentMethodDTO;
+import com.hyundai.project.service.EmailService;
+import com.hyundai.project.service.MemberService;
+import com.hyundai.project.service.MessageService;
 import com.hyundai.project.service.OrderMemberService;
 import com.hyundai.project.service.OrderPageService;
 import com.hyundai.project.service.OrderService;
@@ -39,6 +46,12 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private MessageService messageService;
 	
 	@PostMapping("/orderSheet")
 	public String productOrderSheet (Authentication authentication, CartListDTO list, Model model) throws Exception {
@@ -87,12 +100,27 @@ public class OrderController {
 	}
 	
 	@GetMapping("/orderComplete")
-	public String orderComplete(@RequestParam String oid, Model model) throws Exception {
+	public String orderComplete(@RequestParam String oid, Model model, Authentication authentication) throws Exception {
 		
 		List<OrderCompleteDTO> completeList = orderService.getOrderComplete(oid);
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String email = userDetails.getUsername();
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setAddress(email);
+		emailDTO.setTitle("[한섬3조] 주문완료 이메일입니다.");
+		emailService.sendMailWithFiles(emailDTO, completeList);
+		messageService.sendMessage(completeList);
 		model.addAttribute("complete", completeList);
-		
-		
+
 		return "/order/orderComplete";
+	}
+	
+	@GetMapping("/orderStatus")
+	public String orderStatus(Model model, @RequestParam("oid") String oid) throws Exception {
+		
+		List<OrderCompleteDTO> completeList = orderService.getOrderComplete(oid);
+		model.addAttribute("orderList", completeList);
+		model.addAttribute("oid", oid);
+		return "order/orderStatus";
 	}
 }

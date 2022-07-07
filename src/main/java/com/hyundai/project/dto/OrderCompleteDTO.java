@@ -28,4 +28,6 @@ public class OrderCompleteDTO {
     private String pname;
     private String bname;
     private String pmcompany;
+    private String pcid;
+    private String ostatus;
 }
