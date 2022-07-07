@@ -7,38 +7,107 @@
 	<meta charset="utf-8" />
 	<meta name="_csrf" th:content="${_csrf.token}">
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/_style_gallery.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/board.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/_style_list.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/css3.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/dark.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/fontawesome-all.min.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/main.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/button.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/responsive-grid.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
-	<link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<link rel="shortcut icon" href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/font_80.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/common.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/layout.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/popup.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/brand.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/swiper.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/main_201903.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/footer.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/products.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/contents.css" media="all" />
+	<style type="text/css" media="print">
+		@IMPORT url("/_ui/desktop/common/blueprint/print.css");
+	</style>
+	<link rel="stylesheet" href="https://use.fontawesome.com/7f85a56ba4.css">
+	
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery.vticker.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/common.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/html5shiv-printshiv.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/jquery.flexslider.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/ui.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery.form-3.51.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/common_function.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/videojs-ie8.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery-ui-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/instagramAPI.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/instagramAPI.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/jquery.bxslider.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/makePCookie.js"></script>
+	<script type="text/javascript" src="/_ui/shared/js/siteoverlay.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/wisenut/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/swiper.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel_skin.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/unorm.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/appboy.min.js"></script>
 
-	<!-- Scripts -->
-	<script src="/sommunity/assets/js/jquery.min.js"></script>
-	<script src="/sommunity/assets/js/browser.min.js"></script>
-	<script src="/sommunity/assets/js/breakpoints.min.js"></script>
-	<script src="/sommunity/assets/js/util.js"></script>
-	<script src="/sommunity/assets/js/main.js"></script>
-	<script src="/sommunity/assets/js/board.js"></script>
-	<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
-	<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
-	<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
-	<noscript>
-		<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
-	</noscript>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_gallery.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/board.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/_style_list.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/css3.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/dark.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/fontawesome-all.min.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/main.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/button.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/responsive-grid.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />	
+    <link rel="stylesheet" href="/sommunity/assets/css/editor.css" />	
+    <noscript>	
+        <link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />	
+    </noscript>
 </head>
+
+<script>
+var header = $("meta[name='_csrf_header']").attr('content');
+var token = $("meta[name='_csrf']").attr('content');
+
+function getReplyList(){
+	let object = {
+			bid : $('#bid').val()
+	}
+	
+	let dong = $('#bid').val();
+	console.log('번호 : ' + dong);
+	let jsondata = JSON.stringify(object);
+	
+	$.ajax({
+        url: '/getReplyList',
+        data: jsondata,
+        type: 'POST',
+        async : false,
+        dataType: 'JSON',
+        contentType: 'application/json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        success: function (data) {
+            console.log(data);
+
+        	
+        },
+        error: function () {
+            console.log("댓글 조회 실패");
+        }
+      
+    });
+	
+}
+</script>
+
 
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -58,8 +127,7 @@
 					</ul>
 				</nav>
 				<div class="mg-b30 text-center" style="text-align: center;">
-					<h1 class="text-center" th:text="${#strings.toUpperCase(bname)} + ' 게시판 글쓰기'"></h1>
-					<h2 id="contextPathHolder" th:text="${#httpServletRequest.getContextPath()}" />
+					<h1 th:text="${#strings.toUpperCase(boardDTO.brand)} + ' 게시판'"></h1>
 				</div>
 			</div>
 		</header>
@@ -79,9 +147,6 @@
 		<div class="main">
 			<div class="inner">
 				<div class="xet_container">
-					<div class="b_title">
-						<h2>심플보드 - 테스트</h2>
-					</div>
 					<div class="xet_content">
 						<script>
 							var default_style = 'list';
@@ -93,17 +158,16 @@
 								<div class="xet-boardReadWrp">
 									<div class="boardReadHeader">
 										<div class="boardReadSubject text-center">
-											<a href="https://demo.xetemplate.com/simple_board_test/3700"
-												class="subject">ㅅㄷㄱㅈㅅㄱㄷㅅ</a>
+											<a class="subject" style="text-decoration: none;" th:text="${boardDTO.btitle}"></a>
 										</div>
 
 										<div class="boardReadInfo xet-clearfix">
 											<div class="userWrp">
-												<span> <span>ㄱㄷㅅㄱㄷㅈㅅㄱㄷㅅ</span>
-												</span> <span> <strong>2022.07.04 11:14:49</strong></span>
+												<span> <span th:text="${boardDTO.bauthor}"></span>
+												</span> <span th:text="${boardDTO.bdate}"> <strong>2022.07.04 11:14:49</strong></span>
 											</div>
 											<div class="countWrp">
-												<span> 조회수</span>
+												<span alt="조회수"></span>
 											</div>
 										</div>
 									</div>
@@ -111,7 +175,7 @@
 									<div class="boardReadBody">
 										<!--BeforeDocument(3700,0)-->
 										<div class="document_3700_0 xe_content">
-											<p>terret</p>
+											<p th:text="${boardDTO.bcontent}"></p>
 										</div>
 										<!--AfterDocument(3700,0)-->
 
@@ -130,29 +194,7 @@
 														class="xi-facebook"></i></a> <a href="//twitter.com/"
 													class="twitter xet_btn medium white"> <i class="xi-twitter"></i></a>
 
-												<script>
-													var sTitle = 'ㅅㄷㄱㅈㅅㄱㄷㅅ';
-													jQuery(function ($) {
-														$('.twitter')
-															.snspost(
-																{
-																	type: 'twitter',
-																	content: sTitle
-																		+ ' https://demo.xetemplate.com/simple_board_test/3700'
-																});
-														$('.facebook')
-															.snspost(
-																{
-																	type: 'facebook',
-																	content: sTitle
-																});
-														$('.google').snspost({
-															type: 'google',
-															content: sTitle
-														});
-
-													});
-												</script>
+											
 
 											</div>
 										</div>
@@ -167,11 +209,11 @@
 
 									<div class="boardBtnWrp xet-clearfix mg-t20">
 										<div class="float-left">
-											<a href="https://demo.xetemplate.com/simple_board_test"
+											<a th:href="'http://localhost/sommunity/board?bname=' + ${boardDTO.brand}"
 												class="xet_btn medium white"></i> 목록</a>
 										</div>
-										<div class="float-right">
-											<a href="https://demo.xetemplate.com/index.php?mid=simple_board_test&amp;document_srl=3700&amp;act=dispBoardWrite"
+										<div th:if="${#authentication.name.equals(boardDTO.bauthor)}" class="float-right">
+											<a href=" "
 												class="xet_btn medium white">수정</a> <a href="javascript:;"
 												onclick="delDocument('3700');return false;"
 												class="xet_btn medium red">삭제</a>
@@ -180,9 +222,12 @@
 								</div>
 
 								<div class="feedbackList" id="comment">
-									<!-- // 댓글 목록 -->
-									<div class="replyList"></div>
-
+									<div class="feedbackHeader comment-icon">
+										댓글 <span id = "replyCnt"><em>0개</em></span>
+									</div> <!-- // 댓글 목록 -->
+									<div class="replyList" id= "replyList">
+										
+									</div>
 									<!-- // 댓글 페이지표시 -->
 								</div>
 								<div class="boardModal-form" id="boardModal-comment-del">
@@ -191,6 +236,10 @@
 
 										<form action="./" method="get"
 											onsubmit="return procFilter(this, delete_comment)">
+											<input type="hidden" id="deliveryOkMsg" value="확인"/>
+											<!-- 필요한 input 모음 -->
+											<input type="hidden" name="user" id="user" th:value="${#authentication.name}">
+											
 											<input type="hidden" name="error_return_url"
 												value="/simple_board_test/3700"><input type="hidden" name="act"
 												value=""><input type="hidden" name="vid" value=""> <input type="hidden"
@@ -203,1097 +252,184 @@
 									</div>
 								</div>
 								<div id="comment-form">
-									<form action="./" method="post" onsubmit="return procFilter(this, insert_comment)"
-										class="boardWrite cmtWrite" editor_sequence="2">
-										<input type="hidden" name="error_return_url"
-											value="/simple_board_test/3700"><input type="hidden" name="act"
-											value=""><input type="hidden" name="vid" value=""> <input type="hidden"
-											name="mid" value="simple_board_test"> <input type="hidden"
-											name="document_srl" value="3700"> <input type="hidden" name="comment_srl"
-											value="0"> <input type="hidden" name="content" value="">
+									<form action="./" method="post" onsubmit="return procFilter(this, insert_comment)" class="boardWrite cmtWrite" editor_sequence="2">
+										<input type="hidden" name="error_return_url" value="/simple_board_test/3700">
+										<input type="hidden" name="act" value=""><input type="hidden" name="vid" value=""> 
+										<input type="hidden" name="mid" value="simple_board_test"> 
+										<input type="hidden" name="document_srl" value="3700"> 
+										<input type="hidden" name="comment_srl" value="0"> 
+										<input type="hidden" name="content" value="">
 										<div class="boardEditor r6">
 											<div class="editorOption">
-												<div class="write_type xet-clearfix">
-													<div class="float-right">
-														<input type="checkbox" name="is_secret" value="Y"
-															id="is_secret_3700" class="inputCheck"> <label
-															for="is_secret_3700" title="비밀글 기능">비밀글 기능</label>
-													</div>
-												</div>
+												
 												<div class="write_type xet_clearfix">
 													<div class="input_form">
-														<input type="text" name="nick_name" class="inputText userName"
-															value="" placeholder="닉네임">
+														<input type="hidden" id="bid" th:value="${boardDTO.bid}"></input>
+														<textarea name="breply" id="breply" class="inputText" placeholder="댓글을 입력해주세요."></textarea>
 													</div>
 												</div>
-												<div class="write_type xet_clearfix">
-													<div class="input_form">
-														<input type="password" name="password" class="inputText userPw"
-															value="" placeholder="비밀번호">
-													</div>
-												</div>
-											</div>
-											<div class="editor">
-												<!-- css -->
-												<!-- JS -->
-												<!--#JSPLUGIN:ckeditor-->
-												<div id="ckeditor_instance_2" data-editor-sequence="2"
-													data-editor-primary-key-name="comment_srl"
-													data-editor-content-key-name="content" style="min-height: 120px;">
-													<div id="cke_editor1"
-														class="cke_1 cke cke_reset cke_chrome cke_editor_editor1 cke_ltr cke_browser_webkit"
-														dir="ltr" lang="ko" role="application"
-														aria-labelledby="cke_editor1_arialbl">
-														<span id="cke_editor1_arialbl" class="cke_voice_label">리치
-															텍스트 편집기, editor1</span>
-														<div class="cke_inner cke_reset" role="presentation">
-															<span id="cke_1_top" class="cke_top cke_reset_all"
-																role="presentation"
-																style="height: auto; user-select: none;"><span
-																	id="cke_8" class="cke_voice_label">에디터
-																	툴바</span><span id="cke_1_toolbox"
-																	class="cke_toolbox" role="group"><span
-																		class="cke_toolbox_main"
-																		style="display: none"><span id="cke_12"
-																			class="cke_toolbar"
-																			aria-labelledby="cke_12_label"
-																			role="toolbar"><span id="cke_12_label"
-																				class="cke_voice_label">클립보드/실행
-																				취소</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_13"
-																					class="cke_button cke_button__undo cke_button_disabled "
-																					href="javascript:void('실행 취소')"
-																					title="실행 취소 (컨트롤+Z)" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_13_label"
-																					aria-describedby="cke_13_description"
-																					aria-haspopup="false"
-																					aria-disabled="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(1,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(2,event);"
-																					onclick="CKEDITOR.tools.callFunction(3,this);return false;"><span
-																						class="cke_button_icon cke_button__undo_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1224px; background-size: auto;">&nbsp;</span><span
-																						id="cke_13_label"
-																						class="cke_button_label cke_button__undo_label"
-																						aria-hidden="false">실행
-																						취소</span><span
-																						id="cke_13_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+Z</span></a><a id="cke_14"
-																					class="cke_button cke_button__redo cke_button_disabled "
-																					href="javascript:void('다시 실행')"
-																					title="다시 실행 (컨트롤+Y)" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_14_label"
-																					aria-describedby="cke_14_description"
-																					aria-haspopup="false"
-																					aria-disabled="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(4,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(5,event);"
-																					onclick="CKEDITOR.tools.callFunction(6,this);return false;"><span
-																						class="cke_button_icon cke_button__redo_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1176px; background-size: auto;">&nbsp;</span><span
-																						id="cke_14_label"
-																						class="cke_button_label cke_button__redo_label"
-																						aria-hidden="false">다시
-																						실행</span><span
-																						id="cke_14_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+Y</span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_15" class="cke_toolbar"
-																			aria-labelledby="cke_15_label"
-																			role="toolbar"><span id="cke_15_label"
-																				class="cke_voice_label">편집</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_16"
-																					class="cke_button cke_button__find cke_button_off"
-																					href="javascript:void('찾기')"
-																					title="찾기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_16_label"
-																					aria-describedby="cke_16_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(7,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(8,event);"
-																					onclick="CKEDITOR.tools.callFunction(9,this);return false;"><span
-																						class="cke_button_icon cke_button__find_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -360px; background-size: auto;">&nbsp;</span><span
-																						id="cke_16_label"
-																						class="cke_button_label cke_button__find_label"
-																						aria-hidden="false">찾기</span><span
-																						id="cke_16_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_17"
-																					class="cke_button cke_button__replace cke_button_off"
-																					href="javascript:void('바꾸기')"
-																					title="바꾸기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_17_label"
-																					aria-describedby="cke_17_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(10,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(11,event);"
-																					onclick="CKEDITOR.tools.callFunction(12,this);return false;"><span
-																						class="cke_button_icon cke_button__replace_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -384px; background-size: auto;">&nbsp;</span><span
-																						id="cke_17_label"
-																						class="cke_button_label cke_button__replace_label"
-																						aria-hidden="false">바꾸기</span><span
-																						id="cke_17_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><span
-																					class="cke_toolbar_separator"
-																					role="separator"></span><a
-																					id="cke_18"
-																					class="cke_button cke_button__selectall cke_button_off"
-																					href="javascript:void('모두 선택')"
-																					title="모두 선택" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_18_label"
-																					aria-describedby="cke_18_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(13,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(14,event);"
-																					onclick="CKEDITOR.tools.callFunction(15,this);return false;"><span
-																						class="cke_button_icon cke_button__selectall_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1032px; background-size: auto;">&nbsp;</span><span
-																						id="cke_18_label"
-																						class="cke_button_label cke_button__selectall_label"
-																						aria-hidden="false">모두
-																						선택</span><span
-																						id="cke_18_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_19" class="cke_toolbar"
-																			aria-labelledby="cke_19_label"
-																			role="toolbar"><span id="cke_19_label"
-																				class="cke_voice_label">링크</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_20"
-																					class="cke_button cke_button__link cke_button_off"
-																					href="javascript:void('링크 삽입/변경')"
-																					title="링크 삽입/변경 (컨트롤+L)"
-																					tabindex="-1" hidefocus="true"
-																					role="button"
-																					aria-labelledby="cke_20_label"
-																					aria-describedby="cke_20_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(16,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(17,event);"
-																					onclick="CKEDITOR.tools.callFunction(18,this);return false;"><span
-																						class="cke_button_icon cke_button__link_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -720px; background-size: auto;">&nbsp;</span><span
-																						id="cke_20_label"
-																						class="cke_button_label cke_button__link_label"
-																						aria-hidden="false">링크
-																						삽입/변경</span><span
-																						id="cke_20_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+L</span></a><a id="cke_21"
-																					class="cke_button cke_button__unlink cke_button_disabled "
-																					href="javascript:void('링크 지우기')"
-																					title="링크 지우기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_21_label"
-																					aria-describedby="cke_21_description"
-																					aria-haspopup="false"
-																					aria-disabled="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(19,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(20,event);"
-																					onclick="CKEDITOR.tools.callFunction(21,this);return false;"><span
-																						class="cke_button_icon cke_button__unlink_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -744px; background-size: auto;">&nbsp;</span><span
-																						id="cke_21_label"
-																						class="cke_button_label cke_button__unlink_label"
-																						aria-hidden="false">링크
-																						지우기</span><span
-																						id="cke_21_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_22"
-																					class="cke_button cke_button__anchor cke_button_off"
-																					href="javascript:void('책갈피')"
-																					title="책갈피" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_22_label"
-																					aria-describedby="cke_22_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(22,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(23,event);"
-																					onclick="CKEDITOR.tools.callFunction(24,this);return false;"><span
-																						class="cke_button_icon cke_button__anchor_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -696px; background-size: auto;">&nbsp;</span><span
-																						id="cke_22_label"
-																						class="cke_button_label cke_button__anchor_label"
-																						aria-hidden="false">책갈피</span><span
-																						id="cke_22_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_23" class="cke_toolbar"
-																			aria-labelledby="cke_23_label"
-																			role="toolbar"><span id="cke_23_label"
-																				class="cke_voice_label">삽입</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_24"
-																					class="cke_button cke_button__image cke_button_off"
-																					href="javascript:void('이미지')"
-																					title="이미지" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_24_label"
-																					aria-describedby="cke_24_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(25,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(26,event);"
-																					onclick="CKEDITOR.tools.callFunction(27,this);return false;"><span
-																						class="cke_button_icon cke_button__image_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -432px; background-size: auto;">&nbsp;</span><span
-																						id="cke_24_label"
-																						class="cke_button_label cke_button__image_label"
-																						aria-hidden="false">이미지</span><span
-																						id="cke_24_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_25"
-																					class="cke_button cke_button__table cke_button_off"
-																					href="javascript:void('표')"
-																					title="표" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_25_label"
-																					aria-describedby="cke_25_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(28,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(29,event);"
-																					onclick="CKEDITOR.tools.callFunction(30,this);return false;"><span
-																						class="cke_button_icon cke_button__table_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1248px; background-size: auto;">&nbsp;</span><span
-																						id="cke_25_label"
-																						class="cke_button_label cke_button__table_label"
-																						aria-hidden="false">표</span><span
-																						id="cke_25_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_26"
-																					class="cke_button cke_button__horizontalrule cke_button_off"
-																					href="javascript:void('가로 줄 삽입')"
-																					title="가로 줄 삽입" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_26_label"
-																					aria-describedby="cke_26_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(31,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(32,event);"
-																					onclick="CKEDITOR.tools.callFunction(33,this);return false;"><span
-																						class="cke_button_icon cke_button__horizontalrule_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -408px; background-size: auto;">&nbsp;</span><span
-																						id="cke_26_label"
-																						class="cke_button_label cke_button__horizontalrule_label"
-																						aria-hidden="false">가로 줄
-																						삽입</span><span
-																						id="cke_26_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_27" class="cke_toolbar"
-																			aria-labelledby="cke_27_label"
-																			role="toolbar"><span id="cke_27_label"
-																				class="cke_voice_label">도구</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_28"
-																					class="cke_button cke_button__maximize cke_button_off"
-																					href="javascript:void('최대화')"
-																					title="최대화" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_28_label"
-																					aria-describedby="cke_28_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(34,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(35,event);"
-																					onclick="CKEDITOR.tools.callFunction(36,this);return false;"><span
-																						class="cke_button_icon cke_button__maximize_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -864px; background-size: auto;">&nbsp;</span><span
-																						id="cke_28_label"
-																						class="cke_button_label cke_button__maximize_label"
-																						aria-hidden="false">최대화</span><span
-																						id="cke_28_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_29"
-																					class="cke_button cke_button__showblocks cke_button_off"
-																					href="javascript:void('블록 보기')"
-																					title="블록 보기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_29_label"
-																					aria-describedby="cke_29_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(37,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(38,event);"
-																					onclick="CKEDITOR.tools.callFunction(39,this);return false;"><span
-																						class="cke_button_icon cke_button__showblocks_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1080px; background-size: auto;">&nbsp;</span><span
-																						id="cke_29_label"
-																						class="cke_button_label cke_button__showblocks_label"
-																						aria-hidden="false">블록
-																						보기</span><span
-																						id="cke_29_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_30"
-																			class="cke_toolbar cke_toolbar_last"
-																			aria-labelledby="cke_30_label"
-																			role="toolbar"><span id="cke_30_label"
-																				class="cke_voice_label">문서</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_31"
-																					class="cke_button cke_button__source cke_button_off"
-																					href="javascript:void('소스')"
-																					title="소스" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_31_label"
-																					aria-describedby="cke_31_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(40,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(41,event);"
-																					onclick="CKEDITOR.tools.callFunction(42,this);return false;"><span
-																						class="cke_button_icon cke_button__source_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -1128px; background-size: auto;">&nbsp;</span><span
-																						id="cke_31_label"
-																						class="cke_button_label cke_button__source_label"
-																						aria-hidden="false">소스</span><span
-																						id="cke_31_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			class="cke_toolbar_break"></span><span
-																			id="cke_32" class="cke_toolbar"
-																			aria-labelledby="cke_32_label"
-																			role="toolbar"><span id="cke_32_label"
-																				class="cke_voice_label">기본
-																				스타일</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_33"
-																					class="cke_button cke_button__bold cke_button_off"
-																					href="javascript:void('굵게')"
-																					title="굵게 (컨트롤+B)" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_33_label"
-																					aria-describedby="cke_33_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(43,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(44,event);"
-																					onclick="CKEDITOR.tools.callFunction(45,this);return false;"><span
-																						class="cke_button_icon cke_button__bold_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 0px; background-size: auto;">&nbsp;</span><span
-																						id="cke_33_label"
-																						class="cke_button_label cke_button__bold_label"
-																						aria-hidden="false">굵게</span><span
-																						id="cke_33_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+B</span></a><a id="cke_34"
-																					class="cke_button cke_button__italic cke_button_off"
-																					href="javascript:void('기울임꼴')"
-																					title="기울임꼴 (컨트롤+I)" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_34_label"
-																					aria-describedby="cke_34_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(46,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(47,event);"
-																					onclick="CKEDITOR.tools.callFunction(48,this);return false;"><span
-																						class="cke_button_icon cke_button__italic_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -24px; background-size: auto;">&nbsp;</span><span
-																						id="cke_34_label"
-																						class="cke_button_label cke_button__italic_label"
-																						aria-hidden="false">기울임꼴</span><span
-																						id="cke_34_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+I</span></a><a id="cke_35"
-																					class="cke_button cke_button__underline cke_button_off"
-																					href="javascript:void('밑줄')"
-																					title="밑줄 (컨트롤+U)" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_35_label"
-																					aria-describedby="cke_35_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(49,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(50,event);"
-																					onclick="CKEDITOR.tools.callFunction(51,this);return false;"><span
-																						class="cke_button_icon cke_button__underline_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -120px; background-size: auto;">&nbsp;</span><span
-																						id="cke_35_label"
-																						class="cke_button_label cke_button__underline_label"
-																						aria-hidden="false">밑줄</span><span
-																						id="cke_35_description"
-																						class="cke_button_label"
-																						aria-hidden="false">키보드 단축키
-																						컨트롤+U</span></a><a id="cke_36"
-																					class="cke_button cke_button__strike cke_button_off"
-																					href="javascript:void('취소선')"
-																					title="취소선" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_36_label"
-																					aria-describedby="cke_36_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(52,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(53,event);"
-																					onclick="CKEDITOR.tools.callFunction(54,this);return false;"><span
-																						class="cke_button_icon cke_button__strike_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -48px; background-size: auto;">&nbsp;</span><span
-																						id="cke_36_label"
-																						class="cke_button_label cke_button__strike_label"
-																						aria-hidden="false">취소선</span><span
-																						id="cke_36_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_37"
-																					class="cke_button cke_button__subscript cke_button_off"
-																					href="javascript:void('아래 첨자')"
-																					title="아래 첨자" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_37_label"
-																					aria-describedby="cke_37_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(55,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(56,event);"
-																					onclick="CKEDITOR.tools.callFunction(57,this);return false;"><span
-																						class="cke_button_icon cke_button__subscript_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -72px; background-size: auto;">&nbsp;</span><span
-																						id="cke_37_label"
-																						class="cke_button_label cke_button__subscript_label"
-																						aria-hidden="false">아래
-																						첨자</span><span
-																						id="cke_37_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_38"
-																					class="cke_button cke_button__superscript cke_button_off"
-																					href="javascript:void('위 첨자')"
-																					title="위 첨자" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_38_label"
-																					aria-describedby="cke_38_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(58,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(59,event);"
-																					onclick="CKEDITOR.tools.callFunction(60,this);return false;"><span
-																						class="cke_button_icon cke_button__superscript_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -96px; background-size: auto;">&nbsp;</span><span
-																						id="cke_38_label"
-																						class="cke_button_label cke_button__superscript_label"
-																						aria-hidden="false">위
-																						첨자</span><span
-																						id="cke_38_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><span
-																					class="cke_toolbar_separator"
-																					role="separator"></span><a
-																					id="cke_39"
-																					class="cke_button cke_button__removeformat cke_button_off"
-																					href="javascript:void('형식 지우기')"
-																					title="형식 지우기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_39_label"
-																					aria-describedby="cke_39_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(61,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(62,event);"
-																					onclick="CKEDITOR.tools.callFunction(63,this);return false;"><span
-																						class="cke_button_icon cke_button__removeformat_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -984px; background-size: auto;">&nbsp;</span><span
-																						id="cke_39_label"
-																						class="cke_button_label cke_button__removeformat_label"
-																						aria-hidden="false">형식
-																						지우기</span><span
-																						id="cke_39_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_40"
-																			class="cke_toolbar cke_toolbar_last"
-																			aria-labelledby="cke_40_label"
-																			role="toolbar"><span id="cke_40_label"
-																				class="cke_voice_label">단락</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_41"
-																					class="cke_button cke_button__numberedlist cke_button_off"
-																					href="javascript:void('순서 있는 목록')"
-																					title="순서 있는 목록" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_41_label"
-																					aria-describedby="cke_41_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(64,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(65,event);"
-																					onclick="CKEDITOR.tools.callFunction(66,this);return false;"><span
-																						class="cke_button_icon cke_button__numberedlist_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -840px; background-size: auto;">&nbsp;</span><span
-																						id="cke_41_label"
-																						class="cke_button_label cke_button__numberedlist_label"
-																						aria-hidden="false">순서 있는
-																						목록</span><span
-																						id="cke_41_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_42"
-																					class="cke_button cke_button__bulletedlist cke_button_off"
-																					href="javascript:void('순서 없는 목록')"
-																					title="순서 없는 목록" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_42_label"
-																					aria-describedby="cke_42_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(67,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(68,event);"
-																					onclick="CKEDITOR.tools.callFunction(69,this);return false;"><span
-																						class="cke_button_icon cke_button__bulletedlist_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -792px; background-size: auto;">&nbsp;</span><span
-																						id="cke_42_label"
-																						class="cke_button_label cke_button__bulletedlist_label"
-																						aria-hidden="false">순서 없는
-																						목록</span><span
-																						id="cke_42_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><span
-																					class="cke_toolbar_separator"
-																					role="separator"></span><a
-																					id="cke_43"
-																					class="cke_button cke_button__outdent cke_button_disabled "
-																					href="javascript:void('내어쓰기')"
-																					title="내어쓰기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_43_label"
-																					aria-describedby="cke_43_description"
-																					aria-haspopup="false"
-																					aria-disabled="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(70,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(71,event);"
-																					onclick="CKEDITOR.tools.callFunction(72,this);return false;"><span
-																						class="cke_button_icon cke_button__outdent_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -528px; background-size: auto;">&nbsp;</span><span
-																						id="cke_43_label"
-																						class="cke_button_label cke_button__outdent_label"
-																						aria-hidden="false">내어쓰기</span><span
-																						id="cke_43_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_44"
-																					class="cke_button cke_button__indent cke_button_off"
-																					href="javascript:void('들여쓰기')"
-																					title="들여쓰기" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_44_label"
-																					aria-describedby="cke_44_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(73,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(74,event);"
-																					onclick="CKEDITOR.tools.callFunction(75,this);return false;"><span
-																						class="cke_button_icon cke_button__indent_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -480px; background-size: auto;">&nbsp;</span><span
-																						id="cke_44_label"
-																						class="cke_button_label cke_button__indent_label"
-																						aria-hidden="false">들여쓰기</span><span
-																						id="cke_44_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><span
-																					class="cke_toolbar_separator"
-																					role="separator"></span><a
-																					id="cke_45"
-																					class="cke_button cke_button__blockquote cke_button_off"
-																					href="javascript:void('인용 단락')"
-																					title="인용 단락" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_45_label"
-																					aria-describedby="cke_45_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(76,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(77,event);"
-																					onclick="CKEDITOR.tools.callFunction(78,this);return false;"><span
-																						class="cke_button_icon cke_button__blockquote_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -192px; background-size: auto;">&nbsp;</span><span
-																						id="cke_45_label"
-																						class="cke_button_label cke_button__blockquote_label"
-																						aria-hidden="false">인용
-																						단락</span><span
-																						id="cke_45_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_46"
-																					class="cke_button cke_button__creatediv cke_button_off"
-																					href="javascript:void('Div 태그 생성')"
-																					title="Div 태그 생성" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_46_label"
-																					aria-describedby="cke_46_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(79,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(80,event);"
-																					onclick="CKEDITOR.tools.callFunction(81,this);return false;"><span
-																						class="cke_button_icon cke_button__creatediv_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -312px; background-size: auto;">&nbsp;</span><span
-																						id="cke_46_label"
-																						class="cke_button_label cke_button__creatediv_label"
-																						aria-hidden="false">Div 태그
-																						생성</span><span
-																						id="cke_46_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><span
-																					class="cke_toolbar_separator"
-																					role="separator"></span><a
-																					id="cke_47"
-																					class="cke_button cke_button__justifyleft cke_button_on"
-																					href="javascript:void('왼쪽 정렬')"
-																					title="왼쪽 정렬" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_47_label"
-																					aria-describedby="cke_47_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(82,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(83,event);"
-																					onclick="CKEDITOR.tools.callFunction(84,this);return false;"
-																					aria-pressed="true"><span
-																						class="cke_button_icon cke_button__justifyleft_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -600px; background-size: auto;">&nbsp;</span><span
-																						id="cke_47_label"
-																						class="cke_button_label cke_button__justifyleft_label"
-																						aria-hidden="false">왼쪽
-																						정렬</span><span
-																						id="cke_47_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_48"
-																					class="cke_button cke_button__justifycenter cke_button_off"
-																					href="javascript:void('가운데 정렬')"
-																					title="가운데 정렬" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_48_label"
-																					aria-describedby="cke_48_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(85,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(86,event);"
-																					onclick="CKEDITOR.tools.callFunction(87,this);return false;"><span
-																						class="cke_button_icon cke_button__justifycenter_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -576px; background-size: auto;">&nbsp;</span><span
-																						id="cke_48_label"
-																						class="cke_button_label cke_button__justifycenter_label"
-																						aria-hidden="false">가운데
-																						정렬</span><span
-																						id="cke_48_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_49"
-																					class="cke_button cke_button__justifyright cke_button_off"
-																					href="javascript:void('오른쪽 정렬')"
-																					title="오른쪽 정렬" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_49_label"
-																					aria-describedby="cke_49_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(88,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(89,event);"
-																					onclick="CKEDITOR.tools.callFunction(90,this);return false;"><span
-																						class="cke_button_icon cke_button__justifyright_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -624px; background-size: auto;">&nbsp;</span><span
-																						id="cke_49_label"
-																						class="cke_button_label cke_button__justifyright_label"
-																						aria-hidden="false">오른쪽
-																						정렬</span><span
-																						id="cke_49_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_50"
-																					class="cke_button cke_button__justifyblock cke_button_off"
-																					href="javascript:void('양쪽 맞춤')"
-																					title="양쪽 맞춤" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_50_label"
-																					aria-describedby="cke_50_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(91,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(92,event);"
-																					onclick="CKEDITOR.tools.callFunction(93,this);return false;"><span
-																						class="cke_button_icon cke_button__justifyblock_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -552px; background-size: auto;">&nbsp;</span><span
-																						id="cke_50_label"
-																						class="cke_button_label cke_button__justifyblock_label"
-																						aria-hidden="false">양쪽
-																						맞춤</span><span
-																						id="cke_50_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			class="cke_toolbar_break"></span><span
-																			id="cke_51" class="cke_toolbar"
-																			aria-labelledby="cke_51_label"
-																			role="toolbar"><span id="cke_51_label"
-																				class="cke_voice_label">스타일</span><span
-																				class="cke_toolbar_start"></span><span
-																				id="cke_9"
-																				class="cke_combo cke_combo__format cke_combo_off"
-																				role="presentation"><span
-																					id="cke_9_label"
-																					class="cke_combo_label">문단</span><a
-																					class="cke_combo_button"
-																					title="문단 형식" tabindex="-1"
-																					href="javascript:void('문단 형식')"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_9_label"
-																					aria-haspopup="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(95,event,this);"
-																					onfocus="return CKEDITOR.tools.callFunction(96,event);"
-																					onclick="CKEDITOR.tools.callFunction(94,this);return false;"><span
-																						id="cke_9_text"
-																						class="cke_combo_text">본문</span><span
-																						class="cke_combo_open"><span
-																							class="cke_combo_arrow"></span></span></a></span><span
-																				id="cke_10"
-																				class="cke_combo cke_combo__font cke_combo_off"
-																				role="presentation"><span
-																					id="cke_10_label"
-																					class="cke_combo_label">글꼴</span><a
-																					class="cke_combo_button" title="글꼴"
-																					tabindex="-1"
-																					href="javascript:void('글꼴')"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_10_label"
-																					aria-haspopup="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(98,event,this);"
-																					onfocus="return CKEDITOR.tools.callFunction(99,event);"
-																					onclick="CKEDITOR.tools.callFunction(97,this);return false;"><span
-																						id="cke_10_text"
-																						class="cke_combo_text cke_combo_inlinelabel">글꼴</span><span
-																						class="cke_combo_open"><span
-																							class="cke_combo_arrow"></span></span></a></span><span
-																				id="cke_11"
-																				class="cke_combo cke_combo__fontsize cke_combo_off"
-																				role="presentation"><span
-																					id="cke_11_label"
-																					class="cke_combo_label">크기</span><a
-																					class="cke_combo_button"
-																					title="글자 크기" tabindex="-1"
-																					href="javascript:void('글자 크기')"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_11_label"
-																					aria-haspopup="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(101,event,this);"
-																					onfocus="return CKEDITOR.tools.callFunction(102,event);"
-																					onclick="CKEDITOR.tools.callFunction(100,this);return false;"><span
-																						id="cke_11_text"
-																						class="cke_combo_text cke_combo_inlinelabel">크기</span><span
-																						class="cke_combo_open"><span
-																							class="cke_combo_arrow"></span></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_52" class="cke_toolbar"
-																			aria-labelledby="cke_52_label"
-																			role="toolbar"><span id="cke_52_label"
-																				class="cke_voice_label">색상</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_53"
-																					class="cke_button cke_button__textcolor cke_button_off"
-																					href="javascript:void('글자 색상')"
-																					title="글자 색상" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_53_label"
-																					aria-describedby="cke_53_description"
-																					aria-haspopup="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(103,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(104,event);"
-																					onclick="CKEDITOR.tools.callFunction(105,this);return false;"><span
-																						class="cke_button_icon cke_button__textcolor_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -240px; background-size: auto;">&nbsp;</span><span
-																						id="cke_53_label"
-																						class="cke_button_label cke_button__textcolor_label"
-																						aria-hidden="false">글자
-																						색상</span><span
-																						id="cke_53_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span><span
-																						class="cke_button_arrow"></span></a><a
-																					id="cke_54"
-																					class="cke_button cke_button__bgcolor cke_button_off"
-																					href="javascript:void('배경 색상')"
-																					title="배경 색상" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_54_label"
-																					aria-describedby="cke_54_description"
-																					aria-haspopup="true"
-																					onkeydown="return CKEDITOR.tools.callFunction(106,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(107,event);"
-																					onclick="CKEDITOR.tools.callFunction(108,this);return false;"><span
-																						class="cke_button_icon cke_button__bgcolor_icon"
-																						style="background-image: url('https://demo.xetemplate.com/common/js/plugins/ckeditor/ckeditor/plugins/icons.png?t=H5SC'); background-position: 0 -216px; background-size: auto;">&nbsp;</span><span
-																						id="cke_54_label"
-																						class="cke_button_label cke_button__bgcolor_label"
-																						aria-hidden="false">배경
-																						색상</span><span
-																						id="cke_54_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span><span
-																						class="cke_button_arrow"></span></a></span><span
-																				class="cke_toolbar_end"></span></span><span
-																			id="cke_55" class="cke_toolbar"
-																			aria-labelledby="cke_55_label"
-																			role="toolbar"><span id="cke_55_label"
-																				class="cke_voice_label">xecomponent</span><span
-																				class="cke_toolbar_start"></span><span
-																				class="cke_toolgroup"
-																				role="presentation"><a id="cke_56"
-																					class="cke_button cke_button__emoticon cke_button_off"
-																					href="javascript:void('이모티콘 출력')"
-																					title="이모티콘 출력" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_56_label"
-																					aria-describedby="cke_56_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(109,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(110,event);"
-																					onclick="CKEDITOR.tools.callFunction(111,this);return false;"><span
-																						class="cke_button_icon cke_button__emoticon_icon"
-																						style="background-image: url('https://demo.xetemplate.com/modules/editor/components/emoticon/component_icon.gif?t=H5SC'); background-position: 0 undefinedpx; background-size: 16px;">&nbsp;</span><span
-																						id="cke_56_label"
-																						class="cke_button_label cke_button__emoticon_label"
-																						aria-hidden="false">이모티콘
-																						출력</span><span
-																						id="cke_56_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_57"
-																					class="cke_button cke_button__image_link cke_button_off"
-																					href="javascript:void('이미지 추가')"
-																					title="이미지 추가" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_57_label"
-																					aria-describedby="cke_57_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(112,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(113,event);"
-																					onclick="CKEDITOR.tools.callFunction(114,this);return false;"><span
-																						class="cke_button_icon cke_button__image_link_icon"
-																						style="background-image: url('https://demo.xetemplate.com/modules/editor/components/image_link/component_icon.gif?t=H5SC'); background-position: 0 undefinedpx; background-size: 16px;">&nbsp;</span><span
-																						id="cke_57_label"
-																						class="cke_button_label cke_button__image_link_label"
-																						aria-hidden="false">이미지
-																						추가</span><span
-																						id="cke_57_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_58"
-																					class="cke_button cke_button__poll_maker cke_button_off"
-																					href="javascript:void('설문조사')"
-																					title="설문조사" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_58_label"
-																					aria-describedby="cke_58_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(115,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(116,event);"
-																					onclick="CKEDITOR.tools.callFunction(117,this);return false;"><span
-																						class="cke_button_icon cke_button__poll_maker_icon"
-																						style="background-image: url('https://demo.xetemplate.com/modules/editor/components/poll_maker/component_icon.gif?t=H5SC'); background-position: 0 undefinedpx; background-size: 16px;">&nbsp;</span><span
-																						id="cke_58_label"
-																						class="cke_button_label cke_button__poll_maker_label"
-																						aria-hidden="false">설문조사</span><span
-																						id="cke_58_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a><a
-																					id="cke_59"
-																					class="cke_button cke_button__image_gallery cke_button_off"
-																					href="javascript:void('이미지 갤러리')"
-																					title="이미지 갤러리" tabindex="-1"
-																					hidefocus="true" role="button"
-																					aria-labelledby="cke_59_label"
-																					aria-describedby="cke_59_description"
-																					aria-haspopup="false"
-																					onkeydown="return CKEDITOR.tools.callFunction(118,event);"
-																					onfocus="return CKEDITOR.tools.callFunction(119,event);"
-																					onclick="CKEDITOR.tools.callFunction(120,this);return false;"><span
-																						class="cke_button_icon cke_button__image_gallery_icon"
-																						style="background-image: url('https://demo.xetemplate.com/modules/editor/components/image_gallery/component_icon.gif?t=H5SC'); background-position: 0 undefinedpx; background-size: 16px;">&nbsp;</span><span
-																						id="cke_59_label"
-																						class="cke_button_label cke_button__image_gallery_label"
-																						aria-hidden="false">이미지
-																						갤러리</span><span
-																						id="cke_59_description"
-																						class="cke_button_label"
-																						aria-hidden="false"></span></a></span><span
-																				class="cke_toolbar_end"></span></span></span><a
-																		title="툴바 확장" id="cke_1_toolbar_collapser"
-																		tabindex="-1"
-																		class="cke_toolbox_collapser cke_toolbox_collapser_min"
-																		onclick="CKEDITOR.tools.callFunction(121)"><span
-																			class="cke_arrow">▲</span></a></span></span>
-															<div id="cke_1_contents" class="cke_contents cke_reset"
-																role="presentation" style="height: 120px;">
-																<span id="cke_63" class="cke_voice_label">도움이
-																	필요하면 ALT 0 을 누르세요</span>
-																<iframe src="" frameborder="0"
-																	class="cke_wysiwyg_frame cke_reset"
-																	style="width: 100%; height: 100%;"
-																	title="리치 텍스트 편집기, editor1"
-																	aria-describedby="cke_63" tabindex="0"
-																	allowtransparency="true"></iframe>
-															</div>
-															<span id="cke_1_bottom" class="cke_bottom cke_reset_all"
-																role="presentation" style="user-select: none;"><span
-																	id="cke_1_resizer"
-																	class="cke_resizer cke_resizer_vertical cke_resizer_ltr"
-																	title="크기 조절"
-																	onmousedown="CKEDITOR.tools.callFunction(0, event)">◢</span><span
-																	id="cke_1_path_label" class="cke_voice_label">요소
-																	경로</span><span id="cke_1_path" class="cke_path"
-																	role="group" aria-labelledby="cke_1_path_label"><a
-																		id="cke_elementspath_7_1"
-																		href="javascript:void('body')" tabindex="-1"
-																		class="cke_path_item" title="body 요소"
-																		hidefocus="true"
-																		onkeydown="return CKEDITOR.tools.callFunction(123,1, event );"
-																		onclick="CKEDITOR.tools.callFunction(122,1); return false;"
-																		role="button" aria-label="body 요소">body</a><a
-																		id="cke_elementspath_7_0"
-																		href="javascript:void('p')" tabindex="-1"
-																		class="cke_path_item" title="p 요소"
-																		hidefocus="true"
-																		onkeydown="return CKEDITOR.tools.callFunction(123,0, event );"
-																		onclick="CKEDITOR.tools.callFunction(122,0); return false;"
-																		role="button" aria-label="p 요소">p</a><span
-																		class="cke_path_empty">&nbsp;</span></span></span>
-														</div>
-													</div>
-												</div>
-												<!--#JSPLUGIN:jquery.fileupload-->
-												<!--#JSPLUGIN:jquery.finderSelect-->
-												<!--#JSPLUGIN:handlebars-->
-												<div id="xefu-container-2" class="xefu-container xe-clearfix"
-													data-editor-sequence="2">
-
-													<div class="xefu-dropzone">
-														<span class="xefu-btn fileinput-button xefu-act-selectfile">
-															<span><i class="xi-icon xi-file-add"></i> 파일 첨부</span>
-															<input id="xe-fileupload" type="file"
-																class="fileupload-processing " value="파일 첨부"
-																name="Filedata" data-auto-upload="true"
-																data-editor-sequence="2" multiple="">
-														</span>
-														<p class="xefu-dropzone-message">여기에 파일을 끌어 놓거나 파일 첨부
-															버튼을 클릭하세요.</p>
-														<p class="upload_info">
-															파일 크기 제한 : <span class="allowed_filesize">2.00MB</span>
-															<span>(허용
-																확장자 : <span class="allowed_filetypes">*.*</span>)
-															</span>
-														</p>
-														<p class="xefu-progress-status" style="display: none;">
-															파일 업로드 중... (<span class="xefu-progress-percent">0%</span>)
-														</p>
-														<div class="xefu-progressbar" style="display: none;">
-															<div></div>
-														</div>
-													</div>
-
-													<div class="xefu-controll xe-clearfix" style="display: none;">
-														<div style="float: left;">
-															<span class="file_count">0</span>개 첨부 됨 (<span
-																class="attached_size">0Byte</span> / <span
-																class="allowed_attach_size">2.00MB</span>)
-														</div>
-														<div style="float: right">
-															<input type="button" class="xefu-btn xefu-act-link-selected"
-																style="vertical-align: middle; vertical-align: middle;"
-																value="본문 삽입"> <input type="button"
-																class="xefu-btn xefu-act-delete-selected"
-																style="vertical-align: middle; vertical-align: middle;"
-																value="선택 삭제">
-														</div>
-													</div>
-													<div class="xefu-list" style="display: none;">
-														<div class="xefu-list-images">
-															<ul>
-															</ul>
-														</div>
-														<div class="xefu-list-files">
-															<ul>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<script>
-													jQuery(function ($) {
-														// uploader
-														var setting = {
-															maxFileSize: 2097152,
-															limitMultiFileUploadSize: 2097152
-														};
-														var uploader = $(
-															'#xefu-container-2')
-															.xeUploader(
-																setting);
-														window.xe.msg_exceeds_limit_size = '허용된 용량을 초과하여 첨부가 되지 않았습니다.';
-														window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
-														window.xe.msg_file_cart_is_null = '삭제할 파일을 선택해주세요.';
-														window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
-														window.xe.msg_not_allowed_filetype = '업로드할 수 없는 파일 형식입니다.';
-														window.xe.msg_file_upload_error = '파일 업로드 중 에러가 발생하였습니다.';
-													});
-												</script>
-												<script>
-													(function ($) {
-														"use strict";
-														// editor
-														$(function () {
-															CKEDITOR.config.customConfig = '';
-															var settings = {
-																ckeconfig: {
-																	height: '120',
-																	skin: 'moono',
-																	contentsCss: '/modules/editor/styles/ckeditor_light/editor.css?1645423739',
-																	xe_editor_sequence: 2,
-																	toolbarCanCollapse: true,
-																	language: "ko"
-																},
-																loadXeComponent: true,
-																enableToolbar: true,
-																content_field: jQuery('[name=content]')
-															};
-															CKEDITOR.dtd.$removeEmpty.ins = 0;
-															CKEDITOR.dtd.$removeEmpty.i = 0;
-															settings.ckeconfig.xe_component_arrays = {
-																emoticon: '이모티콘 출력',
-																image_link: '이미지 추가',
-																poll_maker: '설문조사',
-																image_gallery: '이미지 갤러리'
-															};
-															settings.ckeconfig.toolbarStartupExpanded = false;
-
-															var ckeApp = $(
-																'#ckeditor_instance_2')
-																.XeCkEditor(
-																	settings);
-														});
-													})(jQuery);
-												</script>
 											</div>
 											<div class="text-right mg-t10">
-												<button type="submit" class="xet_btn medium submit">등록</button>
+												<button type="button" onclick="enrollReply();" class="xet_btn medium submit">등록</button>
 											</div>
+											<script type="text/javascript">
+												var header = $("meta[name='_csrf_header']").attr('content');
+											    var token = $("meta[name='_csrf']").attr('content');
+										    	
+											    
+											    function delReply(rno) {
+											    	$.ajax({
+											            url: '/delReply?rno='+rno,
+											            type: 'POST',
+											            async : false,
+											            contentType: 'application/json',
+											            beforeSend: function (xhr) {
+											                xhr.setRequestHeader(header, token);
+											            },
+											            success: function () {
+											            	console.log("댓글 삭제 성공");
+											            },
+											            error: function () {
+											                console.log("댓글 삭제 실패");
+											            }
+											          
+											        });
+											    	getReplyList();
+											    	
+											    }
+											    
+											    function getReplyList(){
+											    	let object = {
+											    			bid : $('#bid').val()
+											    	}
+											    	let replyList = document.getElementById('replyList');
+											    	let dong = $('#bid').val();
+											    	console.log('번호 : ' + dong);
+											    	let jsondata = JSON.stringify(object);
+											    	let htmlStr = '';
+											    	$.ajax({
+											            url: '/getReplyList',
+											            data: jsondata,
+											            type: 'POST',
+											            async : false,
+											            dataType: 'JSON',
+											            contentType: 'application/json',
+											            beforeSend: function (xhr) {
+											                xhr.setRequestHeader(header, token);
+											            },
+											            success: function (data) {
+											            	$('#replyCnt').text(data.length);
+											                console.log(data);
+											                
+											                if (data.length > 0) {
+										                        $(data).each(function (index) {
+										                            //댓글 삽입
+										                        	htmlStr += 
+										                            	`<div class="item " id="comment_`+ this.rno+ `">
+											                            	<div class="indent">
+												                        		<div class="itemAside hidden-xs visible-sm">
+												                        			<img src="/sommunity/images/anonymous.png" alt="profile"
+												                        				class="profile">
+												                        		</div>
+												                        		<div class="itemContent">
+												                        			<div class="xet-clearfix">
+												                        				<div class="float-left">
+												                        					<div class="meta mg-b10">
+												                        						<span>
+												                        							<strong>`+ this.rauthor +`</strong> </span>
+												                        						<!-- // 추천표시 출력 -->
+												                        					</div>
+												                        				</div>
+												                        				<div class="float-right">
+												                        					<div class="option-wrp"> `;
+												                        				if(this.rauthor === $('#user').val())
+												                        				htmlStr+= `<ul class="option">
+												                        							<!--
+												                        							<li>
+												                        								<a href=""
+												                        									class="xet_btn small"><span>수정</span></a>
+												                        							</li>
+												                        							-->
+												                        							<li>
+												                        								<a href="javascript:;" onclick="delReply(` + this.rno + `);return false;"
+												                        									class="xet_btn small"><span>삭제</span></a>
+												                        							</li>
+												                        						</ul>
+												                        					`;
+												                        			htmlStr += `</div> </div>
+												                        			</div>
+												                        			<!-- // 댓글 출력 -->
+												                        			<!--BeforeComment(3701,0)-->
+												                        			<div class="comment_3701_0 xe_content">
+												                        				<p>`+ this.rcontent +`</p>
+												                        			</div>
+												                        			<!--AfterComment(3701,0)-->
+												                        			<div class="meta mg-t10">
+												                        				<span title="등록일">` + this.rdate + `</span>
+												                        			</div>
+												                        		</div><!-- // itemContent end -->
+												                        	</div><!-- // indent end -->
+												                        </div>
+											                        `
+										                        }
+										                        );
+										                    }
+										                    else {
+										                        
+										                    }
+											                replyList.innerHTML = htmlStr;
+											            	
+											            },
+											            error: function () {
+											            	$('#replyCnt').text('0');
+											                console.log("댓글 조회 실패");
+											            }
+											          
+											        });
+											    	
+											    }
+											    getReplyList();
+											    
+												function enrollReply() {
+													if($('#user').val() === 'anonymousUser') {
+														layerAlert('로그인 후 이용해주세요.');
+														return;
+													}
+													
+													let object = {
+															bid : $('#bid').val(),
+															rauthor : $('#user').val(),
+															rcontent : $('#breply').val()
+													}
+													
+													$('#breply').attr('value', '')
+													
+													console.log(object);
+													let jsondata = JSON.stringify(object);
+													
+													$.ajax({
+											            url: '/enrollReply',
+											            data: jsondata,
+											            type: 'POST',
+											            async : false,
+											            dataType: 'JSON',
+											            contentType: 'application/json',
+											            beforeSend: function (xhr) {
+											                xhr.setRequestHeader(header, token);
+											            },
+											            success: function (data) {
+											                
+											            	console.log("댓글 삽입 성공");
+											            	getReplyList();
+											            },
+											            error: function () {
+											                console.log("댓글 삽입 실패");
+											            }
+											          
+											        });
+													
+												}
+											</script>
 										</div>
 									</form>
 								</div>
@@ -1301,11 +437,17 @@
 									<form action="./" method="post" onsubmit="return procFilter(this, insert_comment)"
 										class="boardWrite cmtWrite">
 										<input type="hidden" name="error_return_url"
-											value="/simple_board_test/3700"><input type="hidden" name="act"
-											value=""><input type="hidden" name="vid" value=""> <input type="hidden"
-											name="mid" value="simple_board_test"> <input type="hidden"
-											name="document_srl" value="3700"> <input type="hidden" name="parent_srl"
-											value=""> <input type="hidden" name="content" id="re_com_content" value="">
+											value="/simple_board_test/3700">
+											<input type="hidden" name="act"
+											value="">
+											<input type="hidden" name="vid" value=""> 
+											<input type="hidden"
+											name="mid" value="simple_board_test"> 
+											<input type="hidden"
+											name="document_srl" value="3700"> 
+											<input type="hidden" name="parent_srl"
+											value=""> 
+											<input type="hidden" name="content" id="re_com_content" value="">
 										<input type="hidden" name="use_html" value="Y">
 										<div class="textarea">
 											<div class="mg-b10">
@@ -1363,7 +505,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- Footer -->
 	<footer id="footer">
 		<div class="inner">

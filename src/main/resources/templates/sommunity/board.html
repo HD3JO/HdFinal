@@ -5,8 +5,45 @@
 <head>
     <title>한섬 커뮤니티 Sommunity</title>
     <meta charset="utf-8" />
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<link rel="shortcut icon" href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/font_80.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/common.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/layout.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/popup.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/brand.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/swiper.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/main_201903.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/footer.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/products.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/contents.css" media="all" />
+	<style type="text/css" media="print">
+		@IMPORT url("/_ui/desktop/common/blueprint/print.css");
+	</style>
+	
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery.vticker.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/common.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/html5shiv-printshiv.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/jquery.flexslider.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/ui.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery.form-3.51.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/common_function.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/videojs-ie8.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/jquery-ui-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/instagramAPI.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/instagramAPI.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/handsome/jquery.bxslider.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/makePCookie.js"></script>
+	<script type="text/javascript" src="/_ui/shared/js/siteoverlay.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/wisenut/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/swiper.min.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel_skin.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/unorm.js"></script>
+	<script type="text/javascript" src="/_ui/desktop/common/js/appboy.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
     <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />
@@ -115,7 +152,15 @@
 	                        </div>
 	                    </div>
 						<script type="text/javascript">
+						var header = $("meta[name='_csrf_header']").attr('content');
+					    var token = $("meta[name='_csrf']").attr('content');
+					    
 							function goWriteForm(bname) {
+								if($('#user').val() === 'anonymousUser') {
+									layerAlert('로그인 후 이용해주세요.');
+									return;
+								}
+								
 								location.href = '/sommunity/write?bname='+bname;
 							}
 						</script>
@@ -123,10 +168,12 @@
 	                        <form action="https://demo.xetemplate.com/" method="get"
 	                            onsubmit="return procFilter(this, search)" id="fo_search" class="boardSearchForm"><input
 	                                type="hidden" name="act" value="">
+	                            <input type="hidden" name="user" id="user" th:value="${#authentication.name}" >
 	                            <input type="hidden" name="vid" value="">
 	                            <input type="hidden" name="mid" value="simple_board_test">
 	                            <input type="hidden" name="category" value="">
 	                            <input type="hidden" id="bname" name="bname" th:value="${bname}">
+	                            <input type="hidden" id="deliveryOkMsg" value="확인">
 	                            <div class="boardSearchWrp">
 	                                <span class="search-target">
 	                                    <select name="search_target">

@@ -3,16 +3,42 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.board.repository.BoardMapper">
 
-	<select id="getBoard" resultType="com.hyundai.project.dto.BoardDTO">
+	<select id="getBoardList" resultType="com.hyundai.project.dto.BoardDTO">
 		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
 		from board
 		where brand = #{brand}
 		order by bdate desc
 	</select>
 	
+	<select id="getBoard" resultType="com.hyundai.project.dto.BoardDTO">
+		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
+		from board
+		where bid = #{bno}
+	</select>
+	
+	<delete id="delBoard">
+		delete from board where bid = #{bid}
+	</delete>
+
 	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
 		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
 		values (board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent},#{bauthor}, sysdate)
 	</insert>
 	
+	<insert id="enrollReply" parameterType="com.hyundai.project.dto.ReplyDTO">
+		insert into reply(bid, rno, rauthor, rcontent, rdate)
+		values (#{bid}, reply_seq.NEXTVAL, #{rauthor}, #{rcontent}, sysdate)
+	</insert>	
+	
+	<select id="getReplyList" resultType="com.hyundai.project.dto.ReplyDTO">
+		select bid, rno, rauthor, rcontent, rdate 
+		from reply 
+		where bid = #{bid} 
+		order by rdate desc
+	</select>
+	
+	<delete id="delReply">
+		delete from reply where rno = #{rno}
+	</delete>
+
 </mapper>
