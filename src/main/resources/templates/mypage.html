@@ -16,9 +16,11 @@ const token = $("meta[name='_csrf']").attr('content');
 var memberDTO ={
 		
 		name : $("#name").text(),
-		email : $("#email").text()
+		email : $("#email").text(),
+		mileage: $("#mileage").text()
 }
 
+var reviewcount = $("#reviewcount").text();
 </script>
 
 
@@ -77,9 +79,18 @@ var memberDTO ={
                 <div class="pointbox_cover">
 	                <div class="point_wrap">
 	                    <div class="point" style="border-left:0;padding-left:0;">
-	                        <p class="title" th:text="'한섬마일리지'"></p>
-	                        <a class="count" th:href="@{/member/mypoint}" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');">0&nbsp;<span>M</span></a>
+	                        <p class="title" th:text="'나의 회원 등급'"></p>
+	                        <a th:id="${memberDTO.grade}" class="count" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');" th:text="' '+${memberDTO.grade}"><span></span></a>
 	                    </div>
+	                    <div class="point">
+	                        <p class="title" th:text="'한섬마일리지'"></p>
+	                        <a th:id="${memberDTO.mileage}" class="count" onclick="GA_Event('마이페이지','회원정보','한섬마일리지');" th:text="${memberDTO.mileage}+' '+'M'"><span></span></a>
+	                    </div>
+	                    <div class="point review">
+							<p class="title">상품평</p>
+<!-- 							<img th:src="@{https://www.thehandsome.com/_ui/desktop/common/images/common/ico_ques2.png}" alt="상품평이란?" class="tlt"> -->
+							<a th:href="@{/member/myreview}" class="count" onclick="GA_Event('마이페이지','회원정보','상품평');" th:text="${reviewcount}+' '+'개'"><span></span></a>
+						</div>
 <!-- 	                     <div class="point"> -->
 <!-- 	                                <p class="title">H.POINT</p> -->
 <!-- 	                                <a class="count" th:href="@{https://www.h-point.co.kr/cu/myh/myPnt.shd}" target="_blank" onclick="GA_Event('마이페이지','회원정보','H.POINT');">0&nbsp;<span>P</span></a> -->
@@ -96,11 +107,7 @@ var memberDTO ={
 <!-- 	                        <p class="title">COUPON</p> -->
 <!-- 	                        <a class="count" th:href="@{/ko/mypage/voucher}" onclick="GA_Event('마이페이지','회원정보','COUPON');">0&nbsp;<span>장</span></a> -->
 <!-- 	                    </div> -->
-	                    <div class="point review">
-							<p class="title">상품평</p>
-<!-- 							<img th:src="@{https://www.thehandsome.com/_ui/desktop/common/images/common/ico_ques2.png}" alt="상품평이란?" class="tlt"> -->
-							<a th:href="@{/member/myreview}" class="count" onclick="GA_Event('마이페이지','회원정보','상품평');">0&nbsp;<span>개</span></a>
-						</div>
+	                    
 	                   </div>
                 </div>
             </div>
