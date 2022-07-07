@@ -225,15 +225,16 @@ function doDraw(){
 	
 	let json = JSON.stringify(drawDTO);
 	
-	if(email == 'anonymousUser'){
+	if(email == 'anonymousUser') {
 		let la = new layerAlert('로그인 정보가 없어<br>로그인 페이지로 이동합니다.');
 		
 		la.confirmAction = function () {
             location.href = '/customLogin';
         }
 	}
-	else{
-		let lc = new layerConfirm('표시된 만큼 마일리지가 차감되며 미당첨 되더라도 반환되지 않습니다.<br>정말 응모하시겠습니까?','응모하기','취소');
+	else {
+		let lc = new layerConfirm('표시된 금액만큼 마일리지가 차감되며 <br> 미당첨시 마일리지는 반환되지 않습니다.<br> 정말 응모하시겠습니까?','응모하기','취소');
+		
 		lc.confirmAction = function(){
 			$.ajax({
 				type: 'POST',
@@ -245,7 +246,12 @@ function doDraw(){
 	                xhr.setRequestHeader(header, token);
 	            },
 	            success: function(data){
-	            	layerAlert('응모 완료되었습니다. 당첨 결과는 11시 이후에 문자 메세지로 발송드립니다.');
+	            	if(data == 'Draw Success')
+	            		layerAlert('응모 완료되었습니다. 당첨자는 오전 11시 이후 순차적으로 메세지로 안내드립니다.');
+	            	else if(data == 'Not Enough Mileage')
+	            		layerAlert('마일리지가 부족합니다.');
+	            	else if(data == 'Duplicate Application')
+	            		layerAlert('이미 응모한 제품입니다.');
 	            },
 	            error: function(request, status, error){
 	            	console.log("code:" + request.status + "\n" + "error:" + error);

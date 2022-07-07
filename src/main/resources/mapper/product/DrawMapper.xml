@@ -38,5 +38,6 @@
 		UPDATE USERMANAGER.MEMBER
 		SET MILEAGE = MILEAGE - #{pmileage, jdbcType=INTEGER}
 		WHERE EMAIL = #{email, jdbcType=VARCHAR}
+		AND MILEAGE >= #{pmileage, jdbcType=INTEGER}
 	</update>
 </mapper>

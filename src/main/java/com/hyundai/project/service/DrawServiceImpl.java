@@ -32,5 +32,4 @@ public class DrawServiceImpl implements DrawService {
 				
 		return drawMapper.updateMileage(drawDTO);
 	}
-
 }
