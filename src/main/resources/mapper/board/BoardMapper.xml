@@ -3,6 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.board.repository.BoardMapper">
 
+	<select id="getCount" resultType="int">
+		select count(*)
+		from board
+		where brand = #{bname}
+	</select>
+
 	<select id="getBoardList" resultType="com.hyundai.project.dto.BoardDTO">
 		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
 		from board
@@ -14,6 +20,13 @@
 		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
 		from board
 		where bid = #{bno}
+	</select>
+
+	<select id="getPageBoard" resultType="com.hyundai.project.dto.BoardDTO">
+        select (select count(*) from board where brand = #{brand})-rn+1 as seq, bid, bheader, btitle, bauthor, bdate, bimg, bcontent from (
+		select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent
+		from (select * from board where board.brand=#{brand} order by bdate desc)
+		) t where rn between (#{pageNum}-1)*10+1 and #{pageNum}*10
 	</select>
 	
 	<delete id="delBoard">
@@ -40,5 +53,7 @@
 	<delete id="delReply">
 		delete from reply where rno = #{rno}
 	</delete>
-
+	
+	
+	
 </mapper>

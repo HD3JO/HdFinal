@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDTO {
+	private int seq;
 	private int bid;
 	private String brand;
 	private String bheader;
@@ -21,4 +22,5 @@ public class BoardDTO {
 	private String bauthor;
 	private String bdate;
 	private Clob bimg;
+	private int pageNum;
 }

@@ -65,8 +65,16 @@
         <link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
     </noscript>
 </head>
-
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		const count = [[${count}]];
+		const pageNum = [[${pageNum}]];
+		const bname = [[${bname}]];
+		/*]]>*/
+		/*게시글 개수와 페이지 넘버*/
+	</script>
 <body class="is-preload">
+
     <!-- Wrapper -->
     <div id="wrapper">
         <!-- Header -->
@@ -140,14 +148,38 @@
 	                            </div>
 	                        </div>
 							<!-- 페이징 -->
-	                        <ul class="boardPagination">		
-									<li class="prevEnd"> <a href="#;" title="첫 페이지">FIRST</a> </li>				
-									<li><strong>1</strong></li>
-									<li><a href="">2</a></li>
-									<li> <strong class="page_on">3</strong></li>
-									<li><a href="">4</a></li>
-									<li class="nextEnd"><a href="" title="끝 페이지">LAST</a></li>										
+	                        <ul class="boardPagination" id="boardPagination">		
+									
 							</ul>
+							<script>
+								let endPage = Math.ceil(count/10);
+								let pageStr = "";
+								let quotient = parseInt((pageNum-1)/10); /* 10 -> 0, 11 -> 1 */
+								console.log('첫 페이지 : ' + quotient*10+1 + '마지막 페이지')
+								let end;
+								
+								if(pageNum !== 1) {
+									pageStr += `<li class="prevEnd"> <a href="/sommunity/board?bname=`+bname+`&pageNum=1" title="첫 페이지">FIRST</a> </li>`;
+									pageStr += `<li> <a href="/sommunity/board?bname=`+bname+`&pageNum=` + (pageNum-1) + `" title="이전 페이지"> < </a> </li>`;
+								} 
+								
+								
+								if(quotient*10+10 <= endPage) end = quotient*10+10;
+								else end = endPage;
+								for(let i = quotient*10+1 ; i <= end ; i ++) {
+									if(pageNum === i) pageStr += `<li> <strong class="page_on">`+i+`</strong></li>`
+									else pageStr += `<li><a href="/sommunity/board?bname=`+bname+`&pageNum=`+ i +`">`+ i +`</a></li>`;
+								}
+								if(pageNum !== endPage) {
+									pageStr += `<li> <a href="/sommunity/board?bname=`+bname+`&pageNum=` + (pageNum+1) + `" title="다음 페이지"> > </a> </li>`;
+									pageStr += `<li class="nextEnd"><a href="/sommunity/board?bname=`+bname+`&pageNum=` + endPage + `" title="끝 페이지">LAST</a></li>`;
+								} 
+									
+									
+								
+								document.getElementById("boardPagination").innerHTML = pageStr;
+							</script>
+							
 	                    </div>
 						<div class="xet-clearfix boardHeaderCateWrp">
 	                        <div class="float-right">
@@ -236,6 +268,8 @@
     <script src="assets/js/board.js"></script>
     <script src="assets/js/jquery.plugins.min.js"></script>
 	
+	
+	
 	<script type="text/javascript">
 	$(document).ready( function() {
 		
@@ -250,6 +284,7 @@
 		const tbody = document.getElementById("boarditems");
 		let jsondata = JSON.stringify(object);
 		let htmlstr = "<tr class='notice-item' style='background-color: rgba(144, 144, 144, 0.075);'> <td> <span class='notice-text'>공지</span> </td> <td class='td-subject' colspan='6'> <p class='subject'>욕설과 비방글을 무통보 삭제합니다.</p> </td> </tr>";
+		/*
 		$.ajax({
             url: '/getBoard',
             data: jsondata,
@@ -296,10 +331,64 @@
             }
           
         });
+		*/
+		
+		/* 페이지에 맞는 게시글 불러오기 */
+		$.ajax({
+            url: '/getPageBoard',
+            data: JSON.stringify({
+    			"pageNum" : pageNum,
+    			"brand" : bname
+    		}),
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+            	console.log(data);
+                let now = new Date();
+                
+                let nowYear = now.getFullYear();
+                let nowMonth = ('00' + (now.getMonth() + 1)).slice(-2);
+                let nowDate = ('00' + now.getDate()).slice(-2);
+                if(data.length > 0) {
+                	$(data).each(function (index) {
+                		htmlstr += "<tr class='bg1'>";
+                		htmlstr += "<td> <span alt='번호'>" + this.seq + "</span> </td>";
+                		htmlstr += "<td class='td-subject'> <a href='/sommunity/view?bno="+this.bid + "' class='subject'>" + this.btitle + "</a> </td>";
+                		htmlstr += "<td><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
+                		let bdate = this.bdate;
+                		
+                		if(nowMonth === bdate.substr(5,2) && nowDate === bdate.substr(8,2)) {
+                			htmlstr += "<td>"+bdate.substr(11,2)+":"+bdate.substr(14,2)+"</td>";
+                		}
+                		else {
+                			htmlstr += "<td>"+bdate.substr(5,2) +"/" + bdate.substr(8,2) +"</td>";
+                		}
+                		
+                		htmlstr += "<td>조회수</td>";
+                		//htmlstr += "<td> <a href='' class='thumbnail' style='width: 80px'> <em>123</em> <img src='https://post-phinf.pstatic.net/MjAxOTExMDRfOCAg/MDAxNTcyODU1MDQ5NDA4.FCA8G3r-rbxsidLKqxBX6yfk4DuUc1zLXhdCni9BVB0g.fjQTknYM-SXz03aSAQIopvVKV515Qx1LYBn370JkRV0g.JPEG/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C_%281%29.jpg?type=w1200' alt=''> </a></td>"
+                		
+                	}
+                	);
+                }
+            },
+            error: function () {
+                console.log('안됨')
+            },
+            complete : function() {        
+            	tbody.innerHTML = htmlstr;
+            }
+          
+        });
+		
 		
 	});	
 	
 	</script>
+	
 </body>
 
 </html>

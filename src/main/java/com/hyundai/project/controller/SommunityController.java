@@ -1,6 +1,7 @@
 package com.hyundai.project.controller;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +28,11 @@ public class SommunityController {
 	}
 	
 	@GetMapping("/board")
-	public String brandBoard(@RequestParam("bname") String bname, Model model) {
+	public String brandBoard(@RequestParam("bname") String bname, @RequestParam(value="pageNum", defaultValue = "1") int pageNum, Model model) {
+		int count = boardService.getCount(bname);
 		model.addAttribute("bname", bname);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("count", count);
 		return "sommunity/board";
 	}
 	

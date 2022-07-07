@@ -24,4 +24,8 @@ public interface BoardMapper {
 
 	void delBoard(String bid);
 
+	int getCount(String bname);
+
+	List<BoardDTO> getPageBoard(BoardDTO boardDTO);
+
 }

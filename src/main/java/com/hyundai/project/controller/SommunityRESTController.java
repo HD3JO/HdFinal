@@ -23,6 +23,12 @@ public class SommunityRESTController {
 		return boardService.getBoardList(boardDTO.getBrand());
 	} 
 	
+	@PostMapping(value="/getPageBoard")
+	public List<BoardDTO> getPageBoard(@RequestBody BoardDTO boardDTO) {
+		System.out.println(boardDTO);
+		return boardService.getPageBoard(boardDTO);
+	} 
+	
 	@PostMapping(value="/delBoard")
 	public void delBoard(@RequestParam("bid") String bid) {
 		boardService.delBoard(bid);

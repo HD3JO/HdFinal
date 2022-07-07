@@ -14,18 +14,38 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	BoardMapper boardMapper;
-
 	
+	
+	
+	@Override
+	public int getCount(String bname) {
+		return boardMapper.getCount(bname);
+	}
+
+
+
 	@Override
 	public BoardDTO getBoard(String bno) {
 		// TODO Auto-generated method stub
 		return boardMapper.getBoard(bno);
 	}
 
+	
+	
 	@Override
 	public List<BoardDTO> getBoardList(String brand) {
 		return boardMapper.getBoardList(brand);
 	}
+	
+	
+	
+	@Override
+	public List<BoardDTO> getPageBoard(BoardDTO boardDTO) {
+		// TODO Auto-generated method stub
+		return boardMapper.getPageBoard(boardDTO);
+	}
+
+
 
 	@Override
 	public void insertBoard(BoardDTO boardDTO) {

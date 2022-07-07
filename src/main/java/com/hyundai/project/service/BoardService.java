@@ -22,4 +22,10 @@ public interface BoardService {
 	public void delReply(String rno);
 
 	public void delBoard(String bid);
+
+	public int getCount(String bname);
+
+	public List<BoardDTO> getPageBoard(BoardDTO boardDTO);
+
+
 }
