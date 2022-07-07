@@ -57,6 +57,14 @@ public class SommunityController {
 	@GetMapping("/view")
 	public String Complete(@RequestParam("bno") String bno, Model model) {
 		BoardDTO boardDTO = boardService.getBoard(bno);
+		
+		String cont = boardDTO.getBcontent();
+		cont = cont.replaceAll("&lt;", "<");
+		cont = cont.replaceAll("&gt;", ">");
+		//cont = cont.replaceAll("&lt;p&gt;", "");
+		//cont = cont.replaceAll("&lt;/p&gt;", "");
+		
+		boardDTO.setBcontent(cont);
 		model.addAttribute("boardDTO",boardDTO);
 		return "sommunity/viewForm";
 	}

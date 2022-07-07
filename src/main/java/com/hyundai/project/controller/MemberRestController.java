@@ -128,9 +128,9 @@ public class MemberRestController {
 		
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
-		List<ReviewDTO> reviewList = reviewService.reviewexistence(authDTO.getEmail());
+		//List<ReviewDTO> reviewList = reviewService.reviewexistence(authDTO.getEmail());
 		model.addAttribute("orderList", orderList);
-		model.addAttribute("reviewList", reviewList);
+		//model.addAttribute("reviewList", reviewList);
 		return "myreview";
 	}
 	
