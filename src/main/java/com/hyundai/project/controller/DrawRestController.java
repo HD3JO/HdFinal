@@ -98,7 +98,7 @@ public class DrawRestController {
 				
 				if(result == 1) 			
 					return new ResponseEntity<>("Draw Success", HttpStatus.CREATED);
-				else {
+				else {					
 					redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
 					return new ResponseEntity<>("Not Enough Mileage", HttpStatus.CREATED);
 				}

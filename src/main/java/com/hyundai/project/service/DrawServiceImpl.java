@@ -8,16 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.DrawDTO;
 import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.product.repository.DrawMapper;
 
 @Service
 public class DrawServiceImpl implements DrawService {
 
 	@Autowired
-	DrawMapper drawMapper; 
-	
-	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
+	DrawMapper drawMapper;  
 	
 	@Override
 	public List<DrawListDTO> getDrawList() throws Exception {		

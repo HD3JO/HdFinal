@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hyundai.project.dto.DrawDTO;
 import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawWinDTO;
 
 public interface DrawService {
 	

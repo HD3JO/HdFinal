@@ -30,9 +30,10 @@ public class DrawSchedulerService {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	
-	@Scheduled(fixedDelay = 5000)
-	public List<DrawWinDTO> getWinning() throws Exception {
-			List<DrawWinDTO> winList = new ArrayList<>();
+	// 당첨자 추첨하는 기능
+	@Scheduled(fixedDelay = 10000)
+	public DrawWinDTO getWinning() throws Exception {
+			DrawWinDTO winList = new DrawWinDTO();
 			DrawWinDTO winDTO = new DrawWinDTO();
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -55,6 +56,7 @@ public class DrawSchedulerService {
 				String pname = dto.get(i).getPname();
 				//log.info(pname+" 제품에 해당하는 응모 내역 찾기");
 				
+				 // 등록된 제품의 psid에 대해 응모 내역이 있으면 keysListByPsid에 넣어준다.
 				 for(int j = 0; j < keysList.size(); j++) {
 					 Object val = redisTemplate.opsForValue().get(String.valueOf(keysList.get(j)));
 					 Map<String, Object> map = mapper.convertValue(val, Map.class);					 
@@ -65,26 +67,41 @@ public class DrawSchedulerService {
 					 }						 					 					 
 				 }				 
 				 
+				 // keysListByPsid의 사이즈가 0이 아니면 해당 제품에 대한 응모 내역이 존재 
 				 if(keysListByPsid.size() != 0 ) {
-					 //log.info("해당하는 key : "+keysListByPsid);
-					 Collections.shuffle(keysListByPsid);	
+					 // log.info("해당하는 key : "+keysListByPsid);
+					 // 응모 내역을 섞어서 무작위로 배열되도록
+					 Collections.shuffle(keysListByPsid);
+					 
+					 // 배열의 첫 인덱스 value 값(당첨자 정보) 
 					 Object winVal = redisTemplate.opsForValue().get(String.valueOf(keysListByPsid.get(0)));
 					 Map<String, Object> winMap = mapper.convertValue(winVal, Map.class);
 					 
+					 // 당첨자의 전화번호
+					 String phone = drawMapper.getPhoneByEmail((String)winMap.get("email")).getPhone();					 				 
+					 
+					 // winDTO에 당첨자 정보 세팅
 					 winDTO.setEmail((String)winMap.get("email"));
 					 winDTO.setPsid((String)winMap.get("psid"));
 					 winDTO.setPcid((String)winMap.get("pcid"));
 					 winDTO.setPid((String)winMap.get("pid"));
+					 winDTO.setPhone(phone);
+					 			
+					 System.out.println(winDTO);					
 					 
-					 winList.add(winDTO);				
+					 // 당첨자 오라클DB에 insert
+					 drawMapper.insertWinDraw(winDTO);
+					 winDTO = new DrawWinDTO();
+					 					 
+					 keysListByPsid.clear();				
 					 
-					 //log.info("당첨자 이메일은!!! "+(String)winMap.get("email"));
-					 keysListByPsid.clear();
 					 //redis에 있는 데이터 지워주는거 추가
 				 } else if(keysListByPsid.size() == 0) {
 					 //log.info("해당 상품에 대한 응모 내역이 없습니다.");
 				 }
-			 }		
-			 return winList;
+			 }			 
+			 return winDTO;
 		}
+	
+	//메세지 전송하는 기능
 }

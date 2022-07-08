@@ -41,13 +41,29 @@
 		AND MILEAGE >= #{pmileage, jdbcType=INTEGER}
 	</update>
 	
-	<!-- 드로우 당첨자의 정보를 INSERT하는 SQL -->
-	<insert id="insertWinning">
-		INSERT
-		INTO DRAWS
-		VALUES(#{email, jdbcType=VARCHAR},
-		       #{psid, jdbcType=VARCHAR},
-		       #{pcid, jdbcType=VARCHAR},
-		       #{pid, jdbcType=VARCHAR});
-	</insert>
+	<!-- 이메일로 사용자 전화번호 조회하는 SQL -->
+	<select id="getPhoneByEmail" resultType="com.hyundai.project.dto.MemberDTO" parameterType="String">
+	SELECT PHONE 
+	FROM USERMANAGER.MEMBER
+	WHERE EMAIL = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertWinDraw" parameterType="com.hyundai.project.dto.DrawWinDTO">	 	
+	 		INSERT 
+	 		INTO USERMANAGER.DRAWS(DID,
+	 							   PSID,
+	 				   			   PCID,
+	 				   			   PID,
+	 				   			   EMAIL,
+	 				   			   WDATE, 
+	 				   			   PHONE
+	 				   			   )
+	 		VALUES(SEQ_DRAWS.NEXTVAL,
+	 			   #{psid, jdbcType=VARCHAR},
+	 			   #{pcid, jdbcType=VARCHAR},
+	 			   #{pid, jdbcType=VARCHAR},
+	 			   #{email, jdbcType=VARCHAR},
+	 			   SYSDATE,
+	 			   #{phone, jdbcType=VARCHAR})	
+    </insert>
 </mapper>
