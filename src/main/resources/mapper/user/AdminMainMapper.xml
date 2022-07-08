@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.AdminMainMapper">
+
+	<select id="getTotalProductQty" resultType = "int">
+	
+	select count(*) from productmanager.product
+	
+	</select>
+
+	<select id="getTotalUser" resultType = "int">
+	
+	select count(*) from usermanager.member
+	
+	</select>
+
+
+	<select id="getMonthOrderPrice" resultType = "int">
+	
+	select sum(oafterprice) as totalOprice from usermanager.orders
+    where odate between trunc(sysdate, 'MM') and LAST_DAY(sysdate)
+    and ostatus = '배송완료'
+	
+	</select>
+	
+	<select id="getMonthOrderCount" resultType = "int">
+	
+	select count(oid) as totalOcount from usermanager.orders
+	where odate between trunc(sysdate, 'MM') and LAST_DAY(sysdate)
+	and ostatus = '배송완료'
+	</select>
+	
+	
+</mapper>
