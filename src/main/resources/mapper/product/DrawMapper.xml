@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.product.repository.DrawMapper">
+
+	<!-- 드로우 제품 리스트를 출력하는 SQL -->
+	<select id="getDrawList" resultType="com.hyundai.project.dto.DrawListDTO">
+		SELECT PSID,
+		       PCID,
+		       PID,
+		       PMIMG1,
+		       BNAME,
+		       PNAME,
+		       OPENYN
+		FROM PRODUCT_DRAW
+		WHERE 1=1
+	</select>
+	
+	<!-- 선택한 드로우 제품의 상세정보를 출력하는 SQL -->
+	<select id="getDrawDetail" resultType="com.hyundai.project.dto.DrawListDTO" parameterType="String">
+		SELECT PSID,
+	       	   PCID,
+	       	   PID,
+	       	   PMIMG2,
+	       	   BNAME,
+	       	   PNAME,
+	       	   PMILEAGE,
+	       	   PSIZE,
+	       	   PCOLORCODE,
+	       	   PNOTE,	       	   
+	       	   OPENYN  
+		FROM PRODUCT_DRAW
+		WHERE PSID = #{psid}
+	</select>
+	
+	<!-- 드로우 응모 시 차감되는 마일리지 업데이트 하는 SQL -->
+	<update id="updateMileage" parameterType="com.hyundai.project.dto.DrawDTO">
+		UPDATE USERMANAGER.MEMBER
+		SET MILEAGE = MILEAGE - #{pmileage, jdbcType=INTEGER}
+		WHERE EMAIL = #{email, jdbcType=VARCHAR}
+		AND MILEAGE >= #{pmileage, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 이메일로 사용자 전화번호 조회하는 SQL -->
+	<select id="getPhoneByEmail" resultType="com.hyundai.project.dto.MemberDTO" parameterType="String">
+	SELECT PHONE 
+	FROM USERMANAGER.MEMBER
+	WHERE EMAIL = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertWinDraw" parameterType="com.hyundai.project.dto.DrawWinDTO">	 	
+	 		INSERT 
+	 		INTO USERMANAGER.DRAWS(DID,
+	 							   PSID,
+	 				   			   PCID,
+	 				   			   PID,
+	 				   			   EMAIL,
+	 				   			   WDATE, 
+	 				   			   PHONE
+	 				   			   )
+	 		VALUES(SEQ_DRAWS.NEXTVAL,
+	 			   #{psid, jdbcType=VARCHAR},
+	 			   #{pcid, jdbcType=VARCHAR},
+	 			   #{pid, jdbcType=VARCHAR},
+	 			   #{email, jdbcType=VARCHAR},
+	 			   SYSDATE,
+	 			   #{phone, jdbcType=VARCHAR})	
+    </insert>
+</mapper>

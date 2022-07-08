@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OrderDTO implements Serializable{
+public class AdminOrderDTO implements Serializable{
 	
 	private int oid;
 	private String oaddress1;
@@ -29,7 +29,7 @@ public class OrderDTO implements Serializable{
 	private String email;
 	private String pmcode;
 	
-	private Date odate;
+	private String odate;
 	private String oaddress2;
 	
 	
