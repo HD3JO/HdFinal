@@ -32,4 +32,8 @@ public interface BoardMapper {
 
 	void incHits(BCountDTO bCountDTO) throws SQLException;
 
+	void incLikes(BCountDTO bCountDTO) throws SQLException;
+
+	int getLikesCount(String bid);
+
 }

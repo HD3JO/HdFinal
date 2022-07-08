@@ -94,6 +94,12 @@
 	background: #666666;
 }
 
+/* gray */
+.xet_btn.blue {
+	color: #fff;
+	background: #2e74cce3;
+}
+
 /* emerald */
 .xet_btn.emerald {
 	color: #fff;

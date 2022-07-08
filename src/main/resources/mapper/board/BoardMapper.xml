@@ -48,7 +48,7 @@
 
 	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
 		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
-	#{brand}(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bconten#{pageNum}or}, sysdate)#{pageNum}t>
+	values(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent}, #{bauthor} ,sysdate)
 	</insert>
 	
 	<insert id="enrollReply" parameterType="com.hyundai.project.dto.ReplyDTO">
@@ -70,5 +70,14 @@
 	<insert id="incHits">
 		insert into board_hits values(#{bid}, #{reader})
 	</insert>
+
+	<insert id="incLikes">
+		insert into board_likes values(#{bid}, #{reader})
+	</insert>
+	
+	<select id = "getLikesCount"  resultType="_int">
+		select count(*) as bcount from board_likes where bid = #{bid}
+	</select> 
+	
 	
 </mapper>

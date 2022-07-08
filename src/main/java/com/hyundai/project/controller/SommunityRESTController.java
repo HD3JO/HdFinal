@@ -1,5 +1,6 @@
 package com.hyundai.project.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
 import com.hyundai.project.dto.ReplyDTO;
 import com.hyundai.project.service.BoardService;
@@ -48,6 +50,17 @@ public class SommunityRESTController {
 	@PostMapping(value="/delReply")
 	public void delReply(@RequestParam("rno") String rno) {
 		boardService.delReply(rno);
+	}
+	
+	@PostMapping(value="/incLikes")
+	public void incLikes(@RequestBody BCountDTO bCountDTO) throws SQLException {
+		boardService.incLikes(bCountDTO);
+		return;
+	}
+	
+	@PostMapping(value="/getLikesCount")
+	public int getLikesCount(@RequestParam("bid") String bid) {
+		return boardService.getLikesCount(bid);
 	}
 	
 }

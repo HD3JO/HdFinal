@@ -70,7 +70,12 @@
         <link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />	
     </noscript>
 </head>
-
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	const id = [[${boardDTO.bid}]];
+	/*]]>*/
+	/*게시글 개수와 페이지 넘버*/
+</script>
 <script>
 var header = $("meta[name='_csrf_header']").attr('content');
 var token = $("meta[name='_csrf']").attr('content');
@@ -163,11 +168,13 @@ function getReplyList(){
 
 										<div class="boardReadInfo xet-clearfix">
 											<div class="userWrp">
-												<span> <span th:text="${boardDTO.bauthor}"></span>
-												</span> <span th:text="${boardDTO.bdate}"> <strong>2022.07.04 11:14:49</strong></span>
+												<strong>
+													<span> <span th:text="${boardDTO.bauthor}"></span>
+													</span> <span th:text="${boardDTO.bdate}"> <strong>2022.07.04 11:14:49</strong></span>
+												</strong>
 											</div>
 											<div class="countWrp">
-												<span alt="조회수" th:text = "'조회수 : ' + ${boardDTO.bhits} + ' 좋아요 : ' + ${boardDTO.blikes}"></span>
+												<strong><span alt="조회수" th:text = "'조회수 : ' + ${boardDTO.bhits}"></span></strong>
 											</div>
 										</div>
 									</div>
@@ -215,41 +222,99 @@ function getReplyList(){
 									<div class="boardBtnWrp xet-clearfix mg-t20">
 										<div class="float-left">
 											<a th:href="'http://localhost/sommunity/board?bname=' + ${boardDTO.brand}"
-												class="xet_btn medium white"></i> 목록</a>
+												class="xet_btn medium gray"></i> 목록</a>
 										</div>
 										<div th:if="${#authentication.name.equals(boardDTO.bauthor)}" class="float-right">
+											<!-- 게시글 작성자일 경우 -->
 											<a href=" "
 												class="xet_btn medium white">수정</a> <a href="javascript:;"
 												th:onclick="'delBoard('+${boardDTO.bid}+');return false;'"
 												class="xet_btn medium red">삭제</a>
 										</div>
+										<div th:unless="${#authentication.name.equals(boardDTO.bauthor)}" class="float-right">
+											<!-- 게시글 작성자가 아닐 경우 -->
+											<a id="likesBtn" href="javascript:;" th:onclick="'incLikes();return false;'" class="xet_btn medium blue"><strong>좋아요 <span id="likesCnt" th:text="${boardDTO.blikes}"></span></strong></a>
+										</div>
 										<script>
-											function delBoard(bid) {
-												$.ajax({
-										            url: '/delBoard?bid='+bid,
-										            type: 'POST',
-										            async : false,
-										            contentType: 'application/json',
-										            beforeSend: function (xhr) {
-										                xhr.setRequestHeader(header, token);
-										            },
-										            success: function () {
-										            	console.log("게시글 삭제 성공");
-										            },
-										            error: function () {
-										                console.log("게시글 삭제 실패");
-										            }
-										        });
-												location.href="/sommunity/home";
-											}
+										
+										function getLikesCount() {
+											$.ajax({
+												url: '/getLikesCount?bid='+id,
+									            type: 'POST',
+									            async : false,
+									            beforeSend: function (xhr) {
+									                xhr.setRequestHeader(header, token);
+									            },
+									            success: function (data) {
+													console.log("좋아요 개수 : " + data);
+													$('#likesCnt').text(data);
+												},
+												error: function () {
+													console.log("좋아요 개수 조회 실패");
+												}
+											  
+											});
+										}
+
+										
+										function incLikes() {
+											$.ajax({
+												url: '/incLikes',
+												data: JSON.stringify(
+													{
+														bid : $('#bid').val(),
+														reader : $('#user').val()
+													}		
+												),
+									            type: 'POST',
+									            async : false,
+									            dataType: 'JSON',
+									            contentType: 'application/json',
+									            beforeSend: function (xhr) {
+									                xhr.setRequestHeader(header, token);
+									            },
+									            success: function () {
+													console.log("좋아요 증가 성공");
+													getLikesCount();
+												},
+												error: function () {
+													console.log("이미 좋아요를 누른 게시글이다.");
+													layerAlert("이미 추천한 게시글입니다.")
+												}
+											  
+											});
+											
+										}
+										
+										
+										function delBoard(bid) {
+											$.ajax({
+									            url: '/delBoard?bid='+bid,
+									            type: 'POST',
+									            async : false,
+									            contentType: 'application/json',
+									            beforeSend: function (xhr) {
+									                xhr.setRequestHeader(header, token);
+									            },
+									            success: function () {
+									            	console.log("게시글 삭제 성공");
+									            },
+									            error: function () {
+									                console.log("게시글 삭제 실패");
+									            }
+									        });
+											location.href="/sommunity/home";
+										}
 										</script>
 									</div>
 								</div>
 
 								<div class="feedbackList" id="comment">
-									<div class="feedbackHeader comment-icon">
-										댓글 <span id = "replyCnt"><em>0개</em></span>
-									</div> <!-- // 댓글 목록 -->
+									<div class="feedbackHeader comment-icon" style="color : #444;">
+										<strong>
+											댓글 <span id = "replyCnt"><em>0개</em></span>
+											</div> <!-- // 댓글 목록 -->
+										</strong>
 									<div class="replyList" id= "replyList">
 										
 									</div>
@@ -290,12 +355,12 @@ function getReplyList(){
 												<div class="write_type xet_clearfix">
 													<div class="input_form">
 														<input type="hidden" id="bid" th:value="${boardDTO.bid}"></input>
-														<textarea name="breply" id="breply" class="inputText" placeholder="댓글을 입력해주세요."></textarea>
+														<textarea name="breply" id="breply"  class="inputText" placeholder="댓글을 입력해주세요."></textarea>
 													</div>
 												</div>
 											</div>
 											<div class="text-right mg-t10">
-												<button type="button" onclick="enrollReply();" class="xet_btn medium submit">등록</button>
+												<button type="button"    onclick="enrollReply();" class="xet_btn medium submit">등록</button>
 											</div>
 											<script type="text/javascript">
 												var header = $("meta[name='_csrf_header']").attr('content');
@@ -420,6 +485,12 @@ function getReplyList(){
 														layerAlert('로그인 후 이용해주세요.');
 														return;
 													}
+													
+													if($('#breply').val() === '') {
+														layerAlert('내용을 입력해주세요.');
+														return;
+													}
+													
 													
 													let object = {
 															bid : $('#bid').val(),
@@ -550,7 +621,13 @@ function getReplyList(){
 			</ul>
 		</div>
 	</footer>
-
+	<script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/board.js"></script>
+    <script src="assets/js/jquery.plugins.min.js"></script>
 	</div>
 
 </body>

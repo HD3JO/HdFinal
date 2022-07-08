@@ -88,8 +88,19 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.incHits(bCountDTO);
 		
 	}
+
+	@Override
+	public void incLikes(BCountDTO bCountDTO) throws SQLException {
+		boardMapper.incLikes(bCountDTO);
+		return;
+	}
+
+	@Override
+	public int getLikesCount(String bid) {
+		
+		return boardMapper.getLikesCount(bid);
+	}
 	
 	
-	
-	
+
 }

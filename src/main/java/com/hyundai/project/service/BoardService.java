@@ -31,5 +31,9 @@ public interface BoardService {
 
 	public void incHits(BCountDTO bCountDTO) throws SQLException;
 
+	public void incLikes(BCountDTO bCountDTO) throws SQLException;
+
+	public int getLikesCount(String bid);
+
 
 }
