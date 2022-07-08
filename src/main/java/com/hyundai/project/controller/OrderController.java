@@ -111,6 +111,7 @@ public class OrderController {
 		emailDTO.setAddress(email);
 		emailDTO.setTitle("[한섬3조] 주문완료 이메일입니다.");
 		Map<String, Object> variables = new HashMap<>();
+		variables.put("orderList", completeList);
 		emailService.sendMailWithFiles(emailDTO, variables);
 		messageService.sendMessage(completeList);
 		model.addAttribute("complete", completeList);
