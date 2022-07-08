@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hyundai.project.dto.AdminProductDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.ProductCommonDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductStockDTO;
+import com.hyundai.project.service.AdminMainService;
 import com.hyundai.project.service.AdminProductService;
 import com.hyundai.project.service.MemberService;
 
@@ -29,10 +31,20 @@ public class AdminController {
 	private MemberService memberService;
 	@Autowired
 	private AdminProductService adminProductService;
+	@Autowired
+	private AdminMainService adminMainService;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
+		int totalusercount = adminMainService.getTotalUser();
+		int totalordercount = adminMainService.getMonthOrderCount();
+		int totalproductcount = adminMainService.getTotalProductQty();
+		int totalproductprice = adminMainService.getMonthOrderPrice();
+		model.addAttribute("totalproductprice", totalproductprice);
+		model.addAttribute("totalproductcount", totalproductcount);
+		model.addAttribute("totalordercount", totalordercount);
+		model.addAttribute("totalusercount", totalusercount);
 		return "admin/index";
 	}
 	
