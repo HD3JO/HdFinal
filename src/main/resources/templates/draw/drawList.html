@@ -173,7 +173,8 @@ function logout(){
           </div>
         </div>
         <h1 class="cnts_title ou1804" data-aos="fade-up">THE HANSOME DRAW</h1>
-        <h3 class="cnts_small_title ou1804" data-aos="fade-up">매일 오전 10:00 ~ 11:00 드로우가 진행됩니다.</h2>
+        <h3 class="cnts_small_title ou1804" data-aos="fade-up">매일 오전 10:00 ~ 11:00 드로우가 진행됩니다.</h3>
+        <h3 class="cnts_small_title ou1804" data-aos="fade-up" th:text="${totalCount}"></h3>
         <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
           <div th:each="list, status : ${drawList}" th:class="'item ' + ${list.bname} + ' col-sm-6 col-md-4 col-lg-4 mb-4'">
             <a th:href="'/draw/drawDetail?psid=' + ${list.psid}" class="item-wrap fancybox">

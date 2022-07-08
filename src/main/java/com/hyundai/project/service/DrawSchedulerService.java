@@ -32,8 +32,7 @@ public class DrawSchedulerService {
 	
 	// 당첨자 추첨하는 기능
 	@Scheduled(fixedDelay = 10000)
-	public DrawWinDTO getWinning() throws Exception {
-			DrawWinDTO winList = new DrawWinDTO();
+	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();
 			
 			ObjectMapper mapper = new ObjectMapper();
