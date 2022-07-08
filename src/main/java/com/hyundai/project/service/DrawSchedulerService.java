@@ -87,7 +87,7 @@ public class DrawSchedulerService {
 					 winDTO.setPid((String)winMap.get("pid"));
 					 winDTO.setPhone(phone);
 					 			
-					 System.out.println(winDTO);					
+					 //System.out.println(winDTO);					
 					 
 					 // 당첨자 오라클DB에 insert
 					 drawMapper.insertWinDraw(winDTO);
