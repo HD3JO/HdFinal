@@ -79,6 +79,82 @@ function changeBest(e){
 	});
 }
 
+	//chatting start
+	const websocket = new WebSocket("ws://localhost:80/ws/chat");
+	websocket.onmessage = onMessage;	//소켓이 메세지를 받을 때 
+	websocket.onopen = onOpen;			//소켓이 생성될때 클라이언트 접속 
+	websocket.onclose = onClose;		//소켓이 닫힐때(클라이언트 접속해제)
+
+	//on exit chat room
+	function onClose(evt){
+		console.log("close event : " + evt);
+	}
+
+	//on entering chat room 
+	function onOpen(evt){
+		console.log("open event : " +evt);
+	}
+
+	//on message controller
+	function onMessage(msg){
+		const data = JSON.parse(msg.data);	//msg를 받으면 data필드 안에 JSON String으로 정보가 있음 
+		//필요한 정보를 json data에서 추출 
+		const senderId = data.senderId;
+		const message = data.message+' '+data.time;
+		const newOne = data.newOne;
+		const outOne = data.outOne;
+		
+		console.log(data);
+		
+		//console.log('ddd');
+		let html = '';
+		if(senderId != 'master'){
+			html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right;" > '+message +'</div> </li><br>';	
+		}else{
+			html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left;" > '+message + ' </div></li><br>';
+		}
+		
+		$('.messageBox').append(html);
+		
+		//$('#chatInput').val('');
+		$('.messageBox').scrollTop($('.messageBox').height()*10);
+	}
+
+	//send a message
+	function send(){
+		const message = $('#chatInput').val();
+		console.log(message);
+		
+		//don't send when content is empty
+		//채팅 입력칸이 비어있지 않은 경우에만 정보를 json 형태로 전송 
+		if(message != ""){
+			let msg = {
+					'receiverId' : 'master', //receiverId,
+					'message' : message 
+			}
+			
+			if(message != null){
+				websocket.send(JSON.stringify(msg));	//websocket handler로 전송(서버로 전송)
+			}
+			$('#chatInput').val('');
+		}
+	}
+	
+	function clickChat(){
+		$('#chatBtn').toggle();
+		$('#chatModal').toggle();
+		
+		$('.messageBox').scrollTop($('.messageBox').height()*10);
+		console.log('ddddd');
+		
+	}
+	function closeChatModal(){
+		$('#chatBtn').toggle();
+		$('#chatModal').toggle();
+	}
+	//chatting end
+
+
 </script>
 <body>
 	<!--     bodyWrap -->
@@ -255,7 +331,33 @@ function changeBest(e){
                     </div>
                 </div>
                 <!-- new & best -->
-			
+		</div>
+		<!-- chatt modal start -->
+        <div class="popwrap" id="chatModal">
+        	<h3 id="review_title">문의하기</h3>
+        	<div id="wsid" th:text="${session.sessionId}" style="display:none;"></div>
+        	<div class="chatBox" >
+			    <ul class="messageBox">
+			    	
+			    
+			    </ul>
+			    <div class="">
+			        <div class="">
+			            <input id="chatInput" class="" placeholder="Type your message here..." onclick="send()"/>
+			        </div>
+			        
+			    </div>
+			</div>
+	        <a href="javascript:void(0);" onclick="closeChatModal();"
+            style="position: absolute; top: 20px; right: 20px; width: 20px; height: 20px;"><img
+                src="http://cdn.thehandsome.com/_ui/desktop/common/images/popup/ico_close.png" alt="닫기"></a>
+                
+        </div>
+        <!-- chatt modal end -->
+		<div id="chatBtn" style="display: block;">
+			<a href="javascript:void(0);" onclick="clickChat()">
+				<img src="/_ui/desktop/common/images/chat_icon.png" style="width: 3rem; height: 3rem;" alt="맨 위로 ">
+			</a>
 		</div>
 		<!-- //main_container-->
 	</div>

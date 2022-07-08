@@ -103,6 +103,8 @@
 		       , F.PNAME
 		       , G.BNAME
 		       , H.PMCOMPANY
+		       , A.OSTATUS
+		       , E.PCID
 		FROM ORDERS A 
 		INNER JOIN MEMBER B
 		ON A.EMAIL = B.EMAIL
@@ -132,7 +134,7 @@
 	
 	<select id="selectOrderList" resultType="com.hyundai.project.dto.OrderListDTO">
         SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
-       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
     		FROM ORDERS A
     		INNER JOIN ORDER_ITEM B
     		ON A.oid = B.oid
@@ -152,7 +154,7 @@
     
     <select id="selectOrderListByOneMonth" resultType="com.hyundai.project.dto.OrderListDTO">
         SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
-       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
     		FROM ORDERS A
     		INNER JOIN ORDER_ITEM B
     		ON A.oid = B.oid
