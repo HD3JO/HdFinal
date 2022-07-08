@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.hyundai.project.dto.AdminOrderDTO;
 import com.hyundai.project.dto.AdminProductDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderCompleteDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.PaymentMethodDTO;
-import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.ProductCommonDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductStockDTO;
-import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminMainService;
+import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminProductService;
 import com.hyundai.project.service.MemberService;
 import com.hyundai.project.user.repository.OrderMapper;
@@ -39,13 +39,13 @@ public class AdminController {
 	@Autowired
 	private AdminProductService adminProductService;
 	@Autowired
+	private AdminMainService adminMainService;
+	@Autowired
 	private AdminOrderService adminOrderService;
 	@Autowired
 	private PaymentMethodMapper paymentMethodMapper;
 	@Autowired
 	private OrderMapper orderMapper;
-	@Autowired
-	private AdminMainService adminMainService;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
