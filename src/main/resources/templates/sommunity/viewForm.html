@@ -167,7 +167,7 @@ function getReplyList(){
 												</span> <span th:text="${boardDTO.bdate}"> <strong>2022.07.04 11:14:49</strong></span>
 											</div>
 											<div class="countWrp">
-												<span alt="조회수">조회수</span>
+												<span alt="조회수" th:text = "'조회수 : ' + ${boardDTO.bhits} + ' 좋아요 : ' + ${boardDTO.blikes}"></span>
 											</div>
 										</div>
 									</div>

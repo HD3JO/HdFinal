@@ -17,16 +17,29 @@
 	</select>
 	
 	<select id="getBoard" resultType="com.hyundai.project.dto.BoardDTO">
-		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
-		from board
-		where bid = #{bno}
+		select board.bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
+		from board 
+		left join (select bid, count(*) as bhits from board_hits group by bid) hits 
+		on hits.bid = board.bid 
+		left join (select bid, count(*) as blikes from board_likes group by bid) likes
+		on likes.bid = board.bid
+		where board.bid = #{bno}
 	</select>
 
 	<select id="getPageBoard" resultType="com.hyundai.project.dto.BoardDTO">
-        select (select count(*) from board where brand = #{brand})-rn+1 as seq, bid, bheader, btitle, bauthor, bdate, bimg, bcontent from (
-		select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent
-		from (select * from board where board.brand=#{brand} order by bdate desc)
-		) t where rn between (#{pageNum}-1)*10+1 and #{pageNum}*10
+        select (select count(*) from board where brand = #{brand})-rn+1 as seq, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes 
+        from (
+			select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes
+			from (select board.*, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
+				from board 
+				left join (select bid, count(*) as bhits from board_hits group by bid) hits 
+				on hits.bid = board.bid 
+				left join (select bid, count(*) as blikes from board_likes group by bid) likes
+				on likes.bid = board.bid
+				where board.brand=#{brand}  order by bdate desc
+				)
+			) t 
+		where rn between (#{pageNum}-1)*10+1 and #{pageNum}*10
 	</select>
 	
 	<delete id="delBoard">
@@ -35,7 +48,7 @@
 
 	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
 		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
-		values (board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent},#{bauthor}, sysdate)
+	#{brand}(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bconten#{pageNum}or}, sysdate)#{pageNum}t>
 	</insert>
 	
 	<insert id="enrollReply" parameterType="com.hyundai.project.dto.ReplyDTO">
@@ -54,6 +67,8 @@
 		delete from reply where rno = #{rno}
 	</delete>
 	
-	
+	<insert id="incHits">
+		insert into board_hits values(#{bid}, #{reader})
+	</insert>
 	
 </mapper>

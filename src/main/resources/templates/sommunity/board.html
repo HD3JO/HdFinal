@@ -138,8 +138,8 @@
 	                                            <th scope="col">제목</th>
 	                                            <th scope="col">작성자</th>
 	                                            <th scope="col">날짜</th>
-	                                            <th scope="col">조회 수</th>
-	                                            <th scope="col"></th>
+	                                            <th scope="col">조회수</th>
+	                                            <th scope="col">좋아요</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody id="boarditems">
@@ -190,14 +190,23 @@
 						var header = $("meta[name='_csrf_header']").attr('content');
 					    var token = $("meta[name='_csrf']").attr('content');
 					    
-							function goWriteForm(bname) {
-								if($('#user').val() === 'anonymousUser') {
-									layerAlert('로그인 후 이용해주세요.');
-									return;
-								}
-								
-								location.href = '/sommunity/write?bname='+bname;
+					    function goViewForm(bid) {
+							if($('#user').val() === 'anonymousUser') {
+								layerAlert('로그인 후 이용해주세요.');
+								return;
 							}
+							
+							location.href = '/sommunity/view?bno='+bid;
+						}	
+					    
+						function goWriteForm(bname) {
+							if($('#user').val() === 'anonymousUser') {
+								layerAlert('로그인 후 이용해주세요.');
+								return;
+							}
+							
+							location.href = '/sommunity/write?bname='+bname;
+						}
 						</script>
 	                    <div class="boardSearch">
 	                        <form action="https://demo.xetemplate.com/" method="get"
@@ -357,7 +366,7 @@
                 	$(data).each(function (index) {
                 		htmlstr += "<tr class='bg1'>";
                 		htmlstr += "<td> <span alt='번호'>" + this.seq + "</span> </td>";
-                		htmlstr += "<td class='td-subject'> <a href='/sommunity/view?bno="+this.bid + "' class='subject'>" + this.btitle + "</a> </td>";
+                		htmlstr += "<td class='td-subject'> <a href='javascript:void(0);' onclick='goViewForm("+this.bid+")' class='subject'>" + this.btitle + "</a> </td>";
                 		htmlstr += "<td><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
                 		let bdate = this.bdate;
                 		
@@ -368,8 +377,8 @@
                 			htmlstr += "<td>"+bdate.substr(5,2) +"/" + bdate.substr(8,2) +"</td>";
                 		}
                 		
-                		htmlstr += "<td>조회수</td>";
-                		//htmlstr += "<td> <a href='' class='thumbnail' style='width: 80px'> <em>123</em> <img src='https://post-phinf.pstatic.net/MjAxOTExMDRfOCAg/MDAxNTcyODU1MDQ5NDA4.FCA8G3r-rbxsidLKqxBX6yfk4DuUc1zLXhdCni9BVB0g.fjQTknYM-SXz03aSAQIopvVKV515Qx1LYBn370JkRV0g.JPEG/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C_%281%29.jpg?type=w1200' alt=''> </a></td>"
+                		htmlstr += "<td>" +this.bhits+"</td>";
+                		htmlstr += "<td> " +this.blikes +"</td>";
                 		
                 	}
                 	);

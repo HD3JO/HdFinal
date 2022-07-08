@@ -23,4 +23,6 @@ public class BoardDTO {
 	private String bdate;
 	private Clob bimg;
 	private int pageNum;
+	private int bhits;
+	private int blikes;
 }

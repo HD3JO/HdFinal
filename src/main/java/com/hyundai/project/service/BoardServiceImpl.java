@@ -1,11 +1,13 @@
 package com.hyundai.project.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.project.board.repository.BoardMapper;
+import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
 import com.hyundai.project.dto.ReplyDTO;
 
@@ -77,6 +79,14 @@ public class BoardServiceImpl implements BoardService {
 	public void delReply(String rno) {
 		boardMapper.delReply(rno);
 		return;
+	}
+
+
+
+	@Override
+	public void incHits(BCountDTO bCountDTO) throws SQLException {
+		boardMapper.incHits(bCountDTO);
+		
 	}
 	
 	
