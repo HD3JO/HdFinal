@@ -23,6 +23,27 @@
 <script>
 var arkQuery = $.noConflict(true);
 </script>
+<style>
+table {width:100%;border-collapse: separate; border-spacing: 50px;}
+tbody tr   { box-shadow: 0 1px 10px #000000; }
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.tbl_ltype {
+    border-top: 50px solid #414040;
+}
+
+.tbl_ltype th {
+    padding: 15px;
+    color: #222;
+    line-height: 14px;
+    text-align: center;
+    background: #f5f5f5;
+}
+
+</style>
 </head>
 <body>
 <table style="width:760px;padding:60px 20px 30px;margin:0 auto; border-spacing: 0 30px; border-collapse: separate;" border="0" cellpadding="0" cellspacing="0">
@@ -67,32 +88,32 @@ var arkQuery = $.noConflict(true);
 							</h3>-->
 							<div class="tblwrap lncl1812">
 								<!-- 클래스추가 181204 -->
-								<table class="tbl_ltype review_betterment1905">
+								<table class="tbl_ltype review_betterment1905" style="border-top: 1px solid #414040; border-color: #808080;">
 									<colgroup class="interval1812">
 										<!-- 수정 181204 -->
-										<col style="width: 100px">
-										<col style="width: 350px">
-										<col style="width: 50px">
+										<col style="width: 90px">
+										<col style="width: 400px">
+										<col style="width: 80px">
 										<col style="width: 100px">
 										<col style="width: 100px">
 									</colgroup>
-									<thead>
+									<thead style="position: sticky; margin-right: 10px; word-break:break-all">
 										<tr>
-											<th scope="col">주문번호<!-- 주문번호 --></th>
-											<th scope="col">상품정보<!-- 상품정보 --></th>
-											<th scope="col">수량<!-- 수량 --></th>
-											<th scope="col">판매가<!-- 판매가 --></th>
-											<th scope="col">주문상태<!-- 주문상태 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #f5f5f5;">주문번호<!-- 주문번호 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">상품정보<!-- 상품정보 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">수량<!-- 수량 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">판매가<!-- 판매가 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5;">주문상태<!-- 주문상태 --></th>
 										</tr>
 									</thead>
 									<tbody id="listBody">
 											<tr th:each="order : ${orderList}">
-												<td class="pt_list_wrap" style="text-align: center;">
+												<td class="pt_list_wrap" style="text-align: center; border-bottom: 1px solid #e5e5e5;">
 													<div class="price_wrap">
 														<span th:text="${order.oid}"></span>
 													</div> 
 												</td>
-												<td class="pt_list_wrap">
+												<td class="pt_list_wrap" style="border-bottom: 1px solid #e5e5e5;" >
 													<!-- pt_list_all -->
 													<div class="pt_list_all">
 														<a id="productfirst" onclick="javascript:void(0);"> 
@@ -113,21 +134,21 @@ var arkQuery = $.noConflict(true);
 														</div>
 													</div>
 												</td>
-												<td class="al_middle" style="text-align: center;">
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
 													<!-- Price -->
 													<div class="price_wrap">
 														<span th:text="${order.oicount}"></span> 
 														<input type="hidden" name="checkZeroPrice" value="795000.0">
 													</div> <!-- //Price -->
 												</td>
-												<td class="al_middle" style="text-align: center;">
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
 													<!-- Price -->
 													<div class="price_wrap">
 														<span th:text="'₩'+${#numbers.formatInteger(order.pcprice,3,'COMMA')}"></span>
 														<input type="hidden" name="checkZeroPrice" value="795000.0">
 													</div> <!-- //Price -->
 												</td>
-												<td class="al_middle" style="text-align: center;">
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
 
 													<div class="price_wrap">
 														<span th:text="${order.ostatus}"></span> 
