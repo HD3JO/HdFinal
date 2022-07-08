@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.user.repository.AdminOrderMapper">
+
+	<!-- 주문 페이지에서 작성한 정보 입력 -->
+	<select id="getOrderList" resultType="com.hyundai.project.dto.AdminOrderDTO">
+		SELECT A.OID, A.ORECEIVER, A.OPHONE, A.OADDRESS1, A.OADDRESS2, A.OAFTERPRICE, A.OSTATUS, A.EMAIL, TO_CHAR(A.ODATE, 'yyyy-MM-dd') as odate, A.PMCODE, A.MILEAGE
+		  FROM ORDERS A
+		 WHERE A.ORECEIVER LIKE DECODE(#{oreceiver, jdbcType=VARCHAR},NULL, '%', '%'||#{oreceiver, jdbcType=VARCHAR}||'%')
+		   AND A.EMAIL LIKE DECODE(#{email, jdbcType=VARCHAR},NULL, '%', '%'||#{email, jdbcType=VARCHAR}||'%')
+		   AND A.OSTATUS LIKE DECODE(#{ostatus, jdbcType=VARCHAR},NULL,'%','%'||#{ostatus, jdbcType=VARCHAR}||'%')
+		   AND A.PMCODE LIKE DECODE(#{pmcode, jdbcType=VARCHAR}, NULL, '%', '%'||#{pmcode, jdbcType=VARCHAR}||'%')
+		   AND A.ODATE BETWEEN TO_DATE(#{startdate}) AND TO_DATE(#{enddate})
+		 ORDER BY A.ODATE DESC
+	</select>
+	
+	<update id="updateOrder" parameterType="com.hyundai.project.dto.AdminOrderDTO">
+		UPDATE ORDERS
+		   SET OSTATUS = #{ostatus}
+		 WHERE OID = #{oid}
+	</update>
+</mapper>
