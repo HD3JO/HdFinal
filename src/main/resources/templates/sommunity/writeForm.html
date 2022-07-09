@@ -6,8 +6,80 @@
 <head>
 <title>한섬 커뮤니티 Sommunity</title>
 <meta charset="utf-8" />
-<meta name="_csrf" th:content="${_csrf.token}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+<link rel="shortcut icon"
+	href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/font_80.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/common.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/layout.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/popup.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/brand.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/swiper.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/main_201903.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/footer.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/products.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/contents.css" media="all" />
+<style type="text/css" media="print">
+@IMPORT url("/_ui/desktop/common/blueprint/print.css");
+</style>
+
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery.vticker.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/common.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/html5shiv-printshiv.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/jquery.flexslider.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/ui.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery.form-3.51.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/common_function.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/videojs-ie8.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery-ui-1.11.2.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/instagramAPI.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/instagramAPI.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/jquery.bxslider.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/makePCookie.js"></script>
+<script type="text/javascript" src="/_ui/shared/js/siteoverlay.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/wisenut/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/swiper.min.js"></script>
+<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/netfunnel_skin.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/_ui/desktop/common/js/unorm.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/appboy.min.js"></script>
+<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
@@ -26,31 +98,22 @@
 <link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
-
-<!-- Scripts -->
-<script src="/sommunity/assets/js/jquery.min.js"></script>
-<script src="/sommunity/assets/js/browser.min.js"></script>
-<script src="/sommunity/assets/js/breakpoints.min.js"></script>
-<script src="/sommunity/assets/js/util.js"></script>
-<script src="/sommunity/assets/js/main.js"></script>
-<script src="/sommunity/assets/js/board.js"></script>
-<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
-<script src="/sommunity/assets/js/jquery.plugins.min.js"></script>
-<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-
+<link rel="stylesheet" href="/sommunity/assets/css/editor.css" />
 <noscript>
 	<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
 </noscript>
 </head>
-
 <body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Header -->
 		<header id="header">
 			<div class="inner">
-
 				<!-- Logo -->
+				<h2 style="margin: 0 0 0 0;">
+					<span style="display: block;">한섬닷컴 회원을 위한</span><span
+						style="display: block;">패션 커뮤니티</span>
+				</h2>
 				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
 						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
 					class="title"></span>
@@ -61,24 +124,32 @@
 						<li><a href="#menu">Menu</a></li>
 					</ul>
 				</nav>
-				<div class="mg-b30 text-center" style="text-align : center;">
-					<h1 class="text-center" th:text="${#strings.toUpperCase(bname)} + ' 게시판 글쓰기'"></h1>
-					<h2 id="contextPathHolder" th:text="${#httpServletRequest.getContextPath()}"/>
-				</div>
+
 			</div>
 		</header>
 
 		<!-- Menu -->
 		<nav id="menu">
 			<h2>Menu</h2>
+			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
+			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
 			<ul>
 				<li><a href="/sommunity/home">Home</a></li>
-				<li>
-					<a href="/customLogin">로그인</a>
-				</li>
-				<li><a href="/customLogin">회원가입</a></li>
-				<li><a href="elements.html">마이페이지</a></li>
+				<li><a href="/main">한섬닷컴 이동</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">로그인</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">회원가입</a></li>
+				<li sec:authorize="isAuthenticated()">
+					<form action="/logout" method="POST" id="logoutForm">
+						<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
+				<li sec:authorize="isAuthenticated()"><a href="elements.html">마이페이지</a></li>
 			</ul>
+			<script>
+			function logout(){
+				$('#logoutForm').submit();
+			}
+			</script>
 		</nav>
 
 		<!-- Main -->
@@ -240,6 +311,7 @@
 	
 								<div class="boardNavigation">
 									<button type="button" class="xet_btn large submit xet_btn_block" onclick="changeQueryString(this)">등록</button>
+									<input type="hidden" id="deliveryOkMsg" value="확인">
 									<div class="mg-t10">
 										<button type="button" onclick="doDocumentSave(this);"
 											class="xet_btn medium white">  임시 저장 </button>
@@ -253,13 +325,13 @@
 											let checkFormFlag = true;
 											
 											if(bheader === ''|| bheader == undefined){
-												alert('머릿글을 선택해주세요.');
+												layerAlert('머릿글을 선택해주세요.');
 												checkFormFlag = false;
 											}else if(btitle === '' || btitle == undefined){
-												alert('제목을 입력해주세요.');
+												layerAlert('제목을 입력해주세요.');
 												checkFormFlag = false;
 											}else if(bcontent == '<p>&nbsp;</p>' || bcontent === '' || bcontent === undefined){
-												alert('입력된 내용이 없습니다. ');
+												layerAlert('입력된 내용이 없습니다. ');
 												checkFormFlag = false;
 											}
 											return checkFormFlag;
@@ -309,37 +381,38 @@
 			</div>
 		</div>
 	</div>
-	<script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/board.js"></script>
-    <script src="assets/js/jquery.plugins.min.js"></script>
 	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<section>
-				<h2>Follow</h2>
-				<ul class="icons">
-					<li><a href="https://www.facebook.com/thehandsome.official/"
-						class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
-					<li><a href="https://www.instagram.com/thehandsome_official/"
-						class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon solid style2 fa-phone"><span
-							class="label">Phone</span></a></li>
-					<li><a href="#" class="icon solid style2 fa-envelope"><span
-							class="label">Email</span></a></li>
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner" style="padding: 0 2.5em;">
+				<section>
+					<h2>Follow</h2>
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/thehandsome.official/"
+							class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/thehandsome_official/"
+							class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon solid style2 fa-phone"><span
+								class="label">Phone</span></a></li>
+						<li><a href="#" class="icon solid style2 fa-envelope"><span
+								class="label">Email</span></a></li>
+					</ul>
+				</section>
+				<ul class="copyright">
+					<li>&copy;  Fourth st. MEN  All rights reserved</li>
 				</ul>
-			</section>
-			<ul class="copyright">
-				<li>&copy; Untitled. All rights reserved</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-			</ul>
-		</div>
-	</footer>
+			</div>
+		</footer>
 
 	</div>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/board.js"></script>
+	<script src="assets/js/jquery.plugins.min.js"></script>
 
 </body>
 

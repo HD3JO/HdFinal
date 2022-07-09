@@ -37,9 +37,9 @@ public class SommunityRESTController {
 	}
 	
 	@PostMapping(value="/enrollReply")
-	public void enrollReply(@RequestBody ReplyDTO replyDTO) {
+	public boolean enrollReply(@RequestBody ReplyDTO replyDTO) {
 		boardService.enrollReply(replyDTO);
-		return;
+		return true;
 	}
 	
 	@PostMapping(value="/getReplyList")
@@ -53,9 +53,9 @@ public class SommunityRESTController {
 	}
 	
 	@PostMapping(value="/incLikes")
-	public void incLikes(@RequestBody BCountDTO bCountDTO) throws SQLException {
+	public boolean incLikes(@RequestBody BCountDTO bCountDTO) throws SQLException {
 		boardService.incLikes(bCountDTO);
-		return;
+		return true;
 	}
 	
 	@PostMapping(value="/getLikesCount")
