@@ -1,5 +1,9 @@
 package com.hyundai.project.dto;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +11,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@Data
-@ToString
-public class DrawListDTO {
+@ToString 
+public class DrawListDTO implements Serializable{
 	
 	private String email;
 	private String psid;
@@ -24,4 +27,9 @@ public class DrawListDTO {
 	private String pcolorcode;
 	private String pnote;
 	private String openyn;
+	private String regyn;
+	
+	private int cntByPsid;
+	
+	private List<DrawRegDTO> modRegList; 
 }

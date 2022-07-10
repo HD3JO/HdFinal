@@ -105,6 +105,8 @@
 		       , H.PMCOMPANY
 		       , A.OSTATUS
 		       , E.PCID
+		       , B.MARKETINGEMAIL
+		       , B.MARKETINGSMS
 		FROM ORDERS A 
 		INNER JOIN MEMBER B
 		ON A.EMAIL = B.EMAIL

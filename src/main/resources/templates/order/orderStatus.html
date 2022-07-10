@@ -47,12 +47,12 @@ var orderList= {
                         <table class="tbl_ltype review_betterment1905">
                             <caption>상품 주문 목록</caption>
                             <colgroup class="interval1812"><!-- 수정 181204 -->
-                                <col style="width:120px">
+                                <col style="width:90px">
                                 <col>
                                 <col style="width:43px">
-                                <col style="width:112px">
+                                <col style="width:100px">
                                 <col style="width:89px">
-                                <col style="width:111px">
+                                <col style="width:120px">
                             </colgroup>
                             <thead>
                                 <tr>
@@ -61,7 +61,7 @@ var orderList= {
                                     <th scope="col" style="padding:15px 0">수량<!-- 수량 --></th><!-- 스타일추가 181204 -->
                                     <th scope="col">판매가<!-- 판매가 --></th>
                                     <th scope="col">주문상태<!-- 주문상태 --></th>
-                                    <th scope="col">구분<!-- 구분 --></th>
+                                    <th scope="col">상세보기<!-- 구분 --></th>
                                 </tr>
                             </thead>
                            <tbody id="listBody">       
@@ -133,8 +133,7 @@ var orderList= {
 								<td class="al_middle">
 									<!-- Price -->
 									<div class="price_wrap">
-										<span></span> <input type="hidden" name="checkZeroPrice"
-											value="795000.0">
+										<a th:href="'http://localhost:80/order/orderDetail?oid='+${orderList.oid}" id="detailViewBtn" class="btn add_ss mr0">&nbsp;&nbsp;상세보기&nbsp;&nbsp;</a>
 									</div> <!-- //Price -->
 								</td>
 							</tr>
