@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/headerstatic :: headerstatic"></head>
+
+<header th:replace="fragments/header :: header"></header>
+<body>
+<script>
+var arkQuery = $.noConflict(true);
+
+var orderList= {
+		oid: $("#oid").text(),
+		odata: $("#odate").text(),
+		pmcompany: $("#pmcompany").text(),
+		oafterprice: $("#oafterprice").text(),
+		oaddress1: $("#oaddress1").text(),
+		oaddress2: $("#oaddress2").text(),
+		oreceiver: $("#oreceiver").text(),
+		ophone: $("#ophone").text(),
+		phone: $("#phone").text()
+}
+</script>
+<div id="bodyWrap">
+   <h3 class="cnts_title">
+      <span id="menuTitle">주문 상세 조회</span>
+   </h3>
+   <div class="sub_container">
+      <!-- lnb -->
+      <div class="lnb_wrap">
+         <h4><a th:href="@{/member/mypage}">마이페이지<!-- 마이페이지 --></a></h4>
+         <div class="lnb">
+                  <dl>
+							<dt><a th:href="@{/member/myorder}" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a></dt>
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/modify}" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a></dt>
+							
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/myreview}" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a></dt>
+						</dl>
+         </div>
+       </div>
+      <!-- //lnb -->
+      <!-- cnts -->
+     
+   		<div class="sub_cnts">
+					<div class="order_info clearfix">
+                   <div class="order_num"> 
+                    <strong> 
+                      <span th:text="'주문번호 : '+${orderList[0].oid}"></span></strong>
+                   </div> 
+                   <div class="order_date" th:text="'주문일시: '+${orderList[0].odate}"></div>
+                   </div>
+                   
+               <div class="title_wrap mt50">
+                  <h4>주문상품</h4>   
+               </div>
+               <!-- Table -->
+               <div class="tblwrap lncl1812">
+               
+                  <table class="tbl_ltype">
+                     <caption>주문상품</caption>
+                     <colgroup>
+                        <col style="width:340px;">
+                        <col style="width:50px;">
+                        <col style="width:80px">
+                        <col style="width:85px">
+                        <col style="width:120px">
+                        <col style="width:90px">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th scope="col">상품정보</th>
+                           <th scope="col" style="word-break:keep-all;">수량</th>   
+                           <th scope="col">판매가</th>   
+                           <th scope="col" style="word-break:keep-all;">실결제금액</th>   
+                           <th scope="col">적립 한섬마일리지</th>
+                           <th scope="col">주문상태</th>   
+                           </tr>
+                     </thead>
+                     <tbody class="tbody_200618">
+                        <tr class="al_middle" th:each="product: ${orderList}">
+                              <td class="frt">
+                                 <!-- pt_list_all -->
+                                 <div class="pt_list_all">
+                                      <a th:href="@{/detail(pcid=${product.psid})}"><img th:src="${product.pcimg1}" alt="상품 이미지"></a>
+                                                        <div class="tlt_wrap">
+                                                            <a th:href="@{/detail(pcid=${product.pcid})}" class="basket_tlt">
+                                                                <span class="tlt" th:text=${product.bname}></span>
+                                                                <span class="sb_tlt sb_tlt_wrap2006" th:text=${product.pname}></span>
+                                                            </a>
+                                                            <p class="color_op"><span th:text="'color : '+${product.pccolorcode}"></span>
+                                                                <span class="and_line">/</span><span th:text="'size : '+${product.psize}"></span></p>
+                                                            <p class="prd_mileage_txt2006"><span>한섬마일리지 : 5.0%</span></p>
+                                                        </div>
+                                          </div>
+                                 </td>
+                              <td th:text="${product.oicount}">
+<!--                                  <del>1</del> -->
+                                 </td>
+                              <td>
+                                 <!-- price_wrap -->
+                                 <div class="price_wrap">
+                                    <span style="word-break:keep-all;white-space: nowrap;" th:text="'₩'+${#numbers.formatInteger(product.pcprice,0,'COMMA')}">
+                                 </span>
+                                 </div>
+                                 
+                              </td>
+                              <td>
+                                 
+                                 <div class="price_wrap">
+                                    
+                                    <span th:text="'₩'+${#numbers.formatInteger(product.pcprice,0,'COMMA')}">
+                                    </span>
+                                 </div>
+                                 <!-- //price_wrap -->
+                              </td>
+                              <td rowspan="1"><br>한섬마일리지<br>
+                                          <p class="num"><span th:text="${#numbers.formatInteger(product.pcprice*0.05,0,'COMMA')}+'M'"></span></p>
+                                         <br> 
+                                    </td>
+                                 <td>
+                                 <p class="num"><span th:text="${product.ostatus}"></span>
+                                    <span class="sum_date" style="margin:0 auto; font-size: 1em;" th:text="'('+${product.odate}+')'"></span></p>
+                              </td>
+                           </tr>
+                           
+                           </tbody>
+                  </table>
+                  
+                  </div>
+
+               <div class="title_wrap mt50 clearfix">
+                  <h4 class="float_left">결제정보</h4>   <div class="btn_wrap">
+<!--                      <a href="javascript:void(0);" id="detailViewBtn" class="btn add_ss mr0">&nbsp;&nbsp;상세보기&nbsp;&nbsp;</a>    -->
+<!--                      <a href="javascript:receiptRequest('1');" id="receiptBtn" class="btn add_ss mr0">영수증출력</a><br></div> -->
+               </div>
+               
+                <div class="tblwrap">
+                  <table class="tbl_wtype1 none mt10 e-gift1812">
+                        <caption>결제정보 항목</caption><br><br>
+                        <colgroup>
+                           <col style="width:18%">
+                           <col style="width:82%">
+                        </colgroup>
+                        <tbody>
+                                 <tr>
+                                    <th scope="row">주 결제수단</th>   
+                                    <td th:text="${orderList[0].pmcompany}"></td>
+                                 </tr>
+                                 <tr>
+                                    <th scope="row">실 결제금액</th>   
+                                    <td th:text="'₩'+${#numbers.formatInteger(orderList[0].oafterprice,0,'COMMA')}"></td>
+                                 </tr>
+                        </tbody>
+                   </table>
+                  </div>
+               <!-- //Table -->
+               <div class="title_wrap mt50 clearfix">
+                  <h4 class="float_left">배송지 정보</h4> 
+               </div>
+               <!-- Table -->
+               <div class="tblwrap">
+                  <table class="tbl_wtype1 mt10">
+                     <caption>배송지 정보</caption>   <colgroup>
+                        <col style="width:18%">
+                        <col style="width:82%">
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <th scope="row">배송지 주소</th>   
+                           <td th:text="${orderList[0].oaddress1} + ${orderList[0].oaddress2}"></td>
+                        </tr>
+                        <tr>
+                           <th scope="row">수령인</th>   
+                           <td th:text=${orderList[0].oreceiver}></td>
+                        </tr>
+                        <tr>
+                           <th scope="row">휴대폰</th>   
+                           <td th:text=${orderList[0].ophone}></td>
+                        </tr>
+                        <tr>
+                           <th scope="row">연락처</th>
+                           <td th:text=${orderList[0].phone}></td>
+                        </tr>
+                           </tbody>
+                  </table>
+               </div>
+               <!-- //Table -->
+               
+               <!-- Guide Table -->
+                  <div class="gd_list com pl0">
+                     <dl>
+                        <dt>증빙서류출력 안내</dt><br><br>
+                        <dd>
+                         <ul class="bul_sty01_li">
+                              <li>신용카드로 결제하신 경우에만 카드전표를 출력할 수 있습니다.</li>
+                              <li>실시간계좌이체 혹은 가상계좌를 통해 결제하신 경우 영수증 출력이 가능하나, 결제 시 현금 영수증 미발행을 <br>선택하셨다면 영수증 출력이 불가능 합니다.</li>
+                              <li>한섬마일리지 및 기프트카드의 경우 일부 현금영수증 발행 대상 금액에서 제외되며, 결제금액과 상이할 수 있습니다.</li>
+                              <li>부분취소 발생시 취소금액이 적용되어, 증빙 금액이 변경될 수 있습니다.</li>
+						</ul>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- //Guide Table -->
+               <!--  <div class="btnwrap mt0 "><a href="javascript:history.back();" class="btn wt">이전 페이지로</a></div>-->
+</div>
+
+      		<!-- //cnts -->
+</div>
+
+</div>
+</div>
+</body>
+</html>

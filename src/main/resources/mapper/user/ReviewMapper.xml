@@ -38,14 +38,14 @@
     <select id="isPurchased" parameterType="com.hyundai.project.dto.PurchasedProductDTO" resultType="com.hyundai.project.dto.PurchasedProductDTO">
 		select OINFO.PSID, PCID, PCCOLORCODE, PSIZE, ORECEIVER, EMAIL, OSTATUS, PCIMG1
 		from (select PSID, orders.OSTATUS AS OSTATUS, EMAIL , ORECEIVER from order_item 
-		INNER JOIN orders ON order_item.oid = orders.oid where orders.OSTATUS='배송완료' AND EMAIL=#{email}) 
+		INNER JOIN orders ON order_item.oid = orders.oid where orders.OSTATUS='배송완료' AND EMAIL=#{email, jdbcType=VARCHAR}) 
 		OINFO
 		INNER JOIN
 		(select PSID, PSIZE, PS.PCID, PCCOLORCODE, PCIMG1 from productmanager.product_Stock PS
 		INNER JOIN productmanager.product_color PC
 		ON PS.pcid = PC.pcid
 		where PID IN
-		(SELECT pid from productmanager.product_color where pcid = #{pcid})) 
+		(SELECT pid from productmanager.product_color where pcid = #{pcid, jdbcType=VARCHAR})) 
 		PINFO
 		ON OINFO.PSID = PINFO.PSID
     </select>
@@ -56,6 +56,34 @@
     where email=#{email, jdbcType=VARCHAR}
     
     </select>    
+    
+    <select id="reviewCheck" parameterType = "String" resultType="String">
+
+	SELECT DISTINCT E.PCID
+	FROM ORDERS A
+	INNER JOIN ORDER_ITEM B
+	ON A.OID = B.OID
+	INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
+	ON B.PSID = C.PSID
+	INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
+	ON C.PCID = D.PCID
+	INNER JOIN REVIEW E
+	ON A.EMAIL = E.EMAIL
+	WHERE E.EMAIL = #{email, jdbcType=VARCHAR}
+	
+<!--     select C.PSID -->
+<!--     from REVIEW A  -->
+<!--     INNER JOIN ORDERS B -->
+<!--     ON A.EMAIL = B.EMAIL -->
+<!--     INNER JOIN ORDER_ITEM C -->
+<!--     ON B.OID = C.OID -->
+<!--     INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK D -->
+<!--     ON C.PSID = D.PSID -->
+<!--     INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR E -->
+<!--     ON D.PCID = E.PCID -->
+<!--     WHERE A.EMAIL=#{email, jdbcType=VARCHAR} AND A.PCID = E.PCID -->
+    
+    </select>
     
     <!--  
     <update id="updateReview" statementType = "CALLABLE">

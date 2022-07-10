@@ -30,4 +30,7 @@ public class OrderCompleteDTO {
     private String pmcompany;
     private String pcid;
     private String ostatus;
+    private String marketingemail;
+	private String marketingsms;
+	
 }

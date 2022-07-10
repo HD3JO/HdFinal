@@ -92,25 +92,26 @@ public class MemberRestController {
 	public String modify(Model model, Authentication authentication) throws Exception {
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		MemberDTO dto = memberService.selectOneUser(authDTO.getEmail());
-		//System.out.println(dto+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		//String password = dto.getPassword();
-		String phone = dto.getPhone();	//01011112222;
+		String password = dto.getPassword();
+		String phone = dto.getPhone();
 		String hp1 = phone.substring(0, 3);
 		String hp2 = phone.substring(3, 7);
 		String hp3 = phone.substring(7, 11);
+		String marketingemail = dto.getMarketingemail();
+		String marketingsms = dto.getMarketingsms();
 		model.addAttribute("hp1", hp1);
 		model.addAttribute("hp2", hp2);
 		model.addAttribute("hp3", hp3);
-		//model.addAttribute("password", password);
+		model.addAttribute("marketingemail", marketingemail);
+		model.addAttribute("marketingsms", marketingsms);
+		model.addAttribute("password", password);
 		return "modify";
 	}
 	
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> modify(@RequestBody MemberDTO memberDTO) throws Exception {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+memberDTO);
 		memberService.updateMember(memberDTO);
-		memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+memberDTO);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
@@ -128,13 +129,11 @@ public class MemberRestController {
 		
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
-		
+		String pcid = reviewService.reviewCheck(authDTO.getEmail());
 		model.addAttribute("orderList", orderList);
-		
+		model.addAttribute("pcid", pcid);
 		return "myreview";
 	}
-	
-
 	
 	@RequestMapping(value="/secession", method=RequestMethod.POST)
 	public ResponseEntity<String> secession(Authentication authentication) throws Exception{

@@ -13,10 +13,10 @@
 	var reviewDTO = {
 			
 			email : $("#email").text(),
-			pcid : $("#pcid").text(),
 			reviewcontent: $("#reviewcontent").text()
 	};
 	
+	var pcid = $("#pcid").text();
 	
 </script>
 
@@ -107,7 +107,7 @@
 									<tr>
 										<th scope="col">주문 상품정보</th>
 										<th scope="col">배송 상태</th>
-										<th scope="col">작성 상태</th>
+										<th scope="col">작성 여부</th>
 									</tr>
 								</thead>
 
@@ -119,7 +119,7 @@
 									</div>
 									<div th:if="${!#lists.isEmpty(orderList)}">
 										<tr th:each="product : ${orderList}">
-										<th:block th:each="review: ${reviewList}">
+										
 										<td class="pt_list_wrap">
 											<!-- pt_list_all -->
 											
@@ -161,114 +161,26 @@
 											</div> <!-- //Price -->
 										</td>
 										<td class="al_middle">
-											<!-- Price -->
-											<div class="price_wrap" th:if="${review.pcid != product.pcid}">
-												<span th:text="작성가능"></span>
-												<input type="hidden" name="checkZeroPrice" value="795000.0">
-											</div> <!-- //Price -->
-											<div class="price_wrap" th:if="${review.pcid == product.pcid}">
-												<span th:text="작성불가"></span>
-												<input type="hidden" name="checkZeroPrice" value="795000.0">
-											</div> <!-- //Price -->
+											  
+											<div class="price_wrap" th:if="${#strings.isEmpty(pcid)}">
+												<span>작성가능</span>
+											</div> 
+											<div class="price_wrap" th:if="${not #strings.isEmpty(pcid)}">
+												<span>작성불가</span>
+											</div> 
 										</td>
 
 
 										<!-- //pt_list_all-->
-											</th:block>
+											
 										</tr>
 									</div>
+									
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- //Table -->
-					<!-- Table -->
-<!-- 					<div class="review_tab_02" style="display: none;"> -->
-<!-- 						<div class="tblwrap"> -->
-<!-- 							<table -->
-<!-- 								class="tbl_ltype my_review_table review_betterment1905 add_arr190830"> -->
-<!-- 								<caption>내 상품평 목록</caption> -->
-<!-- 								<colgroup> -->
-<!-- 									<col style="width: 100px"> -->
-<!-- 									<col> -->
-<!-- 									<col style="width: 107px"> -->
-<!-- 									<col style="width: 123px"> -->
-<!-- 								</colgroup> -->
-<!-- 								<thead> -->
-<!-- 									<tr> -->
-<!-- 										<th scope="col">작성일</th> -->
-<!-- 										<th scope="col">상품정보</th> -->
-<!-- 										<th scope="col">상품평 수정</th> -->
-<!-- 										<th scope="col">마일리지</th> -->
-<!-- 									</tr> -->
-<!-- 								</thead> -->
-<!-- 								<tbody id="listBody"> -->
-<!-- 								<div th:if="${#lists.isEmpty(reviewedList)}"> -->
-<!-- 								<tr> -->
-<!-- 									<td colspan="4" class="no_data">등록된 상품평이 없습니다. 최초의 상품평을 -->
-<!-- 											등록해 주세요. 등록된 상품평이 없습니다. -->
-<!-- 									</td> -->
-<!-- 								</tr> -->
-<!-- 								</div> -->
-									
-<!-- 								<div th:if="${!#lists.isEmpty(reviewedList)}"> -->
-<!-- 								<tr th:each="review : ${reviewedList}"> -->
-<!-- 								<td class="pt_list_wrap"> -->
-<!-- 									Price -->
-<!-- 									<div class="tlt_wrap"> -->
-<!-- 										<span th:id="reviewdate" th:text="${review.rdate}"></span> -->
-<!-- 									</div> //Price -->
-<!-- 								</td> -->
-<!-- 								<td class="pt_list_wrap"> -->
-<!-- 									pt_list_all -->
-<!-- 									<div class="pt_list_all"> -->
-<!-- 										<a id="productfirst" -->
-<!-- 											 th:href="@{/detail(pcid=${review.pcid})}" -->
-<!-- 											onclick="javascript:void(0);">  -->
-<!-- 											<img th:id="productimg" -->
-<!-- 											th:src="${review.pcimg1}" alt=""> -->
-<!-- 										</a> -->
-<!-- 										<div class="tlt_wrap"> -->
-<!-- 										<a th:id="productsecond" -->
-<!-- 											th:href="@{/detail(pcid=${review.pcid})}" class="basket_tlt" -->
-<!-- 											onclick="javascript:void(0);">  -->
-<!-- 											<span class="tlt" -->
-<!-- 											th:text=${review.bname}></span> -->
-<!-- 											 <span class="sb_tlt" -->
-<!-- 											th:text=${review.pname}> </span> -->
-<!-- 										</a> -->
-
-<!-- 										<p class="color_op"> -->
-
-<!-- 											<span th:id="productcolorcode" -->
-<!-- 												th:text="${review.pccolorcode}"> </span> <span -->
-<!-- 												class="and_line">/</span> <span th:id="productsize" -->
-<!-- 												th:text="${review.psize}"> </span> -->
-<!-- 										</p> -->
-<!-- 									</div> -->
-<!-- 										</div> -->
-<!-- 									</td> -->
-<!-- 								<td class="al_middle"> -->
-<!-- 									Price -->
-<!-- 									<div class="price_wrap"> -->
-<!-- 										<span></span> <input -->
-<!-- 											type="hidden" name="checkZeroPrice" value="795000.0"> -->
-<!-- 									</div> //Price -->
-<!-- 								</td> -->
-<!-- 								<td class="al_middle"> -->
-<!-- 									Price -->
-<!-- 									<div class="price_wrap"> -->
-<!-- 										<span></span> <input type="hidden" name="checkZeroPrice" -->
-<!-- 											value="795000.0"> -->
-<!-- 									</div> //Price -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
-<!-- 						</div> -->
-<!-- 								</tbody> -->
-<!-- 							</table> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<!-- //Table -->
+					
 					<!-- paging -->
 					<div class="paging prPaging" style="display: none;"></div>
 					<!-- //paging -->
