@@ -2,11 +2,13 @@ package com.hyundai.project.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,9 +21,10 @@ import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.product.repository.DrawMapper;
 
 import lombok.extern.log4j.Log4j2;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Component
-@Log4j2
 @Service
 public class DrawSchedulerService {
 	@Autowired
@@ -30,8 +33,9 @@ public class DrawSchedulerService {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	
-	// 당첨자 추첨하는 기능
-	@Scheduled(fixedDelay = 10000)
+	// 당첨자 추첨하고 당첨자에게 문자 전송하는 메서드
+	@Scheduled(cron ="0 0 20 * * SAT")
+	//@Scheduled(fixedDelay = 100000)
 	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();
 			
@@ -90,6 +94,11 @@ public class DrawSchedulerService {
 					 
 					 // 당첨자 오라클DB에 insert
 					 drawMapper.insertWinDraw(winDTO);
+					 
+					 // 당첨자 번호로 문자메세지 전송 
+					 sendWinSms(phone, pname, winDTO.getEmail(), winDTO.getPsid());
+					 
+					 // dto 비워주기, 다음 제품 추첨을 위해
 					 winDTO = new DrawWinDTO();
 					 					 
 					 keysListByPsid.clear();				
@@ -103,4 +112,28 @@ public class DrawSchedulerService {
 		}
 	
 	//메세지 전송하는 기능
+	public void sendWinSms(String phone, String pname, String email, String psid){
+		
+		String api_key = "NCSC2U4IA5IWMONC";
+		String api_secret = "QUK0ICWXGL2KWIS0L3NOVKLDPAJTPJX4";
+		
+		Message winSms = new Message(api_key, api_secret);
+		HashMap<String, String> params = new HashMap<String, String>();
+		
+		params.put("to", phone);
+		params.put("from", "01053495253");
+		params.put("type", "SMS");
+		params.put("text", "<THE HANDSOME DRAW>\n응모에 당쳠되셨습니다!!!\n"
+				+ "localhost/draw/drawOrder?email="+email+"&psid="+psid);
+		params.put("app_version", "test app 1.2");
+
+		try {
+			JSONObject obj = (JSONObject) winSms.send(params);
+			System.out.println(obj.toString());
+		} catch (CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+	}
+
 }

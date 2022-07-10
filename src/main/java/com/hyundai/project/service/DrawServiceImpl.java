@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.DrawDTO;
 import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawRegDTO;
 import com.hyundai.project.dto.DrawWinDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.product.repository.DrawMapper;
 
 @Service
@@ -34,4 +36,35 @@ public class DrawServiceImpl implements DrawService {
 				
 		return drawMapper.updateMileage(drawDTO);
 	}
+
+	@Override
+	public List<DrawWinDTO> getWinList() throws Exception {
+		
+		return drawMapper.getWinList();
+	}
+
+	@Override
+	public int updateRegYn(List<DrawRegDTO> drawRegList) throws Exception {
+		
+		return drawMapper.updateRegYn(drawRegList);
+	}
+
+	@Override
+	public List<DrawListDTO> getDrawListForAdmin() throws Exception {
+		
+		return drawMapper.getDrawListForAdmin();
+	}
+
+	@Override
+	public MemberDTO getWinMember(String email) throws Exception {
+		
+		return drawMapper.getWinMember(email);
+	}
+
+	@Override
+	public int updateOstaus(DrawDTO drawDTO) throws Exception {
+		
+		return drawMapper.updateOstaus(drawDTO);
+	}
+	
 }

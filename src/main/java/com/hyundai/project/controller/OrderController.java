@@ -116,7 +116,7 @@ public class OrderController {
 		messageService.sendMessage(completeList);
 		model.addAttribute("complete", completeList);
 
-		return "/order/orderComplete";
+		return "order/orderComplete";
 	}
 	
 	@GetMapping("/orderStatus")
