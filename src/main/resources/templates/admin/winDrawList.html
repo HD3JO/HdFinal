@@ -40,13 +40,59 @@
 </head>
 
 <body id="page-top">
-	<script type="text/javascript">
-		const data = [];
+	<script type="text/javascript">		
+		let modOstatusList = [];
 		
-		function changeCarousel(idx){
-			//console.log(idx);
-			$('.carousel').hide();
-			$('#carousel'+idx).show();
+		function changeSelect(e){
+			const idx = $(e).attr('idx');	
+			
+			let email = $('#email'+idx).text();
+	     	let psid = $('#psid'+idx).text();	  
+	     	let ostatus = $('#ostatus'+idx).val();
+	     	     
+	        let DrawWinDTO = {
+	        	'email' : email,
+	            'psid' : psid,
+	            'ostatus' : ostatus
+	        }
+	        
+	        modOstatusList.push(DrawWinDTO);
+	        console.log(modOstatusList);
+		}
+
+		function modifyOstatus(){
+			const length = $('.product').length;
+			const header = $("meta[name='_csrf_header']").attr('content');
+	     	const token = $("meta[name='_csrf']").attr('content');          	
+	     	
+	     	console.log(modOstatusList);
+	     	if(modOstatusList.length == 0){
+	     		$('#exampleModalLabel').text('수정한 배송상태가 없습니다.');
+				$('#alertModal').modal();
+				return;
+	     	}
+	     	
+	     	let json = JSON.stringify(modOstatusList);
+	     	console.log(json);
+	     	$.ajax({
+	            type : 'POST',
+	              url : '/drawOstatusUpdate',
+	              data : json,
+	              contentType: 'application/json; charset=utf-8',
+	              dataType: 'text',
+	              beforeSend: function(xhr){
+	                  xhr.setRequestHeader(header, token);
+	              },
+	              success: function(data){
+	            	console.log(data);
+	              	$('#successModal').modal();                              
+	              	modOstatusList = [];
+	              },
+	              error: function(request, status, error){                
+	            	$('#exampleModalLabel').text('배송상태 수정에 실패했습니다.');
+	  	 			$('#alertModal').modal();
+	              }
+	        });
 		}
 </script>
 <style>
@@ -78,6 +124,10 @@ td input {
 				</div>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">당첨 정보 및 배송상태 리스트</h6>
+                            <a href="#;" onclick="modifyOstatus()" class="btn btn-primary">수정</a>
+                        </div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"
@@ -96,26 +146,26 @@ td input {
 
 									<tbody>
 										<tr class="product" th:each="list, status: ${list}">
-											<td><span th:id="'bname'+${status.index}"
+											<td><span th:id="'name'+${status.index}"
 												th:idx="${status.index}" th:text="${list.name}" /></td>
-											<td><span th:id="'bname'+${status.index}"
+											<td><span th:id="'email'+${status.index}"
 												th:idx="${status.index}" th:text="${list.email}" /></td>
-											<td><span th:id="'pid'+${status.index}"
+											<td><span th:id="'pname'+${status.index}"
 												th:idx="${status.index}" th:text="${list.pname}" /></td>
-											<td><span th:id="'pid'+${status.index}"
+											<td><span th:id="'psid'+${status.index}"
 												th:idx="${status.index}" th:text="${list.psid}" /></td>
-											<td><span th:id="'pname'+${status.index}"
+											<td><span th:id="'phone'+${status.index}"
 												th:idx="${status.index}" th:text="${list.phone}" /></td>											
-											<td><span th:id="'pname'+${status.index}"
-												th:idx="${status.index}" th:text="${list.wdate}"/></td>	
-											<td>
+											<td><span th:id="'wdate'+${status.index}"
+												th:idx="${status.index}" th:text="${list.wdate}"/></td>											 
+											<td>												
                                             	<select th:id="'ostatus'+${status.index}" th:idx="${status.index}" name="ostatus" onchange="changeSelect(this)">
-                                            		<option value="주문완료" th:selected="${list.ostatus}=='미입력'">미입력</option>
-                                            		<option value="주문완료" th:selected="${list.ostatus}=='입력완료'">배송지입력완료</option>
-                                            		<option value="배송완료" th:selected="${list.ostatus}=='배송시작'">배송시작</option>
+                                            		<option value="미입력" th:selected="${list.ostatus}=='미입력'">미입력</option>
+                                            		<option value="입력완료" th:selected="${list.ostatus}=='입력완료'">배송지입력완료</option>
+                                            		<option value="배송시작" th:selected="${list.ostatus}=='배송시작'">배송시작</option>
                                             		<option value="배송완료" th:selected="${list.ostatus}=='배송완료'">배송완료</option>                                         		
                                             	</select>
-                                            </td>
+                                            </td>                                           
 										</tr>
 									</tbody>
 								</table>
@@ -123,20 +173,34 @@ td input {
 						</div>
 					</div>
 				</div>
-				<!-- Success Modal-->
-			    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
-			        aria-hidden="true">
-			        <div class="modal-dialog" role="document">
-			            <div class="modal-content">
-			                <div class="modal-header">
-			                    <h5 class="modal-title" id="successModalLabel">수량 모달</h5>
-			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
-			                        <span aria-hidden="true">×</span>
-			                    </button>
-			                </div>
-			        	</div>
-			    	</div>
-				</div>
+				<!-- Fail Modal-->
+				    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				        aria-hidden="true">
+				        <div class="modal-dialog" role="document">
+				            <div class="modal-content">
+				                <div class="modal-header">
+				                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+				                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				                        <span aria-hidden="true">×</span>
+				                    </button>
+				                </div>
+				        	</div>
+				    	</div>
+				    </div>			    
+				    <!-- Success Modal-->
+				    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+				        aria-hidden="true">
+				        <div class="modal-dialog" role="document">
+				            <div class="modal-content">
+				                <div class="modal-header">
+				                    <h5 class="modal-title" id="successModalLabel">배송 상태를 수정하였습니다.</h5>
+				                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+				                        <span aria-hidden="true">×</span>
+				                    </button>
+				                </div>
+				        	</div>
+				    	</div>
+					</div>
 			</div>
 			<!-- End of Main Content -->
 

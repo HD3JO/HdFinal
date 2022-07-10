@@ -25,4 +25,6 @@ public interface DrawService {
 	public MemberDTO getWinMember(String email) throws Exception;
 	
 	public int updateOstaus(DrawDTO drawDTO) throws Exception;
+	
+	public int updateOstatusForAdmin(List<DrawWinDTO> modOstatusList) throws Exception;
 }

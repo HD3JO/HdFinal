@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyundai.project.dto.DrawDTO;
 import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.DrawRegDTO;
+import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.service.DrawService;
 
@@ -128,6 +129,14 @@ public class DrawRestController {
 	public ResponseEntity<String> insertOrder(@RequestBody DrawDTO drawDTO) throws Exception{
 		
 		drawService.updateOstaus(drawDTO);		
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/drawOstatusUpdate")
+	public ResponseEntity<String> drawOstatusUpdate(@RequestBody List<DrawWinDTO> modOstatusList) throws Exception{
+		
+		drawService.updateOstatusForAdmin(modOstatusList);
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

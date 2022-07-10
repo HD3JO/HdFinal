@@ -122,4 +122,13 @@
 		WHERE EMAIL = #{email, jdbcType=VARCHAR}
 		AND PSID = #{psid, jdbcType=VARCHAR}
     </update>
+    
+    <update id="updateOstatusForAdmin" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close=";END;">
+	    	UPDATE USERMANAGER.DRAWS 
+			SET OSTATUS = #{item.ostatus}
+			WHERE EMAIL = #{item.email}
+			AND PSID = #{item.psid}
+		</foreach>
+    </update>
 </mapper>

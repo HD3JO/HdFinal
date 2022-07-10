@@ -3,7 +3,6 @@ package com.hyundai.project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.DrawDTO;
@@ -65,6 +64,12 @@ public class DrawServiceImpl implements DrawService {
 	public int updateOstaus(DrawDTO drawDTO) throws Exception {
 		
 		return drawMapper.updateOstaus(drawDTO);
+	}
+
+	@Override
+	public int updateOstatusForAdmin(List<DrawWinDTO> modOstatusList) throws Exception {
+		
+		return drawMapper.updateOstatusForAdmin(modOstatusList);
 	}
 	
 }
