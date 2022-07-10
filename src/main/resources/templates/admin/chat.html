@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+
+<title>SB Admin 2 - Tables</title>
+
+<!-- Custom fonts for this template -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet" />
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+
+<!-- Custom styles for this template -->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+</head>
+<style>
+.clientMsg{
+	margin-top : 1.5rem;
+	padding : 0.5rem
+}
+.messageBox{
+	overflow:scroll; height: 23rem;
+}
+
+.messageBox::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.messgeBox li{
+	width: 30rem;
+}
+
+</style>
+<body id="page-top">
+	<script type="text/javascript">
+		//chatting start
+		$(document).ready(function(){
+			$("#chatInput").on("keydown",function(key){         
+				if(key.keyCode==13) {           
+					
+					send();
+					
+				}     
+			});
+		});
+
+		const url = window.location.host;
+		const websocket = new WebSocket("ws://"+url+"/ws/chat");
+		websocket.onmessage = onMessage;	//소켓이 메세지를 받을 때 
+		websocket.onopen = onOpen;			//소켓이 생성될때 클라이언트 접속 
+		websocket.onclose = onClose;		//소켓이 닫힐때(클라이언트 접속해제)
+	
+		//on exit chat room
+		function onClose(evt){
+			console.log("close event : " + evt);
+		}
+	
+		//on entering chat room 
+		function onOpen(evt){
+			console.log("open event : " +evt);
+		}
+		
+		function insertMessage(senderId, message){
+			
+			let html = '';
+			if(senderId == 'master'){
+				html += '<li class="d-flex flex-row-reverse"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +'</div> </li><br>';	
+			}else{
+				html += '<li class="d-flex flex-row"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +' </div></li><br>';
+			}
+			
+			$('.messageBox').append(html);
+		}
+	
+		//on message controller
+		function onMessage(msg){
+			const data = JSON.parse(msg.data);	//msg를 받으면 data필드 안에 JSON String으로 정보가 있음 
+			//필요한 정보를 json data에서 추출 
+			const senderId = data.senderId;
+			const message = data.message + ' '+data.time;
+			const newOne = data.newOne;
+			const outOne = data.outOne;
+			
+			console.log(data);
+			
+			//console.log('ddd');
+			if($('#receiverId').text() == senderId || senderId == 'master'){
+				insertMessage(senderId, message);	
+			}else{
+				console.log('dodo');
+				const addData = {
+		    			"message" : message,
+		    			"senderId" : senderId
+		    	}
+				var value = JSON.parse(sessionStorage.getItem(senderId));
+				
+				value.push(addData);
+				console.log(value);
+				sessionStorage.setItem(senderId, JSON.stringify(value));
+			}
+			
+			
+			//$('#chatInput').val('');
+			$('.messageBox').scrollTop($('.messageBox').height()*10);
+			
+			//현재 접속중인 유저들 정보 보여주기 위한 
+			const onlineList = data.onlineList;
+			const set = new Set(onlineList);
+			$(".onlineList").empty();
+			set.forEach(function(e){
+				let html='';
+				html += '<li onclick="activeToggle(\''+e+'\')"><div class="card border-left-primary"><div class="card-body">'+e+'</div></div></li>';
+				$(".onlineList").append(html);
+			})
+			
+		}
+		
+		function activeToggle(e){
+			const receiverId = e;
+			const preReceiverId = $('#receiverId').text();
+			
+			setChatHistory(preReceiverId);
+			$('#receiverId').text(receiverId);
+			$('.messageBox').empty();
+			getChatHistory(receiverId);
+		}
+	
+		//send a message
+		function send(){
+			const message = $('#chatInput').val();
+			console.log(message);
+			
+			//don't send when content is empty
+			//채팅 입력칸이 비어있지 않은 경우에만 정보를 json 형태로 전송 
+			if(message != ""){
+				let msg = {
+						'receiverId' : $('#receiverId').text(),
+						'message' : message 
+				}
+				
+				if(message != null){
+					websocket.send(JSON.stringify(msg));	//websocket handler로 전송(서버로 전송)
+				}
+				$('#chatInput').val('');
+			}
+		}
+		
+		// save chat history
+		 function setChatHistory(name) {
+		    var value = [];
+		    $('.clientMsg').each(function(index, item){
+		    	const message = $(item).text();
+		    	const senderId = $(item).attr('senderId');
+		    	data = {
+		    			"message" : message,
+		    			"senderId" : senderId
+		    	}
+		    	value.push(data);
+		    });
+
+		    sessionStorage.setItem(name, JSON.stringify(value));
+		  };
+		  
+		  //insert pre chat history
+		  function getChatHistory(name){
+			  var data = JSON.parse(sessionStorage.getItem(name));
+			  
+			  if(data != null){
+				  $(data).each(function(index, item){
+					 const message = item.message;
+					 const senderId = item.senderId;
+					 
+					 insertMessage(senderId, message);
+				  });
+			  }
+		  }
+		
+		//chatting end
+
+	</script>
+</style>
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<ul th:replace="admin/slider :: slider"></ul>
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<nav th:replace="admin/topbar :: topbar"></nav>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid h-75">
+					<div class="row h-100">
+						<div class="col-4 border-left-primary card " >
+							<ul style="list-style:none; padding-left:0;" class="onlineList">
+								
+							</ul>
+						</div>
+						
+						<div class="col-8 border-left-primary card">
+							<div id="receiverId" style="display:none;">master</div>
+							<ul class="messageBox" style="overflow:scroll; height: 33rem; list-style:none;">
+								
+							</ul>
+							<input id="chatInput" class="" placeholder="Type your message here..." onclick="send()"/>
+						</div>
+					</div>
+					
+					
+				</div>
+			<!-- End of Main Content -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

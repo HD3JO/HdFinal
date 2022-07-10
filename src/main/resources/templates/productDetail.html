@@ -385,7 +385,7 @@
                                     la.confirmAction = function () {
                                         location.href = '/customLogin';
                                     }
-                                }
+                                }							
                                 
                                 if (pcid == undefined) {
                                     let la = new layerAlert('색상을 선택해주세요.');
@@ -980,7 +980,7 @@
     <!--//상품평 쓰기 팝업 -->
 
 
-    <script text="javascript">
+    <script type="text/javascript">
 
         function mileageInfoView() {//noti 자세히 보기
             $('.mileage_info_wrap1906 .btn_noti_box > span').on('click', function () {
@@ -998,7 +998,25 @@
             });
         }
 		
+        function reviewListMore(e){//상품평 더보기
+        	    if(!$(e).parents('.evaluation_view').hasClass('on')){
+        	        $(e).parents('.evaluation_view').addClass('on');
+        	        /*
+        	        if($(this).parents('.evaluation_view').find('.review_img_cont191216').find('ul').children('li').length > 1){
+        				var thisId = $(this).parents('.evaluation_view').find('.review_img_cont191216').attr('id');
+        				var idx191216 = thisId.replace(/[^0-9]/g,'');
+        				if(!$(this).parents('.evaluation_view').find('.review_img_cont191216').children('div').hasClass('bx-wrapper')){
+        				    reviewImg191216(idx191216);
+        				}
+        			}
+        	        */
+        	    }else{
+        	        $(e).parents('.evaluation_view').removeClass('on');
+        	    }
+        };
+        
         mileageInfoView();
+        reviewListMore();
         
         const modal = document.getElementById("customerReviewDiv");
         const modalWrite = document.getElementById("customerReviewWriteDiv");
@@ -1054,7 +1072,7 @@
                             //리뷰 내 회원 정보 member_info_bottom (선택,  연령,키,체형,상품평)
                             htmlStr += "<div class='member_info_bottom'> <ul>";
 
-
+						
                             if (this.age != undefined || this.height != undefined || this.bodytype != undefined || this.enjoysize != undefined) {
                                 htmlStr += "<li class='choice'> • ";
                                 if (this.age != undefined) {
@@ -1094,14 +1112,30 @@
 
 
                             htmlStr += "</li> </ul> </div>";
-                            //사진 파일이 있는 경우
+                          //사진 파일이 있는 경우
                             if (this.filepath != undefined) {
                                 htmlStr += "<div class='review_represent_img1912'> <img src='";
                                 htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                                htmlStr += `
+                                	<div class="review_img_wrap review_img_cont191216 wlength" id="reviewImg_0">
+                                	<ul class="slides">
+                                		<li>
+                                			<div class="review_img_cont_inner191216">
+                                				<div class="img_wrap">
+                                					<img src="` + this.filepath + `" alt="리뷰 이미지">
+                                				</div>
+                                			</div>
+                                		</li>
+                                	</ul>
+                                </div>
+                                `;
                             }
                             //리뷰 콘텐츠
-                            htmlStr += "<div class=''> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
-                        }
+                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div>";
+                            // + - 버튼
+                            htmlStr += `<div class="review_more_1807"> <a href="javascript:void(0);" onclick="reviewListMore(this);">리뷰 더보기</a></div>`;
+                            htmlStr += "</li>";
+                        	}
                         );
                     }
                     else {
@@ -1256,13 +1290,27 @@
 
 
                             htmlStr += "</li> </ul> </div>";
-                            //사진 파일이 있는 경우
-                            if (this.filepath != undefined) {
-                                htmlStr += "<div class='review_represent_img1912'> <img src='";
-                                htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
-                            }
+                            //사진 파일이 항상 있음
+                            htmlStr += "<div class='review_represent_img1912'> <img src='";
+                            htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                            htmlStr += `
+                            	<div class="review_img_wrap review_img_cont191216 wlength" id="reviewImg_0">
+                            	<ul class="slides">
+                            		<li>
+                            			<div class="review_img_cont_inner191216">
+                            				<div class="img_wrap">
+                            					<img src="` + this.filepath + `" alt="리뷰 이미지">
+                            				</div>
+                            			</div>
+                            		</li>
+                            	</ul>
+                            </div>
+                            `;
                             //리뷰 콘텐츠
-                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
+                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div>";
+                            // + - 버튼
+                            htmlStr += `<div class="review_more_1807"> <a href="javascript:void(0);" onclick="reviewListMore(this);">리뷰 더보기</a></div>`;
+                            htmlStr += "</li>";
                         }
                         );
                     }
@@ -1346,7 +1394,7 @@
                                     if (cnt != 0) {
                                         htmlStr += " / ";
                                     }
-                                    htmlStr += "평소 사이즈 : <span>" + this.enjoysize + "</span>";
+                                    htmlStr += `평소 사이즈 : <span>${this.enjoysize}</span>`;
                                     cnt += 1;
                                 }
                                 htmlStr += " </li> <br> ";
@@ -1359,11 +1407,17 @@
                             htmlStr += "</li> </ul> </div>";
                             //사진 파일이 있는 경우
                             if (this.filepath != undefined) {
-                                htmlStr += "<div class='review_represent_img1912'> <img src='";
-                                htmlStr += this.filepath + "' alt='리뷰 이미지'> </div>";
+                                htmlStr+=`
+                                			<div class='review_represent_img1912'>
+                                				<img src='${this.filepath} alt='리뷰 이미지'>
+                                			</div>
+                                		`;
                             }
-                            //리뷰 콘텐츠
-                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div> </li>";
+                          	//리뷰 콘텐츠
+                            htmlStr += "<div class='review_txt_wrap'> <p class='review_txt'> " + this.reviewcontent + "</p> </div>";
+                            // + - 버튼
+                            htmlStr += `<div class="review_more_1807"> <a href="javascript:void(0);" onclick="reviewListMore(this);">리뷰 더보기</a></div>`;
+                            htmlStr += "</li>";
                         }
                         );
                     }
@@ -1490,8 +1544,9 @@
             let filepath = "";
 
             var file = $('input[name="uploadfile"]').get(0).files[0];
+            console.log('파일아 넘어왔니?' + file);
             var formData = new FormData();
-            formData.append('file', file);
+            formData.append('uploadfile', file);
 
             if (reviewcontent.length < 20 || reviewcontent.length > 200) {
                 layerAlert("상품평을 20자 이상, 200이하 이내로 작성해주세요.");
@@ -1499,10 +1554,8 @@
             }
 			
             
-            
-            /* 기존 업로드 Ajax
             $.ajax({
-                url: "/uploadFile",
+                url: "http://ec2-54-180-37-168.ap-northeast-2.compute.amazonaws.com:3000/upload",
                 type: "POST",
                 async: false,
                 data: formData,
@@ -1510,24 +1563,23 @@
                 processData: false,
                 contentType: false,
                 cache: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
+                
                 success: function (data) {
                     // Handle upload success
-                    // ...
+                    // …
                     console.log('파일 업로드 성공');
                     console.log(data);
-                    filepath = data;
+                    filepath = data[0].fileName;
                 },
                 error: function () {
                     // Handle upload error
-                    // ...
+                    // …
                     console.log('파일 업로드 실패');
                 }
             });
             //추가를 위한 주석이다.
-			*/
+            //추가를 위한 주석이다.
+			
             
             console.log('파일경로는' + filepath);
             console.log($('#purchaseCode').val());
@@ -1541,10 +1593,8 @@
             console.log(bodytype);
             console.log('리뷰 길이' + reviewcontent.length);
             console.log('컬러코드 ' + $('#purchaseColorName').val());
-
-
-
-
+			
+			if(filepath !== "") filepath = 'http://ec2-54-180-37-168.ap-northeast-2.compute.amazonaws.com:3000/image/view?uuid='+filepath;
 
             var object = {
                 'email': email,

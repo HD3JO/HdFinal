@@ -18,6 +18,10 @@ public interface ReviewMapper {
 
 	public List<PurchasedProductDTO> isPurchased(PurchasedProductDTO purchasedProductDTO);
 	
+	public int reviewcount(String email);
+	
+	public String reviewCheck(String email);
+	
 	/*
 	public List<ReviewDTO> selectReview(ReviewDTO reviewDTO) throws SQLException;
 	

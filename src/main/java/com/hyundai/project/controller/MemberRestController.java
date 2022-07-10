@@ -23,10 +23,6 @@ import com.hyundai.project.service.MemberService;
 import com.hyundai.project.service.OrderService;
 import com.hyundai.project.service.ReviewService;
 
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
-
-//@Slf4j
 @Controller
 @RequestMapping("/member/*")
 public class MemberRestController {
@@ -36,8 +32,8 @@ public class MemberRestController {
 	private OrderService orderService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-//	@Autowired
-//	private ReviewService reviewService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@RequestMapping(value="/isduplemail", method=RequestMethod.POST)
 	@ResponseBody
@@ -81,9 +77,14 @@ public class MemberRestController {
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		MemberDTO memberDTO = memberService.selectOneUser(authDTO.getEmail());
 		List<OrderListDTO> orderList = orderService.selectOrderListByOneMonth(authDTO.getEmail());
+		int reviewcount = reviewService.reviewcount(authDTO.getEmail());
 		String name = memberDTO.getName();
+		String grade = memberDTO.getGrade();
+		model.addAttribute("reviewcount", reviewcount);
+		model.addAttribute("memberDTO", memberDTO);
 		model.addAttribute("name", name);
 		model.addAttribute("orderList", orderList);
+		model.addAttribute("grade", grade);
 		return "mypage";
 	}
 	
@@ -91,21 +92,27 @@ public class MemberRestController {
 	public String modify(Model model, Authentication authentication) throws Exception {
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		MemberDTO dto = memberService.selectOneUser(authDTO.getEmail());
-		String phone = dto.getPhone();	//01011112222;
+		String password = dto.getPassword();
+		String phone = dto.getPhone();
 		String hp1 = phone.substring(0, 3);
 		String hp2 = phone.substring(3, 7);
 		String hp3 = phone.substring(7, 11);
+		String marketingemail = dto.getMarketingemail();
+		String marketingsms = dto.getMarketingsms();
 		model.addAttribute("hp1", hp1);
 		model.addAttribute("hp2", hp2);
 		model.addAttribute("hp3", hp3);
+		model.addAttribute("marketingemail", marketingemail);
+		model.addAttribute("marketingsms", marketingsms);
+		model.addAttribute("password", password);
 		return "modify";
 	}
 	
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> modify(@RequestBody MemberDTO memberDTO) throws Exception {
-		System.out.println(memberDTO);
-		memberDTO = memberService.updateMember(memberDTO);
+		memberService.updateMember(memberDTO);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+memberDTO);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
@@ -117,35 +124,15 @@ public class MemberRestController {
 		return "myorder";
 	}
 	
-	@RequestMapping(value="/mygrade", method=RequestMethod.GET)
-	public String mygrade() {
-		return "mygrade";
-	}
-	
 	@RequestMapping(value="/myreview", method=RequestMethod.GET)
 	public String myreview(Model model, Authentication authentication) throws Exception {
-		System.out.println("myReviewCalled");
+		
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
-		//List<OrderReviewedDTO> reviewedList = reviewService.mywroteReview(authDTO.getEmail());
-		System.out.println(orderList.size() + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		
+		String pcid = reviewService.reviewCheck(authDTO.getEmail());
 		model.addAttribute("orderList", orderList);
-		//model.addAttribute("reviewedList", reviewedList);
-		System.out.println(orderList);
+		model.addAttribute("pcid", pcid);
 		return "myreview";
-	}
-	
-//	@RequestMapping(value="/mywroteReview", method=RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseEntity<List<OrderReviewedDTO>> mywroteReview(@RequestBody ReviewDTO reviewDTO) throws Exception{
-//		List<OrderReviewedDTO> reviewedList = reviewService.mywroteReview(reviewDTO.getEmail());
-//		return new ResponseEntity<List<OrderReviewedDTO>>(reviewedList, HttpStatus.OK);
-//	}
-	
-	@RequestMapping(value="/mypoint", method=RequestMethod.GET)
-	public String mypoint() {
-		return "mypoint";
 	}
 	
 	@RequestMapping(value="/secession", method=RequestMethod.POST)
@@ -156,4 +143,13 @@ public class MemberRestController {
 		
 		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 	}
+	
+//	@RequestMapping(value="/pwChange", method=RequestMethod.POST)
+//	@ResponseBody
+//	public String pwChange(String email, String password) throws Exception{
+//		String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
+//		memberService.pwChange(email, hashedPw);
+//		
+//		return "modify";
+//	}
 }

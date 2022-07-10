@@ -2,6 +2,9 @@ package com.hyundai.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hyundai.project.dto.AdminOrderDTO;
 import com.hyundai.project.dto.AdminProductDTO;
+import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.OrderDTO;
+import com.hyundai.project.dto.OrderCompleteDTO;
+import com.hyundai.project.dto.OrderItemDTO;
+import com.hyundai.project.dto.PaymentMethodDTO;
 import com.hyundai.project.dto.ProductCommonDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductStockDTO;
+import com.hyundai.project.product.repository.DrawMapper;
+import com.hyundai.project.service.AdminMainService;
+import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminProductService;
 import com.hyundai.project.service.MemberService;
+import com.hyundai.project.user.repository.OrderMapper;
+import com.hyundai.project.user.repository.PaymentMethodMapper;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,10 +41,28 @@ public class AdminController {
 	private MemberService memberService;
 	@Autowired
 	private AdminProductService adminProductService;
+	@Autowired
+	private AdminMainService adminMainService;
+	@Autowired
+	private AdminOrderService adminOrderService;
+	@Autowired
+	private PaymentMethodMapper paymentMethodMapper;
+	@Autowired
+	private OrderMapper orderMapper;
+	@Autowired
+	private DrawMapper drawMapper;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
+		int totalusercount = adminMainService.getTotalUser();
+		int totalordercount = adminMainService.getMonthOrderCount();
+		int totalproductcount = adminMainService.getTotalProductQty();
+		int totalproductprice = adminMainService.getMonthOrderPrice();
+		model.addAttribute("totalproductprice", totalproductprice);
+		model.addAttribute("totalproductcount", totalproductcount);
+		model.addAttribute("totalordercount", totalordercount);
+		model.addAttribute("totalusercount", totalusercount);
 		return "admin/index";
 	}
 	
@@ -116,6 +149,65 @@ public class AdminController {
 		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/chat", method=RequestMethod.GET)
+	public String chat(HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		session.setAttribute("sessionId", "master");
+		
+		return "admin/chat";
+	}
+	
+	@RequestMapping(value="/order", method=RequestMethod.GET)
+	public String order(Model model) throws Exception{
+		List<PaymentMethodDTO> list = paymentMethodMapper.selectPaymentMethod(new PaymentMethodDTO());
+		for(PaymentMethodDTO a : list) {
+			System.out.println(a+" @@@@@");
+		}
+		model.addAttribute("paymentlist", list);
+		return "admin/order";
+	}
+	
+	@RequestMapping(value="/order", method=RequestMethod.POST)
+	public String orderPost(AdminOrderDTO adminOrderDTO, Model model) throws Exception{
+		System.out.println(adminOrderDTO);
+		List<AdminOrderDTO> list = adminOrderService.getOrderList(adminOrderDTO);
+		for(AdminOrderDTO a : list) {
+			System.out.println(a + "@@@@@");
+		}
+		model.addAttribute("orderlist", list);
+		
+		//검색input값들을 위한 모델값들
+		model.addAttribute("oreceiver", adminOrderDTO.getOreceiver());
+		model.addAttribute("email", adminOrderDTO.getEmail());
+		model.addAttribute("ostatus", adminOrderDTO.getOstatus());
+		model.addAttribute("pmcode", adminOrderDTO.getPmcode());
+		model.addAttribute("startdate", adminOrderDTO.getStartdate());
+		model.addAttribute("enddate", adminOrderDTO.getEnddate());
+		model.addAttribute("pmcode", adminOrderDTO.getPmcode());
+		
+		List<PaymentMethodDTO> paymentlist = paymentMethodMapper.selectPaymentMethod(new PaymentMethodDTO());
+		
+		model.addAttribute("paymentlist", paymentlist);
+		
+		
+		return "admin/order";
+	}
+	
+	@RequestMapping(value="/modifyOrder", method=RequestMethod.POST)
+	public ResponseEntity<String> modifyOrder(@RequestBody List<AdminOrderDTO> adminOrderDTOList) throws Exception{
+		System.out.println(adminOrderDTOList);
+		adminOrderService.updateOrder(adminOrderDTOList);
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getOrderItem", method=RequestMethod.POST)
+	public ResponseEntity<List<OrderCompleteDTO>> getOrderItem(@RequestBody AdminOrderDTO adminOrderDTO) throws Exception{
+		System.out.println(adminOrderDTO.getOid());
+		List<OrderCompleteDTO> list = orderMapper.getOrderComplete(Integer.toString(adminOrderDTO.getOid()));
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 
 	@RequestMapping(value="/utilities-animation", method=RequestMethod.GET)
 	public String utilitiesAnimation() {
@@ -132,5 +224,22 @@ public class AdminController {
 	@RequestMapping(value="/utilities-other", method=RequestMethod.GET)
 	public String utilitiesOther() {
 		return "admin/utilities-other";
+	}
+	@RequestMapping(value="/drawProduct", method=RequestMethod.GET)
+	public String drawProduct(Model model) throws Exception{
+		List<DrawListDTO> drawListDTO = drawMapper.getDrawListForAdmin();
+		
+		model.addAttribute("drawList", drawListDTO);
+		
+		return "admin/drawProduct";
+	}
+	@RequestMapping(value="/winDrawList", method=RequestMethod.GET)
+	public String winDrawList(Model model) throws Exception{	
+		
+		List<DrawWinDTO> winList = drawMapper.getWinList();
+		
+		model.addAttribute("list", winList);
+		
+		return "admin/winDrawList";
 	}
 }

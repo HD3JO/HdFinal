@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		orderMapper.updateMileage(orderDTO);
+		orderMapper.updateStock(orderItemList);
 		
 		if(rows > 0) {
 			cartMapper.selectDelete(cartList);

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=1, target-densitydpi=medium-dpi">
+<meta property="og:title" content="더한섬닷컴 | THE HANDSOME.COM">
+<meta property="og:image" content="http://s3.ap-northeast-2.amazonaws.com/cdn.thehandsome.com-kr/pc/210510_logo/%E3%84%B9%EB%A1%9C%EA%B3%A0.png">
+<link rel="shortcut icon" href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/jquery-ui.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/brand.css" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/layout.css?20220331" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/popup.css?20210225" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/common.css?20220401" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/font_443.css" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/contents.css?20220221" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/main_201903.css" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/swiper.css" media="all">
+<link rel="stylesheet" type="text/css" href="/_ui/desktop/common/css/common.css" media="all">
+<script>
+var arkQuery = $.noConflict(true);
+</script>
+<style>
+table {width:100%;border-collapse: separate; border-spacing: 50px;}
+tbody tr   { box-shadow: 0 1px 10px #000000; }
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.tbl_ltype {
+    border-top: 50px solid #414040;
+}
+
+.tbl_ltype th {
+    padding: 15px;
+    color: #222;
+    line-height: 14px;
+    text-align: center;
+    background: #f5f5f5;
+}
+
+</style>
+</head>
+<body>
+<table style="width:760px;padding:60px 20px 30px;margin:0 auto; border-spacing: 0 30px; border-collapse: separate;" border="0" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td style="border:0;padding:0;margin:0">
+				<table style="width:760px;padding:0;margin:0" border="0" cellpadding="0" cellspacing="0">
+					<colgroup>
+						<col style="width:380px">
+						<col style="width:380px">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td style="border:0;padding:0 0 5px">
+								<a href="http://localhost:80/main" style="border:0;padding:0 0 5px;margin:0" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.thehandsome.com&amp;source=gmail&amp;ust=1657247980877000&amp;usg=AOvVaw1ORlcS50EIvbzEaA6ZsOK7">
+								<img src="https://ci5.googleusercontent.com/proxy/X5B6mn8H3_MGqtKZlWDClYuVuxSy6HRc5spBA_THHbq91e9cmv-D07cAjtXuhdvI_Y-bOkVAy96NGuHw3mVYt0qBbgnoDp8JmCLPyWgvp9EbV_a5pfs=s0-d-e1-ft#http://www.thehandsome.com/_ui/desktop/common/images/email/logo.gif" alt="thehandsome.com" border="0" class="CToWUd">
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- <hr width="760px"> -->
+			</td>
+		</tr>
+
+		<tr>
+			<td style="color:#222;font-size:28px;line-height:40px;font-family:Malgun Gothic,Dotum,sans-serif;font-weight:bold;border:0;padding:50px 0 10px;margin:0">주문 완료 안내</td>
+		</tr>
+		<tr>
+			<td style="color:#222;font-size:14px;line-height:20px;font-family:'MalgunSemilight',sans-serif;font-weight:lighter;border:0;padding:15px 0 0;line-height:1.7em">
+			고객님, 안녕하십니까? 더<span class="il">한섬</span>닷컴을 이용해주셔서 감사합니다.<br>
+			더<span class="il">한섬</span>닷컴 고객님의 주문 완료 내용을 다음과 같이 안내드립니다.<br>
+			<!--  <a href='http://localhost:80/order/orderStatus?oid=" + completeList.get(0).getOid() +"'></a><br> -->
+			</td>
+		</tr>
+		<tr>	
+			<td>
+			<div class="sub_container">
+						<div id="bodyWrap">
+							<!--  <h3 class="cnts_title">
+								<span id="menuTitle" th:text="'고객님의 배송상태는 ' +${orderList[0].ostatus}+' 입니다.'"></span>
+							</h3>-->
+							<div class="tblwrap lncl1812">
+								<!-- 클래스추가 181204 -->
+								<table class="tbl_ltype review_betterment1905" style="border-top: 1px solid #414040; border-color: #808080;">
+									<colgroup class="interval1812">
+										<!-- 수정 181204 -->
+										<col style="width: 90px">
+										<col style="width: 400px">
+										<col style="width: 80px">
+										<col style="width: 100px">
+										<col style="width: 100px">
+									</colgroup>
+									<thead style="position: sticky; margin-right: 10px; word-break:break-all">
+										<tr>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #f5f5f5;">주문번호<!-- 주문번호 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">상품정보<!-- 상품정보 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">수량<!-- 수량 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5;">판매가<!-- 판매가 --></th>
+											<th scope="col" style="padding: 15px;color: #222;line-height: 14px;text-align: center;background: #f5f5f5; border-left: 1px solid #f5f5f5; border-bottom: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5;">주문상태<!-- 주문상태 --></th>
+										</tr>
+									</thead>
+									<tbody id="listBody">
+											<tr th:each="order : ${orderList}">
+												<td class="pt_list_wrap" style="text-align: center; border-bottom: 1px solid #e5e5e5;">
+													<div class="price_wrap">
+														<span th:text="${order.oid}"></span>
+													</div> 
+												</td>
+												<td class="pt_list_wrap" style="border-bottom: 1px solid #e5e5e5;" >
+													<!-- pt_list_all -->
+													<div class="pt_list_all">
+														<a id="productfirst" onclick="javascript:void(0);"> 
+															<img th:id="productimg" th:src="${order.pcimg1}" alt="" th:width="85" th:height="85" style="float: left"><!-- th:href="@{/detail(pcid=${order.psid})}"  -->
+														</a>
+														
+													<div class="tlt_wrap" style="padding-left:100px">
+															
+															<a th:id="productsecond" class="basket_tlt" onclick="javascript:void(0);"> <!--  th:href="@{/detail(pcid=${order.pcid})}" -->
+																<span class="tlt" th:text=${order.bname}></span> 
+																<span class="sb_tlt" th:text=${order.pname}></span>
+															</a>
+															
+															<p class="color_op">
+																<span th:id="productcolorcode" th:text="${order.pccolorcode}"> </span> 
+																<span class="and_line">/</span> <span th:id="productsize" th:text="${order.psize}"> </span>
+															</p>
+														</div>
+													</div>
+												</td>
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
+													<!-- Price -->
+													<div class="price_wrap">
+														<span th:text="${order.oicount}"></span> 
+														<input type="hidden" name="checkZeroPrice" value="795000.0">
+													</div> <!-- //Price -->
+												</td>
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
+													<!-- Price -->
+													<div class="price_wrap">
+														<span th:text="'₩'+${#numbers.formatInteger(order.pcprice,3,'COMMA')}"></span>
+														<input type="hidden" name="checkZeroPrice" value="795000.0">
+													</div> <!-- //Price -->
+												</td>
+												<td class="al_middle" style="text-align: center; border-left: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
+
+													<div class="price_wrap">
+														<span th:text="${order.ostatus}"></span> 
+														<input type="hidden" name="checkZeroPrice" value="795000.0">
+													</div>
+												</td>
+											</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+<!-- 		<tr> -->
+<!-- 			<td style="height:50px;border:0;padding:0;margin:0"></td> -->
+<!-- 		</tr> -->
+	</tbody>
+</table>
+</body>
+</html>

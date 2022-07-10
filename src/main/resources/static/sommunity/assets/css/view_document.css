@@ -1,0 +1,564 @@
+@charset "utf-8";
+
+/* view document 
+-------------------------------------------------------------------------------------------------------- */
+.xet-boardView {
+	margin-bottom: 30px;
+}
+.xet-boardView .xet-boardReadWrp {
+	margin-bottom: 20px;
+}
+.xet-boardView .boardReadHeader {
+	margin:0; 
+	padding:0;  
+	color: #777;
+}
+
+/* view normal style */
+.xet-boardView .boardReadHeader .boardReadSubject { 
+	padding: 0;
+	margin: 10px 0; 
+	word-break: keep-all; 
+}
+.xet-boardView .boardReadHeader .boardReadSubject a.subject { 
+	font-size: 24px; 
+	line-height:150%; 
+	font-weight:bold; 
+	color:#333;
+}
+.xet-boardView .boardReadHeader .boardReadSubject a.category {
+	margin-right:4px; 
+	font-size:18px; 
+	color:#2980b9;
+}
+.xet-boardView .boardReadHeader .boardReadInfo {
+	margin-bottom: 10px; 
+	padding: 15px;
+	*zoom:1; 
+	color: #777;
+	font-size: 12px;
+	border-radius: 3px;
+	overflow: hidden;
+	border:1px solid #e1e1e1;
+	background-color: #f9f9f9;
+}
+.xet-boardView .boardReadHeader .boardReadInfo:after { 
+	content:""; display:block; clear:both; 
+}
+.xet-boardView .boardReadHeader .boardReadInfo .userWrp {
+	float: left;
+}
+.xet-boardView .boardReadHeader .boardReadInfo span { 
+	display: inline-block;
+	white-space: nowrap;
+	margin: 0 10px 0 0;
+}
+.xet-boardView .boardReadHeader .boardReadInfo .countWrp {
+	float: right;
+}
+.xet-boardView .boardReadHeader .boardReadInfo .countWrp span {
+	margin: 0 0 0 10px;	
+}
+.xet-boardView .boardReadHeader .boardReadInfo strong,
+.xet-boardView .boardReadHeader .boardReadInfo a {
+	display:inline-block;
+	font-weight: normal;
+	color: #777;
+}
+
+
+/* 확장 변수 출력 */
+.xet-boardView .extraVarsView {
+	margin: 10px 0;
+	padding: 0 15px;
+	border-radius: 3px;
+	overflow: hidden;
+	border:1px solid #e1e1e1;
+	background-color: #f9f9f9;
+}
+.xet-boardView .extraVarsView>ul { 
+	list-style: none;
+	margin: 0; 
+	padding: 0;	
+}
+.xet-boardView .extraVarsView>ul>li {
+	margin: 0;
+	padding: 15px 0;
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+	border-bottom:1px solid #e1e1e1;
+}
+.xet-boardView .extraVarsView>ul>li:last-child {
+	border-bottom: 0;
+}
+.xet-boardView .extraVarsView .extraVarsItem { 
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+}
+.xet-boardView .extraVarsView .extraVarsName {
+	display: inline-block;
+	vertical-align: middle;
+	position: absolute;
+	left: 0;
+	width: 160px;
+	font-weight: 700;
+}
+.xet-boardView .extraVarsView .extraVarsValue {
+	margin-left: 160px;
+}
+.xet-boardView .extraVarsView .extraVarsValue a {
+	color: #555;
+}
+
+
+	
+
+	/* 본문 */
+.xet-boardView .boardReadBody { 
+	margin: 20px 0; 
+	padding: 0; 
+	word-break: break-all; 
+}
+.xet-boardView .boardReadBody .btn_wrp {
+	margin: 0;
+	text-align: right;
+}
+
+.rx_content,
+.xe_content {
+	word-break: keep-all; 
+	font-size: 14px !important;
+}
+
+/* (이 게시물을, 이 댓글을) */
+.document_popup_menu {
+	padding: 10px 0;
+}
+.document_popup_menu a { 
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px; 
+	text-decoration:none;
+	font-weight: bold; 
+	color: #777;
+}
+
+/* 팝업 메뉴 */
+#popup_menu_area { 
+	margin:0;
+	padding:0; 
+	outline: 0;
+	font-size: 14px;
+	background-color: #fff; 
+	min-width: 100px;
+	box-shadow: 0 0 6px rgba(0,0,0,.3);
+}
+#popup_menu_area ul { 
+	margin:0; 
+	padding: 8px;
+	list-style:none; 
+}
+#popup_menu_area li a {
+	font-size: 14px;
+	padding: 4px;
+	color:#777;
+}
+#popup_menu_area li a:hover {
+	color:#fff; 
+}
+
+	/* 서명 */
+.xet-boardView .boardReadFooter .memberSignature {
+	position:relative;
+	padding:15px;
+	margin-bottom: 10px;
+	overflow:hidden;
+	border:1px solid #e1e1e1;
+	background-color: #f9f9f9;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-o-border-radius: 4px;
+}
+.xet-boardView .boardReadFooter .memberSignature .profile { 
+	margin:0 20px 0 0;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+}
+.xet-boardView .boardReadFooter .memberSignature .profile_text { 
+	overflow:hidden;
+	margin:0;
+	color:#777;
+}
+.xet-boardView .boardReadFooter .memberSignature .profile_text p {
+	margin: 0;
+}
+
+	/* 첨부파일 (본문,댓글) */
+.xet-boardView .attachedFileWrp {
+	margin-top: 15px;
+}
+.xet-boardView .attachedFile { 
+	margin: 0;
+	padding: 0;
+	clear:both; 
+}
+.xet-boardView .attachedFile dt i { 
+	margin:0; 
+	padding:0; 
+	vertical-align: middle;
+}
+.xet-boardView .attachedFile dt .fileToggle { 
+	border:0; 
+	margin:0; 
+	padding:0; 
+	overflow:visible;
+	cursor:pointer; 
+	vertical-align: middle;
+	background:none;
+	color:#777;
+}
+.xet-boardView .attachedFile dd { 
+	position:relative;
+	display:none; 
+	padding: 10px 0; 
+	margin: 5px 0 0; 
+}
+.xet-boardView .attachedFile.open dd {
+	display:block; 
+}
+.xet-boardView .attachedFile ul.files { 
+	position:relative; 
+	margin:0; 
+	padding:0; 
+	clear:both;
+	list-style:none; 
+	text-align:left; 
+}
+.xet-boardView .attachedFile ul.files * { 
+	display:inline-block;
+	*display:inline; 
+	padding:0;
+	margin:0; 
+	font-size: 12px; 
+}
+.xet-boardView .attachedFile ul.files li { 
+	position:relative; 
+	margin:0 10px 0 0;
+}
+.xet-boardView .attachedFile ul.files a { 
+	text-decoration:none !important; 
+	margin-right: 10px; 
+	color:#777;
+}
+.xet-boardView .attachedFile ul.files a .bubble {
+	display:none; 
+	z-index:100; 
+	position:absolute;
+	top:-20px; 
+	left:0; 
+	padding: 4px 8px;
+	white-space:nowrap; 
+	border-radius: 4px;
+	border:1px solid #e1e1e1; 
+	background-color: #f9f9f9;
+}
+.xet-boardView .attachedFile ul.files a:hover .bubble,
+.xet-boardView .attachedFile ul.files a:active .bubble,
+.xet-boardView .attachedFile ul.files a:focus .bubble { 
+	display:block; 
+	color:#ff9900; 
+}
+
+	
+	/* 태그 */
+.xet-boardView .tagListWrp { 
+	margin-top: 15px;
+}
+.xet-boardView .tagListWrp .tag { 
+	margin:0;
+	padding: 0; 
+	clear:both; 
+}
+.xet-boardView .tagListWrp .tag * { 
+	display:inline; 
+	margin:0; 
+	padding:0; 
+	vertical-align:middle;
+}
+.xet-boardView .tagListWrp .tag dt { }
+.xet-boardView .tagListWrp .tag dd { 
+	margin-right:5px; 
+}
+.xet-boardView .tagListWrp .tag dd a { 
+	font-size: 14px;
+	color: #777;
+}
+
+	/* 엮인글 */
+.xet-boardView .trackbackURLWrp { 
+	margin-top: 15px;
+}
+.xet-boardView .trackbackURLWrp .trackbackURL { 
+	margin: 0;
+	padding: 0; 
+	clear:both; 
+}
+.xet-boardView .trackbackURLWrp .trackbackURL * { 
+	display:inline; 
+	margin:0;
+	padding:0;
+}
+.xet-boardView .trackbackURLWrp .trackbackURL dt { 
+	margin-right:5px; 
+}
+.xet-boardView .trackbackURLWrp .trackbackURL dd { 
+	text-decoration:none;
+}
+.xet-boardView .trackbackURLWrp .trackbackURL a { 
+	text-decoration:none;
+	color: #777;
+}
+
+
+
+/* comment
+-------------------------------------------------------------------------------------------------------- */
+.xet-boardView .feedbackList { 
+	position:relative;
+	padding:0; 
+	margin: 0; 
+}
+
+	/* 엮인글 수, 댓글 수 */
+.xet-boardView .feedbackList .feedbackHeader {
+	margin: 0; 
+	padding: 0 0 10px; 
+	border-bottom: 1px solid #e1e1e1;
+}
+.xet-boardView .feedbackList .feedbackHeader a {}
+.xet-boardView .feedbackList .feedbackHeader em { 
+	font-style: normal;
+}
+
+	/* 엮인글 목록 */
+#trackback {
+	margin-bottom: 20px;
+}
+.xet-boardView .feedbackList .trackbackList {
+	position:relative; 
+	margin:0;
+	padding:0; 
+	color: #777;
+}
+.xet-boardView .feedbackList .trackbackList .trackbackURL {
+	margin:0; 
+	padding:0; 
+}
+.xet-boardView .feedbackList .trackbackList a { 
+	font-size: 14px; 
+	color: #777; 
+}
+.xet-boardView .feedbackList .trackbackList .btn-wrp {
+	text-align: right;
+}
+
+
+	/* 댓글 목록 */
+.xet-boardView .feedbackList .replyList { 
+	clear:both; 
+	margin:0; 
+	padding:0;
+}
+.xet-boardView .feedbackList .item { 
+	position:relative; 
+	margin: 0;
+	padding: 15px 0;
+	border-bottom: 1px dotted #e1e1e1;
+	*zoom:1; 
+	 transition:all 0.3s ease-in;
+	-moz-transition:all 0.3s ease-in;
+	-webkit-transition:all 0.3s ease-in;	
+} 
+.xet-boardView .feedbackList .item:last-child {
+	border-bottom: 0;
+}
+.xet-boardView .feedbackList.form .item { 
+	padding: 15px;
+	border: 1px solid #e1e1e1;
+} 
+.xet-boardView .feedbackList .item:after {
+	content:""; 
+	display:block; 
+	clear:both; 
+}
+.xet-boardView .feedbackList .item .indent { 
+	position:relative; 
+	margin:0; 
+	padding:0; 
+	*zoom:1;
+}
+.xet-boardView .feedbackList .item .indent:after { 
+	content:""; 
+	display:block; 
+	clear:both;
+}
+.xet-boardView .feedbackList .item.itemReply .indent { 
+	padding-left: 15px;
+	background: url(../img/common/reply.svg) no-repeat left top;
+	background-size: 12px;
+}
+	
+
+
+
+/* 댓글 작성자 정보 */
+.xet-boardView .feedbackList .item .itemAside {
+	position:relative; 
+	float:left;
+	overflow:hidden; 
+	margin:0; 
+	padding:0; 
+	*zoom:1; 
+	text-align:center;
+	z-index:2;
+
+}
+.xet-boardView .feedbackList .item .itemAside img.profile {
+	width: 50px;
+	vertical-align:top;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+}
+
+	
+/* 댓글 내용 부분 */
+.xet-boardView .feedbackList .item .itemContent { 
+	position:relative; 
+	overflow:hidden;  
+	margin:0; 
+	padding:0 0 0 15px; 
+}
+.xet-boardView .feedbackList .item .itemContent .meta { 
+	margin: 0; 
+	white-space: normal;
+	vertical-align: middle;
+	font-size: 12px;
+	color: #777;
+}
+.xet-boardView .feedbackList .item .itemContent .meta a {
+	white-space: nowrap;
+	color: #777;
+}
+.xet-boardView .feedbackList .item .itemContent .meta>span {
+	margin-right: 10px;
+}
+
+/* 첨부 파일 */
+.xet-boardView .feedbackList .item .itemContent .attachedFile { 
+	border:0; 
+}
+
+
+/* 댓글 옵션 버튼 부분 */
+.xet-boardView .feedbackList .itemContent .option { 
+	position:relative; 
+	margin: 0; 
+	padding:0;
+	list-style:none; 
+	white-space:nowrap; 
+	*zoom:1;
+}
+.xet-boardView .feedbackList .itemContent .option li { 
+	position:relative;
+	float: left;
+	display:inline; 
+	padding:0;
+}
+.xet-boardView .feedbackList .itemContent .option li.wouldYou a { 
+	font-size:11px;
+	padding:0;
+	color:#777;
+}
+.xet-boardView .feedbackList .itemContent .option li a { 
+	text-decoration:none;
+	color:#777;
+}
+
+/* Editor */
+
+/* Editor Option */
+.editorOption {
+	margin: 0; 
+}
+.editorOption * { 
+	vertical-align:middle;
+}
+.editorOption select { 
+	margin-right:10px; 
+}
+
+
+
+/* responsive 
+-------------------------------------------------------------------------------------------------------- */
+@media (max-width: 321px) {
+	.xet-boardView .boardReadHeader .boardReadInfo .countWrp {
+		float: left;
+		width: 100%;
+		margin-top: 10px;
+	}
+	.xet-boardView .boardReadHeader .boardReadInfo .countWrp span {
+		margin: 0 10px 0 0;
+	}
+
+
+}
+
+@media (max-width: 767px) {	
+	.xet-boardView .boardReadHeader .boardReadSubject a.subject { 
+		font-size:18px; 
+	}	
+	.xet-boardView .extraVarsView>ul>li {
+		padding: 10px 0;
+	}
+	.xet-boardView .extraVarsView .extraVarsName {
+		position: relative;
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.xet-boardView .extraVarsView .extraVarsValue {
+		margin-left: 0;
+	}
+	.xet-boardView .feedbackList .itemContent .option li a>span {
+		display: none
+	}
+			
+}
+@media (min-width: 992px) {
+	.xet-boardView .xet-boardReadWrp {
+		margin-bottom: 40px;
+	}
+	.xet-boardView .feedbackList .option-wrp {
+		opacity: 0;
+		visibility: hidden;
+		transition:all 0.1s ease-in;
+		-moz-transition:all 0.1s ease-in;
+		-webkit-transition:all 0.1s ease-in;	
+	}
+	.xet-boardView .feedbackList .item:hover .option-wrp {
+		opacity: 1;
+		visibility: visible
+	}
+}

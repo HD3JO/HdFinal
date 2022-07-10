@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- default header name is X-CSRF-TOKEN -->
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <title>SB Admin 2 - Tables</title>
+
+    <!-- Custom fonts for this template -->
+     <link
+	  href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	  rel="stylesheet"
+	/>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+   
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body id="page-top">
+	<script>
+	const modifyOrderMap = new Map();
+	
+	function changeSelect(e){
+		const idx = $(e).attr('idx');
+		const oid = $('#oid'+idx).text();
+		const modOstatus = $('#ostatus'+idx).val();
+		console.log(oid);
+		
+		modifyOrderMapCheck(oid,modOstatus);
+		
+		const ostatus = $(e).val();
+		console.log(ostatus);
+		
+		modifyOrderMap.get(oid).ostatus = $(e).val();
+		
+	}
+	
+	//map에 이메일 체크해서 값 처리하는 함수 
+	function modifyOrderMapCheck(modOid, modOstatus){
+		//modifyMemberMap에 email이 존재할 경우와 아닐 경우 나눠서 체크
+        if(modifyOrderMap.get(modOid)!= undefined){
+        	console.log('oid 존재 ');
+        	
+        }else{
+        	//이메일이 존재하지 않음
+        	console.log('oid 존재하지 않음 새로운 map 생성');
+        	modifyOrderMap.set(modOid, { oid : modOid, ostatus:modOstatus});
+        }
+	}
+	
+	function modifyOrderAjax(){
+		const data = [];
+		modifyOrderMap.forEach(function(item){
+		    data.push(item);
+		});
+		
+		console.log(data);
+		//ajax 요청 보내기
+		const header = $("meta[name='_csrf_header']").attr('content');
+     	const token = $("meta[name='_csrf']").attr('content'); 
+		console.log(header, token);
+		if(data.length == 0){
+			$('#exampleModalLabel').text('수정할 멤버가 없습니다.');
+			$('#alertModal').modal();
+			return;
+		}
+		console.log(data);
+		$.ajax({
+			  url : '/admin/modifyOrder',
+	          data : JSON.stringify(data),
+	          type : 'POST',
+	          dataType : 'text',
+	          contentType : 'application/json',
+	          beforeSend : function(xhr){
+	               xhr.setRequestHeader(header, token);
+	          },
+	          success : function(data) {
+	        	   console.log(data);
+	        	   
+		 		   $('#successModal').modal();
+	               
+	          },
+	         error : function(request, status, error) {
+	        	$('#exampleModalLabel').text('멤버정보 수정에 실패했습니다.');
+	 			$('#alertModal').modal();
+	 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 			
+	         }
+		});
+	}
+	
+	function makeDateDefault(){
+		var today = new Date();
+		today = today.toISOString().slice(0, 10);
+		
+		if(startdate !=null){
+			$('input[name="startdate"]').val(startdate.substr(0,10));
+		}else{
+			$('#startdate').val(today);	
+		}
+		if(enddate !=null){
+			$('input[name="enddate"]').val(enddate.substr(0,10));
+		}else{
+			$('#enddate').val('2999-12-31');	
+		}
+		
+		
+	}
+	
+	$(document).ready(function(){
+		$('#successModalBtn').click(function(){
+			console.log('ddd');
+			location.reload();
+		});
+		
+		//시작날짜 오늘날짜로 조정	
+		makeDateDefault();
+		
+		
+	});
+	
+	function openOrderModal(idx){
+		const header = $("meta[name='_csrf_header']").attr('content');
+     	const token = $("meta[name='_csrf']").attr('content'); 
+		
+		$.ajax({
+			  url : '/admin/getOrderItem',
+	          data : JSON.stringify({
+	        	  oid : $('#oid'+idx).text()
+	          }),
+	          type : 'POST',
+	          contentType : 'application/json',
+	          beforeSend : function(xhr){
+	               xhr.setRequestHeader(header, token);
+	          },
+	          success : function(data) {
+	        	   console.log(data);
+	        	   $('#dynamicTbody').empty();
+	        	   let html = ``; 
+	        	   $(data).each(function(index, obj){
+	        		  
+	        		  html += `<tr>
+								<td style="text-align:center; border-top: 0px solid #e3e6f0">`+obj.oid+`</td>
+								<td style="border-left: 1px solid #e3e6f0; border-top-width:0px;">
+									<div class="container">
+										<div class="row">
+											<div class="col-4" ><img src="`+obj.pcimg1+`" style="width: 5rem; height:5rem;"></div>
+											<div class="col-8" style="border:1px;">
+												<div class="row">`+obj.bname+`</div>
+												<div class="row">`+obj.pname+`</div>
+												<div class="row">`+obj.pccolorcode+`/ `+obj.psize+`</div>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="border-left: 1px solid #e3e6f0;  border-top-width:0px;">`+obj.oicount+`</td>
+								<td style="border-left: 1px solid #e3e6f0; border-top-width:0px;">`+obj.ostatus+`</td>
+							</tr>`;
+						
+	        	   });
+	        	   $('#dynamicTbody').append(html);
+	          },
+	         error : function(request, status, error) {
+	        	
+	 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 			
+	         }
+		});
+		
+		$('#orderModal').modal();
+	}
+	
+	
+	
+	</script>
+	<style>
+		td input{
+			border:none;
+		}
+	</style>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <ul th:replace="admin/slider :: slider"></ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <nav th:replace="admin/topbar :: topbar"></nav>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">주문 관리</h1>
+                    <p class="mb-4">멤버를 관리할 수 있는 화면입니다. <a target="_blank"
+                            href="https://datatables.net">관련 링크(차후 삭제)</a>.</p>
+                            
+                    <form class="user" action="/admin/order" method="POST">
+                        <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <div class="form-group row">
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>수령인 : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+	                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+	                                aria-label="Search" aria-describedby="basic-addon2" name="oreceiver" th:value="${oreceiver}">	
+                        	</div>
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>Email : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+	                            <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+	                                aria-label="Search" aria-describedby="basic-addon2" name="email" th:value="${email}">	
+                        	</div>
+                        </div>
+                        <div class="form-group row">
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>주문상태 : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+                        		<select name="ostatus" id="ostatus" class="form-select">
+                        			<option value="">선택</option>
+                        			<option value="주문완료" th:selected="${#strings.equalsIgnoreCase('주문완료', ostatus)}">주문완료</option>
+                        			<option value="배송완료" th:selected="${#strings.equalsIgnoreCase('배송완료', ostatus)}">배송완료</option>
+                        			<option value="주문반려" th:selected="${#strings.equalsIgnoreCase('주문반려', ostatus)}">주문반려</option>
+                        		</select>
+                        	</div>
+                        	<div class="col-sm-1 col-form-label">
+                        		<label>결제수단 : </label>
+                        	</div>
+                        	<div class="col-sm-3">
+                        		<select name="pmcode" id="pmcode" class="form-select">
+                        			<option value="">선택</option>
+                        			<option th:each="val: ${paymentlist}" th:value="${val.pmcode}" th:text="${val.pmcompany}" th:selected="${#strings.equalsIgnoreCase(val.pmcode, pmcode)}"></option>
+                        		</select>
+                        		
+                        	</div>
+                        </div>
+                        <div class="form-group row">
+                        	<div class="col-sm-5">
+                        		
+	                        		<label class="col-form-label">시작날짜</label>
+	                        	
+	                        	
+		                            <input name="startdate" type="date" id="startdate" />
+	                        	
+	                        	~
+	                        	
+	                        		<label class="col-form-label">종료날짜</label>
+	                        	
+	                        	
+		                            <input name="enddate" type="date" id="enddate" />
+		                            <script  th:inline="javascript">
+										/*<![CDATA[*/
+										var startdate = [[${startdate}]];
+										var enddate = [[${enddate}]];
+									    if(startdate != null){
+									    	$('input[name="startdate"]').val(startdate.substr(0,10));
+									    }
+									    if(enddate != null){
+									    	$('input[name="enddate"]').val(enddate.substr(0,10));
+									    }
+										/*]]>*/
+									</script>
+                        	</div>
+                        	
+                        	<div class="col-sm-1">
+                        		<button class="btn btn-primary" type="submit" value="검색">검색
+	                                <i class="fas fa-search fa-sm"></i>
+	                            </button>
+                        	</div>
+                        </div>
+                    </form>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">주문 리스트</h6>
+                            <button type="button" onclick="modifyOrderAjax()" class="btn btn-primary">수정</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>주문번호</th>
+                                            <th>수령인</th>
+                                            <th>핸드폰번호</th>
+                                            <th>배송주소</th>
+                                            <th>결제금액</th>
+                                            <th>주문상태</th>
+                                            <th>이메일</th>
+                                            <th>주문날짜</th>
+                                            <th>결제수단</th>
+                                            <th>마일리지</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="order" th:each="order, status: ${orderlist}">
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<div th:id="'oid'+${status.index}" th:idx="${status.index}" th:text="${order.oid}" style="width:3rem;" readOnly/>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<div th:id="'oreceiver'+${status.index}" th:idx="${status.index}" th:text="${order.oreceiver}" style="width:4rem;" readOnly/>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<span th:id="'ophone'+${status.index}" th:idx="${status.index}" th:text="${order.ophone}"style="width:10rem;" readOnly ></span>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<div th:id="'address1'+${status.index}" th:idx="${status.index}" th:text="${order.oaddress1+order.oaddress2}" style="width:10rem;" />
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<text th:id="'oafterprice'+${status.index}" th:idx="${status.index}" th:text="${order.oafterprice}" type="number"></text>
+                                            </td>
+                                            <td>
+                                            	<select th:id="'ostatus'+${status.index}" th:idx="${status.index}" name="ostatus" onchange="changeSelect(this)">
+                                            		<option value="주문완료" th:selected="${#strings.equalsIgnoreCase('주문완료',order.ostatus)}">주문완료</option>
+                                            		<option value="배송완료" th:selected="${#strings.equalsIgnoreCase('배송완료',order.ostatus)}">배송완료</option>
+                                            		<option value="주문반려" th:selected="${#strings.equalsIgnoreCase('주문반려',order.ostatus)}">주문반려</option>
+                                            	</select>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<div th:id="'email'+${status.index}" th:idx="${status.index}" th:text="${order.email}"></div>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<input th:id="'odate'+${status.index}" th:idx="${status.index}" name="odate" type="date"  th:value="${order.odate}" readOnly/>
+                                            </td>
+                                            <td>
+                                            	<select name="pmcode" id="pmcode" class="form-select" readOnly>
+				                        			<option th:each="val: ${paymentlist}" th:value="${val.pmcode}" th:text="${val.pmcompany}" th:selected="${#strings.equalsIgnoreCase(val.pmcode, order.pmcode)}" th:disabled="!${#strings.equalsIgnoreCase(val.pmcode, order.pmcode)}"></option>
+				                        		</select>
+                                            </td>
+                                            <td th:onclick="'openOrderModal('+${status.index}+')'">
+                                            	<div th:id="'mileage'+${status.index}" th:idx="${status.index}" th:text="${order.mileage}" type="number" style="width:100px;"></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+				
+				<!-- Fail Modal-->
+			    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+			                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			        	</div>
+			    	</div>
+			    </div>
+			    
+			    <!-- Success Modal-->
+			    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="successModalLabel">멤버정보를 수정하였습니다.</h5>
+			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			        	</div>
+			    	</div>
+				</div>
+				
+				<!-- Success Modal-->
+			    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog modal-lg" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="orderModalLabel">주문 상세</h5>
+			                    <button class="close" id="orderModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			                <div class="modal-body">
+								<div class="table-responsive">
+									<table class="table table-sm" style="border-collapse: separate; border-spacing:0 1rem;">
+										<thead>
+											<tr>
+												<th style="text-align:center;">주문번호</th>
+												<th style="text-align:center;">상품정보</th>
+												<th style="text-align:center;">수량</th>
+												<th style="text-align:center;">주문상태</th>
+											</tr>
+										</thead>
+										<tbody id="dynamicTbody">
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" type="button"
+									data-dismiss="modal">닫기</button>
+								<!-- <a class="btn btn-primary" href="javascript:void(0);" onclick="updateProductStock()">수정하기</a> -->
+							</div>
+			        	</div>
+			    	</div>
+				</div>
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

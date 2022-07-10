@@ -9,9 +9,15 @@ import com.hyundai.project.dto.ReviewDTO;
 
 @Service
 public interface ReviewService {
+	
 	void insertReview(ReviewDTO reviewDTO);
 	
 	List<ReviewDTO> getReview(ReviewDTO reviewDTO);
 
 	List<PurchasedProductDTO> isPurchased(PurchasedProductDTO purchasedProductDTO);
+	
+	int reviewcount(String email);
+	
+	String reviewCheck(String email);
+	
 }

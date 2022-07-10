@@ -9,6 +9,7 @@
 <body oncontextmenu='return false'>
 <script>
 var arkQuery = $.noConflict(true);
+
 </script>
         <!-- bodyWrap -->
         <div id="bodyWrap">
@@ -169,7 +170,7 @@ var arkQuery = $.noConflict(true);
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">휴대폰</th>
-                                <td th:text="${complete[0].phone}"></td>
+                                <td id="phone" th:text="${complete[0].phone}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">E-MAIL</th>
@@ -179,7 +180,6 @@ var arkQuery = $.noConflict(true);
                     </table>
                 </div>
                 <!--//title wrap & table wrap3-->
-                
                 <!--title wrap & table wrap4-->
                 <div class="title_wrap clearfix">
                     <h4 class="float_left">배송지 정보</h4>
@@ -202,7 +202,7 @@ var arkQuery = $.noConflict(true);
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">휴대폰</th>
-                                <td th:text="${complete[0].ophone}"></td>
+                                <td id="ophone" th:text="${complete[0].ophone}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="th_space">연락처</th>

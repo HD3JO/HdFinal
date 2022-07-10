@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>한섬 커뮤니티 Sommunity</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	th:content="${_csrf.headerName}" />
+<link rel="shortcut icon"
+	href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/font_80.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/common.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/layout.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/popup.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/jquery-ui.min.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/brand.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/swiper.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/main_201903.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/footer.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/products.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/_ui/desktop/common/css/contents.css" media="all" />
+<style type="text/css" media="print">
+@IMPORT url("/_ui/desktop/common/blueprint/print.css");
+</style>
+
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery.vticker.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/common.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/html5shiv-printshiv.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/jquery.flexslider.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/ui.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery.form-3.51.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/common_function.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/videojs-ie8.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/jquery-ui-1.11.2.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/instagramAPI.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/instagramAPI.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/handsome/jquery.bxslider.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/makePCookie.js"></script>
+<script type="text/javascript" src="/_ui/shared/js/siteoverlay.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/wisenut/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/swiper.min.js"></script>
+<script type="text/javascript" src="/_ui/desktop/common/js/netfunnel.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/netfunnel_skin.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/_ui/desktop/common/js/unorm.js"></script>
+<script type="text/javascript"
+	src="/_ui/desktop/common/js/appboy.min.js"></script>
+<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_webzine2.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_gallery.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/board.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/_style_list.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/css3.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/dark.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+<link rel="stylesheet"
+	href="/sommunity/assets/css/fontawesome-all.min.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/main.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/button.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/responsive-grid.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/themify-icons.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/editor.css" />
+<noscript>
+	<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
+</noscript>
+</head>
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+				<!-- Logo -->
+				<h2 style="margin: 0 0 0 0;">
+					<span style="display: block;">한섬닷컴 회원을 위한</span><span
+						style="display: block;">패션 커뮤니티</span>
+				</h2>
+				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
+						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
+					class="title"></span>
+				</a>
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
+			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
+			<ul>
+				<li><a href="/sommunity/home">Home</a></li>
+				<li><a href="/main">한섬닷컴 이동</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">로그인</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">회원가입</a></li>
+				<li sec:authorize="isAuthenticated()">
+					<form action="/logout" method="POST" id="logoutForm">
+						<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
+				<li sec:authorize="isAuthenticated()"><a href="elements.html">마이페이지</a></li>
+			</ul>
+			<script>
+			function logout(){
+				$('#logoutForm').submit();
+			}
+			</script>
+		</nav>
+		
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<section class="tiles">
+					<article>
+						<span class="image"> <img src="images/som.munication.jpg/" alt="" />
+						</span> <a href="/sommunity/board?bname=som.munication">
+							<!--  <h2>SOM.MUNICATION</h2> -->
+							<div class="content">
+								<p><strong>SOM.MUNITY회원을 위한 자유 게시판</strong></p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/time.jpg/" alt="" />
+						</span> <a href="/sommunity/board?bname=time">
+							<h2>TIME</h2>
+							<div class="content">
+								<p>런칭 이후 23년간 부동의 매니아층을 만들어가며 브랜드 인지도 및 신뢰도에 있어 후발 브랜드들이 침범할
+									수 없는 영역을 만들어 온 TIME</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/time homme.jpg/" alt="" />
+						</span> <a href="/sommunity/board?bname=time homme">
+							<h2>TIME HOMME</h2>
+							<div class="content">
+								<p>멋진 실루엣과 고급스러운 소재로 CHIC하고 STYLISH한 전문직 남성상을 표현 </p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/mine.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=mine">
+							<h2>MINE</h2>
+							<div class="content">
+								<p>꾸뛰르적인 섬세함을 미니멀하게 풀어내어 여성스러움을 세련되고 ART적 느낌으로 표현</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/lanvincollection.jpg"
+							alt="" />
+						</span> <a href="/sommunity/board?bname=lanvin collection">
+							<h2>LANVIN COLLECTION</h2>
+							<div class="content">
+								<p>2009년 런칭한 랑방 컬렉션은 잔느 랑방이 창조한 '랑방 PARIS'를 기반으로 한 뉴 엘레강스
+									브랜드이다.</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/system.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=system">
+							<h2>SYSTEM</h2>
+							<div class="content">
+								<p>외면의 스타일 뿐 아니라, 삶을 즐기는 방식을 고민하고 패션에 대한 진정성으로 당신의 생활에 또 다른 생활을 더하는 새로운 자기연출 시스템</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/system homme.jpg/" alt="" />
+						</span> <a href="/sommunity/board?bname=system homme">
+							<h2>SYSTEM HOMME<br><br></h2>
+							<div class="content">
+								<p>외면의 스타일 뿐 아니라, 삶을 즐기는 방식을 고민하고 패션에 대한 진정성으로 당신의 생활에 또 다른 생활을 더하는 새로운 자기연출 시스템</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/obzee.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=obzee">
+							<h2>OBZEE</h2>
+							<div class="content">
+								<p>꾸뛰르적인 감성을 상징적이고 현대적으로 표현하는 브랜드</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/the cashmere.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=the cashmere">
+							<h2>the CASHMERE</h2>
+							<div class="content">
+								<p>스스로의 가치 추구를 원하는 소비자를 위해 최상의 소재, 본질에 충실한 캐시미어 전문 브랜드입니다. </p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/club monaco.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=club monaco">
+							<h2>CLUB MONACO</h2>
+							<div class="content">
+								<p>뉴욕 베이스의 모던하고 도시적인 스타일을 부드럽고 절충된 미니멀리즘으로 제안하는 글로벌 라이프스타일 브랜드</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/sjsj.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=sjsj">
+							<h2><br>SJSJ</h2>
+							<div class="content">
+								<p>YOUNG ARTISTIC한 감성을 바탕으로 여성스러움을 CASUAL VERSION으로 풀어내 ART적인 상상력과 섬세함을 갖춘 젊은 여성을 표현</p>
+							</div>
+						</a>
+					</article>
+					<article>
+						<span class="image"> <img src="images/latt.jpg" alt="" />
+						</span> <a href="/sommunity/board?bname=latt">
+							<h2>LÄTT</h2>
+							<div class="content">
+								<p>고급스럽고 여유로운 스타일을 동시대적인 감성으로 제안한다.</p>
+							</div>
+						</a>
+					</article>
+				</section>
+			</div>
+		</div>
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner" style="padding: 0 2.5em;">
+				<section>
+					<h2>Follow</h2>
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/thehandsome.official/"
+							class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/thehandsome_official/"
+							class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon solid style2 fa-phone"><span
+								class="label">Phone</span></a></li>
+						<li><a href="#" class="icon solid style2 fa-envelope"><span
+								class="label">Email</span></a></li>
+					</ul>
+				</section>
+				<ul class="copyright">
+					<li>&copy;  Fourth st. MEN  All rights reserved</li>
+				</ul>
+			</div>
+		</footer>
+
+	</div>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/board.js"></script>
+	<script src="assets/js/jquery.plugins.min.js"></script>
+
+</body>
+
+</html>

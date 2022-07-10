@@ -1,0 +1,32 @@
+#chatBtn {
+	position:fixed; right:50%; margin-right:-603px; top:80%; display:none; z-index: 9;
+}
+
+#chatModal{
+	display:none;
+	position:fixed; width:20rem; height:55%; right:50%; margin-right:-603px; top:30%; z-index: 9;
+	border-radius: 30px;
+	border-style:solid;
+}
+
+
+.messageBox{
+	overflow:scroll; height: 23rem;
+}
+
+.messageBox::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+#chatInput{
+	width: 98%;
+}
+
+.clientMsg{
+	background-color : #F0F8FF;
+	width: fit-content;
+	border-radius: 0.5rem;
+	margin-top: 1rem;
+	padding-left:0.5rem;
+	padding-right:0.5rem;
+}

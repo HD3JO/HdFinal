@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=1, target-densitydpi=medium-dpi">
+<meta property="og:title" content="더한섬닷컴 | THE HANDSOME.COM">
+<meta property="og:image" content="http://s3.ap-northeast-2.amazonaws.com/cdn.thehandsome.com-kr/pc/210510_logo/%E3%84%B9%EB%A1%9C%EA%B3%A0.png">
+<link rel="shortcut icon" href="http://cdn.thehandsome.com/_ui/desktop/common/images/common/thehandsome_ic_16x16.ico">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/jquery-ui.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/brand.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/layout.css?20220331" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/popup.css?20210225" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/common.css?20220401" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/font_443.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/contents.css?20220221" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/main_201903.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://www.thehandsome.com/_ui/desktop/common/css/swiper.css" media="all">
+<script>
+var arkQuery = $.noConflict(true);
+
+var orderList= {
+			email: $("#email").text(),
+			oid: $("#oid").text(),
+			ostatus: $("#ostatus").text()
+	}
+</script>
+</head>
+
+<body>
+<div id="headerWrap">
+<div class="gnbwarp new201608 clearfix">
+        <h1 class="logo logo1903">
+            <a onclick="GA_Event('공통', '로고', '상단');">thehandsome.com</a>
+        </h1>
+  </div>
+ </div>
+ <div class="sub_container">
+ <div id="bodyWrap" th:if="${!#lists.isEmpty(orderList)}">
+ <h3 class="cnts_title">
+<span id="menuTitle" th:text="'고객님의 배송상태는 ' +${orderList[0].ostatus}+' 입니다.'"></span>
+</h3>
+ <div class="tblwrap lncl1812"><!-- 클래스추가 181204 -->
+                        <table class="tbl_ltype review_betterment1905">
+                            <caption>상품 주문 목록</caption>
+                            <colgroup class="interval1812"><!-- 수정 181204 -->
+                                <col style="width:90px">
+                                <col>
+                                <col style="width:43px">
+                                <col style="width:100px">
+                                <col style="width:89px">
+                                <col style="width:120px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col">주문번호<!-- 주문번호 --></th>
+                                    <th scope="col">상품정보<!-- 상품정보 --></th>
+                                    <th scope="col" style="padding:15px 0">수량<!-- 수량 --></th><!-- 스타일추가 181204 -->
+                                    <th scope="col">판매가<!-- 판매가 --></th>
+                                    <th scope="col">주문상태<!-- 주문상태 --></th>
+                                    <th scope="col">상세보기<!-- 구분 --></th>
+                                </tr>
+                            </thead>
+                           <tbody id="listBody">       
+						<div th:if="${#lists.isEmpty(orderList)}">
+							<tr>
+								<td colspan="6" class="no_data">
+								주문 내역이 없습니다.
+								</td>
+							</tr>
+						</div>
+						<div th:if="${!#lists.isEmpty(orderList)}">
+							<tr th:each="orderList: ${orderList}">
+								<td class="pt_list_wrap">
+									<!-- Price -->
+									<div class="tlt_wrap">
+										<span th:text="${orderList.oid}"></span>
+									</div> <!-- //Price -->
+								</td>
+								<td class="pt_list_wrap">
+									<!-- pt_list_all -->
+									<div class="pt_list_all">
+										<a id="productfirst"
+											 th:href="@{/detail(pcid=${orderList.psid})}"
+											onclick="javascript:void(0);"> 
+											<img th:id="productimg"
+											th:src="${orderList.pcimg1}" alt="">
+										</a>
+										<div class="tlt_wrap">
+										<a th:id="productsecond"
+											th:href="@{/detail(pcid=${orderList.pcid})}" class="basket_tlt"
+											onclick="javascript:void(0);"> 
+											<span class="tlt"
+											th:text=${orderList.bname}></span>
+											 <span class="sb_tlt"
+											th:text=${orderList.pname}> </span>
+										</a>
+
+										<p class="color_op">
+
+											<span th:id="productcolorcode"
+												th:text="${orderList.pccolorcode}"> </span> <span
+												class="and_line">/</span> <span th:id="productsize"
+												th:text="${orderList.psize}"> </span>
+										</p>
+									</div>
+										</div>
+									</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="${orderList.oicount}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<span th:text="'₩'+${#numbers.formatInteger(orderList.pcprice,3,'COMMA')}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> <!-- //Price -->
+								</td>
+								<td class="al_middle">
+									
+									<div class="price_wrap">
+										<span th:text="${orderList.ostatus}"></span> <input
+											type="hidden" name="checkZeroPrice" value="795000.0">
+									</div> 
+								</td>
+								<td class="al_middle">
+									<!-- Price -->
+									<div class="price_wrap">
+										<a th:href="'http://localhost:80/order/orderDetail?oid='+${orderList.oid}" id="detailViewBtn" class="btn add_ss mr0">&nbsp;&nbsp;상세보기&nbsp;&nbsp;</a>
+									</div> <!-- //Price -->
+								</td>
+							</tr>
+						</div>
+					</tbody>
+                        </table>
+                    </div>
+                    </div>
+                    </div>
+</body>
+</html>

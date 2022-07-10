@@ -63,6 +63,14 @@
     	SET MILEAGE = MILEAGE + #{mileage, jdbcType=INTEGER}
     	WHERE EMAIL = #{email, jdbcType=VARCHAR}
     </update>
+    
+    <update id="updateStock" parameterType="java.util.List"> 
+    	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close=";END;">
+    		UPDATE PRODUCTMANAGER.PRODUCT_STOCK
+    		SET PSSTOCK = PSSTOCK - #{item.oicount, jdbcType=INTEGER}
+    		WHERE PSID = #{item.psid, jdbcType=VARCHAR}
+    	</foreach>
+    </update>
 	
 	<!-- 사용자 주문 내역 조회-->
 	<select id="getOrderList" resultType="com.hyundai.project.dto.OrderDTO">
@@ -95,6 +103,10 @@
 		       , F.PNAME
 		       , G.BNAME
 		       , H.PMCOMPANY
+		       , A.OSTATUS
+		       , E.PCID
+		       , B.MARKETINGEMAIL
+		       , B.MARKETINGSMS
 		FROM ORDERS A 
 		INNER JOIN MEMBER B
 		ON A.EMAIL = B.EMAIL
@@ -124,7 +136,7 @@
 	
 	<select id="selectOrderList" resultType="com.hyundai.project.dto.OrderListDTO">
         SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
-       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
     		FROM ORDERS A
     		INNER JOIN ORDER_ITEM B
     		ON A.oid = B.oid
@@ -144,7 +156,7 @@
     
     <select id="selectOrderListByOneMonth" resultType="com.hyundai.project.dto.OrderListDTO">
         SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
-       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid
+       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
     		FROM ORDERS A
     		INNER JOIN ORDER_ITEM B
     		ON A.oid = B.oid
