@@ -7,10 +7,9 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/index">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon rotate-n-0">
+            <img src="/admin/img/handsomeadminlogo.png" style="width:12rem;"/>
         </div>
-        <div class="sidebar-brand-text mx-3">HANDSOME </div>
     </a>
 
     <!-- Divider -->
@@ -122,9 +121,14 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
                 <a class="collapse-item" href="/admin/membertables">멤버</a>
                 <a class="collapse-item" href="/admin/producttables">상품수량</a>
                 <a class="collapse-item" href="/admin/order">주문</a>
+
+                <a class="collapse-item" href="/admin/board">커뮤니티</a>
+                <a class="collapse-item" href="/admin/reply">댓글관리</a>
+
                 <a class="collapse-item" href="/admin/drawProduct">드로우 상품 관리</a>
                 <a class="collapse-item" href="/admin/winDrawList">드로우 당첨자 관리</a>
                 <!-- <a class="collapse-item" href="/admin/forgot-password"></a> -->
+
             </div>
         </div>
         
@@ -144,7 +148,157 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
         <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
     </div>
+	
+<script type="text/javascript">
+		//chatting start
+		$(document).ready(function(){
+			$("#chatInput").on("keydown",function(key){         
+				if(key.keyCode==13) {           
+					
+					send();
+					
+				}     
+			});
+		});
 
+		const url = window.location.host;
+		const websocket = new WebSocket("ws://"+url+"/ws/chat"); 
+		websocket.onmessage = onMessage;	//소켓이 메세지를 받을 때 
+		websocket.onopen = onOpen;			//소켓이 생성될때 클라이언트 접속 
+		websocket.onclose = onClose;		//소켓이 닫힐때(클라이언트 접속해제)
+	
+		//on exit chat room
+		function onClose(evt){
+			console.log("close event : " + evt);
+		}
+	
+		//on entering chat room 
+		function onOpen(evt){
+			console.log("open event : " +evt);
+		}
+		
+		function insertMessage(senderId, message){
+			
+			let html = '';
+			if(senderId == 'master'){
+				html += '<li class="d-flex flex-row-reverse"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +'</div> </li><br>';	
+			}else{
+				html += '<li class="d-flex flex-row"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +' </div></li><br>';
+			}
+			
+			$('.messageBox').append(html);
+		}
+	
+		//on message controller
+		function onMessage(msg){
+			const data = JSON.parse(msg.data);	//msg를 받으면 data필드 안에 JSON String으로 정보가 있음 
+			//필요한 정보를 json data에서 추출 
+			const senderId = data.senderId;
+			const message = data.message + ' '+data.time;
+			const newOne = data.newOne;
+			const outOne = data.outOne;
+			
+			console.log(data);
+			
+			//console.log('ddd');
+			if($('#receiverId').text() == senderId || senderId == 'master'){
+				insertMessage(senderId, message);	
+			}else{
+				console.log('dodo');
+				const addData = {
+		    			"message" : message,
+		    			"senderId" : senderId
+		    	}
+				var value = JSON.parse(sessionStorage.getItem(senderId));
+				
+				value.push(addData);
+				console.log(value);
+				sessionStorage.setItem(senderId, JSON.stringify(value));
+			}
+			
+			
+			//$('#chatInput').val('');
+			$('.messageBox').scrollTop($('.messageBox').height()*10);
+			
+			//현재 접속중인 유저들 정보 보여주기 위한 
+			const onlineList = data.onlineList;
+			const set = new Set(onlineList);
+			$(".onlineList").empty();
+			set.forEach(function(e){
+				let html='';
+				html += '<li onclick="activeToggle(this)" rid="'+e+'" ><div class="card border-left-primary"><div class="card-body">'+e+'</div></div></li>';
+				$(".onlineList").append(html);
+			})
+			
+		}
+		
+		function activeToggle(e){
+			$('.card-body').attr('style','background-color:#fff;');
+			$(e).find('.card-body').attr('style','background-color:#D7CFCD;');
+			e = $(e).attr('rid');
+			const receiverId = e;
+			const preReceiverId = $('#receiverId').text();
+			
+			
+			setChatHistory(preReceiverId);
+			$('#receiverId').text(receiverId);
+			$('.messageBox').empty();
+			getChatHistory(receiverId);
+		}
+	
+		//send a message
+		function send(){
+			const message = $('#chatInput').val();
+			console.log(message);
+			
+			//don't send when content is empty
+			//채팅 입력칸이 비어있지 않은 경우에만 정보를 json 형태로 전송 
+			if(message != ""){
+				let msg = {
+						'receiverId' : $('#receiverId').text(),
+						'message' : message 
+				}
+				
+				if(message != null){
+					websocket.send(JSON.stringify(msg));	//websocket handler로 전송(서버로 전송)
+				}
+				$('#chatInput').val('');
+			}
+		}
+		
+		// save chat history
+		 function setChatHistory(name) {
+		    var value = [];
+		    $('.clientMsg').each(function(index, item){
+		    	const message = $(item).text();
+		    	const senderId = $(item).attr('senderId');
+		    	data = {
+		    			"message" : message,
+		    			"senderId" : senderId
+		    	}
+		    	value.push(data);
+		    });
+
+		    sessionStorage.setItem(name, JSON.stringify(value));
+		  };
+		  
+		  //insert pre chat history
+		  function getChatHistory(name){
+			  var data = JSON.parse(sessionStorage.getItem(name));
+			  
+			  if(data != null){
+				  $(data).each(function(index, item){
+					 const message = item.message;
+					 const senderId = item.senderId;
+					 
+					 insertMessage(senderId, message);
+				  });
+			  }
+		  }
+		
+		//chatting end
+
+	</script>
 </ul>
 <!-- End of Sidebar -->
 </html>

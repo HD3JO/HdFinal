@@ -14,19 +14,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hyundai.project.dto.AdminBoardDTO;
 import com.hyundai.project.dto.AdminOrderDTO;
 import com.hyundai.project.dto.AdminProductDTO;
+
+import com.hyundai.project.dto.AdminReplyDTO;
+
 import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.DrawWinDTO;
+
 import com.hyundai.project.dto.MemberDTO;
-import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderCompleteDTO;
-import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.PaymentMethodDTO;
 import com.hyundai.project.dto.ProductCommonDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductStockDTO;
+
+import com.hyundai.project.service.AdminBoardService;
+
 import com.hyundai.project.product.repository.DrawMapper;
+
 import com.hyundai.project.service.AdminMainService;
 import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminProductService;
@@ -45,6 +52,8 @@ public class AdminController {
 	private AdminMainService adminMainService;
 	@Autowired
 	private AdminOrderService adminOrderService;
+	@Autowired
+	private AdminBoardService adminBoardService;
 	@Autowired
 	private PaymentMethodMapper paymentMethodMapper;
 	@Autowired
@@ -207,6 +216,58 @@ public class AdminController {
 		List<OrderCompleteDTO> list = orderMapper.getOrderComplete(Integer.toString(adminOrderDTO.getOid()));
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/board", method=RequestMethod.GET)
+	public String board(Model model) throws Exception{
+		model.addAttribute("brandlist", adminProductService.getBrand());
+		System.out.println(adminProductService.getBrand());
+		
+		return "admin/board";
+	}
+	
+	@RequestMapping(value="/board", method=RequestMethod.POST)
+	public String boardList(Model model, AdminBoardDTO adminBoardDTO) throws Exception{
+		System.out.println(adminBoardDTO + "@@@@@@@");
+		model.addAttribute("brandlist", adminProductService.getBrand());
+		model.addAttribute("selectedBname", adminBoardDTO.getBrand());
+		model.addAttribute("selectedBheader", adminBoardDTO.getBheader());
+		model.addAttribute("selectedBtitle", adminBoardDTO.getBtitle());
+		model.addAttribute("selectedBauthor", adminBoardDTO.getBauthor());
+		
+		List<AdminBoardDTO> boardlist = adminBoardService.getBoardList(adminBoardDTO);
+		model.addAttribute("boardlist", boardlist);
+		System.out.println(boardlist);
+		return "admin/board";
+	}
+	
+	@RequestMapping(value="/deleteBoard", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteBoard(@RequestBody AdminBoardDTO adminBoardDTO) throws Exception{
+		System.out.println(adminBoardDTO + "!!!");
+		adminBoardService.deleteBoard(adminBoardDTO);
+		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/reply", method=RequestMethod.GET)
+	public String reply() throws Exception{
+		
+		return "admin/reply";
+	}
+	@RequestMapping(value="/reply", method=RequestMethod.POST)
+	public String replyList(Model model, AdminReplyDTO adminReplyDTO) throws Exception {
+		model.addAttribute("selectedRauthor", adminReplyDTO.getRauthor());
+		model.addAttribute("selectedRcontent", adminReplyDTO.getRcontent());
+		
+		List<AdminReplyDTO> replylist = adminBoardService.getReplyList(adminReplyDTO);
+		model.addAttribute("replylist", replylist);		
+		return "admin/reply";
+	}
+	
+	@RequestMapping(value="deleteReply", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteReply(@RequestBody List<AdminReplyDTO> adminReplyDTOList) throws Exception{
+		adminBoardService.deleteReply(adminReplyDTOList);
+		
+		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/utilities-animation", method=RequestMethod.GET)

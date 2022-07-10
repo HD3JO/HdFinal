@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid h-75" th:fragment="chatHide" style="display:none;">
+					<div class="row h-100">
+						<div class="col-4 border-left-primary card " >
+							<ul style="list-style:none; padding-left:0;" class="onlineList">
+								
+							</ul>
+						</div>
+						
+						<div class="col-8 border-left-primary card">
+							<div><span id="receiverId">master</span><span>와의 대화입니다.</span></div>
+							<ul class="messageBox" style="overflow:scroll; height: 33rem; list-style:none;">
+								
+							</ul>
+							<input id="chatInput" class="" placeholder="Type your message here..." onclick="send()"/>
+						</div>
+					</div>
+					
+					
+				</div>
+			<!-- End of Main Content -->
+
+	
+
+</html>

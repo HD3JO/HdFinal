@@ -15,7 +15,7 @@
 <meta id="_csrf_header" name="_csrf_header"
 	th:content="${_csrf.headerName}" />
 
-<title>SB Admin 2 - Tables</title>
+<title>관리자페이지</title>
 
 <!-- Custom fonts for this template -->
 <link
@@ -42,24 +42,17 @@
 <body id="page-top">
 	<script type="text/javascript">
 		const data = [];
-		function updateProductStock(){
-			const len = $('.data').length;
-			for(let i=0; i<len; i++){
-				const psid = $('#psid'+i).text();
-				const psstock = $('#psstock'+i).val();
-				data.push({
-					psid : psid,
-					psstock : psstock
-				});
-			}
-			console.log(data);
+		function deleteBoard(){
+			const bid = $('#modalBid').text();
 			
 			const header = $("meta[name='_csrf_header']").attr('content');
 	     	const token = $("meta[name='_csrf']").attr('content'); 
 			
 			$.ajax({
-				 url : '/admin/updateProductStock',
-		          data : JSON.stringify(data),
+				 url : '/admin/deleteBoard',
+		          data : JSON.stringify({
+		        	  'bid' :bid
+		          }),
 		          type : 'POST',
 		          dataType : 'text',
 		          contentType : 'application/json',
@@ -68,15 +61,21 @@
 		          },
 		          success : function(data) {
 		        	   console.log(data);
-		        	   $('#successModalLabel').text('수량을 수정하였습니다.');
+		        	   $('#successModalLabel').text('게시글을 삭제하였습니다.');
 		        	   $('#successModal').modal();
+		        	   $('#productModal').modal();
+		        	   
 		          },
 		         error : function(request, status, error) {
 		 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		 			$('#successModalLabel').text('수량 수정에 실패하였습니다.');
+		 			$('#successModalLabel').text('게시글 삭제에 실패하였습니다.');
 		        	$('#successModal').modal();
 		         }
 			})
+		}
+		
+		function successModalClose(){
+			location.reload();
 		}
 		
 		function changeCarousel(idx){
@@ -85,84 +84,25 @@
 			$('#carousel'+idx).show();
 		}
 	
-		function productModal(idx) {
+		function modalBoard(idx) {
+			console.log(idx);
+			$('#modalBid').text($('#bid'+idx).text());
+			
+			let cont =$('#bcontent'+idx).val();
+			
+			cont = cont.replaceAll("&lt;", "<");
+		      cont = cont.replaceAll("&gt;", ">");
+			
+			$('#modalBtitle').text($('#btitle'+idx).text());
+			$('#modalBauthor').text('작성자 '+$('#bauthor'+idx).text());
+			$('#modalBdate').text('등록일 '+$('#bdate'+idx).val());
+			$('#modalHits').text('조회수 ' + $('#hits'+idx).text());
+			$('#bcontent').empty();
+			$('#bcontent').append(cont);
+			
 			$('#productModal').modal();
 
-			const header = $("meta[name='_csrf_header']").attr('content');
-			const token = $("meta[name='_csrf']").attr('content');
-			$
-					.ajax({
-						url : '/admin/productDetail',
-						data : JSON.stringify({
-							pid : $('#pid' + idx).text()
-						}),
-						type : 'POST',
-						contentType : 'application/json',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(header, token);
-						},
-						success : function(data) {
-							let html = '';
-
-							for (key in data) {
-								html += '<tr onclick="changeCarousel('+key+')" class="data">';
-								html += '<td id="pcid'+key+'" style="display:none;">'
-										+ data[key].pcid + '</td>';
-								html += '<td id="psid'+key+'" style="display:none;">'
-										+ data[key].psid + '</td>';
-								html += '<td>' + data[key].pcprice + '₩</td>';
-								html += '<td>' + data[key].psize + '</td>';
-								html += '<td>' + data[key].pccolorcode
-										+ '</td>';
-								html += '<td><img src="'+data[key].pcchipimg+'" style="width:1rem; height:1rem;"></img></td>';
-								html += '<td><input id="psstock'+key+'" style="width:4rem;" type="number" value="' + data[key].psstock + '" min="0"></input></td>';
-								//html += '<td>' + data[key].psstock + '</td>';
-								html += '</tr>';
-							}
-
-							let sliderhtml = '';
-							for (key in data) {
-								if(key != 0){
-									sliderhtml += '<div id="carousel'+key+'" class="carousel slide" data-ride="carousel" style="display:none;">'
-								}else{
-									sliderhtml += '<div id="carousel'+key+'" class="carousel slide" data-ride="carousel">'
-								}
-								sliderhtml += '<div class="carousel-inner" style="max-height: 32rem">'
-								sliderhtml += '<div class="carousel-item active">'
-								sliderhtml += '<img src="'+data[key].pcimg1+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
-								sliderhtml += '</div>'
-								sliderhtml += '<div class="carousel-item">'
-								sliderhtml += '<img src="'+data[key].pcimg2+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
-								sliderhtml += '</div>'
-								sliderhtml += '<div class="carousel-item">'
-								sliderhtml += '<img src="'+data[key].pcimg3+'" class="d-block img-fluid center-block" style="height:32rem; margin:auto;" alt="...">'
-								sliderhtml += '</div>'
-								sliderhtml += '</div>'
-								sliderhtml += '<button class="carousel-control-prev" type="button" data-target="#carousel'+key+'" data-slide="prev" style="border:none; backgroud:none;">'
-								sliderhtml += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'
-								sliderhtml += '<span class="sr-only">Previous</span>'
-								sliderhtml += '</button>'
-								sliderhtml += '<button class="carousel-control-next" type="button" data-target="#carousel'+key+'" data-slide="next" style="border:none; backgroud:none;">'
-								sliderhtml += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-								sliderhtml += '<span class="sr-only">Next</span>'
-								sliderhtml += '</button>'
-								sliderhtml += '</div>'
-							}
-
-							$("#dynamicTbody").empty();
-							$("#dynamicTbody").append(html);
-
-							$("#pcimgslide").empty();
-							$("#pcimgslide").append(sliderhtml);
-						},
-						error : function(request, status, error) {
-
-							console.log("code:" + request.status + "\n"
-									+ "message:" + request.responseText + "\n"
-									+ "error:" + error);
-
-						}
-					})
+			
 		}
 
 
@@ -190,13 +130,9 @@ td input {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">상품수량 관리</h1>
-					<p class="mb-4">
-						상품의 수량을 관리할 수 있는 화면입니다. <a target="_blank"
-							href="https://datatables.net">관련 링크(차후 삭제)</a>.
-					</p>
+					<h1 class="h3 mb-2 text-gray-800">게시글 관리</h1>
 
-					<form class="user" action="/admin/producttables" method="POST">
+					<form class="user" action="/admin/board" method="POST">
 						<input id="csrf" type="hidden" th:name="${_csrf.parameterName}"
 							th:value="${_csrf.token}">
 						<div class="form-group row">
@@ -204,20 +140,39 @@ td input {
 								<label>브랜드 : </label>
 							</div>
 							<div class="col-sm-3">
-								<select class="form-select form-select-sm" name="bname">
+								<select class="form-select form-select-sm" name="brand">
+									<option value="">전체</option>
 									<option th:each="brand : ${brandlist}" th:text="${brand.bname}"
 										th:value="${brand.bname}"
 										th:selected="${#strings.equalsIgnoreCase(selectedBname, brand.bname)}"></option>
 								</select>
 							</div>
 							<div class="col-sm-1 col-form-label">
-								<label>상품명 : </label>
+								<label>머릿말 : </label>
 							</div>
 							<div class="col-sm-3">
-								<input type="text" class="form-control bg-light border-1 small"
-									placeholder="Search for..." aria-label="Search"
-									aria-describedby="basic-addon2" name="pname"
-									th:value="${selectedPname}">
+								<select class="form-select form-select-sm" name="bheader">
+									
+										<option value="" th:selected="${#strings.equalsIgnoreCase(selectedBheader, '[전체]')}">전체</option>
+										<option value="[구매후기]" th:selected="${#strings.equalsIgnoreCase(selectedBheader, '[구매후기]')}">구매후기</option>
+										<option value="[정보]" th:selected="${#strings.equalsIgnoreCase(selectedBheader, '[정보]')}">정보</option>
+										<option value="[잡담]" th:selected="${#strings.equalsIgnoreCase(selectedBheader, '[잡담]')}">잡담</option>
+									
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-1 col-form-label">
+								<label>제목 : </label>
+							</div>
+							<div class="col-sm-3">
+								<input value="" name="btitle" th:value="${selectedBtitle}" />
+							</div>
+							<div class="col-sm-1 col-form-label">
+								<label>작성자 : </label>
+							</div>
+							<div class="col-sm-3">
+								<input value="" name="bauthor" th:value="${selectedBauthor}"/>
 							</div>
 							<div>
 								<button class="btn btn-primary" type="submit" value="검색">
@@ -229,28 +184,37 @@ td input {
 					</form>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">게시글 리스트</h6>
+                            <div>리스트를 클릭하면 게시글 내용을 볼 수 있습니다. </div>
+                        </div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<thead>
 										<tr>
-											<th>브랜드명</th>
-											<th>상품코드</th>
-											<th>상품명</th>
+											<th>글번호</th>
+											<th>브랜드</th>
+											<th>머릿말</th>
+											<th>제목</th>
+											<th>작성자</th>
+											<th>조회수</th>
+											<th>좋아요</th>
+											<th>작성일자</th>
 										</tr>
 									</thead>
 
 									<tbody>
-										<tr class="product" th:each="product, status: ${productlist}"
-											th:onclick="'productModal('+${status.index}+')'">
-											<td><span th:id="'bname'+${status.index}"
-												th:idx="${status.index}" th:text="${product.bname}" /></td>
-											<td><span th:id="'pid'+${status.index}"
-												th:idx="${status.index}" th:text="${product.pid}" /></td>
-											<td><span th:id="'pname'+${status.index}"
-												th:idx="${status.index}" th:text="${product.pname}" /></td>
-
+										<tr class="board" th:each="board, status: ${boardlist}" th:onclick="'modalBoard('+${status.index}+');'">
+											<td><span th:id="'bid'+${status.index}" th:text="${board.bid}"></span><input th:id="'bcontent'+${status.index}" type="hidden" th:value="${board.bcontent}"/></td>
+											<td><span th:id="'brand'+${status.index}" th:text="${board.brand}"></span></td>
+											<td><span th:id="'bheader'+${status.index}" th:text="${board.bheader}"></span></td>
+											<td><span th:id="'btitle'+${status.index}" th:text="${board.btitle}"></span></td>
+											<td><span th:id="'bauthor'+${status.index}" th:text="${board.bauthor}"></span></td>
+											<td><span th:id="'hits'+${status.index}" th:text="${board.hits}"></span></td>
+											<td><span th:id="'likes'+${status.index}" th:text="${board.likes}"></span></td>
+											<td><input th:id="'bdate'+${status.index}" type="date" th:value="${board.bdate}" readOnly/></td>
 										</tr>
 									</tbody>
 								</table>
@@ -275,36 +239,25 @@ td input {
 								</button>
 							</div>
 							<div class="modal-body">
-								<div id="pcimgslide" class="h-50"></div>
-								<div class="table-responsive">
-									<table class="table table-sm">
-										<thead>
-											<tr>
-												<th style="display: none;">pcid</th>
-												<th style="display: none;">psid</th>
-												<th>가격</th>
-												<th>사이즈</th>
-												<th>색코드</th>
-												<th>색</th>
-												<th>수량</th>
-											</tr>
-										</thead>
-										<tbody id="dynamicTbody">
-											<tr>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>aaa</td>
-												<td>bbb</td>
-											</tr>
-										</tbody>
-									</table>
+								<div class="container">
+									<div id="modalBid" style="display:none;"></div>
+									<div class="row">
+										<div class="col-md-6 offset-md-3"><h3 id="modalBtitle" style="text-align:center; font-weight:bold;">제목</h3></div>
+									</div>
+									<div class="row" style="background-color:#f5f5f5;">
+										<span class="col" id="modalBauthor">작성자</span> 
+										<span class="col" id="modalBdate">날짜</span> 
+										<span class="col" id="modalHits" style="text-align:right;">조회수</span>
+									</div>
+									<div class="row" style="border-style:solid; margin-top:1rem; border-radius:0.5rem;">
+										<div id="bcontent"></div>
+									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
 								<button class="btn btn-secondary" type="button"
 									data-dismiss="modal">닫기</button>
-								<a class="btn btn-primary" href="javascript:void(0);" onclick="updateProductStock()">수정하기</a>
+								<a class="btn btn-danger" href="javascript:void(0);" onclick="deleteBoard()">삭제하기</a>
 							</div>
 						</div>
 					</div>
@@ -317,7 +270,7 @@ td input {
 			            <div class="modal-content">
 			                <div class="modal-header">
 			                    <h5 class="modal-title" id="successModalLabel">수량 모달</h5>
-			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close">
+			                    <button class="close" id="successModalBtn" type="button" data-dismiss="modal" aria-label="Close" onclick="successModalClose();">
 			                        <span aria-hidden="true">×</span>
 			                    </button>
 			                </div>
