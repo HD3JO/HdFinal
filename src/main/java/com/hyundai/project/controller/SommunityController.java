@@ -87,6 +87,8 @@ public class SommunityController {
 		
 		cont = cont.replaceAll("&lt;", "<");
 		cont = cont.replaceAll("&gt;", ">");
+		cont = cont.replaceAll("&quot;", "\"");
+		
 		boardDTO.setBcontent(cont);
 		model.addAttribute("boardDTO",boardDTO);
 		return "sommunity/viewForm";

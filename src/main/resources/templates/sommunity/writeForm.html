@@ -221,12 +221,13 @@
 								      <textarea id="bcontent" name="bcontent" rows="20" cols="100" style="width: 100%;"></textarea>
 								      	
 										<script>
+										var header = $("meta[name='_csrf_header']").attr('content');
+									    var token = $("meta[name='_csrf']").attr('content');
 										 var ckeditor_config = {
-									  	   filebrowserUploadMethod : 'form',
 										   enterMode : CKEDITOR.ENTER_BR,
 										   shiftEnterMode : CKEDITOR.ENTER_P,
 										   /* 이미지 넣을 컨트롤러 주소 */
-										   filebrowserUploadUrl : "/admin/post/imageUpload"
+										   filebrowserUploadUrl : "/api/upload?_csrf=" + token
 										 };
 										 
 										 CKEDITOR.replace("bcontent", ckeditor_config);

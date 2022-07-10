@@ -185,17 +185,18 @@
 
 									<div class="boardReadBody">
 										<!--BeforeDocument(3700,0)-->
-										<div class="document_3700_0 xe_content">
-											<script  th:inline="javascript">
-												/*<![CDATA[*/
-												const html = [[${boardDTO.bcontent}]];
-												const bno = [[${boardDTO.bid}]];
-												$('.document_3700_0').append(html);
-												/*]]>*/
-											</script>
+										<div id="content" class="document_3700_0 xe_content">
 										</div>
 										<!--AfterDocument(3700,0)-->
-										
+										<script  th:inline="javascript">
+												/*<![CDATA[*/
+												const html = [[${boardDTO.bcontent}]];
+												const bno = [[${boardDTO.bid}]]
+												/*]]>*/
+												console.log(html);
+												$('.document_3700_0').append(html);
+												
+											</script>
 
 										<div class="document_popup_menu">
 											<a href="#popup_menu_area" class="document_3700" onclick="return false"></a>
