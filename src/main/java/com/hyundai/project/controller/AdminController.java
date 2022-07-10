@@ -16,13 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hyundai.project.dto.AdminOrderDTO;
 import com.hyundai.project.dto.AdminProductDTO;
+import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.dto.OrderDTO;
 import com.hyundai.project.dto.OrderCompleteDTO;
 import com.hyundai.project.dto.OrderItemDTO;
 import com.hyundai.project.dto.PaymentMethodDTO;
 import com.hyundai.project.dto.ProductCommonDTO;
 import com.hyundai.project.dto.ProductDetailDTO;
 import com.hyundai.project.dto.ProductStockDTO;
+import com.hyundai.project.product.repository.DrawMapper;
+import com.hyundai.project.service.AdminMainService;
 import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminProductService;
 import com.hyundai.project.service.MemberService;
@@ -37,15 +42,27 @@ public class AdminController {
 	@Autowired
 	private AdminProductService adminProductService;
 	@Autowired
+	private AdminMainService adminMainService;
+	@Autowired
 	private AdminOrderService adminOrderService;
 	@Autowired
 	private PaymentMethodMapper paymentMethodMapper;
 	@Autowired
 	private OrderMapper orderMapper;
+	@Autowired
+	private DrawMapper drawMapper;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
+		int totalusercount = adminMainService.getTotalUser();
+		int totalordercount = adminMainService.getMonthOrderCount();
+		int totalproductcount = adminMainService.getTotalProductQty();
+		int totalproductprice = adminMainService.getMonthOrderPrice();
+		model.addAttribute("totalproductprice", totalproductprice);
+		model.addAttribute("totalproductcount", totalproductcount);
+		model.addAttribute("totalordercount", totalordercount);
+		model.addAttribute("totalusercount", totalusercount);
 		return "admin/index";
 	}
 	
@@ -207,5 +224,22 @@ public class AdminController {
 	@RequestMapping(value="/utilities-other", method=RequestMethod.GET)
 	public String utilitiesOther() {
 		return "admin/utilities-other";
+	}
+	@RequestMapping(value="/drawProduct", method=RequestMethod.GET)
+	public String drawProduct(Model model) throws Exception{
+		List<DrawListDTO> drawListDTO = drawMapper.getDrawListForAdmin();
+		
+		model.addAttribute("drawList", drawListDTO);
+		
+		return "admin/drawProduct";
+	}
+	@RequestMapping(value="/winDrawList", method=RequestMethod.GET)
+	public String winDrawList(Model model) throws Exception{	
+		
+		List<DrawWinDTO> winList = drawMapper.getWinList();
+		
+		model.addAttribute("list", winList);
+		
+		return "admin/winDrawList";
 	}
 }

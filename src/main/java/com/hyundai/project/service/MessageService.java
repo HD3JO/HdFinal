@@ -29,7 +29,7 @@ public class MessageService {
      private List<OrderCompleteDTO> completeList;
     
      @Autowired(required=false)
-	public void sendMessage(List<OrderCompleteDTO> completeList) {
+     public void sendMessage(List<OrderCompleteDTO> completeList) {
     	 
 		Message coolsms = new Message(api_key, api_secret);
 

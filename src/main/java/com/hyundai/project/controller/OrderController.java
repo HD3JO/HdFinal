@@ -1,6 +1,8 @@
 package com.hyundai.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -108,11 +110,13 @@ public class OrderController {
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setAddress(email);
 		emailDTO.setTitle("[한섬3조] 주문완료 이메일입니다.");
-		emailService.sendMailWithFiles(emailDTO, completeList);
+		Map<String, Object> variables = new HashMap<>();
+		variables.put("orderList", completeList);
+		emailService.sendMailWithFiles(emailDTO, variables);
 		messageService.sendMessage(completeList);
 		model.addAttribute("complete", completeList);
 
-		return "/order/orderComplete";
+		return "order/orderComplete";
 	}
 	
 	@GetMapping("/orderStatus")
