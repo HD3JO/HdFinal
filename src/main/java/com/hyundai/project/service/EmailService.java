@@ -1,24 +1,16 @@
 package com.hyundai.project.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.hyundai.project.dto.EmailDTO;
 import com.hyundai.project.dto.MailHandler;
-import com.hyundai.project.dto.OrderCompleteDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,9 +23,6 @@ public class EmailService {
     
     @Autowired
     private SpringTemplateEngine templateEngine;
-    
-    @Autowired
-    private OrderService orderService;
 
     public void sendMail(EmailDTO email) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -46,7 +35,8 @@ public class EmailService {
     }
     
     public void sendMailWithFiles(EmailDTO emailDTO, Map<String, Object> variables) throws Exception {
-        Context context = new Context();
+    	
+    	Context context = new Context();
         variables.forEach((key, value)->{
         	context.setVariable(key,value);
         });
@@ -60,7 +50,6 @@ public class EmailService {
         mailHandler.setTo(emailDTO.getAddress());
         mailHandler.setFrom("gsmtpuser@gmail.com");
         mailHandler.setSubject(emailDTO.getTitle());
-        
         mailHandler.send();
         
         //mailHandler.setText("<h1>한섬3조</h1>"+"<a href='http://localhost:80/order/orderStatus?oid=" + completeList.get(0).getOid() +"'>주문확인</a>", true);

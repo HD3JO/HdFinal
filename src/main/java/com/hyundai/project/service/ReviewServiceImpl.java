@@ -45,4 +45,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewMapper.reviewcount(email);
 	}
 
+
+	@Override
+	public String reviewCheck(String email) {
+		
+		return reviewMapper.reviewCheck(email);
+	}
+	
+	
 }

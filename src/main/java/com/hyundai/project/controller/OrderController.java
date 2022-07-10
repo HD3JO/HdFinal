@@ -36,6 +36,9 @@ import com.hyundai.project.service.OrderMemberService;
 import com.hyundai.project.service.OrderPageService;
 import com.hyundai.project.service.OrderService;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Controller
 @RequestMapping("/order")
 public class OrderController {
@@ -112,8 +115,18 @@ public class OrderController {
 		emailDTO.setTitle("[한섬3조] 주문완료 이메일입니다.");
 		Map<String, Object> variables = new HashMap<>();
 		variables.put("orderList", completeList);
-		emailService.sendMailWithFiles(emailDTO, variables);
-		messageService.sendMessage(completeList);
+		if(completeList.get(0).getMarketingemail().equals("Y")) {
+			emailService.sendMailWithFiles(emailDTO, variables);
+		}
+		else{
+			log.info("");
+		}
+		if(completeList.get(0).getMarketingsms().equals("Y")) {
+			messageService.sendMessage(completeList);
+		}
+		else{
+			log.info("");
+		}
 		model.addAttribute("complete", completeList);
 
 		return "order/orderComplete";
@@ -126,5 +139,30 @@ public class OrderController {
 		model.addAttribute("orderList", completeList);
 		model.addAttribute("oid", oid);
 		return "order/orderStatus";
+	}
+	
+	@GetMapping("/orderDetail")
+	public String orderDetail(Model model, @RequestParam("oid") String oid) throws Exception {
+		List<OrderCompleteDTO> completeList = orderService.getOrderComplete(oid);
+		String odate = completeList.get(0).getOdate();
+		String pmcompany = completeList.get(0).getPmcompany();
+		int oafterprice = completeList.get(0).getOafterprice();
+		String oaddress1 = completeList.get(0).getOaddress1();
+		String oaddress2 = completeList.get(0).getOaddress2();
+		String oreceiver = completeList.get(0).getOreceiver();
+		String ophone = completeList.get(0).getOphone();
+		String phone = completeList.get(0).getPhone();
+		model.addAttribute("orderList", completeList);
+		model.addAttribute("oid", oid);
+		model.addAttribute("odate", odate);
+		model.addAttribute("ophone", ophone);
+		model.addAttribute("phone", phone);
+		model.addAttribute("oreceiver", oreceiver);
+		model.addAttribute("pmcompany", pmcompany);
+		model.addAttribute("oafterprice", oafterprice);
+		model.addAttribute("oaddress1", oaddress1);
+		model.addAttribute("oaddress2", oaddress2);
+		model.addAttribute("oafterprice", oafterprice);
+		return "order/orderDetail";
 	}
 }

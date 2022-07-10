@@ -35,6 +35,7 @@ public class MessageService {
 
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", completeList.get(0).getPhone());
+		params.put("to", completeList.get(0).getOphone());
 		params.put("from", "01068884025");
 		params.put("type", "SMS");
 		params.put("text", "<h1>한섬3조</h1>"+"<a href='http://localhost:80/order/orderStatus?oid=" + completeList.get(0).getOid() +"'>주문확인</a>");
