@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.project.board.repository.AdminBoardMapper">
+
+	<select id="getBoardList" resultType="com.hyundai.project.dto.AdminBoardDTO">
+		SELECT A.BID, A.BRAND, A.BHEADER, A.BTITLE, A.BAUTHOR, TO_CHAR(A.BDATE, 'yyyy-MM-dd') AS BDATE, A.BCONTENT, NVL(B.HITS,0) AS HITS, NVL(C.LIKES,0) AS LIKES
+		  FROM BOARD A, 
+		       (SELECT COUNT(*) AS HITS, BID FROM BOARD_HITS GROUP BY BID) B,
+		       (SELECT COUNT(*) AS LIKES, BID FROM BOARD_LIKES GROUP BY BID) C
+		 WHERE A.BID = B.BID(+)
+		   AND A.BID = C.BID(+)
+		   AND A.BRAND LIKE DECODE(#{brand, jdbcType=VARCHAR},NULL, '%', '%'||#{brand, jdbcType=VARCHAR}||'%')
+		   AND A.BHEADER LIKE DECODE(#{bheader, jdbcType=VARCHAR}, NULL, '%',  '%'||#{bheader, jdbcType=VARCHAR}||'%')
+		   AND A.BTITLE LIKE DECODE(#{btitle, jdbcType=VARCHAR}, NULL, '%',  '%'||#{btitle, jdbcType=VARCHAR}||'%')
+		   AND A.BAUTHOR LIKE DECODE(#{bauthor, jdbcType=VARCHAR}, NULL, '%',  '%'||#{bauthor, jdbcType=VARCHAR}||'%')
+		 ORDER BY A.BID DESC
+	</select>
+	
+	<update id="deleteBoard" parameterType="com.hyundai.project.dto.AdminBoardDTO">
+	<![CDATA[
+		UPDATE BOARD
+		   SET BCONTENT = '&lt;p&gt;관리자에 의해 삭제된 게시글입니다.&lt;/p&gt;'
+		 WHERE BID = #{bid}
+	]]>
+	</update>
+	
+	<select id="getReplyList" resultType="com.hyundai.project.dto.AdminReplyDTO">
+		SELECT A.BID, A.RNO, A.RAUTHOR, A.RCONTENT, TO_CHAR(A.RDATE, 'yyyy-MM-dd') as RDATE, B.BTITLE
+		  FROM REPLY A, BOARD B
+		 WHERE A.BID = B.BID 
+		   AND A.RAUTHOR LIKE DECODE(#{rauthor, jdbcType=VARCHAR}, NULL, '%', '%'||#{rauthor, jdbcType=VARCHAR}||'%')
+		   AND A.RCONTENT LIKE DECODE(#{rcontent, jdbcType=VARCHAR}, NULL, '%', '%'||#{rcontent, jdbcType=VARCHAR}||'%')
+		 ORDER BY RDATE DESC
+	</select>
+	
+	<update id="deleteReply" parameterType="com.hyundai.project.dto.AdminReplyDTO">
+		UPDATE REPLY
+		   SET RCONTENT = '관리자에 의해 삭제된 댓글입니다.'
+		 WHERE RNO = #{rno}
+	</update>
+</mapper>
