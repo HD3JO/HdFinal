@@ -11,6 +11,8 @@ import java.util.Set;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -33,9 +35,12 @@ public class DrawSchedulerService {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	
-	// 당첨자 추첨하고 당첨자에게 문자 전송하는 메서드
+	@Autowired
+	private JavaMailSender emailSender;
+	
+	// 당첨자 추첨하고 당첨자에게 이메일 전송하는 메서드
 	@Scheduled(cron ="0 0 20 * * SAT")
-	//@Scheduled(fixedDelay = 100000)
+	//@Scheduled(fixedDelay = 1000000)
 	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();
 			
@@ -95,45 +100,60 @@ public class DrawSchedulerService {
 					 // 당첨자 오라클DB에 insert
 					 drawMapper.insertWinDraw(winDTO);
 					 
-					 // 당첨자 번호로 문자메세지 전송 
-					 sendWinSms(phone, pname, winDTO.getEmail(), winDTO.getPsid());
+					 // 당첨자 번호로 문자메세지 전송 					 
+					 sendWinEmail(pname, winDTO.getEmail(), winDTO.getPsid());
 					 
 					 // dto 비워주기, 다음 제품 추첨을 위해
-					 winDTO = new DrawWinDTO();
-					 					 
+					 winDTO = new DrawWinDTO();					 					 
 					 keysListByPsid.clear();				
-					 
-					 //redis에 있는 데이터 지워주는거 추가
+					 					  					 
 				 } else if(keysListByPsid.size() == 0) {
 					 //log.info("해당 상품에 대한 응모 내역이 없습니다.");
 				 }
-			 }			 
+			 }	
+			
+			 // 추첨이 끝나면 Redis에 있는 모든 데이터 삭제
+			 redisTemplate.keys("*").stream().forEach(k-> {
+				 redisTemplate.delete(k);
+			 });
+			 
 			 return winDTO;
 		}
 	
 	//메세지 전송하는 기능
-	public void sendWinSms(String phone, String pname, String email, String psid){
-		
-		String api_key = "NCSC2U4IA5IWMONC";
-		String api_secret = "QUK0ICWXGL2KWIS0L3NOVKLDPAJTPJX4";
-		
-		Message winSms = new Message(api_key, api_secret);
-		HashMap<String, String> params = new HashMap<String, String>();
-		
-		params.put("to", phone);
-		params.put("from", "01053495253");
-		params.put("type", "SMS");
-		params.put("text", "<THE HANDSOME DRAW>\n응모에 당쳠되셨습니다!!!\n"
-				+ "localhost/draw/drawOrder?email="+email+"&psid="+psid);
-		params.put("app_version", "test app 1.2");
-
-		try {
-			JSONObject obj = (JSONObject) winSms.send(params);
-			System.out.println(obj.toString());
-		} catch (CoolsmsException e) {
-			System.out.println(e.getMessage());
-			System.out.println(e.getCode());
-		}
+//	public void sendWinSms(String phone, String pname, String email, String psid){
+//		
+//		String api_key = "NCSC2U4IA5IWMONC";
+//		String api_secret = "QUK0ICWXGL2KWIS0L3NOVKLDPAJTPJX4";
+//		
+//		Message winSms = new Message(api_key, api_secret);
+//		HashMap<String, String> params = new HashMap<String, String>();
+//		
+//		params.put("to", phone);
+//		params.put("from", "01053495253");
+//		params.put("type", "SMS");
+//		params.put("text", "<THE HANDSOME DRAW>\n"
+//				+ "<a href='http://localhost/draw/drawOrder?email=" + email + "&psid=" + psid + "'>배송지 입력</a>");		
+//		params.put("app_version", "test app 1.2");
+//
+//		try {
+//			JSONObject obj = (JSONObject) winSms.send(params);
+//			System.out.println(obj.toString());
+//		} catch (CoolsmsException e) {
+//			System.out.println(e.getMessage());
+//			System.out.println(e.getCode());
+//		}
+//	}
+	
+	public void sendWinEmail(String pname, String email, String psid) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("jyshustar@gmail.com");
+		message.setTo(email);
+		message.setSubject("<THE HANDSOME DRAW> 당첨안내입니다!");
+		message.setText("<THE HANDSOME DRAW>\n응모하신" + pname + " 제품에 당첨되었습니다!!\n"
+				+ "아래 링크에 접속하여 배송지를 입력해주시기 바랍니다.\n"
+				+ "http://localhost/draw/drawOrder?email=" + email + "&psid=" + psid);
+		emailSender.send(message);
 	}
 
 }
