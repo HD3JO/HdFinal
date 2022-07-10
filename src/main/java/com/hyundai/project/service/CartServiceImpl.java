@@ -3,6 +3,7 @@ package com.hyundai.project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.CartDTO;
@@ -11,7 +12,7 @@ import com.hyundai.project.user.repository.CartMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Service
+@Service(value="CartServiceImpl")
 @Log4j2
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {

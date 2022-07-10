@@ -39,7 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.successHandler(customAuthenticationSuccessHandler);
 		//http.formLogin();
 		http.oauth2Login();
-				
+		
+		//스마트에디터를 사용하기 위함
+		http.headers().frameOptions().disable();
+
 		//http.csrf().disable();	
 	}
    

@@ -1,0 +1,354 @@
+@charset "utf-8";
+
+/* Dark Colorset
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark { 
+	color:#cbcbcb;
+}
+
+#xet-boardWrp.dark select {
+	color:#cbcbcb;
+	background-image: url(../img/common/angle-down-w.svg);
+	background-size: 12px;
+	background-color: #1f1f1f;
+	border-color: #3f3f3f;
+}
+
+/* No Item */
+#xet-boardWrp.dark .no-item {}
+
+/* 게시판 설정 버튼 */
+#xet-boardWrp.dark .cover-infoManager a {
+	color: #fbfbfb;
+}
+
+/* 게시판 제목 */
+#xet-boardWrp.dark .boardTitle { 
+	color: #fbfbfb; 
+}
+#xet-boardWrp.dark .boardSubTitle { 
+	color: #cbcbcb; 
+}
+#xet-boardWrp.dark .boardDesc {
+	color: #cbcbcb;
+}
+
+/* 카테고리 Dropdown */
+#xet-boardWrp.dark .boardCategoryWrp a[data-toggle="category-dropdown"] {
+	background: url(../img/common/angle-down-w.svg) no-repeat 90% 50%;
+	background-size: 12px;
+}
+#xet-boardWrp.dark .boardCategoryWrp a[data-toggle="category-dropdown"].open {
+	background: url(../img/common/angle-up-w.svg) no-repeat 90% 50%;
+	background-size: 12px;
+}
+#xet-boardWrp.dark .boardCategoryWrp ul {
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .boardCategoryWrp ul li {
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .boardCategoryWrp ul li a { 
+	color: #cbcbcb; 
+}
+#xet-boardWrp.dark .boardCategoryWrp ul ul {
+	box-shadow: 0px 2px 4px rgba(0,0,0,.07);
+}
+
+/* Require Password 비밀번호 요구 박스 */
+#xet-boardWrp.dark .requirePassword h3 {
+	color:#cbcbcb;
+}
+#xet-boardWrp.dark .requirePassword .inputText { 
+	color:#777;
+	background: #1f1f1f;
+	border-color: #3f3f3f;
+	box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+}
+#xet-boardWrp.dark .requirePassword .inputText:focus {
+	color:#cbcbcb;
+}
+
+
+/* 메세지(권한) 박스 */
+#xet-boardWrp .smallBox {
+	border-color: #3f3f3f;
+}
+
+/* 태그 출력 리스트 */
+#xet-boardWrp.dark .tagCloud h3 {
+	color:#cbcbcb;
+	border-color:#3f3f3f; 
+}
+
+/* Pagination */
+#xet-boardWrp.dark .boardPagination a,
+#xet-boardWrp.dark .boardPagination strong { 
+	color: #cbcbcb;
+}
+#xet-boardWrp.dark .boardPagination .page_on {
+	border-color:#cbcbcb; 
+	color: #fff !important;
+}
+
+/* Search */
+#xet-boardWrp.dark .boardSearch .inputText { 	
+	background: #1f1f1f;
+	border-color:#3f3f3f; 
+}
+#xet-boardWrp.dark .boardSearch .inputText:focus { 
+	color: #cbcbcb;
+	background: #1f1f1f;
+}
+#xet-boardWrp.dark .boardSearch .search-btn {
+	border-color:#3f3f3f; 
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .boardSearch .search-btn>a { 
+	background-color: #1f1f1f;
+	border-color: #3f3f3f; 
+	color: #cbcbcb;
+}
+#xet-boardWrp.dark .boardSearch .search-btn>button {
+	border-color:#3f3f3f; 
+	background-image: url(../img/common/search-w.svg);
+	background-color: #1f1f1f;
+	color: #cbcbcb;
+}
+
+
+/* Tag */
+#xet-boardWrp.dark .tag_wrp { 
+	border-color:#3f3f3f; 
+}
+#xet-boardWrp.dark .tag_wrp a { 
+	color:#cbcbcb;
+}
+
+
+
+
+
+
+
+/* 목록형 - Table 스타일 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-listTable { 
+	border-color:#3f3f3f; 
+}
+#xet-boardWrp.dark .xet-listTable thead th { 
+	color: #cbcbcb; 
+	background-image: none;
+	background-color: #1f1f1f;
+	border-color:#3f3f3f; 
+}
+#xet-boardWrp.dark .xet-listTable thead th a {
+	color:#cbcbcb; 
+}
+#xet-boardWrp.dark .xet-listTable td { 
+	border-color:#3f3f3f; 
+}
+#xet-boardWrp.dark .xet-listTable td.td-subject a.subject { 
+	color: #cbcbcb; 
+}
+
+/* 목록형 - UL 스타일 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-ulWrp .item { 
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .xet-ulWrp .item.on { 
+	border-bottom: 3px solid #111;
+}
+#xet-boardWrp.dark .xet-ulWrp .cover-infoSubject a { 
+	color: #cbcbcb; 
+} 
+
+
+/* 갤러리형 - A 스타일 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-galleryWrp .itemBox { 
+	background-color: #1f1f1f;	
+}
+#xet-boardWrp.dark .xet-galleryWrp .itemBox.on {
+	background-color: #3f3f3f;
+	color: #fff;
+}
+#xet-boardWrp.dark .xet-galleryWrp .cover-infoSubject a { 
+	color: #cbcbcb;
+}
+
+/* 갤러리형 - B 스타일 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-galleryWrp .itemBox { 
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .xet-galleryWrp .cover-infoSubject {
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .xet-galleryWrp .cover-infoCount {
+	border-color: #3f3f3f;
+}
+
+
+/* 웹진형 - 1컬럼 스타일 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-webzineWrp .item {
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .xet-webzineWrp .cover-infoSubject a { 
+	color: #cbcbcb; 
+} 
+
+
+#xet-boardWrp.dark .xet-webzineWrp .itemBox {
+	border-color: #3f3f3f;
+}
+
+
+
+
+
+
+
+
+/* write form 
+--------------------------------------------------------------------------------------------------------*/
+#xet-boardWrp.dark .boardWrite .caption {
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .boardWrite .write_type .category { 
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .boardWrite input[type=text],
+#xet-boardWrp.dark .boardWrite input[type=password] { 
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .boardWrite textarea { 
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .boardWrite input:focus,
+#xet-boardWrp.dark .boardWrite textarea:focus {
+	border-color: #3f3f3f;
+	background-color: #000;
+	color:#cbcbcb;
+}
+#xet-boardWrp.dark .boardWrite .write_type .input_form .btn {
+	color: #cbcbcb;
+    background: #2f2f2f;
+    border: 1px solid #3f3f3f;
+	text-shadow: none;
+}
+
+#xet-boardWrp.dark .boardWrite .boardEditor {
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+/* editor */
+#xet-boardWrp.dark .boardWrite .cke_chrome {
+	border-color: #3f3f3f !important;
+}
+#xet-boardWrp.dark .boardWrite .cke_top {
+	border-color: #3f3f3f !important;
+}
+#xet-boardWrp.dark .boardWrite .cke_bottom {
+	border-color: #3f3f3f !important;
+}
+
+
+/* 주소 */
+#xet-boardWrp.dark .extraVarsList input[type="text"]:disabled {
+	background-color: #3f3f3f;	
+}
+
+
+/* 댓글 폼 */
+#xet-boardWrp.dark .cmtWrite .write_type input[name=notify_message] + label {
+	background: url(../img/common/notify-w.svg) no-repeat center center;
+	background-size: 20px;
+} 
+#xet-boardWrp.dark .cmtWrite .write_type input[name=notify_message]:checked + label {
+	background: url(../img/common/notify-on.svg) no-repeat center center;
+	background-size: 20px;
+}
+#xet-boardWrp.dark .cmtWrite .write_type input[name=is_secret] + label {
+	background: url(../img/common/lock-w.svg) no-repeat center center;
+	background-size: 20px;
+}
+#xet-boardWrp.dark .cmtWrite .write_type input[name=is_secret]:checked + label {
+	background: url(../img/common/lock-on.svg) no-repeat center center;
+	background-size: 20px;
+}
+
+
+
+
+
+/* view document 
+-------------------------------------------------------------------------------------------------------- */
+#xet-boardWrp.dark .xet-boardView .boardReadHeader .boardReadSubject a.subject { 
+	color:#cbcbcb;
+}
+#xet-boardWrp.dark .xet-boardView .boardReadHeader .boardReadInfo {
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+
+
+/* 확장 변수 출력 */
+#xet-boardWrp.dark .xet-boardView .extraVarsView {
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .xet-boardView .extraVarsView>ul>li {
+	border-color: #3f3f3f;
+}
+#xet-boardWrp.dark .xet-boardView .extraVarsView .extraVarsValue a {
+	color: #cbcbcb;
+}
+
+#xet-boardWrp.dark .rx_content,
+#xet-boardWrp.dark .xe_content {
+	color:#fff;
+}
+
+
+/* 팝업 메뉴 */
+#popup_menu_area { 
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#popup_menu_area li a {
+	color:#cbcbcb;
+}
+
+	/* 서명 */
+#xet-boardWrp.dark .xet-boardView .boardReadFooter .memberSignature { 
+	border-color: #3f3f3f;
+	background-color: #1f1f1f;
+}
+#xet-boardWrp.dark .xet-boardView .boardReadFooter .memberSignature .profile_text { 
+	color:#cbcbcb;
+}
+
+
+/* comment
+-------------------------------------------------------------------------------------------------------- */
+	/* 엮인글 수, 댓글 수 */
+#xet-boardWrp.dark .xet-boardView .feedbackList .feedbackHeader {
+	border-color: #3f3f3f;
+}
+
+
+
+	/* 댓글 목록 */
+#xet-boardWrp.dark .xet-boardView .feedbackList .item { 
+	border-color: #3f3f3f;
+} 
+#xet-boardWrp.dark .xet-boardView .feedbackList.form .item { 
+	border-color: #3f3f3f;
+} 
+

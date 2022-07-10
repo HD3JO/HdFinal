@@ -2,4 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.project.board.repository.BoardMapper">
+
+	<select id="getCount" resultType="int">
+		select count(*)
+		from board
+		where brand = #{bname}
+	</select>
+
+	<select id="getBoardList" resultType="com.hyundai.project.dto.BoardDTO">
+		SELECT bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg
+		from board
+		where brand = #{brand}
+		order by bdate desc
+	</select>
+	
+	<select id="getBoard" resultType="com.hyundai.project.dto.BoardDTO">
+		select board.bid, brand, bheader, btitle, bcontent, bauthor, bdate, bimg, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
+		from board 
+		left join (select bid, count(*) as bhits from board_hits group by bid) hits 
+		on hits.bid = board.bid 
+		left join (select bid, count(*) as blikes from board_likes group by bid) likes
+		on likes.bid = board.bid
+		where board.bid = #{bno}
+	</select>
+
+	<select id="getPageBoard" resultType="com.hyundai.project.dto.BoardDTO">
+        select bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes 
+        from (
+			select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes
+			from (select board.*, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
+				from board 
+				left join (select bid, count(*) as bhits from board_hits group by bid) hits 
+				on hits.bid = board.bid 
+				left join (select bid, count(*) as blikes from board_likes group by bid) likes
+				on likes.bid = board.bid
+				where board.brand=#{brand}  order by bdate desc
+				)
+			) t 
+		where rn between (#{pageNum}-1)*10+1 and #{pageNum}*10
+	</select>
+	
+	<delete id="delBoard">
+		delete from board where bid = #{bid}
+	</delete>
+
+	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
+		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
+	values(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent}, #{bauthor} ,sysdate)
+	</insert>
+	
+	<insert id="enrollReply" parameterType="com.hyundai.project.dto.ReplyDTO">
+		insert into reply(bid, rno, rauthor, rcontent, rdate)
+		values (#{bid}, reply_seq.NEXTVAL, #{rauthor}, #{rcontent}, sysdate)
+	</insert>	
+	
+	<select id="getReplyList" resultType="com.hyundai.project.dto.ReplyDTO">
+		select bid, rno, rauthor, rcontent, rdate 
+		from reply 
+		where bid = #{bid} 
+		order by rdate desc
+	</select>
+	
+	<delete id="delReply">
+		delete from reply where rno = #{rno}
+	</delete>
+	
+	<insert id="incHits">
+		insert into board_hits values(#{bid}, #{reader})
+	</insert>
+
+	<insert id="incLikes">
+		insert into board_likes values(#{bid}, #{reader})
+	</insert>
+	
+	<select id = "getLikesCount"  resultType="_int">
+		select count(*) as bcount from board_likes where bid = #{bid}
+	</select> 
+	
+	
 </mapper>
