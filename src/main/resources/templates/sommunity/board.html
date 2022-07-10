@@ -188,12 +188,12 @@
 	                                    class="xet-listTable">
 	                                    <thead>
 	                                        <tr>
-	                                            <th scope="col">번호</th>
-	                                            <th scope="col">제목</th>
-	                                            <th scope="col">작성자</th>
-	                                            <th scope="col">날짜</th>
-	                                            <th scope="col">조회수</th>
-	                                            <th scope="col">좋아요</th>
+	                                            <th width="15%" scope="col"></th>
+	                                            <th width="200px" scope="col">제목</th>
+	                                            <th width="20%" scope="col">작성자</th>
+	                                            <th width="10%" scope="col">날짜</th>
+	                                            <th width="5%" scope="col">조회수</th>
+	                                            <th width="5%" scope="col">좋아요</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody id="boarditems">
@@ -390,20 +390,20 @@
 		                if(data.length > 0) {
 		                	$(data).each(function (index) {
 		                		htmlstr += "<tr class='bg1'>";
-		                		htmlstr += "<td> <span alt='번호'>" + this.seq + "</span> </td>";
-		                		htmlstr += "<td class='td-subject'> <a href='javascript:void(0);' onclick='goViewForm("+this.bid+")' class='subject'>" + this.btitle + "</a> </td>";
-		                		htmlstr += "<td><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
+		                		htmlstr += "<td width='15%'> <span alt='머리글'>" + this.bheader + "</span> </td>";
+		                		htmlstr += "<td class='etc' style='text-align : left;'> <a href='javascript:void(0);' onclick='goViewForm("+this.bid+")' class='subject'><strong>" + this.btitle + "</strong></a> </td>";
+		                		htmlstr += "<td width='20%' style='text-align : left; text-overflow: ellipsis;'><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
 		                		let bdate = this.bdate;
 		                		
 		                		if(nowMonth === bdate.substr(5,2) && nowDate === bdate.substr(8,2)) {
-		                			htmlstr += "<td>"+bdate.substr(11,2)+":"+bdate.substr(14,2)+"</td>";
+		                			htmlstr += "<td width='10%'>"+bdate.substr(11,2)+":"+bdate.substr(14,2)+"</td>";
 		                		}
 		                		else {
-		                			htmlstr += "<td>"+bdate.substr(5,2) +"/" + bdate.substr(8,2) +"</td>";
+		                			htmlstr += "<td width='10%'>"+bdate.substr(5,2) +"/" + bdate.substr(8,2) +"</td>";
 		                		}
 		                		
-		                		htmlstr += "<td>" +this.bhits+"</td>";
-		                		htmlstr += "<td> " +this.blikes +"</td>";
+		                		htmlstr += "<td width='5%'>" +this.bhits+"</td>";
+		                		htmlstr += "<td width='5%'> " +this.blikes +"</td>";
 		                		
 		                	}
 		                	);

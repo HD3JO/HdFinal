@@ -334,7 +334,9 @@
     	var tempFile,
     		sUploadURL;
     	
-    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
+    	//sUploadURL= 'file_uploader_html5.php'; 	//upload URL
+    	sUploadURL = "/smarteditorMultiImageUpload";
+    	//sUploadURL = "/smarteditorMultiImageUpload";
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -457,8 +459,8 @@
 	 * Ajax 통신 시 error가 발생할 때 처리하는 함수입니다.
 	 * @return
 	 */
-	function onAjaxError (){
-		alert("[가이드]사진 업로더할 서버URL셋팅이 필요합니다.-onAjaxError");
+	function onAjaxError (e){
+		alert("[가이드]사진 업로더할 서버URL셋팅이 필요합니다.-onAjaxError"+e._response.responseText);
 	}
 
  	/**

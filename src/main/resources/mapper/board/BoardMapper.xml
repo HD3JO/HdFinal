@@ -27,7 +27,7 @@
 	</select>
 
 	<select id="getPageBoard" resultType="com.hyundai.project.dto.BoardDTO">
-        select (select count(*) from board where brand = #{brand})-rn+1 as seq, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes 
+        select bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes 
         from (
 			select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes
 			from (select board.*, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
