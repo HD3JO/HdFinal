@@ -11,9 +11,10 @@
 		       PMIMG1,
 		       BNAME,
 		       PNAME,
-		       OPENYN
+		       OPENYN,
+		       REGYN
 		FROM PRODUCT_DRAW
-		WHERE 1=1
+		WHERE REGYN = 'Y'
 	</select>
 	
 	<!-- 선택한 드로우 제품의 상세정보를 출력하는 SQL -->
@@ -28,7 +29,7 @@
 	       	   PSIZE,
 	       	   PCOLORCODE,
 	       	   PNOTE,	       	   
-	       	   OPENYN  
+	       	   OPENYN	       	   
 		FROM PRODUCT_DRAW
 		WHERE PSID = #{psid}
 	</select>
@@ -48,6 +49,7 @@
 	WHERE EMAIL = #{email, jdbcType=VARCHAR}
 	</select>
 	
+	<!-- Redis 서버에 있는 당첨자 정보 받아서 OracleDB에 저장하는 SQL -->
 	<insert id="insertWinDraw" parameterType="com.hyundai.project.dto.DrawWinDTO">	 	
 	 		INSERT 
 	 		INTO USERMANAGER.DRAWS(DID,
@@ -66,4 +68,58 @@
 	 			   SYSDATE,
 	 			   #{phone, jdbcType=VARCHAR})	
     </insert>
+    
+    <select id="getDrawListForAdmin" resultType="com.hyundai.project.dto.DrawListDTO">
+    	SELECT PSID,
+		       PCID,
+		       PID,
+		       PMIMG1,
+		       BNAME,
+		       PNAME,
+		       OPENYN,
+		       REGYN
+		FROM PRODUCT_DRAW
+    </select>
+    
+    <!-- 당첨자 리스트 출력하는 SQL -->
+    <select id="getWinList" resultType="com.hyundai.project.dto.DrawWinDTO">
+	    SELECT A.EMAIL,
+	      	   C.PNAME,
+	       	   A.PSID,
+	       	   A.PHONE,
+	       	   B.NAME,
+	       	   TO_CHAR(A.WDATE, 'YYYY-MM-DD') WDATE,
+	       	   A.OSTATUS
+		FROM USERMANAGER.DRAWS A
+		INNER JOIN USERMANAGER.MEMBER B
+		ON A.EMAIL = B.EMAIL
+		INNER JOIN PRODUCTMANAGER.PRODUCT_DRAW C
+		ON A.PSID = C.PSID
+    </select>
+    
+    <!-- 드로우 상품의 등록 여부를 업데이트 하는 SQL -->
+    <update id="updateRegYn" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close=";END;">
+	    	UPDATE PRODUCT_DRAW
+	    	SET REGYN = #{item.regyn}
+	    	WHERE PSID = #{item.psid}
+	    </foreach> 
+    </update>
+    
+    <!-- 드로우 당첨자의 이름, 이메일, 전화번호를 출력하는 SQL -->
+    <select id="getWinMember" parameterType="String" resultType="com.hyundai.project.dto.MemberDTO">
+    	SELECT NAME,
+    		   EMAIL, 
+    		   PHONE
+    	FROM USERMANAGER.MEMBER 
+    	WHERE EMAIL = #{email, jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 드로우 당첨자가 배송 정보 입력시 상태값 변경하는 SQL -->
+    <update id="updateOstaus" parameterType="com.hyundai.project.dto.DrawDTO">
+    	UPDATE USERMANAGER.DRAWS 
+		SET OSTATUS = '입력완료'
+		WHERE EMAIL = #{email, jdbcType=VARCHAR}
+		AND PSID = #{psid, jdbcType=VARCHAR}
+    </update>
 </mapper>

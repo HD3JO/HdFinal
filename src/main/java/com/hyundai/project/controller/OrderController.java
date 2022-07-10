@@ -129,7 +129,7 @@ public class OrderController {
 		}
 		model.addAttribute("complete", completeList);
 
-		return "/order/orderComplete";
+		return "order/orderComplete";
 	}
 	
 	@GetMapping("/orderStatus")

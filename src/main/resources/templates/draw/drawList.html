@@ -136,7 +136,7 @@ function logout(){
 				    <svg height="10px" width="12px" fill="#757575" viewBox="0 0 185.4 300">
 						<path d="M160.4 300c-6.4 0-12.7-2.5-17.7-7.3L0 150 142.7 7.3c9.8-9.8 25.6-9.8 35.4 0 9.8 9.8 9.8 25.6 0 35.4L70.7 150 178 257.3c9.8 9.8 9.8 25.6 0 35.4-4.9 4.8-11.3 7.3-17.6 7.3z"></path>
 					</svg>
-				    <span>Visit Handsome.com</span>
+				    <span>Visit Handsome.com</span>				   
 			    </a>		  
 		    </div>
 		    <div class="util-menu">
@@ -174,9 +174,8 @@ function logout(){
         </div>
         <h1 class="cnts_title ou1804" data-aos="fade-up">THE HANSOME DRAW</h1>
         <h3 class="cnts_small_title ou1804" data-aos="fade-up">매일 오전 10:00 ~ 11:00 드로우가 진행됩니다.</h3>
-        <h3 class="cnts_small_title ou1804" data-aos="fade-up" th:text="${totalCount}"></h3>
         <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
-          <div th:each="list, status : ${drawList}" th:class="'item ' + ${list.bname} + ' col-sm-6 col-md-4 col-lg-4 mb-4'">
+          <div th:each="list, status : ${drawList}" th:class="'item ' + ${list.bname} + ' col-sm-6 col-md-4 col-lg-4 mb-4'">          	
             <a th:href="'/draw/drawDetail?psid=' + ${list.psid}" class="item-wrap fancybox">
               <div class="work-info">
                 <h3 th:text="'[' + ${list.bname} + ']'"></h3>
@@ -184,9 +183,14 @@ function logout(){
                 <br></br>
                 <h1 th:if="${list.openyn == 'Y'}" class="ncss-btn-primary-dark">Draw</h1>
                 <h1 th:if="${list.openyn == 'N'}" class="ncss-btn-primary-dark">Coming Soon</h1>
+                <br></br>
+                <br></br>
+                <h1>현재 응모자 수</h1>
+                <p th:text="${list.cntByPsid}" style="font-size:70px; font-weight:bold; color: #c69c6c;"></p>
+                <h1>명</h2>                                
                 <input type="hidden" id="deliveryOkMsg" value="확인"/>
               </div>
-              <img class="img-fluid" th:src="${list.pmimg1}" width="100%">
+              <img class="img-fluid" th:src="${list.pmimg1}" width="100%">            
             </a>
           </div>      
       	</div>

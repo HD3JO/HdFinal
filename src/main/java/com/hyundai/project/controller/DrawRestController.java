@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyundai.project.dto.DrawDTO;
+import com.hyundai.project.dto.DrawListDTO;
+import com.hyundai.project.dto.DrawRegDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.service.DrawService;
 
 @RestController
@@ -107,5 +110,25 @@ public class DrawRestController {
 			 redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
 			 return new ResponseEntity<>("Duplicate Application", HttpStatus.CREATED);
 		 }
+	}
+	
+	@PostMapping("/drawProductUpdate")
+	public ResponseEntity<String> drawProductUpdate(@RequestBody List<DrawRegDTO> drawRegList) throws Exception{
+		
+		int result = drawService.updateRegYn(drawRegList);
+		System.out.println(result+"@@@@@@@@@@@@");
+		if(result == -1)
+			return new ResponseEntity<>("Update RegYN", HttpStatus.CREATED);
+		else {
+			return new ResponseEntity<>("No Update RegYN", HttpStatus.CREATED);
+		}
+	}
+	
+	@PostMapping("/insertOrder")
+	public ResponseEntity<String> insertOrder(@RequestBody DrawDTO drawDTO) throws Exception{
+		
+		drawService.updateOstaus(drawDTO);		
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
