@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
@@ -35,5 +36,13 @@ public interface BoardMapper {
 	void incLikes(BCountDTO bCountDTO) throws SQLException;
 
 	int getLikesCount(String bid);
+
+	int getTodayBoardCnt(String bauthor);
+
+	int getTodayReplyCnt(String rauthor);
+	
+	void getMileage(@Param("amount")int amount, @Param("bauthor") String bauthor);
+
+	
 
 }

@@ -15,4 +15,5 @@ public class ReplyDTO {
 	private String rauthor;
 	private String rcontent;
 	private String rdate;
+	private int disabled;
 }
