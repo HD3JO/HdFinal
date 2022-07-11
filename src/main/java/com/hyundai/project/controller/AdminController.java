@@ -111,6 +111,7 @@ public class AdminController {
 		System.out.println(memberDTO);
 		List<MemberDTO> list = memberService.selectUserAdmin(memberDTO);
 		model.addAttribute("memberList", list);
+		System.out.println("member tables");
 		System.out.println(list);
 		return "admin/tables";
 	}

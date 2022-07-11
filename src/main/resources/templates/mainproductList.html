@@ -107,18 +107,20 @@ function changeBest(e){
 		
 		console.log(data);
 		
-		//console.log('ddd');
-		let html = '';
-		if(senderId != 'master'){
-			html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right;" > '+message +'</div> </li><br>';	
-		}else{
-			html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left;" > '+message + ' </div></li><br>';
+		if(!message.includes('님이 접속했습니다.') && !message.includes('님이 퇴장했습니다.')){
+			//console.log('ddd');
+			let html = '';
+			if(senderId != 'master'){
+				html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right;" > '+message +'</div> </li><br>';	
+			}else{
+				html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left;" > '+message + ' </div></li><br>';
+			}
+			
+			$('.messageBox').append(html);
+			
+			//$('#chatInput').val('');
+			$('.messageBox').scrollTop($('.messageBox').height()*10);	
 		}
-		
-		$('.messageBox').append(html);
-		
-		//$('#chatInput').val('');
-		$('.messageBox').scrollTop($('.messageBox').height()*10);
 	}
 
 	//send a message

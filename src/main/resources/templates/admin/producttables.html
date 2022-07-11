@@ -110,7 +110,7 @@
 										+ data[key].pcid + '</td>';
 								html += '<td id="psid'+key+'" style="display:none;">'
 										+ data[key].psid + '</td>';
-								html += '<td>' + data[key].pcprice + '₩</td>';
+								html += '<td>' + data[key].pcprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '₩</td>';
 								html += '<td>' + data[key].psize + '</td>';
 								html += '<td>' + data[key].pccolorcode
 										+ '</td>';
@@ -229,10 +229,12 @@ td input {
 					</form>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">상품 리스트</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th>브랜드명</th>
@@ -240,17 +242,17 @@ td input {
 											<th>상품명</th>
 										</tr>
 									</thead>
-
 									<tbody>
-										<tr class="product" th:each="product, status: ${productlist}"
-											th:onclick="'productModal('+${status.index}+')'">
-											<td><span th:id="'bname'+${status.index}"
-												th:idx="${status.index}" th:text="${product.bname}" /></td>
-											<td><span th:id="'pid'+${status.index}"
-												th:idx="${status.index}" th:text="${product.pid}" /></td>
-											<td><span th:id="'pname'+${status.index}"
-												th:idx="${status.index}" th:text="${product.pname}" /></td>
-
+										<tr class="product" th:each="product, status: ${productlist}" th:onclick="'productModal('+${status.index}+')'">
+											<td>
+												<span th:id="'bname'+${status.index}" th:idx="${status.index}" th:text="${product.bname}" ></span>
+											</td>
+											<td>
+												<span th:id="'pid'+${status.index}"	th:idx="${status.index}" th:text="${product.pid}" ></span>
+											</td>
+											<td>
+												<span th:id="'pname'+${status.index}" th:idx="${status.index}" th:text="${product.pname}" ></span>
+											</td>
 										</tr>
 									</tbody>
 								</table>

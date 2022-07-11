@@ -303,8 +303,8 @@
                                             <td>
                                             	<input type="hidden" th:value="${member.enable}"/>
                                             	<select th:id="'enable'+${status.index}" th:idx="${status.index}" name="enable" onchange="changeSelect(this)">
-                                            		<option value="1" th:selected="${member.enable}=='1'">활성</option>
-                                            		<option value="0" th:selected="${member.enable}=='0'">휴면</option>
+                                            		<option value="1" th:selected="${member.enable}==1">활성</option>
+                                            		<option value="0" th:selected="${member.enable}==0">휴면</option>
                                             	</select>
                                             </td>
                                             <td>

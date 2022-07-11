@@ -89,6 +89,9 @@ public class MemberOAuth2UserDetailsService
        MemberDTO memberVO;
        try {
     	   memberVO = saveSocialMember(email, "naver");
+    	   if(memberVO.getEnable() == 0) {
+    		   return null;
+    	   }
     	   System.out.println("done1 " +memberVO);
     	   List<GrantedAuthority> authorities = new ArrayList<>();
 	       authorities.add(

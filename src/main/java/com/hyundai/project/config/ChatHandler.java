@@ -104,7 +104,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			sendToAll(msg,senderId);
 		}else {
 			Map<String, Object> data = new HashMap<>();
-			data.put("message", senderId + "님이 접속하셨습니다.");
+			data.put("message", senderId + "님이 접속했습니다.");
 			data.put("receiverId", "master");
 			data.put("newOne", senderId);
 			
@@ -130,7 +130,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			sendToAll(msg, senderId);
 		}else {
 			Map<String, Object> data = new HashMap<>();
-			data.put("message", senderId + " 님이 퇴장하셨습니다.");
+			data.put("message", senderId + " 님이 퇴장했습니다.");
 			data.put("receiverId", "master");
 			data.put("outOne", "senderId");
 			

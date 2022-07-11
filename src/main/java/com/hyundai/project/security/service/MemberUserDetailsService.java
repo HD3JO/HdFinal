@@ -38,6 +38,9 @@ public class MemberUserDetailsService implements UserDetailsService{
 		}
 		
 		MemberDTO  result2 = result.get(0);
+		if(result2.getEnable() == 0) {	//휴면계정 
+			return null;
+		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + result2.getRole()));
 		
