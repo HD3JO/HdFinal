@@ -35,5 +35,11 @@ public interface BoardService {
 
 	public int getLikesCount(String bid);
 
+	public int getTodayBoardCnt(String bauthor);
+
+	public void getMileage(int amount, String bauthor);
+
+	public int getTodayReplayCnt(String rauthor);
+
 
 }

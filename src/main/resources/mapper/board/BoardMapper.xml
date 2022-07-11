@@ -47,13 +47,13 @@
 	</delete>
 
 	<insert id="insertBoard" parameterType="com.hyundai.project.dto.BoardDTO">
-		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate)
-	values(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent}, #{bauthor} ,sysdate)
+		insert into board(bid, brand, bheader, btitle, bcontent, bauthor, bdate, disabled)
+	values(board_seq.NEXTVAL, #{brand},#{bheader},#{btitle},#{bcontent}, #{bauthor} ,sysdate, 0)
 	</insert>
 	
 	<insert id="enrollReply" parameterType="com.hyundai.project.dto.ReplyDTO">
-		insert into reply(bid, rno, rauthor, rcontent, rdate)
-		values (#{bid}, reply_seq.NEXTVAL, #{rauthor}, #{rcontent}, sysdate)
+		insert into reply(bid, rno, rauthor, rcontent, rdate, disabled)
+		values (#{bid}, reply_seq.NEXTVAL, #{rauthor}, #{rcontent}, sysdate, 0)
 	</insert>	
 	
 	<select id="getReplyList" resultType="com.hyundai.project.dto.ReplyDTO">
@@ -79,5 +79,15 @@
 		select count(*) as bcount from board_likes where bid = #{bid}
 	</select> 
 	
+	<select id = "getTodayBoardCnt"  resultType="_int">
+		select fn_todaybcnt(#{bauthor}) as cnt from dual
+	</select> 
+	
+	<select id = "getTodayReplyCnt"  resultType="_int">
+		select fn_todayrcnt(#{rauthor}) as cnt from dual
+	</select> 	
+	<select id = "getMileage" >
+		call proc_getmileage(#{amount}, #{bauthor})
+	</select> 
 	
 </mapper>

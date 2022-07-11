@@ -100,6 +100,25 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardMapper.getLikesCount(bid);
 	}
+
+
+
+	@Override
+	public int getTodayBoardCnt(String bauthor) {
+		
+		return boardMapper.getTodayBoardCnt(bauthor);
+	}
+	
+	@Override
+	public int getTodayReplayCnt(String rauthor) {
+		return boardMapper.getTodayReplyCnt(rauthor);
+	}
+
+	@Override
+	public void getMileage(int amount, String bauthor) {
+		boardMapper.getMileage(amount, bauthor);
+		return;
+	}
 	
 	
 

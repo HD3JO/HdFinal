@@ -1,6 +1,8 @@
 package com.hyundai.project.controller;
 
 
+import javax.sound.midi.SysexMessage;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -52,6 +54,13 @@ public class SommunityController {
 		String url = "";
 		
 		try {
+			int n = boardService.getTodayBoardCnt(boardDTO.getBauthor());
+			if(n<5) {
+				//오늘 5개 미만로 작성한 경우 포린트 지급
+				
+				//해당 유저에게 포인트 지급
+				boardService.getMileage(100, boardDTO.getBauthor());
+			}
 			boardService.insertBoard(boardDTO);
 			url = "redirect:/sommunity/board?bname=" + boardDTO.getBrand();
 		}

@@ -179,7 +179,7 @@
 						<!--  brand v, bheader, btitle, bcontent v, bauthor -->
 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 							<input type="hidden" name="bauthor" id="bauthor" th:value="${#authentication.name}" >
-							<input type="hidden" name="brand" id="brand" th:value=${bname}>
+							<input type="hidden" name="brand" id="brand" th:value="${bname}">
 							<div class="boardEditor">
 								<div class="boardWriteHeader">
 									<!-- 
@@ -218,7 +218,7 @@
 										data-editor-content-key-name="content"
 										style="height: auto; background-color: #fff;">
 
-								      <textarea id="bcontent" name="bcontent" rows="20" cols="100" style="width: 100%;"></textarea>
+								      <textarea id="bcontent" name="bcontent"style="width: 100%;"></textarea>
 								      	
 										<script>
 										var header = $("meta[name='_csrf_header']").attr('content');
@@ -226,65 +226,20 @@
 										 var ckeditor_config = {
 										   enterMode : CKEDITOR.ENTER_BR,
 										   shiftEnterMode : CKEDITOR.ENTER_P,
+										   height : '500px',
 										   /* 이미지 넣을 컨트롤러 주소 */
 										   filebrowserUploadUrl : "/api/upload?_csrf=" + token
 										 };
 										 
 										 CKEDITOR.replace("bcontent", ckeditor_config);
-										</script>
-										<script>
-										/*
-										let oEditors = []
-										
-										smartEditor = function() {
-										  console.log("Naver SmartEditor")
-										  nhn.husky.EZCreator.createInIFrame({
-										    oAppRef: oEditors,
-										    elPlaceHolder: "bcontent",
-										    sSkinURI: "/smarteditor/SmartEditor2Skin.html",
-										    fCreator: "createSEditor2"
-										  })
-										}
-										
-										$(document).ready(function() {
-										  smartEditor()
-										})
-										*/
-										
-											
-										</script> 								      
-									</div>
-
-									<!--#JSPLUGIN:jquery.fileupload-->
-									<!--#JSPLUGIN:jquery.finderSelect-->
-									<!--#JSPLUGIN:handlebars-->
-									
-									<script>
-										jQuery(function($) {
-											// uploader
-											var setting = {
-												maxFileSize : 2097152,
-												limitMultiFileUploadSize : 2097152
-											};
-											var uploader = $('#xefu-container-19')
-													.xeUploader(setting);
-											window.xe.msg_exceeds_limit_size = '허용된 용량을 초과하여 첨부가 되지 않았습니다.';
-											window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
-											window.xe.msg_file_cart_is_null = '삭제할 파일을 선택해주세요.';
-											window.xe.msg_checked_file_is_deleted = '%d개의 첨부 파일이 삭제되었습니다.';
-											window.xe.msg_not_allowed_filetype = '업로드할 수 없는 파일 형식입니다.';
-											window.xe.msg_file_upload_error = '파일 업로드 중 에러가 발생하였습니다.';
-										});
-									</script>
-									
+										</script>						      
+									</div>			
 								</div>
 	
 								<div class="boardNavigation">
 									<button class="xet_btn large submit xet_btn_block">등록</button>
 									<input type="hidden" id="deliveryOkMsg" value="확인">
 									<div class="mg-t10">
-										<button type="button" onclick="doDocumentSave(this);"
-											class="xet_btn medium white">  임시 저장 </button>
 										<script>
 										
 										function checkForm(){
@@ -307,36 +262,6 @@
 											return checkFormFlag;
 										}
 										
-										
-										/*
-										function changeQueryString(obj){
-											oEditors.getById["bcontent"].exec("UPDATE_CONTENTS_FIELD", []); //스마트 에디터 값을 텍스트컨텐츠로 전달  
-											CKEDITOR.bcontent.getData();
-											String.prototype.decodeEntity = function() {     return this.replace(/&/gi, "&").replace(/</gi, "<").replace(/>/gi, ">"); };
-											
-											if(checkForm()){
-												var action = document.querySelector("#boardForm");
-												console.log(action)
-												action.submit();
-											}
-										}
-										*/
-										function doDocumentSave() {
-											
-											let bheader = $('#bheader').val();
-											let btitle = $('#btitle').val();
-											//textarea 값 불러옴
-											oEditors.getById["bcontent"].exec("UPDATE_CONTENTS_FIELD", [])
-											let bcontent = document.getElementById("bcontent").value;
-											if(bcontent == '<p>&nbsp;</p>' || bcontent == '') {
-												console.log('내용 빔');
-											    return;
-											 }else {
-												console.log(bheader);
-												console.log(btitle);
-												console.log(bcontent);
-											 }
-										}
 										</script>
 									</div>
 	
