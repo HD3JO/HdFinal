@@ -46,11 +46,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		updateUser.setName(memberDTO.getName());
 		updateUser.setPhone(memberDTO.getPhone());
+		updateUser.setPassword(memberDTO.getPassword());
 		updateUser.setMarketingemail(memberDTO.getMarketingemail());
 		updateUser.setMarketingsms(memberDTO.getMarketingsms());
 		
 		return mapper2.updateMember(updateUser);
 	}
+	
 	@Override
 	public List<MemberDTO> selectUserAdmin(MemberDTO memberDTO) throws Exception {
 		// TODO Auto-generated method stub

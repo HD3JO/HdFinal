@@ -14,36 +14,36 @@ $(document).ready(function(){
 	function logout(){
 		$('#logoutForm').submit();
 	}
-	$("hpPwChangeBtn").click(function(){
-		const header = $("meta[name='_csrf_header']").attr('content');
-	 	const token = $("meta[name='_csrf']").attr('content');
+// 	$("hpPwChangeBtn").click(function(){
+// 		const header = $("meta[name='_csrf_header']").attr('content');
+// 	 	const token = $("meta[name='_csrf']").attr('content');
 		
-		var password = $("#password").val();
-		console.log(password);
+// 		var password = $("#password").val();
+// 		console.log(password);
 		
-		$.ajax({
-	 		type : "POST",
-	 		url : "/member/modify",
-	 		data : JSON.stringify(password),
-	 		dataType : 'json',
-	 		contentType : 'application/json',
-	 		beforeSend: function(xhr){
-	            xhr.setRequestHeader(header, token);
-	        }, 
-	        success : function(result) {
-	        	if(result=='success'){
-	         	   layerAlert('비밀번호가 수정되었습니다.');
-	         	   console.log("success");
-	            }else{
-	         	   console.log("error");
-	            }
-			},
-			 error:function(request,status,error)
-			 {    
-				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			 }
-		});
-	});
+// 		$.ajax({
+// 	 		type : "POST",
+// 	 		url : "/member/modify",
+// 	 		data : JSON.stringify(password),
+// 	 		dataType : 'json',
+// 	 		contentType : 'application/json',
+// 	 		beforeSend: function(xhr){
+// 	            xhr.setRequestHeader(header, token);
+// 	        }, 
+// 	        success : function(result) {
+// 	        	if(result=='success'){
+// 	         	   layerAlert('비밀번호가 수정되었습니다.');
+// 	         	   console.log("success");
+// 	            }else{
+// 	         	   console.log("error");
+// 	            }
+// 			},
+// 			 error:function(request,status,error)
+// 			 {    
+// 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+// 			 }
+// 		});
+// 	});
 	
 	
 	$("#saveBtn").click(function(){
@@ -57,6 +57,7 @@ $(document).ready(function(){
 	 	var memberDTO= {
 	 			name : $("#name").val(),
 	 			email: $("#email").text(),
+	 			password: $("#password").val(),
 	 			phone : $('#hp1').val()+$('#hp2').val()+$('#hp3').val(),
 	 			marketingemail : $('input:radio[name="emailReceiveYN"]:checked').val()=='true'?'Y':'N',
 	            marketingsms : $('input:radio[name="smsReceiveYN"]:checked').val()=='true'?'Y':'N'
@@ -193,10 +194,10 @@ $(document).ready(function(){
 								<td id="email" name="email" th:text="${#authentication.principal.username}"></td>
 							</tr>
 							<tr>
-								<th scope="row" class="th_space"><label for="pwChangeBtn">비밀번호</label></th>
+								<th scope="row"><strong class="reqd">*</strong><label for="pwChangeBtn">비밀번호</label></th>
 								<td>
 									<input type="password" id="password" th:value="${#authentication.principal.password}">
-									<input type="button" value="비밀번호 변경" class="btn add_s" id="hpPwChangeBtn">
+<!-- 									<input type="button" value="비밀번호 변경" class="btn add_s" id="hpPwChangeBtn"> -->
 								</td>
 							</tr>
 							<tr>
