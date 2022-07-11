@@ -44,4 +44,10 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		
 	}
 
+	@Override
+	public int getBoardCntByDay(AdminBoardDTO adminBoardDTO) throws Exception {
+
+		return adminBoardMapper.getBoardCntByDay(adminBoardDTO);
+	}
+
 }

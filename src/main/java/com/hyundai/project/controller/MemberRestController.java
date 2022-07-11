@@ -18,7 +18,6 @@ import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberRole;
 import com.hyundai.project.dto.MemberUserDetails;
 import com.hyundai.project.dto.OrderListDTO;
-import com.hyundai.project.dto.ReviewDTO;
 import com.hyundai.project.service.MemberService;
 import com.hyundai.project.service.OrderService;
 import com.hyundai.project.service.ReviewService;
@@ -111,8 +110,9 @@ public class MemberRestController {
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> modify(@RequestBody MemberDTO memberDTO) throws Exception {
+		String password = passwordEncoder.encode(memberDTO.getPassword());
+		memberDTO.setPassword(password);
 		memberService.updateMember(memberDTO);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+memberDTO);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
@@ -143,13 +143,5 @@ public class MemberRestController {
 		
 		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 	}
-	
-//	@RequestMapping(value="/pwChange", method=RequestMethod.POST)
-//	@ResponseBody
-//	public String pwChange(String email, String password) throws Exception{
-//		String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
-//		memberService.pwChange(email, hashedPw);
-//		
-//		return "modify";
-//	}
+
 }

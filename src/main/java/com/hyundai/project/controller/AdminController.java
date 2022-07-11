@@ -1,11 +1,17 @@
 package com.hyundai.project.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyundai.project.dto.AdminBoardDTO;
 import com.hyundai.project.dto.AdminOrderDTO;
 import com.hyundai.project.dto.AdminProductDTO;
@@ -37,6 +44,7 @@ import com.hyundai.project.product.repository.DrawMapper;
 import com.hyundai.project.service.AdminMainService;
 import com.hyundai.project.service.AdminOrderService;
 import com.hyundai.project.service.AdminProductService;
+import com.hyundai.project.service.DrawService;
 import com.hyundai.project.service.MemberService;
 import com.hyundai.project.user.repository.OrderMapper;
 import com.hyundai.project.user.repository.PaymentMethodMapper;
@@ -55,19 +63,77 @@ public class AdminController {
 	@Autowired
 	private AdminBoardService adminBoardService;
 	@Autowired
+	private DrawService drawService;
+	@Autowired
 	private PaymentMethodMapper paymentMethodMapper;
 	@Autowired
 	private OrderMapper orderMapper;
 	@Autowired
-	private DrawMapper drawMapper;
-	
+	private DrawMapper drawMapper;	
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String index(Model model) {
+	public String index(Model model) throws Exception {
 		int totalusercount = adminMainService.getTotalUser();
 		int totalordercount = adminMainService.getMonthOrderCount();
 		int totalproductcount = adminMainService.getTotalProductQty();
-		int totalproductprice = adminMainService.getMonthOrderPrice();
+		int totalproductprice = adminMainService.getMonthOrderPrice();		
+		
+		AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
+		
+		Calendar cal = Calendar.getInstance();
+		int last_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int[] cnt = new int[last_day];
+		
+		for(int i = 1; i <= last_day; i++) {
+			int firstDay = i;
+			int SecondDay = i+1;
+			
+			adminBoardDTO.setPrevDate(firstDay);
+			adminBoardDTO.setNextDate(SecondDay);
+			
+			cnt[i-1] = adminBoardService.getBoardCntByDay(adminBoardDTO);
+		}		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		// psid별 드로우 응모현황
+		List<DrawListDTO> drawList = drawService.getDrawList();
+		
+		Set<String> redisKeys = redisTemplate.keys("*");
+		Iterator<String> keys = redisKeys.iterator();
+		List<String> keysList = new ArrayList<>();
+		List<Integer> cntByPsidList = new ArrayList<>();
+		int cntByPsid = 0;
+		int totalCnt = 0;
+		
+		// redis에 있는 모든 키 값들 리스트 형태로 받아옴
+				while(keys.hasNext()) {
+					String data = keys.next();
+					keysList.add(data);
+				}
+				
+				// 드로우 상품 별 응모자 수
+				for(int i = 0; i < drawList.size(); i++) {						 
+					 for(int j = 0; j < keysList.size(); j++) {
+						 Object val = redisTemplate.opsForValue().get(String.valueOf(keysList.get(j)));
+						 Map<String, Object> map = mapper.convertValue(val, Map.class);
+						 
+						 if(((String)map.get("psid")).equals(drawList.get(i).getPsid())) {
+							 cntByPsid++;
+						 }
+					 }
+					 cntByPsidList.add(cntByPsid);
+					 drawList.get(i).setCntByPsid(cntByPsid);
+					 totalCnt += cntByPsid; 
+					 cntByPsid = 0;
+				 }
+		
+		
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("total", totalCnt);
+		model.addAttribute("drawList", drawList);
 		model.addAttribute("totalproductprice", totalproductprice);
 		model.addAttribute("totalproductcount", totalproductcount);
 		model.addAttribute("totalordercount", totalordercount);

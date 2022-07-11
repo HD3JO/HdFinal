@@ -16,4 +16,6 @@ public interface AdminBoardService {
 	public List<AdminReplyDTO> getReplyList(AdminReplyDTO adminReplyDTO) throws Exception;
 
 	public void deleteReply(List<AdminReplyDTO> adminReplyDTOList);
+	
+	public int getBoardCntByDay(AdminBoardDTO adminBoardDTO) throws Exception;
 }

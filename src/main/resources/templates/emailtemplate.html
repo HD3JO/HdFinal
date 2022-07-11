@@ -76,7 +76,8 @@ tbody {
 			<td style="color:#222;font-size:14px;line-height:20px;font-family:'MalgunSemilight',sans-serif;font-weight:lighter;border:0;padding:15px 0 0;line-height:1.7em">
 			고객님, 안녕하십니까? 더<span class="il">한섬</span>닷컴을 이용해주셔서 감사합니다.<br>
 			더<span class="il">한섬</span>닷컴 고객님의 주문 완료 내용을 다음과 같이 안내드립니다.<br>
-			<!--  <a href='http://localhost:80/order/orderStatus?oid=" + completeList.get(0).getOid() +"'></a><br> -->
+			더 자세한 주문 정보는 더한섬닷컴에 접속하여 고객님의 주문내역을 참고해주시기 바랍니다.<br>
+<!-- 			  <a href='http://localhost:80/order/orderDetail?oid=" + orderList.get(0).getOid() +"'>주문상세확인</a><br> -->
 			</td>
 		</tr>
 		<tr>	
@@ -116,13 +117,13 @@ tbody {
 												<td class="pt_list_wrap" style="border-bottom: 1px solid #e5e5e5;" >
 													<!-- pt_list_all -->
 													<div class="pt_list_all">
-														<a id="productfirst" onclick="javascript:void(0);"> 
-															<img th:id="productimg" th:src="${order.pcimg1}" alt="" th:width="85" th:height="85" style="float: left"><!-- th:href="@{/detail(pcid=${order.psid})}"  -->
+														<a id="productfirst"  onclick="javascript:void(0);"> <!-- th:href="@{/detail(psid=${order.psid})}"  -->
+															<img th:id="productimg" th:src="${order.pcimg1}" alt="" th:width="85" th:height="85" style="float: left">
 														</a>
 														
 													<div class="tlt_wrap" style="padding-left:100px">
 															
-															<a th:id="productsecond" class="basket_tlt" onclick="javascript:void(0);"> <!--  th:href="@{/detail(pcid=${order.pcid})}" -->
+															<a th:id="productsecond" class="basket_tlt"  onclick="javascript:void(0);"> <!-- th:href="@{/detail(pcid=${order.pcid})}"  -->
 																<span class="tlt" th:text=${order.bname}></span> 
 																<span class="sb_tlt" th:text=${order.pname}></span>
 															</a>

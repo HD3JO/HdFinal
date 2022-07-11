@@ -19,4 +19,5 @@ public interface MemberService {
 	public void updateMemeberAdmin(List<MemberDTO> memberList) throws Exception;
 	
 	public void secession(String email) throws Exception;
+	
 }

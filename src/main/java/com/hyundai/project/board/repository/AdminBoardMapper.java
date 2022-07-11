@@ -16,5 +16,7 @@ public interface AdminBoardMapper {
 	public List<AdminReplyDTO> getReplyList(AdminReplyDTO adminReplyDTO) throws Exception;
 
 	public void deleteReply(AdminReplyDTO dto);
+	
+	public int getBoardCntByDay(AdminBoardDTO adminBoardDTO) throws Exception;
 }
 
