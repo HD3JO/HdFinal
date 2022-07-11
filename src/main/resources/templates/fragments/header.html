@@ -5,730 +5,731 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 <!-- <head th:replace="include/headerstatic :: headerstatic"></head> -->
 
 <!-- <body oncontextmenu='return false'> -->
-	
-	<!-- headerWrap -->
-	<div id="headerWrap" th:fragment="header">
-	
-		<input type="hidden" id="validationCheckPwd"
-			value="비밀번호를 재입력 하셔야 합니다." /> <input type="hidden"
-			id="validationCheck" value="필수데이터가 입력되지 않았습니다." /> <input
-			type="hidden" id="validationCheckMsg" value="다음 사항을 확인해 주세요." /> <input
-			type="hidden" id="validationCheckMsg1" value="필수데이터가 입력되지 않았습니다." />
-		<input type="hidden" id="validationCheckMsg2"
-			value="동일문자를 3번 이상 사용할 수 없습니다." /> <input type="hidden"
-			id="validationCheckMsg3"
-			value="연속된 문자열(123 또는 321, abc, cba 등) 3자리이상 올 수 없습니다." /> <input
-			type="hidden" id="validationCheckMsg4" value="Caps Lock 이 켜져 있습니다." />
-		<input type="hidden" id="validationCheckMsg5"
-			value="이메일 아이디의 중복 확인이 필요합니다." /> <input type="hidden"
-			id="validationCheckMsg6" value="이메일의 중복확인이 필요합니다." /> <input
-			type="hidden" id="deliveryOkMsg" value="확인" /> <input type="hidden"
-			id="deliveryCancelMsg" value="취소" />
-				
-		<div class="header header_fixed header_main1903">
-			<script type="text/javascript"
-				src="/_ui/desktop/common/js/SsoAjax.js"></script>
-			
-			<script type="text/javascript"
-				src="/_ui/desktop/common/wisenut/ark/js/beta.fix.js"></script>
-			<script type="text/javascript"
-				src="/_ui/desktop/common/wisenut/ark/js/ark.js"></script>
-			<script type="text/javascript"
-				src="/_ui/desktop/common/wisenut/js/search.js"></script>
-			<script type="text/javascript">
-				
-				// #1067 - 201803 메인 개편
-				function applyCategory() {
-
-					layerAlert('로그인 후 당신만의 브랜드 즐겨찾기를 <br /> 완성하세요.');
-					return;
-
-					var brandNameArray = new Array();
-					var brandCodeArray = new Array();
-					var parentBrandCodeArray = new Array();
-					var sortIndexArray = new Array();
-					var valueSplitArray = new Array();
-					var dataValue = "";
-
-					$("input:checkbox[class=\"checkboxEvent\"]").each(
-							function() {
-								if (this.checked) {
-									dataValue = this.value;
-									valueSplitArray = dataValue.split('#');
-									brandNameArray.push(this.title);
-									parentBrandCodeArray
-											.push(valueSplitArray[0]);
-									brandCodeArray.push(valueSplitArray[1]);
-									sortIndexArray.push(valueSplitArray[2]);
-								}
-							});
-					var parentBrandCode = parentBrandCodeArray.join(",");
-					var brandName = brandNameArray.join(",");
-					var brandCode = brandCodeArray.join(",");
-					var sortIndex = sortIndexArray.join(",");
-
-					//braze
-					brazeCustomAttribut(brandCodeArray);
-
-					$.ajax({
-						type : "GET",
-						url : "/intro/setCategoryList",
-						data : {
-							"brandName" : brandName,
-							"brandCode" : brandCode,
-							"parentBrandCode" : parentBrandCode,
-							"sortIndex" : sortIndex
-						},
-						success : function(data) {
-							window.location.reload();
-						},
-						error : function(e) {
-							console.log("error", e);
-						}
-					});
-
-				}
-
-				function resetCategory() {
-
-					$("input:checkbox[class=\"checkboxEvent\"]").each(
-							function() {
-								if (this.checked) {
-									this.checked = false;
-								}
-							});
-					applyCategory();
-				}
-
-				function searchOn() {
-					searchInit();
-					$('div.gnb_sh_wrap').css("display", "block");
-					$('div.util_menu').css("display", "none");
-					$('div.gnb_sh_result').css("display", "block");
-
-				}
-
-				function searchOff() {
-
-					$('div.util_menu').css("display", "block");
-					$('div.gnb_sh_wrap').css("display", "none");
-
-				}
-
-				function showTab() {
-
-					$('div.gnb_sh_result').css("display", "block");
-
-				}
-
-				// 쿠키 생성
-				function setCookie(cName, cValue, cDay) {
-					var expire = new Date();
-					expire.setDate(expire.getDate() + cDay);
-					cookies = cName + '=' + escape(cValue) + '; path=/ ';
-					if (typeof cDay != 'undefined')
-						cookies += ';expires=' + expire.toGMTString() + ';';
-					document.cookie = cookies;
-				}
-				//쿠키 생성 (00시 제거)
-				function setOneDayCookie(cName, cValue, cDay) {
-					var currentDate = new Date();
-					var expire = new Date(currentDate.getFullYear(),
-							currentDate.getMonth(), currentDate.getDate()
-									+ cDay, 0, 0, 0);
-					cookies = cName + '=' + escape(cValue) + '; path=/ ';
-					if (typeof cDay != 'undefined')
-						cookies += ';expires=' + expire.toGMTString() + ';';
-					document.cookie = cookies;
-				}
-
-				// 쿠키 가져오기
-				function getCookie(cName) {
-					cName = cName + '=';
-					var cookieData = document.cookie;
-					var start = cookieData.indexOf(cName);
-					var cValue = '';
-					if (start != -1) {
-						start += cName.length;
-						var end = cookieData.indexOf(';', start);
-						if (end == -1)
-							end = cookieData.length;
-						cValue = cookieData.substring(start, end);
-					}
-					return unescape(cValue);
-				}
-
-				//쿠키 삭제
-				function deletecookie(name) {
-					var today = new Date();
-					var path = "/ko/";
-					var lastIndex = path.lastIndexOf('/');
-					path = path.substring(0, lastIndex);
-					today.setDate(today.getDate() + -1);
-					document.cookie = name + "=; path=" + path + "; expires="
-							+ today.toGMTString() + ";";
-				}
-
-				function deletecookiePath(name, path) {
-					var today = new Date();
-
-					if (path == "") {
-						path = "/";
-					}
-
-					today.setDate(today.getDate() + -1);
-					document.cookie = name + "=; path=" + path + "; expires="
-							+ today.toGMTString() + ";";
-				}
-
-				function searchInit() {
-					var settingCookie = getCookie("searchSaveYN");
-					if (settingCookie == "on") {
-
-						$('#searchSaveYN').text("끄기");
-						$('#searchSaveYNfame').text("끄기");
-
-					} else {
-						$('#searchSaveYN').text("저장");
-						$('#searchSaveYNfame').text("저장");
-
-					}
-				}
-
-				function ie8AlertHide() {
-					setCookie("ie8AlertHideYN", "on", 365);
-					$("#alertIE8").hide();
-				}
-
-				$(document)
-						.ready(
-								function() {
-									$('.dept').mouseover(function(){
-										console.log('dddddd');
-									})
-
-									$('.gnb_nav.hscene1906 .cate_m .hscene')
-											.mouseover(
-													function() { // 툴팁
-														$('.gnb_nav.hscene1906 .cate_m li .delch_box').addClass('on');
-													});
-									$('.gnb_nav.hscene1906 .cate_m .hscene')
-											.mouseout(
-													function() {
-														$('.gnb_nav.hscene1906 .cate_m li .delch_box').removeClass('on');
-													});
-
-									$('#gnbsearch')
-											.click(
-													function() {
-														var searchwords = $('#gnbsearchwords').val();
-														searchwords = searchwords.replace(/(^\s*)|(\s*$)/g,"");
-
-														if (searchwords != "") {
-															location.href = "/ko/hssearch?searchwords="+ searchwords;
-														} else {
-															$('#gnbsearchwords').val("");
-															alert("검색어를 입력해주세요.");
-														}
-													});
-
-									$('.btn_svclose')
-											.click(
-													function() {
-														settingCookie = getCookie("searchSaveYN");
-														if ($(this).children('span').text() == "끄기") {
-															$(this).children('span').text("저장");
-														} else {
-															$(this).children('span').text("끄기");
-														}
-														if (settingCookie == "off") {
-															$(this).children('span').attr("save","on");
-															setCookie("searchSaveYN","on", 365);
-														} else {
-															$(this).children('span').attr("save","off");
-															setCookie("searchSaveYN","off", 365);
-														}
-													});
-									$('.favBtn')
-											.click(
-													function() {
-														words = $(this).text();
-														location.href = "/ko/hssearch?searchwords="+ words;
-													});
-									$('.newlyBtn')
-											.click(
-													function() {
-														words = $(this).text();
-														location.href = "/ko/hssearch?searchwords="+ words;
-													});
-								});
-
-				function athomeBlink() {
-					$('.ico.athome').css('opacity', '0');
-					setTimeout(function() {
-						$('.ico.athome').css('opacity', '1');
-					}, 500);
-				}
-				function athomeEventBlink() {
-					$('.athome_event').css('opacity', '0');
-					setTimeout(function() {
-						$('.athome_event').css('opacity', '1');
-					}, 500);
-				}
-
-				function compStringReverse(a, b) {
-					if (a > b)
-						return -1;
-					if (b > a)
-						return 1;
-					return 0;
-				}
-
-				function EnterSearchHeader() {
-
-					var searchwords = $('#gnbsearchwords').val();
-					searchwords = searchwords.replace(/(^\s*)|(\s*$)/g, "");
-
-					if (searchwords != "") {
-						location.href = "/ko/hssearch?searchwords="
-								+ searchwords;
-					} else {
-						$('#gnbsearchwords').val("");
-						alert("검색어를 입력해주세요.");
-					}
-
-				}
-
-				//START OF 메인 검색창////////////////////////
-				// #1067 - 201803 메인 개편
-				$(function() {
-
-					getNotLoginMyKeyWord($("#query").val(), 10);
-
-					/* 
-					    // 내가 찾은 검색어(비로그인 상태) set, get in DB
-					    getNotLoginMyKeyWord($("#query").val(), 10);           
-					 */
-
-					if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
-						$("#searchBox").on("keypress", function(event) {
-							var keyCode = event.which || event.keyCode;
-						});
-					}
-
-					$('#query')
-							.click(
-									function() {
-										// 스타일 서치 아이템   
-										doStyleItem();
-										$('.search_box_wrap')
-												.click(
-														function() {
-															if (!$('.search_box_wrap').hasClass('on')) {
-																var dataHeight = $('.data_react').height();
-																$("#transparent_mask").show();
-																$('.search_box_wrap').stop().animate({
-																					width : '406px',
-																					height : '+= dataHeight +"px"',
-																					"max-height" : "430px",
-																					"opacity" : 1
-																				},
-																				'fast');
-
-																$('.search_box_wrap').addClass('on');
-																$('.btn_search_tab').stop().show();
-
-																$('.data_react').stop().show();
-
-																$('#styleSearchSlider').hide();
-																$('.search_box .search').stop().fadeIn('fast');
-
-																//검색창 텝 >> style search slider
-																$(document)
-																		.find(
-																				'#styleSearchSlider')
-																		.flexslider(
-																				{
-																					animation : "slide",
-																					slideshow : false,
-																					directionNav : true,
-																					after : function(slider) {
-																						$("#styleSearchSlider .slides li").not(".clone")
-																									.each(
-																										function(idx) {
-																											if ($(this).hasClass("flex-active-slide")) {
-																												$(".ss_txt_list li a").removeClass("on");
-																												$(".ss_txt_list li:eq("+ idx+ ") a").addClass('on');
-																											}
-																										});
-																					}
-																				});
-																var styleTotal = $("#styleSearchSlider .slides li").size();
-																if (styleTotal <= 1) {
-																	$("#styleSearchSlider .flex-direction-nav").hide();
-																}
-
-																//keyup 자동완성 리스트
-																$('#query')
-																		.keyup(
-																				function(e) {
-																					if (!$('#query').val() == "") {
-																						$('.search_tab').hide();
-
-																						$('.search_box_wrap').stop()
-																								.animate(
-																										{
-																											width : '477px'
-																										},
-																										'fast',
-																										function() {
-																											$('.search_autocomplete').show();
-																										});
-																						$('.search_box_wrap.on .search_box input[type="search"]')
-																								.stop()
-																								.animate(
-																										{
-																											width : '461px'
-																										},
-																										'fast');
-																					} else {
-																						$('.search_autocomplete').hide();
-																						$('.search_tab').show();
-
-																						$('.search_box_wrap')
-																								.stop()
-																								.animate(
-																										{
-																											width : '406px'
-																										});
-																						$('.search_box_wrap.on .search_box input[type="search"]')
-																								.stop()
-																								.animate(
-																										{
-																											width : '390px'
-																										});
-																					}
-																					$('.autocomplete_txt li a')
-																							.each(
-																									function() {
-																										if (!$(this).hasClass('brand_main')) {
-																											$(this).html(
-																														$(this).html().replace("<strong>",""));
-																											$(this).html(
-																														$(this).html().replace("</strong>",""));
-
-																											if ($(this).html().indexOf(
-																															$('#searchBox').val()) > -1) {
-																													$(this).html(
-																																$(this).html().replace(
-																																				$('#searchBox').val(),
-																																				"<strong>"+ $('#searchBox').val()+ "</strong>"));
-																											}
-																										}
-																									});
-																				});
-
-																//검색창 click시 이미 value 값이 있을 때
-																if (!$('#query')
-																		.val() == "") {
-																	$('.search_box_wrap').stop()
-																			.animate(
-																					{
-																						width : '477px',
-																						'opacity' : 1
-																					},
-																					'fast');
-																	$('.search_box_wrap.on .search_box input[type="search"]')
-																			.stop()
-																			.animate(
-																					{
-																						width : '461px'
-																					},
-																					'fast');
-																} else {
-																	$('.search_box_wrap.on .search_box input[type="search"]')
-																			.stop()
-																			.animate(
-																					{
-																						width : '390px'
-																					},
-																					'fast');
-																}
-
-															}
-
-															$('#styleSearchSlider').fadeIn();
-
-															//close button
-															$('.search_box a span.btn_close').on('click',function() {
-																				$('.search_box_wrap')
-																						.stop()
-																						.animate(
-																								{
-																									width : '30px',
-																									height : '-= dataHeight +"px"',
-																									"opacity" : 0
-																								});
-
-																				$('.data_react').stop().hide();
-																				$('.btn_search_tab').stop().hide();
-																				$('.search_box_wrap').removeClass('on');
-																				$("#transparent_mask").hide();
-																				$('.search_box .search').stop().fadeOut('fast');
-																				if (!$('#query').val() == "") {
-																					$('#query').val("");
-																					$('.search_autocomplete').hide();
-																					$('.search_tab').show();
-																				}
-																				return false;
-																			});
-														});
-										$("#transparent_mask").click(
-														function() {
-															if ($('.search_box_wrap').hasClass('on')) {
-																$('.search_box_wrap')
-																		.stop()
-																		.animate(
-																				{
-																					width : '30px',
-																					height : '-= dataHeight +"px"',
-																					"opacity" : 0
-																				});
-
-																$('.data_react').stop().hide();
-																$('.btn_search_tab').stop().hide();
-																$('.search_box_wrap').removeClass('on');
-																$("#transparent_mask").hide();
-																$('.search_box .search').stop().fadeOut('fast');
-															}
-														});
-										//검색창 텝
-										$(document).on(
-												'click',
-												'.btn_search_tab a',
-												function() {
-													$(this).addClass('on');
-													$(this).siblings()
-															.removeClass('on');
-													$('.data_react .s_tab')
-															.stop().hide();
-													var activeTab = $(this)
-															.attr('rel');
-													$('.' + activeTab).stop()
-															.show();
-												});
-									});
-				});
-
-				//##1141 - 카테고리 개편
-				function outletGnbNav() {//아울렛 gnb
-					$('.outlet_brand1803 .sub_menu > ul > li > ul > li > a')
-							.on('mouseenter focus',
-									function() {
-										$('.outlet_brand1803 .sub_menu > ul > li > ul > li > a').removeClass('on');
-										$('.outlet_brand1803 .sub_menu > ul > li > ul > li > div').stop().hide();
-										$(this).addClass('on');
-										$(this).parent('li').children('div').stop().css('display','inline-block');
-										var liWidthSumDep3 = 0;
-										$(this)
-												.next('div')
-												.children('ul')
-												.children('li')
-												.each(
-														function(idx3) {
-															var liWidth = $(this).width();
-															var liLength = $(this).length;
-															if (idx3 > 0) {
-																liWidthSumDep3 = liWidthSumDep3+ (liWidth + 25);
-															}
-															$(this).width(liWidth);
-														});
-										$(this).next('div').children('ul').width(liWidthSumDep3 - 10);
-									});
-					$('.outlet_brand1803 .sub_menu > ul > li > ul > li')
-							.on('mouseleave blur',
-									function() {
-										$('.outlet_brand1803 .sub_menu > ul > li > ul > li > a').removeClass('on');
-										$('.outlet_brand1803 .sub_menu > ul > li > ul > li > div').stop().hide();
-									});
-				}
-				function doSearch(){
-					$('.search').toggle();;
-				}
-				
-				(function(){
-					const header = $("meta[name='_csrf_header']").attr('content');
-     				const token = $("meta[name='_csrf']").attr('content');
-     				
-     				console.log(header,token);
-					$.ajax({
-						type : 'POST',
-						url : "/getCategoryList",
-						beforeSend: function(xhr){
-							xhr.setRequestHeader(header, token);
-						},
-						success : function(result) {
-							console.log(result);
-							$.each(result,function(index, item){
-								console.log(item.depth1name);
-								let listHtml = ``;
-								listHtml += `<li onmouseout="hideCategory(`+index+`)" onmouseover="showCategory(`+index+`)"><a href="/productList?depth1name=`+item.depth1name+`" class="dept">`+item.depth1name+`<span class="arr">arrow</span></a><div class="sub_back"><div class="sub_menu clearfix" id="dept`+index+`" style="background:#ffffff;"><ul class="al_frt1 sm_dep1">`+makeDepth2Tag(item.subList, item.depth1name)+`</ul><div class="gnb_banner float_right"> </div></div></div>`;
-								$('#cate_m_main').append(listHtml);
-								//$('#cate_m_main').append(makeDepth3Tag(item.depth1name));
-									//$('#cate_m_main').append('</div>');
-							})
-							
-						},
-						error : function(e) {
-							result('failed');
-							console.log(e);
-							return;
-						}
-					});
-				}());
-
-				function showCategory(e){
-					console.log(e + 'onmouse');
-					$('#dept'+e).toggle();
-				}
-				function hideCategory(e){
-					$('#dept'+e).toggle();
-				}
-
-
-				function makeDepth2Tag(list, depth1name){
-					var tag =``;
-					$.each(list, function(index, item2){
-						tag += `<li><a href="/productList?depth1name=`+depth1name+`&depth2name=`+item2.depth2name+`">`+item2.depth2name+`</a>
-											<ul class="clearfix sm_dep2">`
-												+ makeDepth3Tag(depth1name, item2.depth2name, item2.subList) +`</ul></li>`;
-					});
-					return tag;
-				}
-				function makeDepth3Tag(depth1name, depth2name, subList){
-					var tag = ``;
-					$.each(subList, function(index, item){
-						tag += `<li><a href="/productList?depth1name=`+depth1name+`&depth2name=`+depth2name+`&depth3name=`+item.depth3name+`">`
-									+item.depth3name+
-								   `</a>
-								</li>`
-					});
-					return tag;
-				}
-
-				function logout(){
-					$('#logoutForm').submit();
-				}
-				
-					
-		  </script>
-			<div class="top_nav topnav1903">
-				<div class="top_nav_wrap clearfix">
-					<div class="brand_menu brand_menu1903">
-						<ul class="clearfix">
-							<!-- 선호 브랜드 없음 -->
-							<li><span class="on"><a href="/main">HOME</a></span></li>
-							<li><span class="on"><a href="/draw/drawList">DRAW</a></span></li>
-							<li><span class="on"><a href="/sommunity/home">SOM.MUNITY</a></span></li>
-							
-							<!-- 비로그인 상태 -->
-							<!-- <p class="brand_menu_guide_text" sec:authorize="!isAuthenticated()">
-								로그인 후 아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
-									style="margin-top: -1px; display: inline-block;">♥</span>해주세요
-							</p> -->
-							<!-- 로그인 상태 -->
-							<!-- <p class="brand_menu_guide_text" sec:authorize="isAuthenticated()">
-								아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
-									style="margin-top: -1px; display: inline-block;">♥</span>해주세요
-							</p> -->
-						</ul>
-					</div>
-					<div class="gnb_sh_wrap" style="display: none;">
-						<!-- search box -->
-						<div class="gnb_sh_box">
-							<input type="text" class="input" id="gnbsearchwords"
-								title="검색어 입력" value=""
-								onkeypress="if(event.keyCode==13) {EnterSearchHeader(); return false;}"
-								 /> <a href="javascript:void(0);" id="gnbsearch">검색</a>
-						</div>
-						<!-- //search box -->
-						
-					</div>
-					<!-- 201705 search_box_wrap -->
-					<div class="search_box_wrap sbw1803" id="searchBox">
-						<form name="search" id="search"
-							action="/ko/hssearch/searchCount" method="post"
-							onsubmit="return false;">
-							<div class="search_box">
-								<label for="query" class="">search</label> <input
-									type="search" id="query" name="query" value=""
-									onKeypress="javascript:pressCheck((event),this);"
-									style="margin-top: 0.2px;" autocomplete="off"> <span
-									class="placeholder"></span> <a href="javascript:void(0);"><span
-									class="btn_close">닫기</span></a> <a
-									href="javascript:GA_search();doSearch();" class="search" ><span
-									class="ico">검색</span></a>
-							</div>
-						</form>
-						
-					</div>
-					<!--// 201705 search_box_wrap -->
-					<div class="util_menu" style="display: block;">
-						<ul class="clearfix">
-							<!-- 로그인 안되어 있을때-->
-							<li sec:authorize="!isAuthenticated()">
-								<a href="/customLogin">로그인<!-- 로그인 --></a>
-							</li>
-							<!-- 로그인 되어 있는경우 (황명하) -->
-							<li sec:authorize="isAuthenticated()"><a>안녕하세요 <span sec:authentication="principal.name"></span>님</a></li>
-							<li sec:authorize="isAuthenticated()">
-								<form action="/logout" method="POST" id="logoutForm">
-									<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-								</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
-							<li class="header_dropmemu mypage" sec:authorize="isAuthenticated()"><a
-								href="/member/mypage" class="btn">마이페이지</a>
-							
-							<div class="list">
-								<ul>
-									<li><a href="/member/myorder">주문조회<!-- 주문조회 --></a></li>
-									<li><a href="/member/modify">회원정보변경<!-- 회원정보변경 --></a></li>
-									<li><a href="/member/myreview">내상품평</a></li>
-								</ul>
-							</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="gnbwarp com clearfix">
-				<h1 class="logo logo1903">
-					<a href="/main">thehandsome.com</a>
-				</h1>
-				<div class="gnb_nav gnb_nav1903 hscene1906 hscene1910">
-					<h2 class="invisible">주메뉴</h2>
-					<ul class="cate_m cate_banner gnbul1" id="cate_m_main">
-					</ul>
-				</div>
-				<!-- 첫번째 c:if -->
-
-
-				<div id="transparent_mask"></div>
-				<!-- 201803 util menu -->
-				<div class="util_menu util_menu1803">
-					<ul class="clearfix">
-						<li><a href="javascript:void(0);" onclick="doSearch();"><span class="ico_sh">search</span></a></li>
-						<li><a href="/cart/cartList"><span
-								class="ico cart">장바구니</span></a></li>
-					</ul>
-				</div>
-				<script>
-					function doSearch(){
-						
-					}
-				</script>
-			</div>
-		</div>
-	</div>
+   
+   <!-- headerWrap -->
+   <div id="headerWrap" th:fragment="header">
+   
+      <input type="hidden" id="validationCheckPwd"
+         value="비밀번호를 재입력 하셔야 합니다." /> <input type="hidden"
+         id="validationCheck" value="필수데이터가 입력되지 않았습니다." /> <input
+         type="hidden" id="validationCheckMsg" value="다음 사항을 확인해 주세요." /> <input
+         type="hidden" id="validationCheckMsg1" value="필수데이터가 입력되지 않았습니다." />
+      <input type="hidden" id="validationCheckMsg2"
+         value="동일문자를 3번 이상 사용할 수 없습니다." /> <input type="hidden"
+         id="validationCheckMsg3"
+         value="연속된 문자열(123 또는 321, abc, cba 등) 3자리이상 올 수 없습니다." /> <input
+         type="hidden" id="validationCheckMsg4" value="Caps Lock 이 켜져 있습니다." />
+      <input type="hidden" id="validationCheckMsg5"
+         value="이메일 아이디의 중복 확인이 필요합니다." /> <input type="hidden"
+         id="validationCheckMsg6" value="이메일의 중복확인이 필요합니다." /> <input
+         type="hidden" id="deliveryOkMsg" value="확인" /> <input type="hidden"
+         id="deliveryCancelMsg" value="취소" />
+            
+      <div class="header header_fixed header_main1903">
+         <script type="text/javascript"
+            src="/_ui/desktop/common/js/SsoAjax.js"></script>
+         
+         <script type="text/javascript"
+            src="/_ui/desktop/common/wisenut/ark/js/beta.fix.js"></script>
+         <script type="text/javascript"
+            src="/_ui/desktop/common/wisenut/ark/js/ark.js"></script>
+         <script type="text/javascript"
+            src="/_ui/desktop/common/wisenut/js/search.js"></script>
+         <script type="text/javascript">
+            
+            // #1067 - 201803 메인 개편
+            function applyCategory() {
+
+               layerAlert('로그인 후 당신만의 브랜드 즐겨찾기를 <br /> 완성하세요.');
+               return;
+
+               var brandNameArray = new Array();
+               var brandCodeArray = new Array();
+               var parentBrandCodeArray = new Array();
+               var sortIndexArray = new Array();
+               var valueSplitArray = new Array();
+               var dataValue = "";
+
+               $("input:checkbox[class=\"checkboxEvent\"]").each(
+                     function() {
+                        if (this.checked) {
+                           dataValue = this.value;
+                           valueSplitArray = dataValue.split('#');
+                           brandNameArray.push(this.title);
+                           parentBrandCodeArray
+                                 .push(valueSplitArray[0]);
+                           brandCodeArray.push(valueSplitArray[1]);
+                           sortIndexArray.push(valueSplitArray[2]);
+                        }
+                     });
+               var parentBrandCode = parentBrandCodeArray.join(",");
+               var brandName = brandNameArray.join(",");
+               var brandCode = brandCodeArray.join(",");
+               var sortIndex = sortIndexArray.join(",");
+
+               //braze
+               brazeCustomAttribut(brandCodeArray);
+
+               $.ajax({
+                  type : "GET",
+                  url : "/intro/setCategoryList",
+                  data : {
+                     "brandName" : brandName,
+                     "brandCode" : brandCode,
+                     "parentBrandCode" : parentBrandCode,
+                     "sortIndex" : sortIndex
+                  },
+                  success : function(data) {
+                     window.location.reload();
+                  },
+                  error : function(e) {
+                     console.log("error", e);
+                  }
+               });
+
+            }
+
+            function resetCategory() {
+
+               $("input:checkbox[class=\"checkboxEvent\"]").each(
+                     function() {
+                        if (this.checked) {
+                           this.checked = false;
+                        }
+                     });
+               applyCategory();
+            }
+
+            function searchOn() {
+               searchInit();
+               $('div.gnb_sh_wrap').css("display", "block");
+               $('div.util_menu').css("display", "none");
+               $('div.gnb_sh_result').css("display", "block");
+
+            }
+
+            function searchOff() {
+
+               $('div.util_menu').css("display", "block");
+               $('div.gnb_sh_wrap').css("display", "none");
+
+            }
+
+            function showTab() {
+
+               $('div.gnb_sh_result').css("display", "block");
+
+            }
+
+            // 쿠키 생성
+            function setCookie(cName, cValue, cDay) {
+               var expire = new Date();
+               expire.setDate(expire.getDate() + cDay);
+               cookies = cName + '=' + escape(cValue) + '; path=/ ';
+               if (typeof cDay != 'undefined')
+                  cookies += ';expires=' + expire.toGMTString() + ';';
+               document.cookie = cookies;
+            }
+            //쿠키 생성 (00시 제거)
+            function setOneDayCookie(cName, cValue, cDay) {
+               var currentDate = new Date();
+               var expire = new Date(currentDate.getFullYear(),
+                     currentDate.getMonth(), currentDate.getDate()
+                           + cDay, 0, 0, 0);
+               cookies = cName + '=' + escape(cValue) + '; path=/ ';
+               if (typeof cDay != 'undefined')
+                  cookies += ';expires=' + expire.toGMTString() + ';';
+               document.cookie = cookies;
+            }
+
+            // 쿠키 가져오기
+            function getCookie(cName) {
+               cName = cName + '=';
+               var cookieData = document.cookie;
+               var start = cookieData.indexOf(cName);
+               var cValue = '';
+               if (start != -1) {
+                  start += cName.length;
+                  var end = cookieData.indexOf(';', start);
+                  if (end == -1)
+                     end = cookieData.length;
+                  cValue = cookieData.substring(start, end);
+               }
+               return unescape(cValue);
+            }
+
+            //쿠키 삭제
+            function deletecookie(name) {
+               var today = new Date();
+               var path = "/ko/";
+               var lastIndex = path.lastIndexOf('/');
+               path = path.substring(0, lastIndex);
+               today.setDate(today.getDate() + -1);
+               document.cookie = name + "=; path=" + path + "; expires="
+                     + today.toGMTString() + ";";
+            }
+
+            function deletecookiePath(name, path) {
+               var today = new Date();
+
+               if (path == "") {
+                  path = "/";
+               }
+
+               today.setDate(today.getDate() + -1);
+               document.cookie = name + "=; path=" + path + "; expires="
+                     + today.toGMTString() + ";";
+            }
+
+            function searchInit() {
+               var settingCookie = getCookie("searchSaveYN");
+               if (settingCookie == "on") {
+
+                  $('#searchSaveYN').text("끄기");
+                  $('#searchSaveYNfame').text("끄기");
+
+               } else {
+                  $('#searchSaveYN').text("저장");
+                  $('#searchSaveYNfame').text("저장");
+
+               }
+            }
+
+            function ie8AlertHide() {
+               setCookie("ie8AlertHideYN", "on", 365);
+               $("#alertIE8").hide();
+            }
+
+            $(document)
+                  .ready(
+                        function() {
+                           $('.dept').mouseover(function(){
+                              console.log('dddddd');
+                           })
+
+                           $('.gnb_nav.hscene1906 .cate_m .hscene')
+                                 .mouseover(
+                                       function() { // 툴팁
+                                          $('.gnb_nav.hscene1906 .cate_m li .delch_box').addClass('on');
+                                       });
+                           $('.gnb_nav.hscene1906 .cate_m .hscene')
+                                 .mouseout(
+                                       function() {
+                                          $('.gnb_nav.hscene1906 .cate_m li .delch_box').removeClass('on');
+                                       });
+
+                           $('#gnbsearch')
+                                 .click(
+                                       function() {
+                                          var searchwords = $('#gnbsearchwords').val();
+                                          searchwords = searchwords.replace(/(^\s*)|(\s*$)/g,"");
+
+                                          if (searchwords != "") {
+                                             location.href = "/ko/hssearch?searchwords="+ searchwords;
+                                          } else {
+                                             $('#gnbsearchwords').val("");
+                                             alert("검색어를 입력해주세요.");
+                                          }
+                                       });
+
+                           $('.btn_svclose')
+                                 .click(
+                                       function() {
+                                          settingCookie = getCookie("searchSaveYN");
+                                          if ($(this).children('span').text() == "끄기") {
+                                             $(this).children('span').text("저장");
+                                          } else {
+                                             $(this).children('span').text("끄기");
+                                          }
+                                          if (settingCookie == "off") {
+                                             $(this).children('span').attr("save","on");
+                                             setCookie("searchSaveYN","on", 365);
+                                          } else {
+                                             $(this).children('span').attr("save","off");
+                                             setCookie("searchSaveYN","off", 365);
+                                          }
+                                       });
+                           $('.favBtn')
+                                 .click(
+                                       function() {
+                                          words = $(this).text();
+                                          location.href = "/ko/hssearch?searchwords="+ words;
+                                       });
+                           $('.newlyBtn')
+                                 .click(
+                                       function() {
+                                          words = $(this).text();
+                                          location.href = "/ko/hssearch?searchwords="+ words;
+                                       });
+                        });
+
+            function athomeBlink() {
+               $('.ico.athome').css('opacity', '0');
+               setTimeout(function() {
+                  $('.ico.athome').css('opacity', '1');
+               }, 500);
+            }
+            function athomeEventBlink() {
+               $('.athome_event').css('opacity', '0');
+               setTimeout(function() {
+                  $('.athome_event').css('opacity', '1');
+               }, 500);
+            }
+
+            function compStringReverse(a, b) {
+               if (a > b)
+                  return -1;
+               if (b > a)
+                  return 1;
+               return 0;
+            }
+
+            function EnterSearchHeader() {
+
+               var searchwords = $('#gnbsearchwords').val();
+               searchwords = searchwords.replace(/(^\s*)|(\s*$)/g, "");
+
+               if (searchwords != "") {
+                  location.href = "/ko/hssearch?searchwords="
+                        + searchwords;
+               } else {
+                  $('#gnbsearchwords').val("");
+                  alert("검색어를 입력해주세요.");
+               }
+
+            }
+
+            //START OF 메인 검색창////////////////////////
+            // #1067 - 201803 메인 개편
+            $(function() {
+
+               getNotLoginMyKeyWord($("#query").val(), 10);
+
+               /* 
+                   // 내가 찾은 검색어(비로그인 상태) set, get in DB
+                   getNotLoginMyKeyWord($("#query").val(), 10);           
+                */
+
+               if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+                  $("#searchBox").on("keypress", function(event) {
+                     var keyCode = event.which || event.keyCode;
+                  });
+               }
+
+               $('#query')
+                     .click(
+                           function() {
+                              // 스타일 서치 아이템   
+                              doStyleItem();
+                              $('.search_box_wrap')
+                                    .click(
+                                          function() {
+                                             if (!$('.search_box_wrap').hasClass('on')) {
+                                                var dataHeight = $('.data_react').height();
+                                                $("#transparent_mask").show();
+                                                $('.search_box_wrap').stop().animate({
+                                                               width : '406px',
+                                                               height : '+= dataHeight +"px"',
+                                                               "max-height" : "430px",
+                                                               "opacity" : 1
+                                                            },
+                                                            'fast');
+
+                                                $('.search_box_wrap').addClass('on');
+                                                $('.btn_search_tab').stop().show();
+
+                                                $('.data_react').stop().show();
+
+                                                $('#styleSearchSlider').hide();
+                                                $('.search_box .search').stop().fadeIn('fast');
+
+                                                //검색창 텝 >> style search slider
+                                                $(document)
+                                                      .find(
+                                                            '#styleSearchSlider')
+                                                      .flexslider(
+                                                            {
+                                                               animation : "slide",
+                                                               slideshow : false,
+                                                               directionNav : true,
+                                                               after : function(slider) {
+                                                                  $("#styleSearchSlider .slides li").not(".clone")
+                                                                           .each(
+                                                                              function(idx) {
+                                                                                 if ($(this).hasClass("flex-active-slide")) {
+                                                                                    $(".ss_txt_list li a").removeClass("on");
+                                                                                    $(".ss_txt_list li:eq("+ idx+ ") a").addClass('on');
+                                                                                 }
+                                                                              });
+                                                               }
+                                                            });
+                                                var styleTotal = $("#styleSearchSlider .slides li").size();
+                                                if (styleTotal <= 1) {
+                                                   $("#styleSearchSlider .flex-direction-nav").hide();
+                                                }
+
+                                                //keyup 자동완성 리스트
+                                                $('#query')
+                                                      .keyup(
+                                                            function(e) {
+                                                               if (!$('#query').val() == "") {
+                                                                  $('.search_tab').hide();
+
+                                                                  $('.search_box_wrap').stop()
+                                                                        .animate(
+                                                                              {
+                                                                                 width : '477px'
+                                                                              },
+                                                                              'fast',
+                                                                              function() {
+                                                                                 $('.search_autocomplete').show();
+                                                                              });
+                                                                  $('.search_box_wrap.on .search_box input[type="search"]')
+                                                                        .stop()
+                                                                        .animate(
+                                                                              {
+                                                                                 width : '461px'
+                                                                              },
+                                                                              'fast');
+                                                               } else {
+                                                                  $('.search_autocomplete').hide();
+                                                                  $('.search_tab').show();
+
+                                                                  $('.search_box_wrap')
+                                                                        .stop()
+                                                                        .animate(
+                                                                              {
+                                                                                 width : '406px'
+                                                                              });
+                                                                  $('.search_box_wrap.on .search_box input[type="search"]')
+                                                                        .stop()
+                                                                        .animate(
+                                                                              {
+                                                                                 width : '390px'
+                                                                              });
+                                                               }
+                                                               $('.autocomplete_txt li a')
+                                                                     .each(
+                                                                           function() {
+                                                                              if (!$(this).hasClass('brand_main')) {
+                                                                                 $(this).html(
+                                                                                          $(this).html().replace("<strong>",""));
+                                                                                 $(this).html(
+                                                                                          $(this).html().replace("</strong>",""));
+
+                                                                                 if ($(this).html().indexOf(
+                                                                                             $('#searchBox').val()) > -1) {
+                                                                                       $(this).html(
+                                                                                                $(this).html().replace(
+                                                                                                            $('#searchBox').val(),
+                                                                                                            "<strong>"+ $('#searchBox').val()+ "</strong>"));
+                                                                                 }
+                                                                              }
+                                                                           });
+                                                            });
+
+                                                //검색창 click시 이미 value 값이 있을 때
+                                                if (!$('#query')
+                                                      .val() == "") {
+                                                   $('.search_box_wrap').stop()
+                                                         .animate(
+                                                               {
+                                                                  width : '477px',
+                                                                  'opacity' : 1
+                                                               },
+                                                               'fast');
+                                                   $('.search_box_wrap.on .search_box input[type="search"]')
+                                                         .stop()
+                                                         .animate(
+                                                               {
+                                                                  width : '461px'
+                                                               },
+                                                               'fast');
+                                                } else {
+                                                   $('.search_box_wrap.on .search_box input[type="search"]')
+                                                         .stop()
+                                                         .animate(
+                                                               {
+                                                                  width : '390px'
+                                                               },
+                                                               'fast');
+                                                }
+
+                                             }
+
+                                             $('#styleSearchSlider').fadeIn();
+
+                                             //close button
+                                             $('.search_box a span.btn_close').on('click',function() {
+                                                            $('.search_box_wrap')
+                                                                  .stop()
+                                                                  .animate(
+                                                                        {
+                                                                           width : '30px',
+                                                                           height : '-= dataHeight +"px"',
+                                                                           "opacity" : 0
+                                                                        });
+
+                                                            $('.data_react').stop().hide();
+                                                            $('.btn_search_tab').stop().hide();
+                                                            $('.search_box_wrap').removeClass('on');
+                                                            $("#transparent_mask").hide();
+                                                            $('.search_box .search').stop().fadeOut('fast');
+                                                            if (!$('#query').val() == "") {
+                                                               $('#query').val("");
+                                                               $('.search_autocomplete').hide();
+                                                               $('.search_tab').show();
+                                                            }
+                                                            return false;
+                                                         });
+                                          });
+                              $("#transparent_mask").click(
+                                          function() {
+                                             if ($('.search_box_wrap').hasClass('on')) {
+                                                $('.search_box_wrap')
+                                                      .stop()
+                                                      .animate(
+                                                            {
+                                                               width : '30px',
+                                                               height : '-= dataHeight +"px"',
+                                                               "opacity" : 0
+                                                            });
+
+                                                $('.data_react').stop().hide();
+                                                $('.btn_search_tab').stop().hide();
+                                                $('.search_box_wrap').removeClass('on');
+                                                $("#transparent_mask").hide();
+                                                $('.search_box .search').stop().fadeOut('fast');
+                                             }
+                                          });
+                              //검색창 텝
+                              $(document).on(
+                                    'click',
+                                    '.btn_search_tab a',
+                                    function() {
+                                       $(this).addClass('on');
+                                       $(this).siblings()
+                                             .removeClass('on');
+                                       $('.data_react .s_tab')
+                                             .stop().hide();
+                                       var activeTab = $(this)
+                                             .attr('rel');
+                                       $('.' + activeTab).stop()
+                                             .show();
+                                    });
+                           });
+            });
+
+            //##1141 - 카테고리 개편
+            function outletGnbNav() {//아울렛 gnb
+               $('.outlet_brand1803 .sub_menu > ul > li > ul > li > a')
+                     .on('mouseenter focus',
+                           function() {
+                              $('.outlet_brand1803 .sub_menu > ul > li > ul > li > a').removeClass('on');
+                              $('.outlet_brand1803 .sub_menu > ul > li > ul > li > div').stop().hide();
+                              $(this).addClass('on');
+                              $(this).parent('li').children('div').stop().css('display','inline-block');
+                              var liWidthSumDep3 = 0;
+                              $(this)
+                                    .next('div')
+                                    .children('ul')
+                                    .children('li')
+                                    .each(
+                                          function(idx3) {
+                                             var liWidth = $(this).width();
+                                             var liLength = $(this).length;
+                                             if (idx3 > 0) {
+                                                liWidthSumDep3 = liWidthSumDep3+ (liWidth + 25);
+                                             }
+                                             $(this).width(liWidth);
+                                          });
+                              $(this).next('div').children('ul').width(liWidthSumDep3 - 10);
+                           });
+               $('.outlet_brand1803 .sub_menu > ul > li > ul > li')
+                     .on('mouseleave blur',
+                           function() {
+                              $('.outlet_brand1803 .sub_menu > ul > li > ul > li > a').removeClass('on');
+                              $('.outlet_brand1803 .sub_menu > ul > li > ul > li > div').stop().hide();
+                           });
+            }
+            function doSearch(){
+               $('.search').toggle();;
+            }
+            
+            (function(){
+               const header = $("meta[name='_csrf_header']").attr('content');
+                 const token = $("meta[name='_csrf']").attr('content');
+                 
+                 console.log(header,token);
+               $.ajax({
+                  type : 'POST',
+                  url : "/getCategoryList",
+                  beforeSend: function(xhr){
+                     xhr.setRequestHeader(header, token);
+                  },
+                  success : function(result) {
+                     console.log(result);
+                     $.each(result,function(index, item){
+                        console.log(item.depth1name);
+                        let listHtml = ``;
+                        listHtml += `<li onmouseout="hideCategory(`+index+`)" onmouseover="showCategory(`+index+`)"><a href="/productList?depth1name=`+item.depth1name+`" class="dept">`+item.depth1name+`<span class="arr">arrow</span></a><div class="sub_back"><div class="sub_menu clearfix" id="dept`+index+`" style="background:#ffffff;"><ul class="al_frt1 sm_dep1">`+makeDepth2Tag(item.subList, item.depth1name)+`</ul><div class="gnb_banner float_right"> </div></div></div>`;
+                        $('#cate_m_main').append(listHtml);
+                        //$('#cate_m_main').append(makeDepth3Tag(item.depth1name));
+                           //$('#cate_m_main').append('</div>');
+                     })
+                     
+                  },
+                  error : function(e) {
+                     result('failed');
+                     console.log(e);
+                     return;
+                  }
+               });
+            }());
+
+            function showCategory(e){
+               console.log(e + 'onmouse');
+               $('#dept'+e).toggle();
+            }
+            function hideCategory(e){
+               $('#dept'+e).toggle();
+            }
+
+
+            function makeDepth2Tag(list, depth1name){
+               var tag =``;
+               $.each(list, function(index, item2){
+                  tag += `<li><a href="/productList?depth1name=`+depth1name+`&depth2name=`+item2.depth2name+`">`+item2.depth2name+`</a>
+                                 <ul class="clearfix sm_dep2">`
+                                    + makeDepth3Tag(depth1name, item2.depth2name, item2.subList) +`</ul></li>`;
+               });
+               return tag;
+            }
+            function makeDepth3Tag(depth1name, depth2name, subList){
+               var tag = ``;
+               $.each(subList, function(index, item){
+                  tag += `<li><a href="/productList?depth1name=`+depth1name+`&depth2name=`+depth2name+`&depth3name=`+item.depth3name+`">`
+                           +item.depth3name+
+                           `</a>
+                        </li>`
+               });
+               return tag;
+            }
+
+            function logout(){
+               $('#logoutForm').submit();
+            }
+            
+               
+        </script>
+         <div class="top_nav topnav1903">
+            <div class="top_nav_wrap clearfix">
+               <div class="brand_menu brand_menu1903">
+                  <ul class="clearfix">
+                     <!-- 선호 브랜드 없음 -->
+                     <li><span class="on"><a href="/main">HOME</a></span></li>
+                     <li><span class="on"><a href="/draw/drawList">DRAW</a></span></li>
+                     <li><span class="on"><a href="/sommunity/home">SOM.MUNITY</a></span></li>
+                     <li sec:authorize="hasRole('ROLE_ADMIN')"><span class="on"><a href="/admin/index">AMDINISTER</a></span></li>
+                     
+                     <!-- 비로그인 상태 -->
+                     <!-- <p class="brand_menu_guide_text" sec:authorize="!isAuthenticated()">
+                        로그인 후 아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
+                           style="margin-top: -1px; display: inline-block;">♥</span>해주세요
+                     </p> -->
+                     <!-- 로그인 상태 -->
+                     <!-- <p class="brand_menu_guide_text" sec:authorize="isAuthenticated()">
+                        아래 '브랜드' 메뉴에서 좋아하는 브랜드를 <span
+                           style="margin-top: -1px; display: inline-block;">♥</span>해주세요
+                     </p> -->
+                  </ul>
+               </div>
+               <div class="gnb_sh_wrap" style="display: none;">
+                  <!-- search box -->
+                  <div class="gnb_sh_box">
+                     <input type="text" class="input" id="gnbsearchwords"
+                        title="검색어 입력" value=""
+                        onkeypress="if(event.keyCode==13) {EnterSearchHeader(); return false;}"
+                         /> <a href="javascript:void(0);" id="gnbsearch">검색</a>
+                  </div>
+                  <!-- //search box -->
+                  
+               </div>
+               <!-- 201705 search_box_wrap -->
+               <div class="search_box_wrap sbw1803" id="searchBox">
+                  <form name="search" id="search"
+                     action="/ko/hssearch/searchCount" method="post"
+                     onsubmit="return false;">
+                     <div class="search_box">
+                        <label for="query" class="">search</label> <input
+                           type="search" id="query" name="query" value=""
+                           onKeypress="javascript:pressCheck((event),this);"
+                           style="margin-top: 0.2px;" autocomplete="off"> <span
+                           class="placeholder"></span> <a href="javascript:void(0);"><span
+                           class="btn_close">닫기</span></a> <a
+                           href="javascript:GA_search();doSearch();" class="search" ><span
+                           class="ico">검색</span></a>
+                     </div>
+                  </form>
+                  
+               </div>
+               <!--// 201705 search_box_wrap -->
+               <div class="util_menu" style="display: block;">
+                  <ul class="clearfix">
+                     <!-- 로그인 안되어 있을때-->
+                     <li sec:authorize="!isAuthenticated()">
+                        <a href="/customLogin">로그인<!-- 로그인 --></a>
+                     </li>
+                     <!-- 로그인 되어 있는경우 (황명하) -->
+                     <li sec:authorize="isAuthenticated()"><a>안녕하세요 <span sec:authentication="principal.name"></span>님</a></li>
+                     <li sec:authorize="isAuthenticated()">
+                        <form action="/logout" method="POST" id="logoutForm">
+                           <!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
+                           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        </form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
+                     <li class="header_dropmemu mypage" sec:authorize="isAuthenticated()"><a
+                        href="/member/mypage" class="btn">마이페이지</a>
+                     
+                     <div class="list">
+                        <ul>
+                           <li><a href="/member/myorder">주문조회<!-- 주문조회 --></a></li>
+                           <li><a href="/member/modify">회원정보변경<!-- 회원정보변경 --></a></li>
+                           <li><a href="/member/myreview">내상품평</a></li>
+                        </ul>
+                     </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="gnbwarp com clearfix">
+            <h1 class="logo logo1903">
+               <a href="/main">thehandsome.com</a>
+            </h1>
+            <div class="gnb_nav gnb_nav1903 hscene1906 hscene1910">
+               <h2 class="invisible">주메뉴</h2>
+               <ul class="cate_m cate_banner gnbul1" id="cate_m_main">
+               </ul>
+            </div>
+            <!-- 첫번째 c:if -->
+
+
+            <div id="transparent_mask"></div>
+            <!-- 201803 util menu -->
+            <div class="util_menu util_menu1803">
+               <ul class="clearfix">
+                  <li><a href="javascript:void(0);" onclick="doSearch();"><span class="ico_sh">search</span></a></li>
+                  <li><a href="/cart/cartList"><span
+                        class="ico cart">장바구니</span></a></li>
+               </ul>
+            </div>
+            <script>
+               function doSearch(){
+                  
+               }
+            </script>
+         </div>
+      </div>
+   </div>
 <!-- </body> -->
 </html>

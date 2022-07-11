@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		// TODO Auto-generated method stub
 		http.authorizeRequests()
 			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/member/register").permitAll()
+			.antMatchers("/member/isduplemail").permitAll()
 			.antMatchers("/member/**").hasAnyRole("USER","ADMIN")
 			//.antMatchers("/member/**").permitAll()
 			.anyRequest().permitAll();
