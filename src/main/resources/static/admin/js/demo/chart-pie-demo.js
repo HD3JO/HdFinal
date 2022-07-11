@@ -22,7 +22,7 @@ var myPieChart = new Chart(ctx, {
     labels: pnameList,//[pnameList[0], pnameList[1]],
     datasets: [{
       data: cnt,
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#f8f9fc', '#5a5c69', '#000000'],
+      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#afc5db', '#e9df56', '#00a29b', '#a7b901', '#ffbd60', '#f76e77'],
       hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#36b9cc'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],

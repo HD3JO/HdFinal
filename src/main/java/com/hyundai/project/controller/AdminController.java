@@ -1,6 +1,7 @@
 package com.hyundai.project.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,23 @@ public class AdminController {
 		int totalusercount = adminMainService.getTotalUser();
 		int totalordercount = adminMainService.getMonthOrderCount();
 		int totalproductcount = adminMainService.getTotalProductQty();
-		int totalproductprice = adminMainService.getMonthOrderPrice();
+		int totalproductprice = adminMainService.getMonthOrderPrice();		
+		
+		AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
+		
+		Calendar cal = Calendar.getInstance();
+		int last_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int[] cnt = new int[last_day];
+		
+		for(int i = 1; i <= last_day; i++) {
+			int firstDay = i;
+			int SecondDay = i+1;
+			
+			adminBoardDTO.setPrevDate(firstDay);
+			adminBoardDTO.setNextDate(SecondDay);
+			
+			cnt[i-1] = adminBoardService.getBoardCntByDay(adminBoardDTO);
+		}		
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -114,6 +131,7 @@ public class AdminController {
 				 }
 		
 		
+		model.addAttribute("cnt", cnt);
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("drawList", drawList);
 		model.addAttribute("totalproductprice", totalproductprice);

@@ -22,5 +22,8 @@ public class AdminBoardDTO {
 	private int hits;
 	private int likes;
 	
+	private int prevDate;
+	private int nextDate;
+	
 	
 }
