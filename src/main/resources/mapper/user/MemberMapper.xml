@@ -14,7 +14,7 @@
         #{role, jdbcType=VARCHAR}, #{marketingemail, jdbcType=VARCHAR}, #{marketingsms, jdbcType=VARCHAR})
     </insert>
     
-    <select id="updateMember" statementType = "CALLABLE">
+    <select id="updateMember" parameterType="com.hyundai.project.dto.MemberDTO">
     	CALL P_MEMBER_UPDATE(#{email, jdbcType=VARCHAR}, 
     						 #{password, jdbcType=VARCHAR}, 
     						 #{name, jdbcType=VARCHAR}, 
@@ -44,4 +44,5 @@
     	   SET ENABLE = 0
     	 WHERE EMAIL = #{email}
     </update>
+    
 </mapper>

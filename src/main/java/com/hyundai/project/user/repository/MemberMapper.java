@@ -22,5 +22,6 @@ public interface MemberMapper {
 
 	public void secession(MemberDTO dto);
 	
+	
 	//public void updateMemberAdmin(MemberDTO memberDTO) throws SQLException;
 }
