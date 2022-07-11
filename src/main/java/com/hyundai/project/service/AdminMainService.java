@@ -12,4 +12,7 @@ public interface AdminMainService {
 	public int getMonthOrderPrice();
 	
 	public int getMonthOrderCount();
+	
+	public int getMemberGrade(String grade) throws Exception;
+
 }

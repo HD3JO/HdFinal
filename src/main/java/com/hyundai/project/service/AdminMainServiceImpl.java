@@ -36,4 +36,10 @@ public class AdminMainServiceImpl implements AdminMainService {
 		return adminMapper.getMonthOrderCount();
 	}
 
+	@Override
+	public int getMemberGrade(String grade) throws Exception {
+		
+		return adminMapper.getMemberGrade(grade);
+	}
+
 }

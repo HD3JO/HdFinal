@@ -49,7 +49,7 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: day,
     datasets: [{
-      label: "게시글 수",
+      label: "게시글 수 ",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",

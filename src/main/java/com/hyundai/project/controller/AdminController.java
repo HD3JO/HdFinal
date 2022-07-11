@@ -80,6 +80,7 @@ public class AdminController {
 		int totalproductcount = adminMainService.getTotalProductQty();
 		int totalproductprice = adminMainService.getMonthOrderPrice();		
 		
+		// 날짜별 게시글 현황
 		AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
 		
 		Calendar cal = Calendar.getInstance();
@@ -130,9 +131,18 @@ public class AdminController {
 					 cntByPsid = 0;
 				 }
 		
+		// 등급별 사용자 수
+		int[] cntByGrade = new int[5];
+		
+		cntByGrade[0] = adminMainService.getMemberGrade("FRIEND");
+		cntByGrade[1] = adminMainService.getMemberGrade("CREW");
+		cntByGrade[2] = adminMainService.getMemberGrade("MANIA");
+		cntByGrade[3] = adminMainService.getMemberGrade("STAR");
+		cntByGrade[4] = adminMainService.getMemberGrade("THE STAR");
 		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("total", totalCnt);
+		model.addAttribute("grade", cntByGrade);
 		model.addAttribute("drawList", drawList);
 		model.addAttribute("totalproductprice", totalproductprice);
 		model.addAttribute("totalproductcount", totalproductcount);

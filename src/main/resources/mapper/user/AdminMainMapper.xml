@@ -31,5 +31,9 @@
 	and ostatus = '배송완료'
 	</select>
 	
-	
+	<select id="getMemberGrade" resultType="int" parameterType="String">
+		SELECT COUNT(GRADE) 
+		FROM MEMBER
+		WHERE GRADE = #{grade, jdbcType=VARCHAR}
+	</select>
 </mapper>
