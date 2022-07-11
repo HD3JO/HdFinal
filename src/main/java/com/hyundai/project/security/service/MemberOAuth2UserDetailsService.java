@@ -2,6 +2,7 @@ package com.hyundai.project.security.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +32,7 @@ public class MemberOAuth2UserDetailsService
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	private MemberDTO saveSocialMember(String email) throws Exception {
+	private MemberDTO saveSocialMember(String email, String clientName) throws Exception {
 		System.out.println("Email  is : " +email);
 		MemberDTO result = null;
 		MemberDTO vo = new MemberDTO();
@@ -43,8 +44,12 @@ public class MemberOAuth2UserDetailsService
 			return result;
 		}else {
 			MemberDTO member = new MemberDTO();
+			if("Google".equals(clientName)) {
+				member.setChannel("G");
+			}else {
+				member.setChannel("N");
+			}
 			member.setEmail(email);
-			member.setChannel("G");
 			member.setEnable(1);
 			member.setName(email);
 			member.setPassword(passwordEncoder.encode("1111"));
@@ -71,27 +76,34 @@ public class MemberOAuth2UserDetailsService
        
        
        String email = null;
+       Map<String, Object> response = (Map<String, Object>)oAuth2User.getAttributes().get("response");
+       System.out.println(response.get("email") + "@@@@@");
        
-       if(clientName.equals("Google")) {
-    	   email = oAuth2User.getAttribute("email");
-    	   
-       }
+//       if(clientName.equals("Google")) {
+//    	   email = oAuth2User.getAttribute("email");
+//       }else if(clientName.equals("naver")){
+//    	   email = oAuth2User.getAttribute("email");
+//       }
+       email = (String)response.get("email");
        
        MemberDTO memberVO;
        try {
-    	   memberVO = saveSocialMember(email);
+    	   memberVO = saveSocialMember(email, "naver");
+    	   System.out.println("done1 " +memberVO);
     	   List<GrantedAuthority> authorities = new ArrayList<>();
 	       authorities.add(
 	               new SimpleGrantedAuthority("ROLE_" + memberVO.getRole()));      
-	       
+	       System.out.println("done2 ");
 	       MemberUserDetails memberUserDetails = new MemberUserDetails(memberVO.getEmail(), memberVO.getPassword(), 1, authorities,oAuth2User.getAttributes(), memberVO.getGrade());
 	       memberUserDetails.setName(memberVO.getName());
 	       memberUserDetails.setChannel(memberVO.getChannel());
+	       System.out.println("done3");
 	       return memberUserDetails;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+       System.out.println("done4");
 		return null;
        
    }  

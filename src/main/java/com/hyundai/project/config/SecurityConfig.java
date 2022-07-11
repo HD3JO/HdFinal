@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.failureHandler(customAuthenticationFailureHandler)
 			.successHandler(customAuthenticationSuccessHandler);
 		//http.formLogin();
-		http.oauth2Login();
+		http.oauth2Login().defaultSuccessUrl("/main");
 		
 		//스마트에디터를 사용하기 위함
 		http.headers().frameOptions().disable();
