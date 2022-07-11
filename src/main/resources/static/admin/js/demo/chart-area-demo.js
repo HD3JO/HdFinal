@@ -33,11 +33,11 @@ var date = new Date();
 var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 var lastDate = lastDay.getDate();
 var day = [];
-var cnt = [];
+var cnt1 = [];
 
 for(let i = 0; i <= lastDate; i++){
 	var cntByDate = $('#cntBoardByDate'+i).val();
-	cnt.push(cntByDate);	
+	cnt1.push(cntByDate);	
 }
 
 for(let i = 1; i <= lastDate; i++){
@@ -61,7 +61,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: cnt,
+      data: cnt1,
     }],
   },
   options: {

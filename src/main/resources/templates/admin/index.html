@@ -359,10 +359,10 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary" th:text=${cnt}></h6>
-                                    <th th:each="list, status: ${cnt}">
-                                    	<input type="hidden" th:id="'cntBoardByDate' + ${status.index}" th:value="${list}"/>
-                                    </th>
+                                    <h6 class="m-0 font-weight-bold text-primary">날짜별 게시글 현황</h6>
+                                    <tr th:each="list, status: ${cnt}">
+                                    	<input type="hidden" th:id="'cntBoardByDate' + ${status.index}" th:value="${list}"></input>
+                                    </tr>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
