@@ -36,7 +36,6 @@ public class DrawRestController {
 	
 	@PostMapping("/drawInsert")
 	public ResponseEntity<String> drawInsert(Authentication authentication, @RequestBody DrawDTO drawDTO) throws Exception {						
-		
 		/* 
 		 * 1) unique한 key값 생성  
 		 *     - key로 사용할 uid 생성   

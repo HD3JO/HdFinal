@@ -46,7 +46,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		updateUser.setName(memberDTO.getName());
 		updateUser.setPhone(memberDTO.getPhone());
-		updateUser.setPassword(memberDTO.getPassword());
+		System.out.println(memberDTO + "here2");
+		if(!"".equals(memberDTO.getPassword())) {
+			updateUser.setPassword(memberDTO.getPassword());
+		}
 		updateUser.setMarketingemail(memberDTO.getMarketingemail());
 		updateUser.setMarketingsms(memberDTO.getMarketingsms());
 		

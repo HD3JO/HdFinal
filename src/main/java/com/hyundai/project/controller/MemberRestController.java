@@ -73,6 +73,9 @@ public class MemberRestController {
 	}
 	@RequestMapping(value="/mypage", method=RequestMethod.GET)
 	public String mypage(Model model, Authentication authentication) throws Exception {
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		MemberDTO memberDTO = memberService.selectOneUser(authDTO.getEmail());
 		List<OrderListDTO> orderList = orderService.selectOrderListByOneMonth(authDTO.getEmail());
@@ -89,6 +92,9 @@ public class MemberRestController {
 	
 	@RequestMapping(value="/modify", method= RequestMethod.GET)
 	public String modify(Model model, Authentication authentication) throws Exception {
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		MemberDTO dto = memberService.selectOneUser(authDTO.getEmail());
 		String password = dto.getPassword();
@@ -110,14 +116,20 @@ public class MemberRestController {
 	@RequestMapping(value="/modify", method= RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> modify(@RequestBody MemberDTO memberDTO) throws Exception {
-		String password = passwordEncoder.encode(memberDTO.getPassword());
-		memberDTO.setPassword(password);
+		System.out.println(memberDTO +"here1");
+		if(!"".equals(memberDTO.getPassword())) {
+			String password = passwordEncoder.encode(memberDTO.getPassword());
+			memberDTO.setPassword(password);
+		}
 		memberService.updateMember(memberDTO);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/myorder", method=RequestMethod.GET)
 	public String myorder(Model model, Authentication authentication) throws Exception {
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
 		model.addAttribute("orderList", orderList);
@@ -126,6 +138,9 @@ public class MemberRestController {
 	
 	@RequestMapping(value="/myreview", method=RequestMethod.GET)
 	public String myreview(Model model, Authentication authentication) throws Exception {
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
@@ -137,6 +152,7 @@ public class MemberRestController {
 	
 	@RequestMapping(value="/secession", method=RequestMethod.POST)
 	public ResponseEntity<String> secession(Authentication authentication) throws Exception{
+		
 		MemberUserDetails dto = (MemberUserDetails)authentication.getPrincipal();
 		String email = dto.getEmail();
 		memberService.secession(email);

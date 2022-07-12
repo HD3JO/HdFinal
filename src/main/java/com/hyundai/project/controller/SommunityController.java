@@ -73,7 +73,9 @@ public class SommunityController {
 	
 	@GetMapping("/view")
 	public String Complete(@RequestParam("bno") String bno, Model model, Authentication authentication) {
-		
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		
 		MemberUserDetails userDetails = (MemberUserDetails)authentication.getPrincipal();
 		

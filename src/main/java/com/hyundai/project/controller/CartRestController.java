@@ -84,6 +84,9 @@ public class CartRestController {
 	@PostMapping(value="/selectDelete")
 	public String deleteCart(@RequestBody List<CartDTO> cartList, Model model, Authentication authentication) throws Exception {
 		log.info("Called deleteCart");
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		

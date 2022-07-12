@@ -61,8 +61,12 @@ public class OrderController {
 	@PostMapping("/orderSheet")
 	public String productOrderSheet (Authentication authentication, CartListDTO list, Model model) throws Exception {
 		
-		// 로그인 정보 받아오기 위한 UserDetails 클래스 사용 
+		// 로그인 정보 받아오기 위한 UserDetails 클래스 사용
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
 		
 		// 현재 로그인 유저 이메일 
 		String email = userDetails.getUsername();
@@ -106,7 +110,9 @@ public class OrderController {
 	
 	@GetMapping("/orderComplete")
 	public String orderComplete(@RequestParam String oid, Model model, Authentication authentication) throws Exception {
-		
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		List<OrderCompleteDTO> completeList = orderService.getOrderComplete(oid);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String email = userDetails.getUsername();
