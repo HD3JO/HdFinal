@@ -2,6 +2,7 @@ package com.hyundai.project.service;
 
 import java.util.List;
 
+import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.MemberDTO;
 
 public interface MemberService {
@@ -20,4 +21,5 @@ public interface MemberService {
 	
 	public void secession(String email) throws Exception;
 	
+	public List<DrawListDTO> getMyDrawList(String email) throws Exception;
 }

@@ -1,19 +1,23 @@
 package com.hyundai.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.MemberRole;
 import com.hyundai.project.dto.MemberUserDetails;
@@ -158,6 +162,23 @@ public class MemberRestController {
 		memberService.secession(email);
 		
 		return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@GetMapping("/mydraw")
+	public String mydraw(Authentication authentication, Model model) throws Exception{
+		
+		// 로그인 정보 받아오기 위한 UserDetails 클래스 사용 
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		// 현재 로그인 유저 이메일 
+		String email = userDetails.getUsername();
+		
+		List<DrawListDTO> dto = new ArrayList<>();
+		
+		dto = memberService.getMyDrawList(email);
+		
+		model.addAttribute("myList", dto);
+		
+		return "mydraw";
 	}
 
 }
