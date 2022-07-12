@@ -249,15 +249,17 @@
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">한섬닷컴</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">사용자 구매금액 순위</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
+                                	<tr th:each="list, status : ${rank}">
+		                            	<h4 class="small font-weight-bold" th:text="${list.name}"><span
+                                            class="float-right" th:text="${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"></span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-danger" role="progressbar" th:style="'width:' + ${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"
+                                            th:aria-valuenow="${list.totalPurchase}" th:aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <p>반영된 변경사항을 확인하고 이상 있을 시 수정바랍니다.</p>
-                                    <a target="_blank" rel="nofollow" href="/main">한섬닷컴 메인 페이지&rarr;</a>
+                                    </tr>
                                 </div>
                             </div>                          
                         </div>
