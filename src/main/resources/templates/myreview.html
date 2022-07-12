@@ -9,15 +9,6 @@
 
 <script type="text/javascript">
 	var arkQuery = $.noConflict(true);
-
-	var reviewDTO = {
-			
-			email : $("#email").text(),
-			reviewcontent: $("#reviewcontent").text()
-	};
-	
-	var pcid = $("#pcid").text();
-	
 </script>
 
 <body>
@@ -166,8 +157,8 @@
 										<td class="al_middle">
 											  
 											<div class="price_wrap">
-												<span th:if="${pcid} == ${product.pcid}" th:text="작성불가"></span>
-												<span th:if="${pcid} != ${product.pcid}" th:text="작성가능"></span>
+												<span th:if="${product.rp == 'N'}" th:text="작성불가"></span>
+ 												<span th:if="${product.rp == 'Y'}" th:text="작성가능"></span>
 											</div> 
 										</td>
 

@@ -681,13 +681,13 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
                         <a href="/customLogin">로그인<!-- 로그인 --></a>
                      </li>
                      <!-- 로그인 되어 있는경우 (황명하) -->
-                     <li sec:authorize="isAuthenticated()"><a>안녕하세요 <span sec:authentication="principal.name"></span>님</a></li>
-                     <li sec:authorize="isAuthenticated()">
+                     <li sec:authorize="isAuthenticated()" style="margin-left:30px;"><a>안녕하세요 <span sec:authentication="principal.name"></span>님</a></li>
+                     <li sec:authorize="isAuthenticated()" style="margin-left:30px;">
                         <form action="/logout" method="POST" id="logoutForm">
                            <!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         </form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
-                     <li class="header_dropmemu mypage" sec:authorize="isAuthenticated()"><a
+                     <li class="header_dropmemu mypage" sec:authorize="isAuthenticated()" style="margin-left:30px;"><a
                         href="/member/mypage" class="btn">마이페이지</a>
                      
                      <div class="list">
