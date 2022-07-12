@@ -13,6 +13,9 @@ public class CartController {
 	
 	@GetMapping("/cartList")
 	public String cartList(Authentication authentication, Model model) {
+		if(authentication == null) {
+			return "redirect:/customLogin";
+		}
 		
 	    UserDetails userDetails = (UserDetails) authentication.getPrincipal();	    
 	    
