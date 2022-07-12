@@ -4,6 +4,7 @@
 <mapper namespace="com.hyundai.project.user.repository.OrderMapper">
 
 	<!-- 주문 페이지에서 작성한 정보 입력 -->
+	
 	<insert id="insertOrder" parameterType="com.hyundai.project.dto.OrderDTO">
 		<selectKey keyProperty="oid" order="BEFORE" resultType="Integer">
 			SELECT SEQ_ORDERS.NEXTVAL FROM DUAL
@@ -135,21 +136,23 @@
 	
 	
 	<select id="selectOrderList" resultType="com.hyundai.project.dto.OrderListDTO">
-        SELECT G.email, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
-       	B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
-    		FROM ORDERS A
-    		INNER JOIN ORDER_ITEM B
-    		ON A.oid = B.oid
-    		INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
-    		ON B.psid = C.psid
-    		INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
-    		ON C.pcid = D.pcid
-    		INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON E
-    		ON D.pid = E.pid
-    		INNER JOIN PRODUCTMANAGER.BRAND F
-    		ON E.bno = F.bno
-    		INNER JOIN MEMBER G
-    		ON A.email = G.email
+        SELECT G.email, DECODE(H.REVIEWCONTENT, NULL,'Y','N') AS RP, B.psid, D.pcimg1, F.bname, E.pname, D.pccolorcode, C.psize,
+       		B.oicount, A.ostatus, D.pcid, G.name, D.pcprice, A.oid, G.mileage
+	    	FROM ORDERS A
+	    	INNER JOIN ORDER_ITEM B
+	    	ON A.oid = B.oid
+	    	INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
+	    	ON B.psid = C.psid
+	    	INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
+	    	ON C.pcid = D.pcid
+	    	INNER JOIN PRODUCTMANAGER.PRODUCT_COMMON E
+	    	ON D.pid = E.pid
+	    	INNER JOIN PRODUCTMANAGER.BRAND F
+	    	ON E.bno = F.bno
+	    	INNER JOIN MEMBER G
+	    	ON A.email = G.email
+	    	LEFT OUTER JOIN REVIEW H
+	    	ON (G.EMAIL = H.EMAIL AND D.PCID = H.PCID)
     		where G.email = #{email}
     		order by odate desc
     </select>

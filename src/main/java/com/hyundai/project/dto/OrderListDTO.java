@@ -29,4 +29,5 @@ public class OrderListDTO {
 	private Date odate;
 	private String pcid;
 	private int mileage;
+	private String rp;
 }

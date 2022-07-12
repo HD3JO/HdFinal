@@ -219,7 +219,7 @@ var reviewcount = $("#reviewcount").text();
 								<td class="al_middle">
 									<!-- Price -->
 									<div class="price_wrap">
-										<a th:href="'http://localhost:80/order/orderDetail?oid='+${product.oid}" id="detailViewBtn" class="btn add_ss mr0">&nbsp;&nbsp;상세보기&nbsp;&nbsp;</a>
+										<a th:href="@{/order/orderDetail(oid=${product.oid})}" id="detailViewBtn" class="btn add_ss mr0">&nbsp;&nbsp;상세보기&nbsp;&nbsp;</a>
 									</div> <!-- //Price -->
 								</td>
 							</tr>

@@ -240,6 +240,9 @@ td input {
 											<th>브랜드명</th>
 											<th>상품코드</th>
 											<th>상품명</th>
+											<th>대분류</th>
+											<th>중분류</th>
+											<th>소분류</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -252,6 +255,15 @@ td input {
 											</td>
 											<td>
 												<span th:id="'pname'+${status.index}" th:idx="${status.index}" th:text="${product.pname}" ></span>
+											</td>
+											<td>
+												<span th:id="'depth1name'+${status.index}" th:idx="${status.index}" th:text="${product.depth1name}" ></span>
+											</td>
+											<td>
+												<span th:id="'depth2name'+${status.index}" th:idx="${status.index}" th:text="${product.depth2name}" ></span>
+											</td>
+											<td>
+												<span th:id="'depth3name'+${status.index}" th:idx="${status.index}" th:text="${product.depth3name}" ></span>
 											</td>
 										</tr>
 									</tbody>

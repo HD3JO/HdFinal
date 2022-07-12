@@ -111,9 +111,9 @@ function changeBest(e){
 			//console.log('ddd');
 			let html = '';
 			if(senderId != 'master'){
-				html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right;" > '+message +'</div> </li><br>';	
+				html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right; max-width: 80%;" > '+message +'</div> </li><br>';	
 			}else{
-				html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left;" > '+message + ' </div></li><br>';
+				html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left; background-color:#d7f7a6; max-width: 80%;" > '+message + ' </div></li><br>';
 			}
 			
 			$('.messageBox').append(html);

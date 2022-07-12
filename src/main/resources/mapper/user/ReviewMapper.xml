@@ -56,20 +56,6 @@
     where email=#{email, jdbcType=VARCHAR}
     
     </select>    
-    
-    <select id="reviewCheck" parameterType = "String" resultType="String">
-
-	SELECT DISTINCT E.PCID
-	FROM ORDERS A
-	INNER JOIN ORDER_ITEM B
-	ON A.OID = B.OID
-	INNER JOIN PRODUCTMANAGER.PRODUCT_STOCK C
-	ON B.PSID = C.PSID
-	INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR D
-	ON C.PCID = D.PCID
-	INNER JOIN REVIEW E
-	ON A.EMAIL = E.EMAIL
-	WHERE E.EMAIL = #{email, jdbcType=VARCHAR}
 	
 <!--     select C.PSID -->
 <!--     from REVIEW A  -->
@@ -82,8 +68,7 @@
 <!--     INNER JOIN PRODUCTMANAGER.PRODUCT_COLOR E -->
 <!--     ON D.PCID = E.PCID -->
 <!--     WHERE A.EMAIL=#{email, jdbcType=VARCHAR} AND A.PCID = E.PCID -->
-    
-    </select>
+ 
     
     <!--  
     <update id="updateReview" statementType = "CALLABLE">

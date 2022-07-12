@@ -16,4 +16,7 @@ public class AdminProductDTO {
 	private String bname;
 	private String pid;
 	private String pname;
+	private String depth1name;
+	private String depth2name;
+	private String depth3name;
 }

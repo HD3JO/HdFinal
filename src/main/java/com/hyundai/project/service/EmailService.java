@@ -45,7 +45,7 @@ public class EmailService {
         //completeList = orderService.getOrderComplete(oid);
         
         MailHandler mailHandler = new MailHandler(mailSender);
-        String html = templateEngine.process("emailtemplate", context);
+        String html = templateEngine.process("emailTemplate", context);
         mailHandler.setText(html, true);
         mailHandler.setTo(emailDTO.getAddress());
         mailHandler.setFrom("gsmtpuser@gmail.com");
