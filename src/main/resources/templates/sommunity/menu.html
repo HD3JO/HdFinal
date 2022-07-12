@@ -3,31 +3,8 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-
-		<!-- Header -->
-		<header id="header"  th:fragment="header">
-			<div class="inner">
-				<!-- Logo -->
-				<h2 style="margin: 0 0 0 0;">
-					<span style="display: block;">한섬닷컴 회원을 위한</span><span
-						style="display: block;">패션 커뮤니티</span>
-				</h2>
-				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
-						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
-					class="title"></span>
-				</a>
-				<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-
-			</div>
-		</header>
-
 		<!-- Menu -->
-		<nav id="menu">
+		<nav id="menu" th:fragment="menu">
 			<h2>Menu</h2>
 			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
 			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
@@ -50,6 +27,4 @@
 			}
 			</script>
 		</nav>
-		
-		
 </html>
