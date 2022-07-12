@@ -127,9 +127,9 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 			if(!message.includes('님이 접속했습니다.') && !message.includes('님이 퇴장했습니다.')){
 				let html = '';
 				if(senderId == 'master'){
-					html += '<li class="d-flex flex-row-reverse"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +'</div> </li><br>';	
+					html += '<li class="d-flex flex-row-reverse"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" style="max-width: 80%;"> '+message +'</div> </li><br>';	
 				}else{
-					html += '<li class="d-flex flex-row"><div class="clientMsg card shadow border-left-primary" senderId="'+senderId+'" > '+message +' </div></li><br>';
+					html += '<li class="d-flex flex-row"><div class="clientMsg card shadow border-left-success" senderId="'+senderId+'" style="max-width: 80%;"> '+message +' </div></li><br>';
 				}
 				
 				$('.messageBox').append(html);	
