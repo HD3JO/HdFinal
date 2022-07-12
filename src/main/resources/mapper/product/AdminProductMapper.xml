@@ -4,10 +4,11 @@
 <mapper namespace="com.hyundai.project.product.repository.AdminProductMapper">
 
 	<select id="getProductCommon" resultType="com.hyundai.project.dto.AdminProductDTO">
-		SELECT A.BNAME, B.PID, B.PNAME
-		  FROM BRAND A, PRODUCT_COMMON B, PRODUCT_CATEGORY C
+		SELECT A.BNAME, B.PID, B.PNAME, D.DEPTH1NAME, D.DEPTH2NAME, D.DEPTH3NAME
+		  FROM BRAND A, PRODUCT_COMMON B, PRODUCT_CATEGORY C, CATEGORY D
 		 WHERE A.BNO = B.BNO
 		   AND B.PID = C.PID
+		   AND C.CATENO = D.CATENO
 		   AND A.BNAME LIKE DECODE(#{bname}, null, '%', '%'||#{bname}||'%')
 		   AND B.PNAME LIKE DECODE(#{pname}, null, '%', '%'||#{pname}||'%')
 		 order by b.pid
