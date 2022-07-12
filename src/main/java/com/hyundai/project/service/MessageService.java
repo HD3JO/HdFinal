@@ -38,7 +38,7 @@ public class MessageService {
 		params.put("to", completeList.get(0).getOphone());
 		params.put("from", "01068884025");
 		params.put("type", "SMS");
-		params.put("text", "<h1>한섬3조</h1>"+"<a href='http://localhost:80/order/orderStatus?oid=" + completeList.get(0).getOid() +"'>주문확인</a>");
+		params.put("text", "<h1>4st.men 주문완료/상태확인</h1>"+"<a href='4stmen.kro.kr/order/orderStatus?oid=" + completeList.get(0).getOid() +"'>주문확인</a>");
 		params.put("app_version", "test app 1.2"); // application name and version
 
 		try {

@@ -75,6 +75,7 @@ public class MemberRestController {
 		}
 		return new ResponseEntity<String>("FAILURE", HttpStatus.BAD_REQUEST);
 	}
+	
 	@RequestMapping(value="/mypage", method=RequestMethod.GET)
 	public String mypage(Model model, Authentication authentication) throws Exception {
 		if(authentication == null) {
@@ -148,9 +149,7 @@ public class MemberRestController {
 		
 		MemberUserDetails authDTO = (MemberUserDetails) authentication.getPrincipal();
 		List<OrderListDTO> orderList = orderService.selectOrderList(authDTO.getEmail());
-		String pcid = reviewService.reviewCheck(authDTO.getEmail());
 		model.addAttribute("orderList", orderList);
-		model.addAttribute("pcid", pcid);
 		return "myreview";
 	}
 	

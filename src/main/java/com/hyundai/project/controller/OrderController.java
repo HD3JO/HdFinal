@@ -118,7 +118,7 @@ public class OrderController {
 		String email = userDetails.getUsername();
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setAddress(email);
-		emailDTO.setTitle("[한섬3조] 주문완료 이메일입니다.");
+		emailDTO.setTitle("[4st.men] 주문완료 이메일입니다.");
 		Map<String, Object> variables = new HashMap<>();
 		variables.put("orderList", completeList);
 		if(completeList.get(0).getMarketingemail().equals("Y")) {
@@ -171,4 +171,5 @@ public class OrderController {
 		model.addAttribute("oafterprice", oafterprice);
 		return "order/orderDetail";
 	}
+	
 }
