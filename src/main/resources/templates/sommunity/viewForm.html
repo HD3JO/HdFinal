@@ -192,9 +192,12 @@
 												/*<![CDATA[*/
 												const html = [[${boardDTO.bcontent}]];
 												const bno = [[${boardDTO.bid}]]
+												
 												/*]]>*/
-												console.log(html);
-												$('.document_3700_0').append(html);
+												/* 띄어 쓰기 문자 변환*/
+												let content = html.replace(/amp;/gi, "")
+												console.log(content);
+												$('.document_3700_0').append(content);
 												
 											</script>
 
