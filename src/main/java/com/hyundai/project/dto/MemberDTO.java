@@ -31,6 +31,7 @@ public class MemberDTO implements Serializable{
 	
 	private String grade;
 	private int mileage;
+	private int totalPurchase;
 	
 	public void updateMember(MemberDTO dto) {
 		// TODO Auto-generated method stub

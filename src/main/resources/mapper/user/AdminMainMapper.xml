@@ -36,4 +36,20 @@
 		FROM MEMBER
 		WHERE GRADE = #{grade, jdbcType=VARCHAR}
 	</select>
+	
+	
+	<select id="rankMember" resultType="com.hyundai.project.dto.MemberDTO">
+		SELECT * 			   
+		FROM( 
+			 SELECT A.EMAIL, 
+			   	    A.NAME, 
+	       	   	    SUM(B.OAFTERPRICE) AS TOTALPURCHASE
+			 FROM MEMBER A, 
+	    	 ORDERS B
+			 WHERE A.EMAIL = B.EMAIL
+			 AND (B.OSTATUS LIKE '주문완료' OR B.OSTATUS LIKE '배송완료')
+			 GROUP BY A.EMAIL, A.NAME
+			 ORDER BY TOTALPURCHASE DESC)
+	 	WHERE ROWNUM <![CDATA[<=]]> 5
+	</select>
 </mapper>

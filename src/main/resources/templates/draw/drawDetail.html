@@ -202,7 +202,7 @@ function logout(){
 }
 
 function doWait(){
-	layerAlert("매일 오전 10시에 오픈 됩니다!");
+	layerAlert("주말과 공휴일을 제외한 평일에 오픈 됩니다!");
 }
 
 function doDraw(){
@@ -247,7 +247,7 @@ function doDraw(){
 	            },
 	            success: function(data){
 	            	if(data == 'Draw Success')
-	            		layerAlert('응모 완료되었습니다. 당첨자는 오전 11시 이후 순차적으로 메세지로 안내드립니다.');
+	            		layerAlert('응모 완료되었습니다. 당첨자는 토요일 8시 이후 순차적으로 가입하신 이메일로 안내드립니다.');
 	            	else if(data == 'Not Enough Mileage')
 	            		layerAlert('마일리지가 부족합니다.');
 	            	else if(data == 'Duplicate Application')
@@ -318,11 +318,11 @@ function doDraw(){
                   만세를 하거나 앉아 있는 등 다양한 포즈로 연출이 가능합니다.</p>
 
                 </div>
-                <p th:if="${drawDetail.openyn == 'N'}"></p>
-                <p th:if="${drawDetail.openyn == 'Y'}" style="text-align:center;">오전 10:00 오픈 예정</p>
+                <p th:if="${drawDetail.openyn == 'Y'}"></p>
+                <p th:if="${drawDetail.openyn == 'N'}" style="text-align:center; font-size:23px;"></p>
                 
-                <p th:if="${drawDetail.openyn == 'N'}" style="text-align:center;"><a th:text="'Draw ' + ${#numbers.formatInteger(drawDetail.pmileage, 3, 'COMMA')} + ' M'" href="#;" onclick="doDraw();" class="readmore"></a></p>
-                <p th:if="${drawDetail.openyn == 'Y'}" style="text-align:center;"><a href="#;" class="readmore" onclick="doWait();">Coming Soon</a></p>
+                <p th:if="${drawDetail.openyn == 'Y'}" style="text-align:center;"><a th:text="'Draw ' + ${#numbers.formatInteger(drawDetail.pmileage, 3, 'COMMA')} + ' M'" href="#;" onclick="doDraw();" class="readmore"></a></p>
+                <p th:if="${drawDetail.openyn == 'N'}" style="text-align:center;"><a href="#;" class="readmore" onclick="doWait();">Coming Soon</a></p>
                 <input type="hidden" id="deliveryOkMsg" value="확인"/>
                 <input type="hidden" id="email" th:value="${#authentication.name}"/>
                 <input type="hidden" id="psid" th:value="${drawDetail.psid}"/>
