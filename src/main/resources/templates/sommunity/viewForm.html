@@ -227,7 +227,7 @@
 
 									<div class="boardBtnWrp xet-clearfix mg-t20">
 										<div class="float-left">
-											<a th:href="'http://localhost/sommunity/board?bname=' + ${boardDTO.brand}"
+											<a th:href="'/sommunity/board?bname=' + ${boardDTO.brand}"
 												class="xet_btn medium gray">목록</a>
 										</div>
 										<div th:if="${#authentication.name.equals(boardDTO.bauthor)}" class="float-right">
