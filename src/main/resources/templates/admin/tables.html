@@ -277,7 +277,8 @@
                                     <tbody>
                                         <tr class="member" th:each="member, status: ${memberList}">
                                             <td>
-                                            	<input th:id="'email'+${status.index}" th:idx="${status.index}" th:value="${member.email}" readOnly/>
+                                            	<span th:text="${member.email}"></span>
+                                            	<input type="hidden" th:id="'email'+${status.index}" th:idx="${status.index}" th:value="${member.email}" readOnly/>
                                             </td>
                                             <td>
                                             	<input th:id="'name'+${status.index}" th:idx="${status.index}" th:value="${member.name}"/>
