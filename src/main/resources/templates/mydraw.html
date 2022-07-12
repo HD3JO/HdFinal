@@ -50,15 +50,11 @@ var arkQuery = $.noConflict(true);
                             <colgroup class="interval1812">
                                 <col style="width:100px">
                 				<col style="width:70px">
-                				<col style="width:50px">
-                				<col style="width:90px">
                             </colgroup>
                             <thead>
                                 <tr>                                    
                                     <th scope="col">상품정보</th>                                   
                                     <th scope="col">사용 마일리지</th>
-                                    <th scope="col">당첨여부</th>
-                                    <th scope="col">발송상태</th>
                                 </tr>
                             </thead>
                            <tbody id="listBody">
@@ -101,19 +97,7 @@ var arkQuery = $.noConflict(true);
 									<div class="price_wrap">
 										<span th:text="${#numbers.formatInteger(myList.pmileage, 3, 'COMMA')} + ' P'"></span> 
 									</div> <!-- //Price -->
-								</td>
-								<td class="al_middle">
-									<!-- Price -->
-									<div class="price_wrap">
-										<span></span> 
-									</div> <!-- //Price -->
-								</td>	
-								<td class="al_middle">
-									<!-- Price -->
-									<div class="price_wrap">
-										<span></span> 
-									</div> <!-- //Price -->
-								</td>						
+								</td>					
 							</tr>
 						</div>
 					</tbody>
@@ -124,13 +108,14 @@ var arkQuery = $.noConflict(true);
                     <!-- Guide Table -->
                     <div class="gd_wrap mt70">
                         <dl class="gd_list com pl0">
-                            <dt>드로우 응모 안내<!-- 주문 배송 조회 안내 --></dt>
+                            <dt>드로우 응모 안내</dt>
                             <dd>
                                 <ul class="bul_sty01_li">
                                     <li>더 한섬 드로우는 매주 토요일 8시에 당첨자를 발표합니다.</li>
-                                    <li>미당첨 시에는 별도의 안내 메세지나 이메일이 발송되지 않습니다.</li>
+                                    <li>미당첨 시에는 별도의 안내 메세지나 이메일이 발송되지 않습니다.</li>                                    
                                     <li>배송신청은 당첨 시 가입한 이메일로 링크가 발송됩니다.</li>
-                                    <li>배송준비 중 상태에서는 취소/변경이나 주소의 변경이 불가능 합니다.<!-- 배송준비중 상태에서는 주문의 취소/변경이나 주소의 변경이 불가능 합니다. --></li>                                                                       
+                                    <li>배송준비 중 상태에서는 취소/변경이나 주소의 변경이 불가능 합니다.</li>
+                                    <li>당첨자 추첨 후에는 응모내역이 초기화됩니다.</li>                                                                       
                                 </ul>
                             </dd>
                         </dl>
