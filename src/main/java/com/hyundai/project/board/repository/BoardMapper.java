@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ReplyDTO;
 
 @Mapper
@@ -43,6 +44,6 @@ public interface BoardMapper {
 	
 	void getMileage(@Param("amount")int amount, @Param("bauthor") String bauthor);
 
-	
+	MemberDTO showMileage(String email);
 
 }

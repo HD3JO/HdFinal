@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ReplyDTO;
 
 
@@ -40,6 +41,8 @@ public interface BoardService {
 	public void getMileage(int amount, String bauthor);
 
 	public int getTodayReplayCnt(String rauthor);
+
+	public MemberDTO showMileage(String email);
 
 
 }

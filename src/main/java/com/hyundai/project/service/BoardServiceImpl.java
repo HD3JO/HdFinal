@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hyundai.project.board.repository.BoardMapper;
 import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ReplyDTO;
 
 @Service
@@ -16,30 +17,22 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	BoardMapper boardMapper;
-	
-	
-	
+
 	@Override
 	public int getCount(String bname) {
 		return boardMapper.getCount(bname);
 	}
-
-
 
 	@Override
 	public BoardDTO getBoard(String bno) {
 		// TODO Auto-generated method stub
 		return boardMapper.getBoard(bno);
 	}
-
-	
 	
 	@Override
 	public List<BoardDTO> getBoardList(String brand) {
 		return boardMapper.getBoardList(brand);
 	}
-	
-	
 	
 	@Override
 	public List<BoardDTO> getPageBoard(BoardDTO boardDTO) {
@@ -47,15 +40,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getPageBoard(boardDTO);
 	}
 
-
-
 	@Override
 	public void insertBoard(BoardDTO boardDTO) {
 		boardMapper.insertBoard(boardDTO);
 		return;
 	}
-	
-	
 	
 	@Override
 	public void delBoard(String bid) {
@@ -81,8 +70,6 @@ public class BoardServiceImpl implements BoardService {
 		return;
 	}
 
-
-
 	@Override
 	public void incHits(BCountDTO bCountDTO) throws SQLException {
 		boardMapper.incHits(bCountDTO);
@@ -101,8 +88,6 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getLikesCount(bid);
 	}
 
-
-
 	@Override
 	public int getTodayBoardCnt(String bauthor) {
 		
@@ -118,6 +103,13 @@ public class BoardServiceImpl implements BoardService {
 	public void getMileage(int amount, String bauthor) {
 		boardMapper.getMileage(amount, bauthor);
 		return;
+	}
+
+	@Override
+	public MemberDTO showMileage(String email) {
+		System.out.println(email + "done2");
+		
+		return boardMapper.showMileage(email);
 	}
 	
 	
