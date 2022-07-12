@@ -46,14 +46,17 @@ var reviewcount = $("#reviewcount").text();
 			<h4><a th:href="@{/member/mypage}" >마이페이지<!-- 마이페이지 --></a></h4>
 			<div class="lnb">
 						<dl>
-							<dt><a th:href="@{/member/myorder}" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');">주문/배송/반품/취소</a></dt>
+							<dt><a th:href="@{/member/myorder}" onclick="GA_Event('마이페이지','LNB','주문/배송/반품/취소');" style="font-size:12px;">주문/배송/반품/취소</a></dt>
 						</dl>
 						<dl>
-							<dt><a th:href="@{/member/modify}" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');">개인정보 변경/탈퇴</a></dt>
+							<dt><a th:href="@{/member/modify}" onclick="GA_Event('마이페이지','LNB','개인정보 변경/탈퇴');" style="font-size:12px;">개인정보 변경/탈퇴</a></dt>
 							
 						</dl>
 						<dl>
-							<dt><a th:href="@{/member/myreview}" onclick="GA_Event('마이페이지','LNB','내 상품평');">내 상품평</a></dt>
+							<dt><a th:href="@{/member/myreview}" onclick="GA_Event('마이페이지','LNB','내 상품평');" style="font-size:12px;">내 상품평</a></dt>
+						</dl>
+						<dl>
+							<dt><a th:href="@{/member/mydraw}" onclick="GA_Event('마이페이지','LNB','내 상품평');" style="font-size:12px;">내 드로우 응모 내역</a></dt>
 						</dl>
 					</div>
 				</div>

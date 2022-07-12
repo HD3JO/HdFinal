@@ -349,8 +349,7 @@
 		                <p>총 <span id="selectProductCount">0</span>개 상품</p>
 		              </div>
 		            </div>
-		            <div class="btnwrap order" id="checkout_btn_wrap">
-		              <a href="#;" onclick="selectRemove();"><input value="선택상품삭제" class="btn wt" type="button" /></a>
+		            <div class="btnwrap order" id="checkout_btn_wrap">		              
 		                <form action="/order/orderSheet" method="POST" id="orderSheet">
 		                  <input value="선택상품 주문하기"  class="btn gray mr0" type="submit"  />
 		                  <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>

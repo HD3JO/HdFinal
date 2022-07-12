@@ -1,11 +1,19 @@
 package com.hyundai.project.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.MemberDTO;
+import com.hyundai.project.product.repository.DrawMapper;
 import com.hyundai.project.user.repository.MemberMapper;
 
 
@@ -14,6 +22,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberMapper mapper2;
+	
+	@Autowired
+	DrawMapper drawMapper;
+	
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
 	
 	@Override
 	public List<MemberDTO> selectAllUser() throws Exception{
@@ -87,5 +101,59 @@ public class MemberServiceImpl implements MemberService {
 		mapper2.secession(dto);
 		
 	}
+	
+	@Override
+	public List<DrawListDTO> getMyDrawList(String email) throws Exception {
+		
+		DrawListDTO myDraw =  new DrawListDTO();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		List<DrawListDTO> myDrawList = new ArrayList<DrawListDTO>(); 
+		List<DrawListDTO> dto = drawMapper.getDrawList();
+		
+		Set<String> redisKeys = redisTemplate.keys("*");
+		List<String> keysList = new ArrayList<>();
+		List<String> keysListByEmail = new ArrayList<>();
+		Iterator<String> keys = redisKeys.iterator();
+		
+		// redis에 있는 모든 키 값들 리스트 형태로 받아옴
+		while(keys.hasNext()) {
+			String data = keys.next();
+			keysList.add(data);
+		}
 
+		
+		// 해당 사용자의 이메일에 해당하는 응모 내역 키 값 가져오기 
+		for(int i = 0; i < keysList.size(); i++) {														 
+			 Object val = redisTemplate.opsForValue().get(String.valueOf(keysList.get(i)));
+			 Map<String, Object> map = mapper.convertValue(val, Map.class);					 
+			 String emailDB = (String)map.get("email");
+			 
+			 if(email.equals(emailDB)) { 
+				 keysListByEmail.add((String)keysList.get(i));
+			 }						 					 					 							
+		}
+		
+		for(int k = 0; k < keysListByEmail.size(); k++) {
+			Object val = redisTemplate.opsForValue().get(String.valueOf(keysListByEmail.get(k)));
+			Map<String, Object> map = mapper.convertValue(val, Map.class);			
+			
+			myDraw.setEmail(email);
+			myDraw.setPsid((String)map.get("psid"));
+			myDraw.setPmileage((Integer)map.get("pmileage"));
+			
+			DrawListDTO info = drawMapper.getDrawDetail((String)map.get("psid"));
+			
+			myDraw.setBname(info.getBname());
+			myDraw.setPname(info.getPname());
+			myDraw.setPmimg2(info.getPmimg2());
+			myDraw.setPcolorcode(info.getPcolorcode());
+			myDraw.setPsize(info.getPsize());
+			
+			myDrawList.add(myDraw);
+			myDraw = new DrawListDTO();	
+		}
+		
+		return myDrawList;
+	}
 }
