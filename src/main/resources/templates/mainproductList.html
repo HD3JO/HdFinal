@@ -11,6 +11,10 @@
 <script type="text/javascript">
 var arkQuery = $.noConflict(true);
 
+$(document).ready(function(){
+	mainSlider1903();	
+}) 
+
 function changeNew(e){
 	console.log(e);
 	const header = $("meta[name='_csrf_header']").attr('content');
