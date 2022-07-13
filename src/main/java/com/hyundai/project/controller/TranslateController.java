@@ -76,6 +76,7 @@ public class TranslateController {
         
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 	}
+	
 	private static String postCH(String apiUrl, Map<String, String> requestHeaders, String text){
         HttpURLConnection con = connect(apiUrl);
         String postParams = "source=zh-CN&target=ko&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
