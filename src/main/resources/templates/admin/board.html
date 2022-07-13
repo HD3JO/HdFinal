@@ -216,7 +216,7 @@ td input {
 											<td><span th:id="'bauthor'+${status.index}" th:text="${board.bauthor}"></span></td>
 											<td><span th:id="'hits'+${status.index}" th:text="${board.hits}"></span></td>
 											<td><span th:id="'likes'+${status.index}" th:text="${board.likes}"></span></td>
-											<td><input th:id="'bdate'+${status.index}" type="date" th:value="${board.bdate}" readOnly/></td>
+											<td><span th:id="'bdate'+${status.index}" th:text="${board.bdate}"></span></td>
 										</tr>
 									</tbody>
 								</table>
