@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hyundai.project.dto.BCountDTO;
 import com.hyundai.project.dto.BoardDTO;
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.dto.ReplyDTO;
 import com.hyundai.project.service.BoardService;
 import com.hyundai.project.service.S3Service;
@@ -94,5 +95,15 @@ public class SommunityRESTController {
 		return boardService.getLikesCount(bid);
 	}
 	
+	@PostMapping(value="/showMileage")
+	public MemberDTO showMileage (@RequestBody MemberDTO memberDTO) {
+		System.out.println(memberDTO + "done1");
+		return boardService.showMileage(memberDTO.getEmail());
+	}
+	
+	@PostMapping(value="/getTodayReplayCnt")
+	public int getTodayReplayCnt (@RequestParam("email") String email) {
+		return boardService.getTodayReplayCnt(email);
+	}
 	
 }

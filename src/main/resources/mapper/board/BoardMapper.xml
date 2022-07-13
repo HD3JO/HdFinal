@@ -86,8 +86,13 @@
 	<select id = "getTodayReplyCnt"  resultType="_int">
 		select fn_todayrcnt(#{rauthor}) as cnt from dual
 	</select> 	
+	
 	<select id = "getMileage" >
 		call proc_getmileage(#{amount}, #{bauthor})
+	</select> 
+	
+	<select id = "showMileage" resultType = "com.hyundai.project.dto.MemberDTO">
+		select email, mileage from usermanager.member where email = #{email}
 	</select> 
 	
 </mapper>

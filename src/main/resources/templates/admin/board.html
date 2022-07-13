@@ -90,8 +90,10 @@
 			
 			let cont =$('#bcontent'+idx).val();
 			
-			cont = cont.replaceAll("&lt;", "<");
+		      cont = cont.replaceAll("&lt;", "<");
 		      cont = cont.replaceAll("&gt;", ">");
+		      cont = cont.replaceAll("&quot;", "\"");
+				cont = cont.replaceAll("&nbsp;", "");
 			
 			$('#modalBtitle').text($('#btitle'+idx).text());
 			$('#modalBauthor').text('작성자 '+$('#bauthor'+idx).text());
@@ -214,7 +216,7 @@ td input {
 											<td><span th:id="'bauthor'+${status.index}" th:text="${board.bauthor}"></span></td>
 											<td><span th:id="'hits'+${status.index}" th:text="${board.hits}"></span></td>
 											<td><span th:id="'likes'+${status.index}" th:text="${board.likes}"></span></td>
-											<td><input th:id="'bdate'+${status.index}" type="date" th:value="${board.bdate}" readOnly/></td>
+											<td><span th:id="'bdate'+${status.index}" th:text="${board.bdate}"></span></td>
 										</tr>
 									</tbody>
 								</table>

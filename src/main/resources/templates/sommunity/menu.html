@@ -3,35 +3,12 @@
 	xmlns:sec="http://www.w3.org/1999/xhtml"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-
-		<!-- Header -->
-		<header id="header"  th:fragment="header">
-			<div class="inner">
-				<!-- Logo -->
-				<h2 style="margin: 0 0 0 0;">
-					<span style="display: block;">한섬닷컴 회원을 위한</span><span
-						style="display: block;">패션 커뮤니티</span>
-				</h2>
-				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
-						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
-					class="title"></span>
-				</a>
-				<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-
-			</div>
-		</header>
-
 		<!-- Menu -->
-		<nav id="menu">
+		<nav id="menu" th:fragment="menu">
 			<h2>Menu</h2>
 			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
 			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
-			<h3 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">마일리지 : <span sec:authentication="principal.mileage"></span> M</h3>
+			<h3 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">마일리지 : <span id="mileage"></span> M</h3>
 			<ul>
 				<li><a href="/sommunity/home">Home</a></li>
 				<li><a href="/main">한섬닷컴 이동</a></li>
@@ -42,14 +19,48 @@
 						<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
 						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
+				<!--  
 				<li sec:authorize="isAuthenticated()"><a href="elements.html">마이페이지</a></li>
+				-->
 			</ul>
+			<input type="hidden" id="email" th:value="${#authentication.name}"></input>
 			<script>
+			
 			function logout(){
 				$('#logoutForm').submit();
 			}
+			
+			let object = {
+	    			email : $('#email').val()
+	    	}
+			let jsondata = JSON.stringify(object);
+			console.log(jsondata);
+			
+			function showMileage() {
+				$.ajax({
+					url: '/showMileage',
+		            type: 'POST',
+		            data : jsondata,
+		            dataType: 'JSON',
+		            contentType: 'application/json',
+		            beforeSend: function (xhr) {
+		                xhr.setRequestHeader(header, token);
+		            },
+		            success: function (data) {
+						console.log(data.mileage);
+						$('#mileage').text(data.mileage)
+					},
+					error: function () {
+						console.log("마일리지 조회 실패");
+					}
+				  
+				});
+			}
+			
+			$(document).ready(function(){
+				showMileage();
+			});
+			
 			</script>
 		</nav>
-		
-		
 </html>
