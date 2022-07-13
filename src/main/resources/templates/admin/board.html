@@ -90,8 +90,10 @@
 			
 			let cont =$('#bcontent'+idx).val();
 			
-			cont = cont.replaceAll("&lt;", "<");
+		      cont = cont.replaceAll("&lt;", "<");
 		      cont = cont.replaceAll("&gt;", ">");
+		      cont = cont.replaceAll("&quot;", "\"");
+				cont = cont.replaceAll("&nbsp;", "");
 			
 			$('#modalBtitle').text($('#btitle'+idx).text());
 			$('#modalBauthor').text('작성자 '+$('#bauthor'+idx).text());
