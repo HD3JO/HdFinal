@@ -4,7 +4,10 @@
 <mapper namespace="com.hyundai.project.board.repository.AdminBoardMapper">
 
 	<select id="getBoardList" resultType="com.hyundai.project.dto.AdminBoardDTO">
-		SELECT A.BID, A.BRAND, A.BHEADER, A.BTITLE, A.BAUTHOR, TO_CHAR(A.BDATE, 'yyyy-MM-dd') AS BDATE, A.BCONTENT, NVL(B.HITS,0) AS HITS, NVL(C.LIKES,0) AS LIKES
+		SELECT A.BID, A.BRAND, A.BHEADER, A.BTITLE, A.BAUTHOR, CASE WHEN TO_CHAR(A.BDATE, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd') THEN TO_CHAR(A.BDATE, 'hh24 : mi')
+                                                            ELSE TO_CHAR(A.BDATE, 'yyyy-MM-dd') 
+                                                            END AS BDATE, 
+       		   A.BCONTENT, NVL(B.HITS,0) AS HITS, NVL(C.LIKES,0) AS LIKES
 		  FROM BOARD A, 
 		       (SELECT COUNT(*) AS HITS, BID FROM BOARD_HITS GROUP BY BID) B,
 		       (SELECT COUNT(*) AS LIKES, BID FROM BOARD_LIKES GROUP BY BID) C
