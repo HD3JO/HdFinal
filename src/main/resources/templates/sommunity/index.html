@@ -109,7 +109,10 @@
 		<!-- Header -->
 		<!-- Header -->
 		<header th:replace="sommunity/header :: header"></header>
-
+		<script>
+		var header = $("meta[name='_csrf_header']").attr('content');
+	    var token = $("meta[name='_csrf']").attr('content');
+		</script>
 		<!-- Menu -->
 		<nav th:replace="sommunity/menu :: menu"></nav>
 		
