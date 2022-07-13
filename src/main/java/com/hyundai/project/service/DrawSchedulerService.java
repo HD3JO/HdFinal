@@ -2,13 +2,11 @@ package com.hyundai.project.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,9 +21,6 @@ import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.product.repository.DrawMapper;
 
 import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Component
 @Service
@@ -42,7 +37,7 @@ public class DrawSchedulerService {
 	
 	// 당첨자 추첨하고 당첨자에게 이메일 전송하는 메서드
 	@Scheduled(cron ="0 0/20 * * * ?")
-	//@Scheduled(fixedDelay = 1000000)
+	//@Scheduled(fixedDelay = 60000)
 	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();
 			
@@ -154,7 +149,7 @@ public class DrawSchedulerService {
 		message.setSubject("<THE HANDSOME DRAW> 당첨안내입니다!");
 		message.setText("<THE HANDSOME DRAW>\n응모하신" + pname + " 제품에 당첨되었습니다!!\n"
 				+ "아래 링크에 접속하여 배송지를 입력해주시기 바랍니다.\n"
-				+ "http://localhost/draw/drawOrder?email=" + email + "&psid=" + psid);
+				+ "http://4stmen.kro.kr:40300/draw/drawOrder?email=" + email + "&psid=" + psid);
 		emailSender.send(message);
 	}
 

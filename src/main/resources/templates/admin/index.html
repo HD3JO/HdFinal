@@ -35,6 +35,92 @@
 	crossorigin="anonymous"></script>
 
 </head>
+<style>
+.rank-list-item {
+    border-bottom: 1px solid #f0f1f3;
+    height: 63px;
+    background-color: #ffffff;
+    display: block;
+    transition: transform 0.15s linear;
+}
+.item-info .item-title {
+    display: block;
+    margin-top: 9px;
+    margin-left: 8px;
+    max-width: 300px;
+    font-size: 14px;
+    line-height: 1.2em;
+    color: #333333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.pull-left {
+    float: left;
+}
+
+.item-info .item-title {
+    display: block;
+    margin-top: 9px;
+    margin-left: 8px;
+    max-width: 300px;
+    font-size: 14px;
+    line-height: 1.2em;
+    color: #333333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-rank {
+    width: 50px;
+    padding-left: 14px;
+}
+
+.list-item {
+    height: 100%;
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1em;
+    color: #666666;
+}
+
+.item-rank .rank-number {
+    display: block;
+    width: 24px;
+    text-align: center;
+}
+
+.item-rank .rank-1, .item-rank .rank-2, .item-rank .rank-3 {
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 0;
+    line-height: 0;
+    margin-top: 0;
+}
+
+
+.item-rank .rank-1 {
+    background-image: url(https://res02.noxgroup.com/kol/2022/07/public/img/home/f6589b1a.png);
+}
+
+.item-rank .rank-2 {
+    background-image: url(https://res02.noxgroup.com/kol/2022/07/public/img/home/befa124e.png);
+}
+
+.item-rank .rank-3 {
+    background-image: url(https://res02.noxgroup.com/kol/2022/07/public/img/home/b4875868.png);
+}
+
+.card-body-nice {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 5px;
+}
+</style>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -253,14 +339,19 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">사용자 구매금액 순위</h6>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body-nice">
                                 	<tr th:each="list, status : ${rank}">
-		                            	<h4 class="small font-weight-bold" th:text="${list.name}"><span
-                                            class="float-right" th:text="${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"></span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" th:style="'width:' + ${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"
-                                            th:aria-valuenow="${list.totalPurchase}" th:aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                		<div>
+                                			<a href="#none" class="rank-list-item clearfix">
+                                				<span class="list-item pull-left item-rank clearfix">
+                                					<span th:class="'rank-number pull-left rank-' + ${status.index+1}" th:text="${status.index+1}"></span> 
+                                				</span>
+	                                			<span class="list-item pull-left item-info clearfix">
+				                            		<span class="item-title pull-left" th:text="${list.name}"></span>
+				                            	</span>
+				                            	<span class="float-right" th:text="${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')} + ' 원'"></span>
+			                            	</a>
+		                            	</div>                                    
                                     </tr>
                                 </div>
                             </div>                          
