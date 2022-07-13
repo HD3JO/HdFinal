@@ -111,9 +111,9 @@ function changeBest(e){
 			//console.log('ddd');
 			let html = '';
 			if(senderId != 'master'){
-				html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right; max-width: 80%;" > '+message +'</div> </li><br>';	
+				html += '<li style="list-style:block;"><div class="clientMsg" style="float:right; clear:right; max-width: 80%;"  beforeM="'+message+'"> '+message +'</div>  </li> <br>';	
 			}else{
-				html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left; background-color:#d7f7a6; max-width: 80%;" > '+message + ' </div></li><br>';
+				html += '<li style="list-style:block;"><div  class="clientMsg" style="float:left; clear:left; background-color:#d7f7a6; max-width: 80%;"  onclick="transkotoen(this)" beforeM="'+message+'"> '+message + ' </div><div style="display:none;" onclick="returnKO(this)">恢复</div></li><br>';
 			}
 			
 			$('.messageBox').append(html);
@@ -156,6 +156,47 @@ function changeBest(e){
 		$('#chatModal').toggle();
 	}
 	//chatting end
+	
+	//trans
+	function transkotoen(e){
+		console.log($(e).text());
+		const header = $("meta[name='_csrf_header']").attr('content');
+	 	const token = $("meta[name='_csrf']").attr('content'); 
+
+	 	const jsonData ={
+				"beforeM" : $(e).text()
+		}
+	 	
+		$.ajax({
+			type : 'POST',
+			url : "/trans/transkotoen",
+			data : JSON.stringify(jsonData),
+			contentType : 'application/json',
+			dataType : 'json',
+			beforeSend: function(xhr){
+	               xhr.setRequestHeader(header, token);
+	           },
+			success : function(data) {
+				const afterM = data.message.result.translatedText;
+				$(e).text(afterM);
+				const nextE = $(e).next();
+				nextE.toggle();
+			},
+			error : function(e) {
+				console.log(e);
+				
+			}
+		});
+	}
+	//
+	function returnKO(e){
+		console.log('called returnKO');
+		$(e).toggle();
+		const beforeE = $(e).prev();
+		console.log($(beforeE).attr('beforeM'));
+		$(beforeE).text($(beforeE).attr('beforeM'));
+		
+	}
 
 
 </script>
