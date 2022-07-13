@@ -107,50 +107,11 @@
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Header -->
-		<header id="header">
-			<div class="inner">
-				<!-- Logo -->
-				<h2 style="margin: 0 0 0 0;">
-					<span style="display: block;">한섬닷컴 회원을 위한<br></span><span
-						style="display: block;">패션 커뮤니티</span>
-				</h2>
-				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
-						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
-					class="title"></span>
-				</a>
-				<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-
-			</div>
-		</header>
+		<!-- Header -->
+		<header th:replace="sommunity/header :: header"></header>
 
 		<!-- Menu -->
-		<nav id="menu">
-			<h2>Menu</h2>
-			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
-			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
-			<ul>
-				<li><a href="/sommunity/home">Home</a></li>
-				<li><a href="/main">한섬닷컴 이동</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">로그인</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">회원가입</a></li>
-				<li sec:authorize="isAuthenticated()">
-					<form action="/logout" method="POST" id="logoutForm">
-						<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
-				<li sec:authorize="isAuthenticated()"><a href="elements.html">마이페이지</a></li>
-			</ul>
-			<script>
-			function logout(){
-				$('#logoutForm').submit();
-			}
-			</script>
-		</nav>
+		<nav th:replace="sommunity/menu :: menu"></nav>
 		
 		<!-- Main -->
 		<div id="main">

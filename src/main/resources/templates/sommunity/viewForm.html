@@ -99,6 +99,9 @@
 <link rel="stylesheet" href="/sommunity/assets/css/view_document.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/write_form.css" />
 <link rel="stylesheet" href="/sommunity/assets/css/editor.css" />
+<link rel="stylesheet" href="/sommunity/assets/css/toastr.css" />
+
+
 <noscript>
 	<link rel="stylesheet" href="/sommunity/assets/css/noscript.css" />
 </noscript>
@@ -107,50 +110,11 @@
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Header -->
-		<header id="header">
-			<div class="inner">
-				<!-- Logo -->
-				<h2 style="margin: 0 0 0 0;">
-					<span style="display: block;">한섬닷컴 회원을 위한</span><span
-						style="display: block;">패션 커뮤니티</span>
-				</h2>
-				<a href="/sommunity/home" class="logo"> <span class="symbol"><img
-						src="images/sommunity.png" style="margin: 0 auto;" alt="" /></span><span
-					class="title"></span>
-				</a>
-				<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-
-			</div>
-		</header>
+		<!-- Header -->
+		<header th:replace="sommunity/header :: header"></header>
 
 		<!-- Menu -->
-		<nav id="menu">
-			<h2>Menu</h2>
-			<h2 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;">안녕하세요! <span sec:authentication="principal.name"></span>님</h2>
-			<h4 sec:authorize="isAuthenticated()" style="letter-spacing: 0.1em;"><span sec:authentication="principal.email"></h4>
-			<ul>
-				<li><a href="/sommunity/home">Home</a></li>
-				<li><a href="/main">한섬닷컴 이동</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">로그인</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/customLogin">회원가입</a></li>
-				<li sec:authorize="isAuthenticated()">
-					<form action="/logout" method="POST" id="logoutForm">
-						<!--<input type="hidden" th:name="${_csrf.token}" th:value="${_csrf.headerName}"> -->
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a></li>
-				<li sec:authorize="isAuthenticated()"><a href="elements.html">마이페이지</a></li>
-			</ul>
-			<script>
-			function logout(){
-				$('#logoutForm').submit();
-			}
-			</script>
-		</nav>
+		<nav th:replace="sommunity/menu :: menu"></nav>
 
 		<!-- Main -->
 		<div class="main">
@@ -524,6 +488,25 @@
 													
 													console.log(object);
 													let jsondata = JSON.stringify(object);
+													let cnt = -1;
+													$.ajax({
+											            url: '/getTodayReplayCnt?email=' + $('#user').val(),
+											            data: jsondata,
+											            type: 'POST',
+											            async : false,
+											            beforeSend: function (xhr) {
+											                xhr.setRequestHeader(header, token);
+											            },
+											            success: function (data) {
+											                
+											            	console.log("갯수 : " + data);
+											            	cnt = data;
+											            },
+											            error: function () {
+											                console.log("오늘 단 댓글 조회 실패");
+											            }
+											          
+											        });
 													
 													$.ajax({
 											            url: '/enrollReply',
@@ -540,6 +523,35 @@
 											            	console.log("댓글 삽입 성공");
 											            	$('#breply').val('');
 											            	getReplyList();
+											            	showMileage();
+											            	
+											            	toastr.options = {
+										            			"closeButton": true, // 닫힘 버튼 보이게(true)
+										            			"debug": false, // 콘솔창에 토스트 관련 메세지를 띄울 것인지?
+										            			"newestOnTop": false, // 새로운 팝업창을 띄울 때 위로 뜰지 말지, 위로 true, 아래로 false
+										            			"progressBar": true, // 닫히기까지의 프로그레스바 표시(true)
+										            			"positionClass" : "toast-top-right", // [위치 및 크기 설정 : 위쪽 >> 오른쪽]
+										            			/* Top Right
+										            			Bottom Right
+										            			Bottom Left
+										            			Top Left
+										            			Top Full Width
+										            			Bottom Full Width
+										            			Top Center
+										            			Bottom Center */
+										            			"preventDuplicates" : true, // 중복실행 방지, false일 경우 여러번 실행 가능, true면 하나만 띄운다(없어지면 다시 띄우기 가능)
+										            			"showDuration": 1000, // 등장에 걸리는 시간, 공식 홈에서 문자로 되어있지만 숫자로 해야 먹힌다.
+										            			"hideDuration": 1000, // 사라질때 걸리는 시간, 공식 홈에서 문자로 되어있지만 숫자로 해야 먹힌다.
+										            			"timeOut": 2000, // 자동으로 토스트가 사라지는 시간
+										            			"extendedTimeOut": 1000, // 토스트에 호버링 했다 땠을 때 사라지는 시간(마우스를 올렸다가 땠을 때)
+										            			"showEasing": "swing", // 보일 때 애니메이션, swing(끝부분에 살짝 드려짐) / linear(일정한 속도)
+										            			"hideEasing": "swing", // 사라질 때 애니메이션 swing, linear
+										            			"showMethod": "fadeIn", // 보일 때 효과 종류 show(그냥 보이게), fadeIn(천천히 해당위치에서 등장), slideDown(위에서 아래로 펼치기)
+										            			"hideMethod": "fadeOut" // 사라질 때 효과 종류 hide, fadeOut(천천히 사라짐), slideUp(아래에서 위로 사라짐)
+										            		}
+											            	if(cnt < 10) toastr.success('댓글이 작성되었습니다.<br>10마일리지가 적립되었습니다.<br>(1일 10회 한정)');
+											            	else toastr.success('댓글이 작성되었습니다.');
+											            	
 											            },
 											            error: function () {
 											                console.log("댓글 삽입 실패");
@@ -655,6 +667,7 @@
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/board.js"></script>
 	<script src="assets/js/jquery.plugins.min.js"></script>
+	<script src="assets/js/toastr.min.js"></script>
 
 </body>
 
