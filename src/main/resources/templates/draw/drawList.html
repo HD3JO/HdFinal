@@ -150,10 +150,7 @@ function myDraw(){
 					</li>				
 					<li sec:authorize="isAuthenticated()" style="float:left; list-style:none;">
 						<a style="padding-right:30px;">안녕하세요 <span sec:authentication="principal.name"></span>님</a>
-					</li>
-					<li sec:authorize="isAuthenticated()" style="float:left; list-style:none;">
-						<a th:href="@{/member/mydraw}" onclick="" style="font-size:15px;">내 드로우 응모 내역</a>
-					</li>
+					</li>					
 					<li sec:authorize="isAuthenticated()" style="float:left; list-style:none;">
 						<form action="/logout" method="POST" id="logoutForm">			
 								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
