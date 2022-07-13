@@ -278,54 +278,6 @@
 				const tbody = document.getElementById("boarditems");
 				let jsondata = JSON.stringify(object);
 				let htmlstr = "<tr class='notice-item' style='background-color: rgba(144, 144, 144, 0.075);'> <td> <span class='notice-text'>공지</span> </td> <td class='td-subject' colspan='6'> <p class='subject'>욕설과 비방글을 무통보 삭제합니다.</p> </td> </tr>";
-				/*
-				$.ajax({
-		            url: '/getBoard',
-		            data: jsondata,
-		            type: 'POST',
-		            dataType: 'JSON',
-		            contentType: 'application/json',
-		            beforeSend: function (xhr) {
-		                xhr.setRequestHeader(header, token);
-		            },
-		            success: function (data) {
-		                console.log(data);
-		                let now = new Date();
-		                
-		                let nowYear = now.getFullYear();
-		                let nowMonth = ('00' + (now.getMonth() + 1)).slice(-2);
-		                let nowDate = ('00' + now.getDate()).slice(-2);
-		                if(data.length > 0) {
-		                	$(data).each(function (index) {
-		                		htmlstr += "<tr class='bg1'>";
-		                		htmlstr += "<td> <span alt='번호'>" + this.bid + "</span> </td>";
-		                		htmlstr += "<td class='td-subject'> <a href='/sommunity/view?bno="+this.bid + "' class='subject'>" + this.btitle + "</a> </td>";
-		                		htmlstr += "<td><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
-		                		let bdate = this.bdate;
-		                		
-		                		if(nowMonth === bdate.substr(5,2) && nowDate === bdate.substr(8,2)) {
-		                			htmlstr += "<td>"+bdate.substr(11,2)+":"+bdate.substr(14,2)+"</td>";
-		                		}
-		                		else {
-		                			htmlstr += "<td>"+bdate.substr(5,2) +"/" + bdate.substr(8,2) +"</td>";
-		                		}
-		                		
-		                		htmlstr += "<td>조회수</td>";
-		                		//htmlstr += "<td> <a href='' class='thumbnail' style='width: 80px'> <em>123</em> <img src='https://post-phinf.pstatic.net/MjAxOTExMDRfOCAg/MDAxNTcyODU1MDQ5NDA4.FCA8G3r-rbxsidLKqxBX6yfk4DuUc1zLXhdCni9BVB0g.fjQTknYM-SXz03aSAQIopvVKV515Qx1LYBn370JkRV0g.JPEG/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C_%281%29.jpg?type=w1200' alt=''> </a></td>"
-		                		
-		                	}
-		                	);
-		                }
-		            },
-		            error: function () {
-		                console.log("게시판 로드 실패");
-		            },
-		            complete : function() {        
-		            	tbody.innerHTML = htmlstr;
-		            }
-		          
-		        });
-				*/
 				
 				/* 페이지에 맞는 게시글 불러오기 */
 				$.ajax({
@@ -351,7 +303,7 @@
 		                	$(data).each(function (index) {
 		                		htmlstr += "<tr class='bg1'>";
 		                		htmlstr += "<td width='15%'> <span alt='머리글'>" + this.bheader + "</span> </td>";
-		                		htmlstr += "<td class='etc' style='text-align : left;'> <a href='javascript:void(0);' onclick='goViewForm("+this.bid+")' class='subject'><strong>" + this.btitle + "</strong></a> </td>";
+		                		htmlstr += "<td class='etc' style='text-align : left;'> <a href='javascript:void(0);' onclick='goViewForm("+this.bid+")' class='subject'><strong>" + this.btitle + "</strong>   [" + this.rcnt + "]" + "</a> </td>";
 		                		htmlstr += "<td width='20%' style='text-align : left; text-overflow: ellipsis;'><a href='' class='member_0' onclick='return false' alt='작성자'>" + this.bauthor + "</a></td>"
 		                		let bdate = this.bdate;
 		                		

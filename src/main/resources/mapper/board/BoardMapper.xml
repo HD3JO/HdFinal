@@ -27,15 +27,17 @@
 	</select>
 
 	<select id="getPageBoard" resultType="com.hyundai.project.dto.BoardDTO">
-        select bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes 
+        select bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes, nvl(rcnt, 0) as rcnt
         from (
-			select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes
-			from (select board.*, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes
+			select rownum as rn, bid, brand, bheader, btitle, bauthor, bdate, bimg, bcontent, bhits, blikes, rcnt
+			from (select board.*, nvl(bhits, 0) as bhits, nvl(blikes,0) as blikes, rcnt
 				from board 
 				left join (select bid, count(*) as bhits from board_hits group by bid) hits 
 				on hits.bid = board.bid 
 				left join (select bid, count(*) as blikes from board_likes group by bid) likes
 				on likes.bid = board.bid
+                left join (select bid , count(*) AS rcnt from reply group by bid) reply
+                on reply.bid = board.bid
 				where board.brand=#{brand}  order by bdate desc
 				)
 			) t 
