@@ -35,7 +35,7 @@
 	        });
 	        
 	        if(count == 0){
-	          alert('선택된 상품이 없습니다.');
+	          layerAlert('선택된 상품이 없습니다.');
 	          return false;
 	        }
 	        
@@ -104,7 +104,8 @@
         	document.querySelectorAll('quantity'+idx);
           let quantity = $('#quantity'+idx).val();
           console.log('clicked - ', quantity);
-          if(quantity == 0){
+          if(quantity == 1){
+         	layerAlert("1개 이상만 변경 가능합니다.");
             return;
           }
           $('#quantity'+idx).val(parseInt(quantity)-1);

@@ -125,6 +125,10 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 function logout(){
 	$('#logoutForm').submit();
 }
+
+function myDraw(){
+	location.href='/member/mydraw';
+}
 </script>
 <body id="bodywrap">
   <main id="main">
@@ -146,12 +150,13 @@ function logout(){
 					</li>				
 					<li sec:authorize="isAuthenticated()" style="float:left; list-style:none;">
 						<a style="padding-right:30px;">안녕하세요 <span sec:authentication="principal.name"></span>님</a>
-					</li>
+					</li>					
 					<li sec:authorize="isAuthenticated()" style="float:left; list-style:none;">
 						<form action="/logout" method="POST" id="logoutForm">			
 								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-						</form><a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a>
-					</li>
+						</form>
+						<a href="javascript:void(0);" onclick="logout()">로그아웃 <!-- 로그아웃 --></a>					
+					</li>					
 				</ul>
 		    </div>
 	    </div>
@@ -172,8 +177,9 @@ function logout(){
             </div>
           </div>
         </div>
-        <h1 class="cnts_title ou1804" data-aos="fade-up">THE HANSOME DRAW</h1>
-        <h3 class="cnts_small_title ou1804" data-aos="fade-up">매일 오전 10:00 ~ 11:00 드로우가 진행됩니다.</h3>
+        <h3 onclick="myDraw();" data-aos="fade-up" style="text-align:right; text-size:20px; font-weight:bold;">나의 응모내역 확인하기</h3>
+        <h1 class="cnts_title ou1804" data-aos="fade-up">THE HANSOME DRAW</h1>       
+        <h3 class="cnts_small_title ou1804" data-aos="fade-up">평일에만 응모가 진행되며, 매주 토요일 오후 8시 당첨자가 발표됩니다.</h3>
         <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
           <div th:each="list, status : ${drawList}" th:class="'item ' + ${list.bname} + ' col-sm-6 col-md-4 col-lg-4 mb-4'">          	
             <a th:href="'/draw/drawDetail?psid=' + ${list.psid}" class="item-wrap fancybox">

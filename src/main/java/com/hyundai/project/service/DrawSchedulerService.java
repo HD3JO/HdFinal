@@ -22,12 +22,14 @@ import com.hyundai.project.dto.DrawListDTO;
 import com.hyundai.project.dto.DrawWinDTO;
 import com.hyundai.project.product.repository.DrawMapper;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Component
 @Service
+@Log4j
 public class DrawSchedulerService {
 	@Autowired
 	DrawMapper drawMapper; 
@@ -39,7 +41,7 @@ public class DrawSchedulerService {
 	private JavaMailSender emailSender;
 	
 	// 당첨자 추첨하고 당첨자에게 이메일 전송하는 메서드
-	@Scheduled(cron ="0 0/20 * * * *")
+	@Scheduled(cron ="0 0/20 * * * ?")
 	//@Scheduled(fixedDelay = 1000000)
 	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();
@@ -108,7 +110,7 @@ public class DrawSchedulerService {
 					 keysListByPsid.clear();				
 					 					  					 
 				 } else if(keysListByPsid.size() == 0) {
-					 //log.info("해당 상품에 대한 응모 내역이 없습니다.");
+					 log.info("해당 상품에 대한 응모 내역이 없습니다.");
 				 }
 			 }	
 			

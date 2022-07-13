@@ -1,8 +1,11 @@
 package com.hyundai.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hyundai.project.dto.MemberDTO;
 import com.hyundai.project.user.repository.AdminMainMapper;
 
 @Service
@@ -42,4 +45,9 @@ public class AdminMainServiceImpl implements AdminMainService {
 		return adminMapper.getMemberGrade(grade);
 	}
 
+	@Override
+	public List<MemberDTO> rankMember() throws Exception {
+		
+		return adminMapper.rankMember();
+	}
 }

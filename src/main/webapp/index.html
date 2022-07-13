@@ -47,8 +47,6 @@
 
             <!-- Main Content -->
             <div id="content">
-            
-                <nav th:replace="admin/topbar :: topbar"></nav>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
@@ -255,12 +253,8 @@
                                 </div>
                                 <div class="card-body">
                                 	<tr th:each="list, status : ${rank}">
-		                            	<h4 class="small font-weight-bold" th:text="${list.name}"><span
-                                            class="float-right" th:text="${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"></span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" th:style="'width:' + ${#numbers.formatInteger(list.totalPurchase, 3, 'COMMA')}"
-                                            th:aria-valuenow="${list.totalPurchase}" th:aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+	                                    <h4 class="small font-weight-bold" th:text="${list.name}">	                                    	
+	                                   	</h4>	                                    
                                     </tr>
                                 </div>
                             </div>                          

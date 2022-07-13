@@ -140,9 +140,13 @@ public class AdminController {
 		cntByGrade[3] = adminMainService.getMemberGrade("STAR");
 		cntByGrade[4] = adminMainService.getMemberGrade("THE STAR");
 		
+		// 멤버 매출 탑5
+		List<MemberDTO> dto = adminMainService.rankMember();
+		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("grade", cntByGrade);
+		model.addAttribute("rank", dto);
 		model.addAttribute("drawList", drawList);
 		model.addAttribute("totalproductprice", totalproductprice);
 		model.addAttribute("totalproductcount", totalproductcount);
