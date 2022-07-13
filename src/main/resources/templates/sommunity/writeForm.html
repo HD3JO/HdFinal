@@ -198,7 +198,7 @@
 								</div>
 	
 								<div class="boardNavigation">
-									<button class="xet_btn large submit xet_btn_block">등록</button>
+									<button type="button" onclick="checkForm();" class="xet_btn large submit xet_btn_block">등록</button>
 									<input type="hidden" id="deliveryOkMsg" value="확인">
 									<div class="mg-t10">
 										<script>
@@ -207,20 +207,23 @@
 											console.log('checkForm called');
 											let btitle = document.querySelector("#btitle").value;
 											let bheader = document.querySelector("#bheader").value;
-											let bcontent = document.querySelector("#bcontent").value;
+											/*let bcontent = document.querySelector("#bcontent").value;*/
+											let bcontent = CKEDITOR.instances.bcontent.getData()											
 											let checkFormFlag = true;
 											
 											if(bheader === ''|| bheader == undefined){
 												layerAlert('머릿글을 선택해주세요.');
-												checkFormFlag = false;
+												return;
 											}else if(btitle === '' || btitle == undefined){
 												layerAlert('제목을 입력해주세요.');
-												checkFormFlag = false;
+												return;
 											}else if(bcontent == '<p>&nbsp;</p>' || bcontent === '' || bcontent === undefined){
+												console.log('내용은 : ' + bcontent);
 												layerAlert('입력된 내용이 없습니다. ');
-												checkFormFlag = false;
+												return;
 											}
-											return checkFormFlag;
+											
+											$('#boardForm').submit();
 										}
 										
 										</script>

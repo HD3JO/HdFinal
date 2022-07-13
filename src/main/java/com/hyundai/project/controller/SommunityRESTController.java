@@ -101,4 +101,9 @@ public class SommunityRESTController {
 		return boardService.showMileage(memberDTO.getEmail());
 	}
 	
+	@PostMapping(value="/getTodayReplayCnt")
+	public int getTodayReplayCnt (@RequestParam("email") String email) {
+		return boardService.getTodayReplayCnt(email);
+	}
+	
 }
