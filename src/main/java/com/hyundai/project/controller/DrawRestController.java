@@ -121,6 +121,7 @@ public class DrawRestController {
 			return new ResponseEntity<>("Update RegYN", HttpStatus.CREATED);
 		else {
 			return new ResponseEntity<>("No Update RegYN", HttpStatus.CREATED);
+			//수정주
 		}
 	}
 	
