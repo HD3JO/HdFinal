@@ -156,7 +156,7 @@
 												/*<![CDATA[*/
 												const html = [[${boardDTO.bcontent}]];
 												const bno = [[${boardDTO.bid}]]
-												
+												const bauthor = [[${boardDTO.bauthor}]]
 												/*]]>*/
 												/* 띄어 쓰기 문자 변환*/
 												let content = html.replace(/amp;/gi, "")
@@ -412,7 +412,10 @@
 												                        				<div class="float-left">
 												                        					<div class="meta mg-b10">
 												                        						<span>
-												                        							<strong>`+ this.rauthor +`</strong> </span>
+												                        							<strong>`+ this.rauthor;
+												                        							if(this.rauthor === bauthor) htmlStr += ` &nbsp;(글쓴이)`;
+												                        							if(this.rauthor === $('#user').val()) htmlStr += ` &nbsp;(나)`;
+												                        							htmlStr += `</strong> </span>
 												                        						<!-- // 추천표시 출력 -->
 												                        					</div>
 												                        				</div>
@@ -488,7 +491,7 @@
 													
 													console.log(object);
 													let jsondata = JSON.stringify(object);
-													let cnt = -1;
+													let cnt = 10000;
 													$.ajax({
 											            url: '/getTodayReplayCnt?email=' + $('#user').val(),
 											            data: jsondata,
