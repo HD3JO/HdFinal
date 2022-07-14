@@ -26,4 +26,5 @@ public class BoardDTO {
 	private int bhits;
 	private int blikes;
 	private int disabled;
+	private int rcnt;
 }
