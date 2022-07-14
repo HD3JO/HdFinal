@@ -171,7 +171,7 @@ xmlns:sec="http://www.w3.org/1999/xhtml">
 				sessionStorage.setItem(senderId, JSON.stringify(value));
 				if(!message.includes('님이 접속했습니다.') && !message.includes('님이 퇴장했습니다.')){
 					$('.toast-body').text(senderId+'로 부터 채팅이 왔습니다.');
-					$('.toast').toast({delay:1000});
+					$('.toast').toast({delay:3000});
 					$('.toast').toast('show');	
 				}
 				
