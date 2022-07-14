@@ -255,7 +255,7 @@ function doDraw(){
 	            },
 	            error: function(request, status, error){
 	            	console.log("code:" + request.status + "\n" + "error:" + error);
-	            	layerAlert('응모실패');	
+	            	layerAlert('이미 응모한 제품입니다.');	
 	            }
 			});	
 		}
