@@ -87,7 +87,6 @@ public class SommunityController {
 		
 		try {
 			boardService.incHits(bCountDTO);
-			//sfdffsfs
 			boardDTO.setBhits(boardDTO.getBhits()+1);
 		}catch(Exception e) {
 			

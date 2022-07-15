@@ -127,12 +127,12 @@ public class OrderController {
 		else{
 			log.info("");
 		}
-		if(completeList.get(0).getMarketingsms().equals("Y")) {
-			messageService.sendMessage(completeList);
-		}
-		else{
-			log.info("");
-		}
+//		if(completeList.get(0).getMarketingsms().equals("Y")) {
+//			messageService.sendMessage(completeList);
+//		}
+//		else{
+//			log.info("");
+//		}
 		model.addAttribute("complete", completeList);
 
 		return "order/orderComplete";

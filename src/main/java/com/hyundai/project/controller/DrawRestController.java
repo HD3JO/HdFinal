@@ -102,12 +102,14 @@ public class DrawRestController {
 				if(result == 1) 			
 					return new ResponseEntity<>("Draw Success", HttpStatus.CREATED);
 				else {					
-					redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
+					//redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
+					redisTemplate.delete(String.valueOf(uid));
 					return new ResponseEntity<>("Not Enough Mileage", HttpStatus.CREATED);
 				}
 		   //중복이 있으면	 
 		 } else {
-			 redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
+			 //redisTemplate.opsForValue().getAndDelete(String.valueOf(uid));
+			 redisTemplate.delete(String.valueOf(uid));
 			 return new ResponseEntity<>("Duplicate Application", HttpStatus.CREATED);
 		 }
 	}

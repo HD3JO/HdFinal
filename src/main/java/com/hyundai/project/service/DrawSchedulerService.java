@@ -36,7 +36,7 @@ public class DrawSchedulerService {
 	private JavaMailSender emailSender;
 	
 	// 당첨자 추첨하고 당첨자에게 이메일 전송하는 메서드
-	@Scheduled(cron ="0 0/20 * * * ?")
+	//@Scheduled(cron ="0 0/20 * * * ?")
 	//@Scheduled(fixedDelay = 60000)
 	public DrawWinDTO getWinning() throws Exception {		
 			DrawWinDTO winDTO = new DrawWinDTO();

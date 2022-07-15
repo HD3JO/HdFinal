@@ -4,7 +4,7 @@
 
 #chatModal{
 	display:none;
-	position:fixed; width:20rem; height:25rem; right:50%; margin-right:-603px; top:30%; z-index: 9;
+	position:fixed; width:20rem; height:25rem; right:80%; margin-right:-603px; top:30%; z-index: 9;
 	border-radius: 30px;
 	border-style:solid;
 }
@@ -29,4 +29,5 @@
 	margin-top: 1rem;
 	padding-left:0.5rem;
 	padding-right:0.5rem;
+	font-size : 1.2rem;
 }
